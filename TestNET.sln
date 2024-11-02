@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Teacher", "TestNET.Teacher\TestNET.Teacher.csproj", "{933A4AD7-D7C0-424F-B837-3B40CF5FC104}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Student", "TestNET.Student\TestNET.Student.csproj", "{CCF2C5C5-11A0-4B9B-A887-5B3DB21DA380}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{933A4AD7-D7C0-424F-B837-3B40CF5FC104}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{933A4AD7-D7C0-424F-B837-3B40CF5FC104}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{933A4AD7-D7C0-424F-B837-3B40CF5FC104}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{933A4AD7-D7C0-424F-B837-3B40CF5FC104}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CCF2C5C5-11A0-4B9B-A887-5B3DB21DA380}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CCF2C5C5-11A0-4B9B-A887-5B3DB21DA380}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CCF2C5C5-11A0-4B9B-A887-5B3DB21DA380}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CCF2C5C5-11A0-4B9B-A887-5B3DB21DA380}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8A7B24ED-847B-44AC-B05E-EB44CD2D5BA3}
+	EndGlobalSection
+EndGlobal
