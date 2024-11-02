@@ -1,13 +1,35 @@
-﻿<Window x:Class="TestNET.Teacher.View.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:TestNET.Teacher.View"
-        mc:Ignorable="d"
-        Title="TestNET Teacher" Height="450" Width="800">
-    <Grid>
-        <Label Content="Тестове" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+﻿<Window 
+	x:Class="TestNET.Teacher.View.MainWindow"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	xmlns:local="clr-namespace:TestNET.Teacher.View"
+	xmlns:model="clr-namespace:TestNET.Teacher.Model"
+	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
+	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
+	mc:Ignorable="d"
+	Title="TestNET Teacher" Height="450" Width="800">
+	<Grid>
+		<Label Content="Тестове" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+        
+		<Button Content="Add" HorizontalAlignment="Left" Margin="484,13,0,0" VerticalAlignment="Top" Command="{Binding Path=NewTestCommand}"/>
+
+        <Button Content="Remove" HorizontalAlignment="Left" Margin="527,13,0,0" VerticalAlignment="Top" Command="{Binding Path=RemoveTestCommand}" CommandParameter="{Binding ElementName=TestView, Path=SelectedItem}"/>
+
+        <Button Content="Save" HorizontalAlignment="Left" Margin="596,13,0,0" VerticalAlignment="Top" Command="{Binding SaveTestCommand}"/>
+
+        <Button Content="Load" HorizontalAlignment="Left" Margin="648,13,0,0" VerticalAlignment="Top" Command="{Binding LoadTestCommand}"/>
+
+        <ListView ItemsSource="{Binding Path=Tests}" Margin="0,50,0,0" Name="TestView">
+			<ListView.ItemTemplate>
+				<DataTemplate d:DataType="model:Test">
+                    <WrapPanel>
+                        <Label Content="{Binding Path=Name}"/>
+                    </WrapPanel>
+				</DataTemplate>
+			</ListView.ItemTemplate>
+		</ListView>
 
     </Grid>
 </Window>
