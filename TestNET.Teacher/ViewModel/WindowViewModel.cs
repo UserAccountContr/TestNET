@@ -1,6 +1,4 @@
-﻿using TestNET.Teacher.Model;
-
-namespace TestNET.Teacher.ViewModel;
+﻿namespace TestNET.Teacher.ViewModel;
 
 public partial class WindowViewModel: BaseViewModel
 {

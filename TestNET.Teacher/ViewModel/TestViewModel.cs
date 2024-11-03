@@ -1,6 +1,4 @@
-﻿using TestNET.Teacher.Service;
-
-namespace TestNET.Teacher.ViewModel;
+﻿namespace TestNET.Teacher.ViewModel;
 
 public partial class TestViewModel : BaseViewModel
 {

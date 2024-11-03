@@ -1,4 +1,4 @@
-﻿namespace TestNET.Teacher.Model;
+﻿namespace TestNET.Shared.Model;
 
 public class Question
 {
