@@ -6,3 +6,8 @@ public class Question
 
     public string Answer { get; set; }
 }
+
+public class MultipleChoiceQuestion : Question
+{
+    public string[] PossibleAnswers { get; set; }
+}

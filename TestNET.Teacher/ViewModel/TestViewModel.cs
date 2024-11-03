@@ -19,12 +19,19 @@ public partial class TestViewModel : BaseViewModel
 		Tests.Add(new Test
 		{
 			Name = "Test1",
-			Questions = new ()
+			Questions = new()
 			{
-				new Question
+				new MultipleChoiceQuestion
 				{
 					Text = "Q1",
-					Answer = "A1"
+					Answer = "A1",
+					PossibleAnswers =
+                    [
+                        "Slay",
+						"Brat",
+						"Queen",
+						"Yesh"
+					]
 				}
 			}
 		});
@@ -56,6 +63,14 @@ public partial class TestViewModel : BaseViewModel
     [RelayCommand]
     void ShowTest(object test)
     {
-        MessageBox.Show($"Q: {(test as Test).Questions[0].Text}\nA: {(test as Test).Questions[0].Answer}", (test as Test).Name);
+		if (test != null && test is Test)
+		{
+			Test test1 = (Test)test;
+			if (test1.Questions[0] is MultipleChoiceQuestion)
+			{
+
+				MessageBox.Show($"Q: {test1.Questions[0].Text}\nA: {test1.Questions[0].Answer}\n {string.Join(" ", (test1.Questions[0] as MultipleChoiceQuestion).PossibleAnswers)}", test1.Name);
+			}
+		}
     }
 }
