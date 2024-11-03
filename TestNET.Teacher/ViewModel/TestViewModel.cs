@@ -19,7 +19,7 @@ public partial class TestViewModel : BaseViewModel
 		Tests.Add(new Test
 		{
 			Name = "Test1",
-			Questions = new List<Question>()
+			Questions = new ()
 			{
 				new Question
 				{
@@ -43,7 +43,7 @@ public partial class TestViewModel : BaseViewModel
 	}
 
 	[RelayCommand]
-	async void LoadTest()
+	async Task LoadTest()
 	{
 		Tests.Clear();
 		var tests = await testService.GetTests();

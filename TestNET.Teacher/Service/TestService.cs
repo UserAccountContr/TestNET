@@ -8,15 +8,13 @@ public class TestService
 
     public async Task<List<Test>> GetTests()
     {
-        testList = new List<Test>();
+        testList = new ();
 
         string filename = Path.Combine(AppContext.BaseDirectory, "tests.json");
         if (File.Exists(filename))
         {
-            using (Stream stream = File.OpenRead(filename))
-            {
-                testList = (List<Test>)JsonSerializer.Deserialize(stream, typeof(List<Test>));
-            }
+            using Stream stream = File.OpenRead(filename);
+            testList = (List<Test>)JsonSerializer.Deserialize(stream, typeof(List<Test>));
         }
 
         if (testList == null)
