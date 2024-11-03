@@ -66,10 +66,10 @@ public partial class TestViewModel : BaseViewModel
 		{
 			Test test1 = (Test)test;
 			if (test1.Questions[0] is MultipleChoiceQuestion)
-			{
-
 				MessageBox.Show($"Q: {test1.Questions[0].Text}\nA: {test1.Questions[0].Answer}\n {string.Join(" ", (test1.Questions[0] as MultipleChoiceQuestion).PossibleAnswers)}", test1.Name);
-			}
+			else 
+				MessageBox.Show($"Q: {test1.Questions[0].Text}\nA: {test1.Questions[0].Answer}", test1.Name);
+
 		}
     }
 }
