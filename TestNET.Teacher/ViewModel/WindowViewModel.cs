@@ -1,18 +1,29 @@
-﻿namespace TestNET.Teacher.ViewModel;
+﻿using TestNET.Teacher.Model;
+
+namespace TestNET.Teacher.ViewModel;
 
 public partial class WindowViewModel: BaseViewModel
 {
     public WindowViewModel()
     {
-        PageViewModels.Add(new TestViewModel());
-
-        currentPageViewModel = PageViewModels[0];
+        homeViewModel = new HomeViewModel();
+        currentPageViewModel = homeViewModel;
     }
 
-    ObservableCollection<ObservableObject> PageViewModels = new();
+    HomeViewModel homeViewModel;
 
     [ObservableProperty]
     ObservableObject currentPageViewModel;
 
+    [RelayCommand]
+    void OpenTestView(object test)
+    {
+        CurrentPageViewModel = new TestViewModel(test as Test);
+    }
 
+    [RelayCommand]
+    void GoToHomeView()
+    {
+        CurrentPageViewModel = homeViewModel;
+    }
 }

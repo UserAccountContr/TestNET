@@ -8,6 +8,7 @@ global using System.Linq;
 global using System.Text;
 global using System.Threading.Tasks;
 global using System.Windows;
+global using System.Windows.Controls;
 global using TestNET.Teacher.View;
 global using TestNET.Teacher.ViewModel;
 global using TestNET.Teacher.Model;

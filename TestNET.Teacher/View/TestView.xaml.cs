@@ -1,8 +1,8 @@
 ﻿namespace TestNET.Teacher.View;
 
-public partial class HomeView : UserControl
+public partial class TestView : UserControl
 {
-    public HomeView()
+    public TestView()
     {
         InitializeComponent();
     }

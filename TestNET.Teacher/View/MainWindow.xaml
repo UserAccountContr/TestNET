@@ -12,8 +12,12 @@
 	Title="TestNET Teacher" Height="450" Width="800">
 
     <Window.Resources>
-        <DataTemplate DataType="{x:Type viewmodel:TestViewModel}">
+        <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
             <local:HomeView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodel:TestViewModel}">
+            <local:TestView />
         </DataTemplate>
     </Window.Resources>
     
