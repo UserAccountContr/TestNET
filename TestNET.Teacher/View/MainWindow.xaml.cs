@@ -4,7 +4,7 @@ public partial class MainWindow : Window
 {
     public MainWindow()
     {
-        DataContext = new TestViewModel();
+        DataContext = new WindowViewModel();
         InitializeComponent();
     }
 }

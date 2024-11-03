@@ -7,37 +7,18 @@
 	xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Teacher.Model"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
-	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
+	d:DataContext="{d:DesignInstance Type=viewmodel:WindowViewModel}"
 	mc:Ignorable="d"
 	Title="TestNET Teacher" Height="450" Width="800">
+
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewmodel:TestViewModel}">
+            <local:HomeView />
+        </DataTemplate>
+    </Window.Resources>
+    
 	<Grid>
-        <Label Content="Тестове" HorizontalAlignment="Left" VerticalAlignment="Top"/>
-		
-		<Button Content="Add" HorizontalAlignment="Left" Margin="484,13,0,0" VerticalAlignment="Top" Command="{Binding Path=NewTestCommand}"/>
-
-        <!-->
-            <Button Content="Remove" HorizontalAlignment="Left" Margin="527,13,0,0" VerticalAlignment="Top" Command="{Binding Path=RemoveTestCommand}" CommandParameter="{Binding ElementName=TestView, Path=SelectedItem}"/>
-        </!-->
-
-        <Button Content="Save" HorizontalAlignment="Left" Margin="596,13,0,0" VerticalAlignment="Top" Command="{Binding SaveTestCommand}"/>
-
-        <Button Content="Load" HorizontalAlignment="Left" Margin="648,13,0,0" VerticalAlignment="Top" Command="{Binding LoadTestCommand}"/>
-
-        <!-->
-            <Button Content="Show" HorizontalAlignment="Left" Margin="700,13,0,0" VerticalAlignment="Top" Command="{Binding ShowTestCommand}" CommandParameter="{Binding ElementName=TestView, Path=SelectedItem}"/>
-        </!-->
-
-        <ListView ItemsSource="{Binding Path=Tests}" Margin="0,50,0,0" Name="TestView">
-			<ListView.ItemTemplate>
-				<DataTemplate>
-					<WrapPanel>
-                        <Label Content="{Binding Name}"/>
-                        <Button Content="Show" Command="{Binding DataContext.ShowTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding .}"/>
-                        <Button Content="Delete" Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{Binding .}"/>
-                    </WrapPanel>
-				</DataTemplate>
-			</ListView.ItemTemplate>
-		</ListView>
+        <ContentControl x:Name="ContentArea" Content="{Binding CurrentPageViewModel }"/>
 
 	</Grid>
 </Window>
