@@ -31,6 +31,18 @@ public partial class HomeViewModel : BaseViewModel
                         "Queen",
                         "Yesh"
                     ]
+                },
+                new MultipleChoiceQuestion
+                {
+                    Text = "Q2",
+                    Answer = "A2",
+                    PossibleAnswers =
+                    [
+                        "Slay",
+                        "Brat",
+                        "Queen",
+                        "Yesh"
+                    ]
                 }
             }
         });

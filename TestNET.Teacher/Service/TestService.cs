@@ -4,11 +4,9 @@ namespace TestNET.Teacher.Service;
 
 public class TestService
 {
-    List<Test> testList;
-
     public async Task<List<Test>> GetTests()
     {
-        testList = new ();
+        List<Test> testList = new();
 
         string filename = Path.Combine(AppContext.BaseDirectory, "tests.json");
         if (File.Exists(filename))

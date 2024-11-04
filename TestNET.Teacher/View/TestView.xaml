@@ -11,21 +11,61 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Button Content="Back" 
-                Grid.Row="0"
-                Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
-        <TextBox Text="{Binding Test.Name}"
-               Grid.Row="1"/>
-        <Label Content="{Binding Test.Questions[0].Text}"
-               Grid.Row="2"/>
-        <Label Content="{Binding Test.Questions[0].Answer}"
-               Grid.Row="3"/>
-    </Grid>
+    <ScrollViewer>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Button Content="Back" 
+                    Grid.Row="0"
+                    Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <WrapPanel Grid.Row="1">
+                <Label Content="Test Name: "/>
+                <TextBox Text="{Binding Test.Name}"
+                         Grid.Row="1"
+                         VerticalContentAlignment="Center"/>
+            </WrapPanel>
+            <ListView Grid.Row="2" 
+                      ItemsSource="{Binding Test.Questions}">
+                <ListView.Resources>
+                    <DataTemplate DataType="{x:Type model:Question}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding Text}"
+                                   Grid.Column="0"/>
+                            <TextBox Text="{Binding Answer}"
+                                   Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBox Text="{Binding Text}"
+                                   Grid.Column="0"/>
+                            <TextBox Text="{Binding Answer}"
+                                   Grid.Column="1"/>
+                            <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          Grid.Column="2">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <RadioButton Content="{Binding .}"
+                                                     GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </DataTemplate>
+                </ListView.Resources>
+            </ListView>
+        </Grid>
+    </ScrollViewer>
 </UserControl>
