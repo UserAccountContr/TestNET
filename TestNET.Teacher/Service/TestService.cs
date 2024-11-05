@@ -31,11 +31,12 @@ public class TestService
         File.WriteAllText(filePath, jsonString);
     }
 
+    TcpListener server = null;
+
     public void ShareTest(Test test)
     {
         Task.Run(() =>
         {
-            TcpListener server = null;
             try
             {
                 // Set the TcpListener on port 13000.
@@ -96,5 +97,10 @@ public class TestService
                 server.Stop();
             }
         });
+    }
+
+    public void StopSharingTest()
+    {
+        server.Stop();
     }
 }

@@ -6,7 +6,7 @@ public partial class TestViewModel : BaseViewModel
 {
     public TestViewModel(Test test)
     {
-        this.test = test;
+        Test = test;
         testService = new TestService();
     }
 
@@ -18,6 +18,14 @@ public partial class TestViewModel : BaseViewModel
     [RelayCommand]
     void ShareTest()
     {
+        IsBusy = true;
         testService.ShareTest(test);
+    }
+
+    [RelayCommand]
+    void StopSharingTest()
+    {
+        testService.StopSharingTest();
+        IsBusy = false;
     }
 }

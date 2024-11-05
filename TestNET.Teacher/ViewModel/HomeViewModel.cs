@@ -20,45 +20,39 @@ public partial class HomeViewModel : BaseViewModel
             Name = "Test1",
             Questions = new()
             {
-                new MultipleChoiceQuestion
-                {
-                    Text = "Q1",
-                    Answer = "A1",
-                    PossibleAnswers =
-                    [
-                        "Slay",
-                        "Brat",
-                        "Queen",
-                        "Yesh"
-                    ]
-                },
-                new MultipleChoiceQuestion
-                {
-                    Text = "Q2",
-                    Answer = "A2",
-                    PossibleAnswers =
-                    [
-                        "Slay",
-                        "Brat",
-                        "Queen",
-                        "Yesh"
-                    ]
-                }
+                //new MultipleChoiceQuestion
+                //{
+                //    Text = "Q1",
+                //    Answer = "A1",
+                //    PossibleAnswers =
+                //    [
+                //        "Slay",
+                //        "Brat",
+                //        "Queen",
+                //        "Yesh"
+                //    ]
+                //},
+                //new MultipleChoiceQuestion
+                //{
+                //    Text = "Q2",
+                //    Answer = "A2",
+                //    PossibleAnswers =
+                //    [
+                //        "Slay",
+                //        "Brat",
+                //        "Queen",
+                //        "Yesh"
+                //    ]
+                //}
             }
         });
     }
 
     [RelayCommand]
-    void RemoveTest(object selitem)
-    {
-        Tests.Remove(selitem as Test);
-    }
+    void RemoveTest(object selitem) => Tests.Remove(selitem as Test);
 
     [RelayCommand]
-    void SaveTest()
-    {
-        testService.SaveTests(Tests.ToList());
-    }
+    void SaveTest() => testService.SaveTests(Tests.ToList());
 
     [RelayCommand]
     async Task LoadTest()

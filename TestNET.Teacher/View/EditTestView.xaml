@@ -1,5 +1,5 @@
 ﻿<UserControl 
-    x:Class="TestNET.Teacher.View.TestView"
+    x:Class="TestNET.Teacher.View.EditTestView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
-	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
+	d:DataContext="{d:DesignInstance Type=viewmodel:EditTestViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
@@ -21,32 +21,22 @@
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Button Content="Back" 
                         Grid.Column="0"
                         Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         IsEnabled="{Binding IsNotBusy}"/>
-                <Button Content="Start" 
+                <Button Content="Add Question"
                         Grid.Column="1"
-                        Command="{Binding ShareTestCommand}"/>
-                <Button Content="Stop" 
-                        Grid.Column="2"
-                        Command="{Binding StopSharingTestCommand}"/>
-                <Button Content="Edit" 
-                        Grid.Column="3"
-                        Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding Test}"
-                        IsEnabled="{Binding IsNotBusy}"/>
+                        Command="{Binding AddQuestionCommand}"/>
             </Grid>
-            <StackPanel Grid.Row="1">
-                <Label ContentStringFormat="Test Name: {0}"
-                       Content="{Binding Test.Name}"/>
-                <Label ContentStringFormat="Number of questions: {0}"
-                       Content="{Binding Test.Questions.Count}"/>
-            </StackPanel>
+            <WrapPanel Grid.Row="1">
+                <Label Content="Test Name: "/>
+                <TextBox Text="{Binding Test.Name}"
+                         Grid.Row="1"
+                         VerticalContentAlignment="Center"/>
+            </WrapPanel>
             <ListView Grid.Row="2" 
                       ItemsSource="{Binding Test.Questions}">
                 <ListView.Resources>
@@ -56,11 +46,9 @@
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
-                            <Label ContentStringFormat="Question: {0}"
-                                   Content="{Binding Text}"
+                            <TextBox Text="{Binding Text}"
                                    Grid.Column="0"/>
-                            <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer}"
+                            <TextBox Text="{Binding Answer}"
                                    Grid.Column="1"/>
                         </Grid>
                     </DataTemplate>
