@@ -20,30 +20,26 @@ public partial class HomeViewModel : BaseViewModel
             Name = "Test1",
             Questions = new()
             {
-                //new MultipleChoiceQuestion
-                //{
-                //    Text = "Q1",
-                //    Answer = "A1",
-                //    PossibleAnswers =
-                //    [
-                //        "Slay",
-                //        "Brat",
-                //        "Queen",
-                //        "Yesh"
-                //    ]
-                //},
-                //new MultipleChoiceQuestion
-                //{
-                //    Text = "Q2",
-                //    Answer = "A2",
-                //    PossibleAnswers =
-                //    [
-                //        "Slay",
-                //        "Brat",
-                //        "Queen",
-                //        "Yesh"
-                //    ]
-                //}
+                new MultipleChoiceQuestion("Q1", "A1")
+                {
+                    PossibleAnswers =
+                    [
+                        "Slay",
+                        "Brat",
+                        "Queen",
+                        "Yesh"
+                    ]
+                },
+                new MultipleChoiceQuestion("Q2", "A2")
+                {
+                    PossibleAnswers =
+                    [
+                        "Slay",
+                        "Brat",
+                        "Queen",
+                        "Yesh"
+                    ]
+                }
             }
         });
     }

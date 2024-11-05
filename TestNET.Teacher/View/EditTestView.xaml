@@ -25,7 +25,8 @@
                 </Grid.ColumnDefinitions>
                 <Button Content="Back" 
                         Grid.Column="0"
-                        Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                        Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                        CommandParameter="{Binding Test}"
                         IsEnabled="{Binding IsNotBusy}"/>
                 <Button Content="Add Question"
                         Grid.Column="1"

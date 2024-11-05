@@ -50,7 +50,7 @@ public class TestService
                 server.Start();
 
                 // Buffer for reading data
-                Byte[] bytes = new Byte[256];
+                Byte[] bytes = new Byte[1024];
                 String data = null;
 
                 // Enter the listening loop.

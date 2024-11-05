@@ -33,7 +33,7 @@ public class TestService
             // Receive the server response.
 
             // Buffer to store the response bytes.
-            data = new Byte[256];
+            data = new Byte[1024];
 
             // String to store the response ASCII representation.
             String responseData = String.Empty;
