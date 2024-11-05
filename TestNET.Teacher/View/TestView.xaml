@@ -18,9 +18,18 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Button Content="Back" 
-                    Grid.Row="0"
-                    Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
+                <Button Content="Back" 
+                        Grid.Column="0"
+                        Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"/>
+                <Button Content="Send" 
+                        Grid.Column="1"
+                        Command="{Binding ShareTestCommand}"/>
+            </Grid>
             <WrapPanel Grid.Row="1">
                 <Label Content="Test Name: "/>
                 <TextBox Text="{Binding Test.Name}"
