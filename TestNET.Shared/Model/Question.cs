@@ -13,6 +13,11 @@ public class Question
         Text = text;
         Answer = answer;
     }
+
+    public Question DeepCopy()
+    {
+        return new Question(Text, Answer);
+    }
 }
 
 public class MultipleChoiceQuestion : Question
