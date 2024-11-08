@@ -31,10 +31,12 @@
                         IsEnabled="{Binding IsNotBusy}"/>
                 <Button Content="Start" 
                         Grid.Column="1"
-                        Command="{Binding ShareTestCommand}"/>
+                        Command="{Binding ShareTestCommand}"
+                        IsEnabled="{Binding IsNotBusy}"/>
                 <Button Content="Stop" 
                         Grid.Column="2"
-                        Command="{Binding StopSharingTestCommand}"/>
+                        Command="{Binding StopSharingTestCommand}"
+                        IsEnabled="{Binding IsBusy}"/>
                 <Button Content="Edit" 
                         Grid.Column="3"
                         Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
