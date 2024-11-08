@@ -5,17 +5,36 @@ public partial class EditTestViewModel : BaseViewModel
     [ObservableProperty]
     Test test;
 
-    Test original;
+    [ObservableProperty]
+    string name;
+
+    public ObservableCollection<Question> Questions { get; set; } = new();
 
     public EditTestViewModel(Test test)
     {
         Test = test;
-        original = test.DeepCopy();
+        Name = test.DeepCopy().Name;
+        Questions = new ObservableCollection<Question>(test.DeepCopy().Questions);
     }
 
     [RelayCommand]
     void AddQuestion() => Test.AddQuestion();
 
     [RelayCommand]
-    void Cancel() => Test = original.DeepCopy();
+    void SaveChanges()
+    {
+        Test.Name = Name;
+        Test.Questions = Questions;
+    }
+
+    [RelayCommand]
+    void Cancel()
+    {
+        Name = Test.DeepCopy().Name;
+        Questions.Clear();
+        foreach (Question question in Test.DeepCopy().Questions)
+        {
+            Questions.Add(question);
+        }
+    }
 }

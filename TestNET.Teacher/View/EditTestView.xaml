@@ -23,6 +23,7 @@
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="50" />
                 </Grid.ColumnDefinitions>
                 <Button Content="Back" 
                         Grid.Column="0"
@@ -32,18 +33,21 @@
                 <Button Content="Add Question"
                         Grid.Column="1"
                         Command="{Binding AddQuestionCommand}"/>
-                <Button Content="Cancel"
+                <Button Content="Save"
                         Grid.Column="2"
+                        Command="{Binding SaveChangesCommand}"/>
+                <Button Content="Cancel"
+                        Grid.Column="3"
                         Command="{Binding CancelCommand}"/>
             </Grid>
             <WrapPanel Grid.Row="1">
                 <Label Content="Test Name: "/>
-                <TextBox Text="{Binding Test.Name}"
+                <TextBox Text="{Binding Name}"
                          Grid.Row="1"
                          VerticalContentAlignment="Center"/>
             </WrapPanel>
             <ListView Grid.Row="2" 
-                      ItemsSource="{Binding Test.Questions}">
+                      ItemsSource="{Binding Questions}">
                 <ListView.Resources>
                     <DataTemplate DataType="{x:Type model:Question}">
                         <Grid>
