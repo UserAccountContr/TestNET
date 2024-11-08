@@ -15,6 +15,10 @@
         <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
             <local:HomeView/>
         </DataTemplate>
+
+        <DataTemplate DataType="{x:Type viewmodel:TestOverviewViewModel}">
+            <local:TestOverviewView/>
+        </DataTemplate>
     </Window.Resources>
     
     <Grid>

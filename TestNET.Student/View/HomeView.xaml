@@ -14,58 +14,26 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
             <RowDefinition />
         </Grid.RowDefinitions>
         <Label Grid.Row="0"
                Content="Home"/>
-        <Button Grid.Row="0"
-                Content="Get"
-                Command="{Binding GetTestCommand}"/>
-        <WrapPanel Grid.Row="1">
-            <Label Content="Test Name: "/>
-            <TextBox Text="{Binding Test.Name}"
-                         Grid.Row="1"
-                         VerticalContentAlignment="Center"/>
-        </WrapPanel>
-        <ListView Grid.Row="2" 
-                      ItemsSource="{Binding Test.Questions}">
-            <ListView.Resources>
-                <DataTemplate DataType="{x:Type model:Question}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding Text}"
-                                   Grid.Column="0"/>
-                        <TextBox Text="{Binding Answer}"
-                                   Grid.Column="1"/>
-                    </Grid>
-                </DataTemplate>
-                <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="150"/>
-                            <ColumnDefinition Width="150"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBox Text="{Binding Text}"
-                                   Grid.Column="0"/>
-                        <TextBox Text="{Binding Answer}"
-                                   Grid.Column="1"/>
-                        <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="2">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <RadioButton Content="{Binding .}"
-                                                 GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Grid>
-                </DataTemplate>
-            </ListView.Resources>
-        </ListView>
+        <StackPanel Grid.Row="1">
+            <WrapPanel>
+                <Label Content="First name:"/>
+                <TextBox Text="{Binding FirstName}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Content="Last name:"/>
+                <TextBox Text="{Binding LastName}"/>
+            </WrapPanel>
+            <WrapPanel>
+                <Label Content="Code:"/>
+                <TextBox Text="{Binding Code}"/>
+            </WrapPanel>
+            <Button Content="Get test"
+                    Command="{Binding DataContext.GoToTestOverviewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding FullName}"/>
+        </StackPanel>
     </Grid>
 </UserControl>

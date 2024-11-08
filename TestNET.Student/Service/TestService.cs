@@ -1,12 +1,11 @@
 ﻿using System.Net.Sockets;
 using System.Text.Json;
-using System.Windows;
 
 namespace TestNET.Student.Service;
 
 public class TestService
 {
-    public async Task<Test> GetTest()
+    public async Task<Test> GetTest(string name)
     {
         try
         {
@@ -20,7 +19,7 @@ public class TestService
             using TcpClient client = new TcpClient("127.0.0.1", port);
 
             // Translate the passed message into ASCII and store it as a Byte array.
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes("A");
+            Byte[] data = System.Text.Encoding.ASCII.GetBytes(name);
 
             // Get a client stream for reading and writing.
             NetworkStream stream = client.GetStream();
@@ -57,6 +56,6 @@ public class TestService
         {
             //Console.WriteLine("SocketException: {0}", e);
         }
-        return new Test();
+        return null;
     }
 }

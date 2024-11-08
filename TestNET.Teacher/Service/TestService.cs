@@ -61,7 +61,6 @@ public class TestService
                     // Perform a blocking call to accept requests.
                     // You could also use server.AcceptSocket() here.
                     using TcpClient client = server.AcceptTcpClient();
-                    MessageBox.Show("Connected!");
 
                     data = null;
 
@@ -76,6 +75,7 @@ public class TestService
                         // Translate data bytes to a ASCII string.
                         data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                         //MessageBox.Show("Received: {0}", data);
+                        MessageBox.Show(data + "Connected!");
 
                         // Process the data sent by the client.
                         data = JsonSerializer.Serialize(test);

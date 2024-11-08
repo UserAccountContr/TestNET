@@ -1,4 +1,6 @@
-﻿namespace TestNET.Student.ViewModel;
+﻿using TestNET.Student.Service;
+
+namespace TestNET.Student.ViewModel;
 
 public partial class WindowViewModel : BaseViewModel
 {
@@ -6,16 +8,25 @@ public partial class WindowViewModel : BaseViewModel
     {
         homeViewModel = new HomeViewModel();
         currentPageViewModel = homeViewModel;
+        testService = new TestService();
     }
 
     HomeViewModel homeViewModel;
+
+    TestService testService;
 
     [ObservableProperty]
     ObservableObject currentPageViewModel;
 
     [RelayCommand]
-    void GoToHomeView()
+    void GoToHomeView() => CurrentPageViewModel = homeViewModel;
+
+    [RelayCommand]
+    async void GoToTestOverview(string name)
     {
-        CurrentPageViewModel = homeViewModel;
+        Test test = await testService.GetTest(name);
+        if (test == null)
+            return;
+        CurrentPageViewModel = new TestOverviewViewModel(test);
     }
 }

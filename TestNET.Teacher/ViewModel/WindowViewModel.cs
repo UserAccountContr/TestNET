@@ -1,6 +1,6 @@
 ﻿namespace TestNET.Teacher.ViewModel;
 
-public partial class WindowViewModel: BaseViewModel
+public partial class WindowViewModel : BaseViewModel
 {
     public WindowViewModel()
     {

@@ -4,20 +4,29 @@ namespace TestNET.Student.ViewModel;
 
 public partial class HomeViewModel : BaseViewModel
 {
+    //[ObservableProperty]
+    //Test test;
+    //
     [ObservableProperty]
-    Test test;
+    [NotifyPropertyChangedFor(nameof(FullName))]
+    string firstName;
 
-    TestService service;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(FullName))]
+    string lastName;
+
+    public string FullName { get => $"{FirstName + LastName}"; }
+
+    [ObservableProperty]
+    string code;
+
+    //TestService service;
 
     public HomeViewModel()
     {
-        service = new TestService();
+        //service = new TestService();
     }
 
-    [RelayCommand]
-    async void GetTest()
-    {
-
-        this.Test = await service.GetTest();
-    }
+    //[RelayCommand]
+    //async Task<Test> GetTest() => await service.GetTest();
 }
