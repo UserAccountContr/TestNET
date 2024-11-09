@@ -18,7 +18,7 @@ public partial class EditTestViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void AddQuestion() => Test.AddQuestion();
+    void AddQuestion() => Questions.Add(new Question("q", "a"));
 
     [RelayCommand]
     void SaveChanges()
