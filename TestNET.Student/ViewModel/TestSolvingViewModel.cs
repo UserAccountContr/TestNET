@@ -9,4 +9,7 @@ public partial class TestSolvingViewModel : BaseViewModel
 
     [ObservableProperty]
     Test test;
+
+    [RelayCommand]
+    void Submit() => MessageBox.Show("yay :)");
 }
