@@ -29,4 +29,10 @@ public partial class WindowViewModel : BaseViewModel
             return;
         CurrentPageViewModel = new TestOverviewViewModel(test);
     }
+
+    [RelayCommand]
+    void StartTest(Test test)
+    {
+        CurrentPageViewModel = new TestSolvingViewModel(test);
+    }
 }

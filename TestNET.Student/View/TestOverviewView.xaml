@@ -24,6 +24,9 @@
                        Content="{Binding Test.Name}"/>
             <Label ContentStringFormat="Number of questions: {0}"
                        Content="{Binding Test.Questions.Count}"/>
+            <Button Content="Start"
+                    Command="{Binding DataContext.StartTestCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    CommandParameter="{Binding Test}"/>
         </StackPanel>
         <!--
         <ListView Grid.Row="2" 
