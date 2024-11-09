@@ -21,19 +21,20 @@
         <StackPanel Grid.Row="1">
             <WrapPanel>
                 <Label Content="First name:"/>
-                <TextBox Text="{Binding FirstName}"/>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Last name:"/>
-                <TextBox Text="{Binding LastName}"/>
+                <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Code:"/>
-                <TextBox Text="{Binding Code}"/>
+                <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </WrapPanel>
             <Button Content="Get test"
                     Command="{Binding DataContext.GoToTestOverviewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                    CommandParameter="{Binding FullName}"/>
+                    CommandParameter="{Binding FullName}"
+                    IsEnabled="{Binding CanStart}"/>
         </StackPanel>
     </Grid>
 </UserControl>
