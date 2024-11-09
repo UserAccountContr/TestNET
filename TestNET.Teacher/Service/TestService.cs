@@ -1,6 +1,5 @@
 ﻿using System.Net.Sockets;
 using System.Net;
-using System.Text.Json;
 
 namespace TestNET.Teacher.Service;
 
@@ -26,7 +25,9 @@ public class TestService
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
 
-        string jsonString = JsonSerializer.Serialize(tests);
+        var options = new JsonSerializerOptions { WriteIndented = true, Converters = { new JsonStringEnumConverter() } };
+
+        string jsonString = JsonSerializer.Serialize(tests, options);
 
         File.WriteAllText(filePath, jsonString);
     }

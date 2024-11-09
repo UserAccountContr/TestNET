@@ -1,5 +1,6 @@
 ﻿namespace TestNET.Shared.Model;
 
+[JsonDerivedType(typeof(MultipleChoiceQuestion), typeDiscriminator: "multipleChoice")]
 public class Question
 {
     public string Text { get; set; }
@@ -14,17 +15,17 @@ public class Question
         Answer = answer;
     }
 
-    public Question DeepCopy()
-    {
-        return new Question(Text, Answer);
-    }
+    public virtual Question DeepCopy() => new Question(Text, Answer);
 }
 
 public class MultipleChoiceQuestion : Question
 {
     public string[] PossibleAnswers { get; set; }
 
-    public MultipleChoiceQuestion(string text, string answer) : base(text, answer)
+    public MultipleChoiceQuestion(string text, string answer, string[] possibleanswers) : base(text, answer)
     {
+        PossibleAnswers = possibleanswers;
     }
+
+    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, PossibleAnswers);
 }

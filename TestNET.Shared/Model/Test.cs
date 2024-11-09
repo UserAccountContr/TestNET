@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-
-namespace TestNET.Shared.Model;
+﻿namespace TestNET.Shared.Model;
 
 public class Test
 {
