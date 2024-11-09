@@ -20,12 +20,12 @@ public class Question
 
 public class MultipleChoiceQuestion : Question
 {
-    public string[] PossibleAnswers { get; set; }
+    public ObservableCollection<string> PossibleAnswers { get; set; }
 
-    public MultipleChoiceQuestion(string text, string answer, string[] possibleanswers) : base(text, answer)
+    public MultipleChoiceQuestion(string text, string answer, ObservableCollection<string> possibleanswers) : base(text, answer)
     {
         PossibleAnswers = possibleanswers;
     }
 
-    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, PossibleAnswers);
+    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, new ObservableCollection<string>(PossibleAnswers));
 }

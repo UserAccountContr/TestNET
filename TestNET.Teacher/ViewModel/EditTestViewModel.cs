@@ -24,7 +24,11 @@ public partial class EditTestViewModel : BaseViewModel
     void SaveChanges()
     {
         Test.Name = Name;
-        Test.Questions = Questions;
+        Test.Questions.Clear();
+        foreach (Question question in Questions)
+        {
+            Test.Questions.Add(question);
+        };
     }
 
     [RelayCommand]

@@ -66,8 +66,9 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition />
                             </Grid.ColumnDefinitions>
+
                             <TextBox Text="{Binding Text}"
                                    Grid.Column="0"/>
                             <TextBox Text="{Binding Answer}"
@@ -76,8 +77,11 @@
                                           Grid.Column="2">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <RadioButton Content="{Binding .}"
-                                                     GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
+                                        <WrapPanel>
+                                            <TextBox Text="{Binding .}"/>
+                                            <RadioButton Content="{Binding .}"
+                                                         GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"/>
+                                        </WrapPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
