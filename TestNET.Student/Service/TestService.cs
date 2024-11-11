@@ -8,44 +8,54 @@ public class TestService
     {
         try
         {
-            // Create a TcpClient.
-            // Note, for this client to work you need to have a TcpServer
-            // connected to the same address as specified by the server, port
-            // combination.
-            Int32 port = 13000;
+            int port = 13000;
 
-            // Prefer a using declaration to ensure the instance is Disposed later.
-            using TcpClient client = new TcpClient("127.0.0.1", port);
+            {
+                using TcpClient client = new TcpClient("127.0.0.1", port);
+                using NetworkStream stream = client.GetStream();
 
-            // Translate the passed message into ASCII and store it as a Byte array.
-            Byte[] data = System.Text.Encoding.ASCII.GetBytes(name);
+                TestRequest request = new TestRequest { StudentName = name, Code = 13000 };
+                string requestJson = JsonSerializer.Serialize(request);
+                byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 
-            // Get a client stream for reading and writing.
-            NetworkStream stream = client.GetStream();
+                stream.Write(requestBytes, 0, requestBytes.Length);
+                stream.Write([0xff], 0, 1);
 
-            // Send the message to the connected TcpServer.
-            stream.Write(data, 0, data.Length);
+                byte[] responseBytes = new byte[1024];
+                int responseLength = 0;
 
-            //MessageBox.Show("Sent: {0}", "A");
+                for (int currentLenght = 0;
+                    (currentLenght = stream.Read(responseBytes, responseLength, 1024)) != 0;)
+                {
+                    responseLength += currentLenght;
+                    
+                    if (responseBytes[responseLength - 1] == 0xff)
+                    {
+                        break;
+                    }
 
-            // Receive the server response.
+                    Array.Resize(ref responseBytes, responseLength + 1024);
+                }
 
-            // Buffer to store the response bytes.
-            data = new Byte[1024];
+                Array.Resize(ref responseBytes, responseLength - 1);
 
-            // String to store the response ASCII representation.
-            String responseData = String.Empty;
+                stream.Write([0xff], 0, 1); // Acknowledge
 
-            // Read the first batch of the TcpServer response bytes.
-            Int32 bytes = stream.Read(data, 0, data.Length);
-            responseData = System.Text.Encoding.ASCII.GetString(data, 0, bytes);
-            //Console.WriteLine("Received: {0}", responseData);
+                string responseJson = Encoding.UTF8.GetString(responseBytes);
+                TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson);
 
-            // Explicit close is not necessary since TcpClient.Dispose() will be
-            // called automatically.
-            // stream.Close();
-            // client.Close();
-            return (Test)JsonSerializer.Deserialize(responseData, typeof(Test));
+                if (response is null)
+                {
+                    throw new ArgumentNullException("Invalid response.");
+                }
+
+                if (response.Test is null)
+                {
+                    throw new ArgumentNullException(response.Error);
+                }
+
+                return response.Test;
+            }
         }
         catch (ArgumentNullException e)
         {

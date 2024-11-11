@@ -36,62 +36,77 @@ public class TestService
 
     public void ShareTest(Test test)
     {
-        Task.Run(() =>
+        _ = Task.Run(() =>
         {
             try
             {
-                // Set the TcpListener on port 13000.
-                Int32 port = 13000;
-                IPAddress localAddr = IPAddress.Parse("127.0.0.1");
+                int port = 13000;
 
-                // TcpListener server = new TcpListener(port);
+                IPAddress localAddr;
+                localAddr = IPAddress.Parse("127.0.0.1");
+
                 server = new TcpListener(localAddr, port);
-
-                // Start listening for client requests.
                 server.Start();
 
-                // Buffer for reading data
-                Byte[] bytes = new Byte[1024];
-                String data = null;
-
-                // Enter the listening loop.
                 while (true)
                 {
-                    MessageBox.Show("Waiting for a connection... ");
+                    Task.Run(() => MessageBox.Show("Waiting for a connection... "));
 
-                    // Perform a blocking call to accept requests.
-                    // You could also use server.AcceptSocket() here.
-                    using TcpClient client = server.AcceptTcpClient();
-
-                    data = null;
-
-                    // Get a stream object for reading and writing
-                    NetworkStream stream = client.GetStream();
-
-                    int i;
-
-                    // Loop to receive all the data sent by the client.
-                    while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                     {
-                        // Translate data bytes to a ASCII string.
-                        data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                        //MessageBox.Show("Received: {0}", data);
-                        MessageBox.Show(data + "Connected!");
+                        using TcpClient client = server.AcceptTcpClient();
+                        using NetworkStream stream = client.GetStream();
 
-                        // Process the data sent by the client.
-                        data = JsonSerializer.Serialize(test);
+                        byte[] requestBytes = new byte[1024];
+                        int requestLength = 0;
 
-                        byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+                        // Exhaust the entire stream
+                        for (int currentLength = 0;
+                            (currentLength = stream.Read(requestBytes, requestLength, 1024)) != 0;)
+                        {
+                            requestLength += currentLength;
 
-                        // Send back a response.
-                        stream.Write(msg, 0, msg.Length);
-                        //MessageBox.Show("Sent: {0}", data);
+                            if (requestBytes[requestLength - 1] == 0xff)
+                            { 
+                                break;
+                            }
+
+                            Array.Resize(ref requestBytes, requestLength + 1024);
+                        }
+
+                        Array.Resize(ref requestBytes, requestLength - 1);
+
+                        string requestJson = Encoding.UTF8.GetString(requestBytes);
+                        TestRequest? request = JsonSerializer.Deserialize<TestRequest>(requestJson);
+
+                        if (request is null)
+                        {
+                            throw new ArgumentNullException(nameof(request));
+                        }
+
+                        Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+
+                        TestResponse response = new TestResponse { Error = "", Test = test };
+
+                        string responseJson = JsonSerializer.Serialize(response);
+                        byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
+
+                        stream.Write(responseBytes, 0, responseBytes.Length);
+                        stream.Write([0xff], 0, 1);
+
+                        byte[] acknowledge = new byte[1];
+                        stream.Read(acknowledge, 0, 1);
+                        
+                        if (acknowledge[0] != 0xff)
+                        {
+                            throw new ArgumentException($"Acknowledge was not 0: {acknowledge[0]}");
+                        }
                     }
                 }
             }
-            catch (SocketException e)
+            catch (Exception e)
             {
-                //MessageBox.Show("SocketException: {0}", e);
+                Console.WriteLine(e);
+                throw;
             }
             finally
             {
