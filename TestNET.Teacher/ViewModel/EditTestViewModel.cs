@@ -27,7 +27,7 @@ public partial class EditTestViewModel : BaseViewModel
         Test.Questions.Clear();
         foreach (Question question in Questions)
         {
-            Test.Questions.Add(question);
+            Test.Questions.Add(question.DeepCopy());
         };
     }
 
@@ -38,7 +38,7 @@ public partial class EditTestViewModel : BaseViewModel
         Questions.Clear();
         foreach (Question question in Test.DeepCopy().Questions)
         {
-            Questions.Add(question);
+            Questions.Add(question.DeepCopy());
         }
     }
 }
