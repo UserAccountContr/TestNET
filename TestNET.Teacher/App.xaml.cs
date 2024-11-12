@@ -27,12 +27,12 @@ public partial class App : Application
 
         services.AddSingleton<MainWindow>(); 
         services.AddSingleton<HomeView>();
-        services.AddTransient<TestView>();
-        services.AddTransient<EditTestView>();
+        //services.AddTransient<TestView>();
+        //services.AddTransient<EditTestView>();
 
         services.AddSingleton<WindowViewModel>();
         services.AddSingleton<HomeViewModel>();
-        services.AddTransient<TestViewModel>();
-        services.AddTransient<EditTestViewModel>(); 
+        //services.AddTransient<TestViewModel>();
+        //services.AddTransient<EditTestViewModel>(); 
     }
 }
