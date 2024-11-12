@@ -4,10 +4,10 @@ namespace TestNET.Teacher.ViewModel;
 
 public partial class TestViewModel : BaseViewModel
 {
-    public TestViewModel(Test test)
+    public TestViewModel(Test test, TestService testService)
     {
         Test = test;
-        testService = new TestService();
+        this.testService = testService;
     }
 
     TestService testService;
@@ -19,7 +19,7 @@ public partial class TestViewModel : BaseViewModel
     void ShareTest()
     {
         IsBusy = true;
-        testService.ShareTest(test);
+        testService.ShareTest(Test);
     }
 
     [RelayCommand]

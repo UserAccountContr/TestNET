@@ -1,5 +1,4 @@
-﻿using System.Dynamic;
-using TestNET.Teacher.Service;
+﻿using TestNET.Teacher.Service;
 
 namespace TestNET.Teacher;
 
@@ -9,6 +8,8 @@ public partial class App : Application
 
     protected override void OnStartup(StartupEventArgs e)
     {
+        base.OnStartup(e);
+
         var serviceCollection = new ServiceCollection();
         ConfigureServices(serviceCollection);
         serviceProvider = serviceCollection.BuildServiceProvider();
@@ -19,6 +20,8 @@ public partial class App : Application
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<TestService>();
+
         services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider => viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
         services.AddSingleton<Func<Type, object, BaseViewModel>>(serviceProvider => (viewModelType, test) => (BaseViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, test));
 

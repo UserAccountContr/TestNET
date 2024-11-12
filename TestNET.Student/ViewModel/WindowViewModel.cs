@@ -4,22 +4,22 @@ namespace TestNET.Student.ViewModel;
 
 public partial class WindowViewModel : BaseViewModel
 {
-    public WindowViewModel()
+    public WindowViewModel(INavigationService navigationService, TestService testService)
     {
-        homeViewModel = new HomeViewModel();
-        currentPageViewModel = homeViewModel;
-        testService = new TestService();
+        Navigation = navigationService;
+        this.testService = testService;
+        GoToHomeView();
+
+        //homeViewModel = new HomeViewModel();
+        //currentPageViewModel = homeViewModel;
     }
 
-    HomeViewModel homeViewModel;
-
+    [ObservableProperty]
+    INavigationService navigation;
     TestService testService;
 
-    [ObservableProperty]
-    ObservableObject currentPageViewModel;
-
     [RelayCommand]
-    void GoToHomeView() => CurrentPageViewModel = homeViewModel;
+    void GoToHomeView() => Navigation.NavigateTo<HomeViewModel>();
 
     [RelayCommand]
     async void GoToTestOverview(string name)
@@ -27,12 +27,34 @@ public partial class WindowViewModel : BaseViewModel
         Test test = await testService.GetTest(name);
         if (test == null)
             return;
-        CurrentPageViewModel = new TestOverviewViewModel(test);
+        Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
     }
 
     [RelayCommand]
-    void StartTest(Test test)
-    {
-        CurrentPageViewModel = new TestSolvingViewModel(test);
-    }
+    void StartTest(Test test) => Navigation.NavigateTo<TestSolvingViewModel, Test>(test);
+
+    //HomeViewModel homeViewModel;
+    //
+    //TestService testService;
+    //
+    //[ObservableProperty]
+    //ObservableObject currentPageViewModel;
+
+    //[RelayCommand]
+    //void GoToHomeView() => CurrentPageViewModel = homeViewModel;
+
+    //[RelayCommand]
+    //async void GoToTestOverview(string name)
+    //{
+    //    Test test = await testService.GetTest(name);
+    //    if (test == null)
+    //        return;
+    //    CurrentPageViewModel = new TestOverviewViewModel(test);
+    //}
+
+    //[RelayCommand]
+    //void StartTest(Test test)
+    //{
+    //    CurrentPageViewModel = new TestSolvingViewModel(test);
+    //}
 }

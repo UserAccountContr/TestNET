@@ -26,6 +26,6 @@
     </Window.Resources>
     
     <Grid>
-        <ContentControl x:Name="ContentArea" Content="{Binding CurrentPageViewModel}"/>
+        <ContentControl x:Name="ContentArea" Content="{Binding Navigation.CurrentViewModel}"/>
     </Grid>
 </Window>

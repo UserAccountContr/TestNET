@@ -7,9 +7,9 @@ public partial class HomeViewModel : BaseViewModel
     public ObservableCollection<Test> Tests { get; } = new();
     TestService testService;
 
-    public HomeViewModel()
+    public HomeViewModel(TestService testService)
     {
-        this.testService = new TestService();
+        this.testService = testService;
     }
 
     [RelayCommand]
