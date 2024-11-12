@@ -1,4 +1,5 @@
-﻿using TestNET.Teacher.Service;
+﻿using System.Dynamic;
+using TestNET.Teacher.Service;
 
 namespace TestNET.Teacher;
 
@@ -19,6 +20,7 @@ public partial class App : Application
     {
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider => viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
+        services.AddSingleton<Func<Type, object, BaseViewModel>>(serviceProvider => (viewModelType, test) => (BaseViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, test));
 
         services.AddSingleton<MainWindow>(); 
         services.AddSingleton<HomeView>();

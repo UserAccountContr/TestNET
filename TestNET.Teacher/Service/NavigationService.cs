@@ -12,14 +12,14 @@ public partial class NavigationService : ObservableObject, INavigationService
 {
     [ObservableProperty]
     BaseViewModel currentViewModel;
-    IServiceProvider serviceProvider;
 
     readonly Func<Type, BaseViewModel> viewModelFactory;
+    readonly Func<Type, object, BaseViewModel> viewModelParameterFactory;
 
-    public NavigationService(Func<Type, BaseViewModel> viewModelFactory, IServiceProvider serviceProvider)
+    public NavigationService(Func<Type, BaseViewModel> viewModelFactory, Func<Type, object, BaseViewModel> viewModelParameterFactory)
     {
         this.viewModelFactory = viewModelFactory;
-        this.serviceProvider = serviceProvider;
+        this.viewModelParameterFactory = viewModelParameterFactory;
     }
 
     public void NavigateTo<TViewModel>() where TViewModel : BaseViewModel
@@ -29,6 +29,6 @@ public partial class NavigationService : ObservableObject, INavigationService
 
     public void NavigateTo<TViewModel, TParameter>(TParameter parameter) where TViewModel : BaseViewModel
     {
-        CurrentViewModel = (TViewModel)ActivatorUtilities.CreateInstance(serviceProvider, typeof(TViewModel), parameter);
+        CurrentViewModel = viewModelParameterFactory(typeof(TViewModel), parameter);
     }
 }
