@@ -24,7 +24,7 @@ public partial class WindowViewModel : BaseViewModel
     [RelayCommand]
     async void GoToTestOverview(string name)
     {
-        Test test = await testService.GetTest(name);
+        Test test = await Task.Run(() => testService.GetTest(name));
         if (test == null)
             return;
         Navigation.NavigateTo<TestOverviewViewModel, Test>(test);

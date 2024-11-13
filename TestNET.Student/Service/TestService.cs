@@ -25,7 +25,7 @@ public class TestService
                 int responseLength = 0;
 
                 for (int currentLenght = 0;
-                    (currentLenght = stream.Read(responseBytes, responseLength, 1024)) != 0;)
+                    (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
                 {
                     responseLength += currentLenght;
                     
