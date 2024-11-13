@@ -21,14 +21,14 @@ public partial class WindowViewModel : BaseViewModel
     [RelayCommand]
     void GoToHomeView() => Navigation.NavigateTo<HomeViewModel>();
 
-    [RelayCommand]
-    async void GoToTestOverview(string name)
-    {
-        Test test = await Task.Run(() => testService.GetTest(name));
-        if (test == null)
-            return;
-        Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
-    }
+    //[RelayCommand]
+    //async void GoToTestOverview(string name)
+    //{
+    //    Test test = await Task.Run(() => testService.GetTest(name));
+    //    if (test == null)
+    //        return;
+    //    Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
+    //}
 
     [RelayCommand]
     void StartTest(Test test) => Navigation.NavigateTo<TestSolvingViewModel, Test>(test);

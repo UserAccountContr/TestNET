@@ -21,18 +21,21 @@
         <StackPanel Grid.Row="1">
             <WrapPanel>
                 <Label Content="First name:"/>
-                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsNotGettingTest}"/>
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Last name:"/>
-                <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsNotGettingTest}"/>
             </WrapPanel>
             <WrapPanel>
                 <Label Content="Code:"/>
-                <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsNotGettingTest}"/>
             </WrapPanel>
             <Button Content="Get test"
-                    Command="{Binding DataContext.GoToTestOverviewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                    Command="{Binding GoToTestOverviewCommand, RelativeSource={RelativeSource AncestorType=Grid}}"
                     CommandParameter="{Binding FullName}"
                     IsEnabled="{Binding CanStart}"/>
         </StackPanel>
