@@ -44,9 +44,8 @@ public partial class HomeViewModel : BaseViewModel
     {
         IsGettingTest = true;
         Test test = await Task.Run(() => testService.GetTest(name));
-        if (test == null)
-            return;
-        Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
+        if (test != null)
+            Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
         IsGettingTest = false;
     }
 }
