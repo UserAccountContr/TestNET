@@ -1,4 +1,6 @@
-﻿namespace TestNET.Shared.Model;
+﻿using System.Collections.Specialized;
+
+namespace TestNET.Shared.Model;
 
 [JsonDerivedType(typeof(MultipleChoiceQuestion), typeDiscriminator: "multipleChoice")]
 public class Question
@@ -20,12 +22,24 @@ public class Question
 
 public class MultipleChoiceQuestion : Question
 {
-    public ObservableCollection<string> PossibleAnswers { get; set; }
+    public ObservableCollection<Answer> PossibleAnswers { get; set; }
 
-    public MultipleChoiceQuestion(string text, string answer, ObservableCollection<string> possibleanswers) : base(text, answer)
+    public MultipleChoiceQuestion(string text, string answer, ObservableCollection<Answer> possibleanswers) : base(text, answer)
     {
         PossibleAnswers = possibleanswers;
     }
 
-    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, new ObservableCollection<string>(PossibleAnswers));
+    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())));
+}
+
+public class Answer
+{
+    public string Text { get; set; }
+
+    public Answer(string text)
+    {
+        Text = text;
+    }
+
+    public Answer DeepCopy() => new(Text);
 }

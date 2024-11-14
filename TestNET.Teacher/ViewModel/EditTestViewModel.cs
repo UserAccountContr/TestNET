@@ -13,8 +13,7 @@ public partial class EditTestViewModel : BaseViewModel
     public EditTestViewModel(Test test)
     {
         Test = test;
-        Name = test.DeepCopy().Name;
-        Questions = new ObservableCollection<Question>(test.DeepCopy().Questions);
+        BackupTest();
     }
 
     [RelayCommand]
@@ -33,6 +32,11 @@ public partial class EditTestViewModel : BaseViewModel
 
     [RelayCommand]
     void Cancel()
+    {
+        BackupTest();
+    }
+
+    void BackupTest()
     {
         Name = Test.DeepCopy().Name;
         Questions.Clear();

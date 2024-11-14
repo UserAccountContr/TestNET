@@ -40,7 +40,7 @@ public partial class HomeViewModel : BaseViewModel
     public bool IsNotGettingTest { get => !IsGettingTest; }
 
     [RelayCommand]
-    async void GoToTestOverview(string name)
+    async Task GoToTestOverview(string name)
     {
         IsGettingTest = true;
         Test test = await Task.Run(() => testService.GetTest(name));

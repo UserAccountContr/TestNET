@@ -76,11 +76,11 @@
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
                                           Grid.Column="2">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:Answer}">
                                         <WrapPanel>
-                                            <TextBox Text="{Binding .}"/>
-                                            <RadioButton Content="{Binding .}"
+                                            <RadioButton Content="{Binding Text}"
                                                          GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"/>
+                                            <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

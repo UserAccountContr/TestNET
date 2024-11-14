@@ -43,17 +43,16 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
 
                             <Label Content="{Binding Text}"
                                    Grid.Column="0"/>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="2">
+                                          Grid.Column="1">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <RadioButton Content="{Binding .}"
+                                        <RadioButton Content="{Binding Text}"
                                                      GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>

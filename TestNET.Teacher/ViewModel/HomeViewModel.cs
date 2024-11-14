@@ -20,8 +20,9 @@ public partial class HomeViewModel : BaseViewModel
             Name = "Test1",
             Questions = new()
             {
-                new MultipleChoiceQuestion("Q1", "A1", ["Slay", "Yes", "Thats on period"]),
-                new MultipleChoiceQuestion("Q2", "A2", ["Slay", "Yes", "Thats on period"])
+                //new MultipleChoiceQuestion("Q1", "A1", ["Slay", "Yes", "Thats on period"]),
+                //new MultipleChoiceQuestion("Q2", "A2", ["Slay", "Yes", "Thats on period"])
+                new MultipleChoiceQuestion("Q2", "A2", new() { new("Yass")})
             }
         });
     }

@@ -73,15 +73,17 @@
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Text}"
+                            <Label ContentStringFormat="Question: {0}"
+                                   Content="{Binding Text}"
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Answer}"
+                            <Label ContentStringFormat="Answer: {0}"
+                                   Content="{Binding Answer}"
                                    Grid.Column="1"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
                                           Grid.Column="2">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <RadioButton Content="{Binding .}"
+                                        <RadioButton Content="{Binding Text}"
                                                      GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
