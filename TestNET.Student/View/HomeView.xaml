@@ -35,7 +35,7 @@
                          IsEnabled="{Binding IsNotGettingTest}"/>
             </WrapPanel>
             <Button Content="Get test"
-                    Command="{Binding GoToTestOverviewCommand, RelativeSource={RelativeSource AncestorType=Grid}}"
+                    Command="{Binding GoToTestOverviewCommand}"
                     CommandParameter="{Binding FullName}"
                     IsEnabled="{Binding CanStart}"/>
         </StackPanel>
