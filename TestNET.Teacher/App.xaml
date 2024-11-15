@@ -4,6 +4,10 @@
              xmlns:local="clr-namespace:TestNET.Teacher">
         <!-- StartupUri="View\MainWindow.xaml"> -->
     <Application.Resources>
-         
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/TestNET.Shared;component/Resources/StringResources.en.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -19,16 +19,26 @@
 
         <WrapPanel Grid.Row="0">
 
-            <Label Content="Тестове" />
+            <Label Content="{DynamicResource tests}" />
 
-            <Button Content="Add" 
+            <Button Content="{DynamicResource add}" 
                     Command="{Binding NewTestCommand}" />
 
-            <Button Content="Save" 
+            <Button Content="{DynamicResource save}" 
                     Command="{Binding SaveTestCommand}"/>
 
-            <Button Content="Load" 
+            <Button Content="{DynamicResource load}" 
                     Command="{Binding LoadTestCommand}"/>
+
+            <RadioButton GroupName="Lang"
+                         Content="English"
+                         Tag="en"
+                         IsChecked="True"
+                         Checked="RadioButton_Checked"/>
+            <RadioButton GroupName="Lang"
+                         Content="Български"
+                         Tag="bg"
+                         Checked="RadioButton_Checked"/>
 
         </WrapPanel>
 
@@ -39,10 +49,10 @@
                 <DataTemplate>
                     <WrapPanel>
                         <Label Content="{Binding Name}"/>
-                        <Button Content="Show" 
+                        <Button Content="{DynamicResource open}" 
                                 Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
                                 CommandParameter="{Binding .}"/>
-                        <Button Content="Delete" 
+                        <Button Content="{DynamicResource delete}" 
                                 Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
                                 CommandParameter="{Binding .}"/>
                     </WrapPanel>

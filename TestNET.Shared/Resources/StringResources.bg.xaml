@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="cancel">Отказ</system:String>
+    <system:String x:Key="tests">Тестове</system:String>
+    <system:String x:Key="add">Добави</system:String>
+    <system:String x:Key="save">Запиши</system:String>
+    <system:String x:Key="load">Зареди</system:String>
+    <system:String x:Key="open">Отвори</system:String>
+    <system:String x:Key="delete">Изтрий</system:String>
+    <system:String x:Key="back">Назад</system:String>
+</ResourceDictionary>
