@@ -12,39 +12,28 @@
     d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
 
-        <Label Content="Тестове" 
-               HorizontalAlignment="Left" 
-               VerticalAlignment="Top"/>
+        <WrapPanel Grid.Row="0">
 
-        <Button Content="Add" 
-                HorizontalAlignment="Left" 
-                Margin="484,13,0,0" 
-                VerticalAlignment="Top" 
-                Command="{Binding Path=NewTestCommand}"/>
+            <Label Content="Тестове" />
 
-        <!-->
-            <Button Content="Remove" HorizontalAlignment="Left" Margin="527,13,0,0" VerticalAlignment="Top" Command="{Binding Path=RemoveTestCommand}" CommandParameter="{Binding ElementName=TestView, Path=SelectedItem}"/>
-        </!-->
+            <Button Content="Add" 
+                    Command="{Binding NewTestCommand}" />
 
-        <Button Content="Save" 
-                HorizontalAlignment="Left" 
-                Margin="596,13,0,0" 
-                VerticalAlignment="Top" 
-                Command="{Binding SaveTestCommand}"/>
+            <Button Content="Save" 
+                    Command="{Binding SaveTestCommand}"/>
 
-        <Button Content="Load" 
-                HorizontalAlignment="Left" 
-                Margin="648,13,0,0" 
-                VerticalAlignment="Top" 
-                Command="{Binding LoadTestCommand}"/>
+            <Button Content="Load" 
+                    Command="{Binding LoadTestCommand}"/>
 
-        <!-->
-            <Button Content="Show" HorizontalAlignment="Left" Margin="700,13,0,0" VerticalAlignment="Top" Command="{Binding ShowTestCommand}" CommandParameter="{Binding ElementName=TestView, Path=SelectedItem}"/>
-        </!-->
+        </WrapPanel>
 
         <ListView ItemsSource="{Binding Path=Tests}" 
-                  Margin="0,50,0,0" 
+                  Grid.Row="1"
                   Name="TestView">
             <ListView.ItemTemplate>
                 <DataTemplate>
