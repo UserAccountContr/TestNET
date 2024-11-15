@@ -6,10 +6,12 @@ public partial class HomeViewModel : BaseViewModel
 {
     public ObservableCollection<Test> Tests { get; } = new();
     TestService testService;
+    ISettingsService settingsService;
 
-    public HomeViewModel(TestService testService)
+    public HomeViewModel(TestService testService, ISettingsService settings)
     {
         this.testService = testService;
+        settingsService = settings;
     }
 
     [RelayCommand]
@@ -42,6 +44,19 @@ public partial class HomeViewModel : BaseViewModel
         {
             Tests.Add(test);
         }
+    }
+
+
+    [RelayCommand]
+    void SetLang(string lang)
+    {
+        settingsService.ChangeLanguage(lang);
+    }
+
+    [RelayCommand]
+    void SetTheme(string style)
+    {
+        settingsService.ChangeTheme(style);
     }
 
     //[RelayCommand]

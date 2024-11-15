@@ -20,6 +20,7 @@ public partial class App : Application
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<INavigationService, NavigationService>();
+        services.AddSingleton<ISettingsService, SettingsService>();
         services.AddSingleton<TestService>();
 
         services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider => viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));

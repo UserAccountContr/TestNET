@@ -19,26 +19,31 @@
 
         <WrapPanel Grid.Row="0">
 
-            <Label Content="{DynamicResource tests}" />
+            <Label Content="{DynamicResource tests}" 
+                   Style="{StaticResource LargeLabel}"/>
 
             <Button Content="{DynamicResource add}" 
-                    Command="{Binding NewTestCommand}" />
+                    Command="{Binding NewTestCommand}" 
+                    Style="{StaticResource Btn}"/>
 
             <Button Content="{DynamicResource save}" 
-                    Command="{Binding SaveTestCommand}"/>
+                    Command="{Binding SaveTestCommand}"
+                    Style="{StaticResource Btn}"/>
 
             <Button Content="{DynamicResource load}" 
-                    Command="{Binding LoadTestCommand}"/>
+                    Command="{Binding LoadTestCommand}"
+                    Style="{StaticResource Btn}"/>
 
             <RadioButton GroupName="Lang"
                          Content="English"
-                         Tag="en"
                          IsChecked="True"
-                         Checked="RadioButton_Checked"/>
+                         Command="{Binding SetLangCommand}"
+                         CommandParameter="en"/>
+            
             <RadioButton GroupName="Lang"
                          Content="Български"
-                         Tag="bg"
-                         Checked="RadioButton_Checked"/>
+                         Command="{Binding SetLangCommand}"
+                         CommandParameter="bg"/>
 
         </WrapPanel>
 
@@ -51,10 +56,12 @@
                         <Label Content="{Binding Name}"/>
                         <Button Content="{DynamicResource open}" 
                                 Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                CommandParameter="{Binding .}"/>
+                                CommandParameter="{Binding .}"
+                                Style="{StaticResource Btn}"/>
                         <Button Content="{DynamicResource delete}" 
                                 Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                CommandParameter="{Binding .}"/>
+                                CommandParameter="{Binding .}"
+                                Style="{StaticResource Btn}"/>
                     </WrapPanel>
                 </DataTemplate>
             </ListView.ItemTemplate>

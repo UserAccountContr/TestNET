@@ -6,9 +6,6 @@ public partial class WindowViewModel : BaseViewModel
 {
     public WindowViewModel(INavigationService navigationService)
     {
-        //this.homeViewModel = homeViewModel;
-        //CurrentPageViewModel = this.homeViewModel;
-
         Navigation = navigationService;
         GoToHomeView();
     }
@@ -24,19 +21,4 @@ public partial class WindowViewModel : BaseViewModel
 
     [RelayCommand]
     void GoToHomeView() => Navigation.NavigateTo<HomeViewModel>();
-
-
-    //HomeViewModel homeViewModel;
-
-    //[ObservableProperty]
-    //ObservableObject currentPageViewModel;
-
-    //[RelayCommand]
-    //void OpenTestView(object test) => CurrentPageViewModel = new TestViewModel(test as Test);
-
-    //[RelayCommand]
-    //void OpenEditTestView(object test) => CurrentPageViewModel = new EditTestViewModel(test as Test);
-
-    //[RelayCommand]
-    //void GoToHomeView() => CurrentPageViewModel = homeViewModel;
 }

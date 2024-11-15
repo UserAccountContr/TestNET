@@ -1,0 +1,31 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+    <Style TargetType="Label" x:Key="BaseLabel">
+        <Setter Property="FontFamily" Value="OpenSansRegular" />
+        <!--
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" />
+        -->
+    </Style>
+
+    <Style x:Key="MicroLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+        <Setter Property="FontSize" Value="10"/>
+    </Style>
+
+    <Style x:Key="SmallLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+        <Setter Property="FontSize" Value="12"/>
+    </Style>
+
+    <Style x:Key="MediumLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
+    <Style x:Key="LargeLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+        <Setter Property="FontSize" Value="20"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="Btn">
+        <Setter Property="MinWidth" Value="50"/>
+    </Style>
+</ResourceDictionary>
