@@ -9,4 +9,7 @@
     <system:String x:Key="open">Отвори</system:String>
     <system:String x:Key="delete">Изтрий</system:String>
     <system:String x:Key="back">Назад</system:String>
+    <system:String x:Key="start">Старт</system:String>
+    <system:String x:Key="stop">Стоп</system:String>
+    <system:String x:Key="edit">Редактирай</system:String>
 </ResourceDictionary>

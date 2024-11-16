@@ -17,11 +17,16 @@ public partial class EditTestViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void AddQuestion() => Questions.Add(new Question("q", "a"));
+    void AddQuestion() => Questions.Add(new Question("q", new("a")));
 
     [RelayCommand]
     void SaveChanges()
     {
+        if (!Questions.OfType<MultipleChoiceQuestion>().All(x => x.PossibleAnswers.Any(y => y.IsCorrect)))
+        {
+            MessageBox.Show("Not all questions have a selected answer.... u stooooopid");
+            return;
+        }
         Test.Name = Name;
         Test.Questions.Clear();
         foreach (Question question in Questions)

@@ -57,29 +57,28 @@
                             </Grid.ColumnDefinitions>
                             <TextBox Text="{Binding Text}"
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Answer}"
+                            <TextBox Text="{Binding Answer.Text}"
                                    Grid.Column="1"/>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="250"/>
                             </Grid.ColumnDefinitions>
 
                             <TextBox Text="{Binding Text}"
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Answer}"
-                                   Grid.Column="1"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="2">
+                                          Grid.Column="1">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type model:Answer}">
                                         <WrapPanel>
-                                            <RadioButton Content="{Binding Text}"
-                                                         GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"/>
+                                            <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
+                                                         Command="{Binding DataContext.SetCorrectAnswerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                         CommandParameter="{Binding .}"
+                                                         IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
                                             <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                         </WrapPanel>
                                     </DataTemplate>

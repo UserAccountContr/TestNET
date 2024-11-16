@@ -18,31 +18,27 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                </Grid.ColumnDefinitions>
-                <Button Content="Back" 
-                        Grid.Column="0"
+            <WrapPanel Grid.Row="0">
+                <Label Content="Test"
+                       Style="{DynamicResource LargeLabel}"/>
+                <Button Content="{DynamicResource back}" 
                         Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        IsEnabled="{Binding IsNotBusy}"/>
-                <Button Content="Start" 
-                        Grid.Column="1"
+                        IsEnabled="{Binding IsNotBusy}"
+                        Style="{DynamicResource Btn}"/>
+                <Button Content="{DynamicResource start}" 
                         Command="{Binding ShareTestCommand}"
-                        IsEnabled="{Binding IsNotBusy}"/>
-                <Button Content="Stop" 
-                        Grid.Column="2"
+                        IsEnabled="{Binding IsNotBusy}"
+                        Style="{DynamicResource Btn}"/>
+                <Button Content="{DynamicResource stop}" 
                         Command="{Binding StopSharingTestCommand}"
-                        IsEnabled="{Binding IsBusy}"/>
-                <Button Content="Edit" 
-                        Grid.Column="3"
+                        IsEnabled="{Binding IsBusy}"
+                        Style="{DynamicResource Btn}"/>
+                <Button Content="{DynamicResource edit}" 
                         Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                         CommandParameter="{Binding Test}"
-                        IsEnabled="{Binding IsNotBusy}"/>
-            </Grid>
+                        IsEnabled="{Binding IsNotBusy}"
+                        Style="{DynamicResource Btn}"/>
+            </WrapPanel>
             <StackPanel Grid.Row="1">
                 <Label ContentStringFormat="Test Name: {0}"
                        Content="{Binding Test.Name}"/>
@@ -50,7 +46,8 @@
                        Content="{Binding Test.Questions.Count}"/>
             </StackPanel>
             <ListView Grid.Row="2" 
-                      ItemsSource="{Binding Test.Questions}">
+                      ItemsSource="{Binding Test.Questions}"
+                      AlternationCount="{Binding Test.Questions.Count}">
                 <ListView.Resources>
                     <DataTemplate DataType="{x:Type model:Question}">
                         <Grid>
@@ -61,9 +58,11 @@
                             <Label ContentStringFormat="Question: {0}"
                                    Content="{Binding Text}"
                                    Grid.Column="0"/>
+                            <!--
                             <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer}"
+                                   Content="{Binding Answer.Text}"
                                    Grid.Column="1"/>
+                            -->
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
@@ -71,20 +70,21 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
+
                             <Label ContentStringFormat="Question: {0}"
                                    Content="{Binding Text}"
                                    Grid.Column="0"/>
+                            <!--
                             <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer}"
+                                   Content="{Binding Answer.Text}"
                                    Grid.Column="1"/>
+                            -->
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="2">
+                                          Grid.Column="1">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <RadioButton Content="{Binding Text}"
-                                                     GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"/>
+                                        <Label Content="{Binding Text}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

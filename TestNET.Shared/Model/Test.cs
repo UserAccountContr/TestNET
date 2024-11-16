@@ -8,7 +8,7 @@ public class Test
 
     public override string ToString() => Name;
 
-    public void AddQuestion() => Questions.Add(new Question("q", "a"));
+    public void AddQuestion() => Questions.Add(new Question("q", new("a")));
 
     public Test DeepCopy()
     {
