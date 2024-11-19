@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Teacher.View"
+    xmlns:serv="clr-namespace:TestNET.Teacher.Service"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
@@ -52,7 +53,11 @@
                   Name="TestView">
             <ListView.ItemTemplate>
                 <DataTemplate>
+                    <DataTemplate.Resources>
+                        <serv:IndexConverter x:Key="IndexConverter" />
+                    </DataTemplate.Resources>
                     <WrapPanel>
+                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
                         <Label Content="{Binding Name}"/>
                         <Button Content="{DynamicResource open}" 
                                 Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
