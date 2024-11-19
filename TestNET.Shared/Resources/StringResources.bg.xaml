@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="cancel">Отказ</system:String>
     <system:String x:Key="tests">Тестове</system:String>
-    <system:String x:Key="quesitons">Въпроси</system:String>
+    <system:String x:Key="questions">Въпроси</system:String>
     <system:String x:Key="add">Добави</system:String>
     <system:String x:Key="save">Запиши</system:String>
     <system:String x:Key="load">Зареди</system:String>

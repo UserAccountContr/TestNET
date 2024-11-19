@@ -46,7 +46,7 @@
                        Content="{Binding Test.Questions.Count}"/>
             </StackPanel>
             <StackPanel Grid.Row="2">
-                <Expander Header="{DynamicResource quesitons}"
+                <Expander Header="{DynamicResource questions}"
                           ExpandDirection="Down"
                           IsExpanded="True">
                     <ListView ItemsSource="{Binding Test.Questions}">

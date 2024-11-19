@@ -3,7 +3,7 @@
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <system:String x:Key="cancel">Cancel</system:String>
     <system:String x:Key="tests">Tests</system:String>
-    <system:String x:Key="quesitons">Questions</system:String>
+    <system:String x:Key="questions">Questions</system:String>
     <system:String x:Key="add">Add</system:String>
     <system:String x:Key="save">Save</system:String>
     <system:String x:Key="load">Load</system:String>

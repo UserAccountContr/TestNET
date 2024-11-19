@@ -8,14 +8,13 @@ public class Test
 
     public override string ToString() => Name;
 
+    public Test(string name, ObservableCollection<Question> questions)
+    {
+        Name = name;
+        Questions = questions;
+    }
+
     public void AddQuestion() => Questions.Add(new Question("q", new("a")));
 
-    public Test DeepCopy()
-    {
-        return new Test
-        {
-            Name = this.Name,
-            Questions = new ObservableCollection<Question>(Questions.Select(x => x.DeepCopy()))
-        };
-    }
+    public Test DeepCopy() => new Test(Name, new ObservableCollection<Question>(Questions.Select(x => x.DeepCopy())));
 }
