@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.Specialized;
+using System.ComponentModel;
 using TestNET.Teacher.Service;
 
 namespace TestNET.Teacher.ViewModel;
@@ -29,6 +30,12 @@ public partial class EditTestViewModel : BaseViewModel
 
     [RelayCommand]
     void AddQuestion() => Questions.Add(new Question("q", new("a")));
+
+    [RelayCommand]
+    void AddSAQuestion() => Questions.Add(new Question("", new("")));
+
+    [RelayCommand]
+    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", new(""), new()));
 
     [RelayCommand]
     void SaveChanges()
@@ -86,7 +93,7 @@ public partial class EditTestViewModel : BaseViewModel
         IsDirty = false;
     }
 
-    void Questions_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+    void Questions_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         IsDirty = true;
 
@@ -95,6 +102,12 @@ public partial class EditTestViewModel : BaseViewModel
             {
                 oldItem.PropertyChanged -= Question_PropertyChanged;
                 oldItem.Answer.PropertyChanged -= Question_PropertyChanged;
+                if (oldItem is MultipleChoiceQuestion question)
+                { 
+                    question.PossibleAnswers.CollectionChanged -= Answers_CollectionChanged;
+                    foreach (Answer posans in question.PossibleAnswers)
+                        posans.PropertyChanged -= Question_PropertyChanged;
+                }
             }
 
         if (e.NewItems != null)
@@ -102,10 +115,31 @@ public partial class EditTestViewModel : BaseViewModel
             {
                 newItem.PropertyChanged += Question_PropertyChanged;
                 newItem.Answer.PropertyChanged += Question_PropertyChanged;
+                if (newItem is MultipleChoiceQuestion question)
+                {
+                    question.PossibleAnswers.CollectionChanged += Answers_CollectionChanged;
+                    foreach (Answer posans in question.PossibleAnswers)
+                        posans.PropertyChanged += Question_PropertyChanged;
+                }
             }
     }
 
-    
+    void Answers_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        IsDirty = true;
+
+        if (e.OldItems != null)
+            foreach (Answer oldItem in e.OldItems)
+            {
+                oldItem.PropertyChanged -= Question_PropertyChanged;
+            }
+
+        if (e.NewItems != null)
+            foreach (Answer newItem in e.NewItems)
+            {
+                newItem.PropertyChanged += Question_PropertyChanged;
+            }
+    }
 
     void Question_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {

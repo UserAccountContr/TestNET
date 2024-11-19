@@ -24,6 +24,7 @@
                     <ColumnDefinition Width="100" />
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="50" />
+                    <ColumnDefinition Width="100" />
                 </Grid.ColumnDefinitions>
                 <Button Content="Back" 
                         Grid.Column="0"
@@ -38,6 +39,14 @@
                 <Button Content="Cancel"
                         Grid.Column="3"
                         Command="{Binding CancelCommand}"/>
+                <Menu Grid.Column="4">
+                    <MenuItem Header="Add question">
+                        <MenuItem Header="Short answer"
+                                  Command="{Binding AddSAQuestionCommand}" />
+                        <MenuItem Header="Multiple choice"
+                                  Command="{Binding AddMCQuestionCommand}" />
+                    </MenuItem>
+                </Menu>
             </Grid>
             <WrapPanel Grid.Row="1">
                 <Label Content="Test Name: "/>
@@ -69,20 +78,23 @@
 
                             <TextBox Text="{Binding Text}"
                                    Grid.Column="0"/>
-                            <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="1">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type model:Answer}">
-                                        <WrapPanel>
-                                            <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
+                            <StackPanel Grid.Column="1">
+                                <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type model:Answer}">
+                                            <WrapPanel>
+                                                <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
                                                          Command="{Binding DataContext.SetCorrectAnswerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                          CommandParameter="{Binding .}"
                                                          IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                            <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                        </WrapPanel>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                                                <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </WrapPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button Content="+"
+                                        Command="{Binding AddPosAnsCommand}"/>
+                            </StackPanel>
                         </Grid>
                     </DataTemplate>
                 </ListView.Resources>

@@ -38,6 +38,9 @@ public partial class MultipleChoiceQuestion : Question
     {
         Answer = answer;
     }
+
+    [RelayCommand]
+    void AddPosAns() => PossibleAnswers.Add(new(""));
 }
 
 public partial class Answer : ObservableObject
