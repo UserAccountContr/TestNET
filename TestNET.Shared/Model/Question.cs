@@ -1,11 +1,15 @@
-﻿namespace TestNET.Shared.Model;
+﻿using System.ComponentModel;
+
+namespace TestNET.Shared.Model;
 
 [JsonDerivedType(typeof(MultipleChoiceQuestion), typeDiscriminator: "multipleChoice")]
-public class Question
+public partial class Question : ObservableObject
 {
-    public string Text { get; set; }
+    [ObservableProperty]
+    string text;
 
-    public Answer Answer { get; set; }
+    [ObservableProperty]
+    Answer answer;
 
     public string UniqueId { get; set; } = Guid.NewGuid().ToString();
 
@@ -15,7 +19,7 @@ public class Question
         Answer = answer;
     }
 
-    public virtual Question DeepCopy() => new Question(Text, Answer);
+    public virtual Question DeepCopy() => new Question(Text, Answer.DeepCopy());
 }
 
 public partial class MultipleChoiceQuestion : Question
@@ -27,7 +31,7 @@ public partial class MultipleChoiceQuestion : Question
         PossibleAnswers = possibleanswers;
     }
 
-    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())));
+    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer.DeepCopy(), new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())));
 
     [RelayCommand]
     void SetCorrectAnswer(Answer answer)
@@ -38,7 +42,8 @@ public partial class MultipleChoiceQuestion : Question
 
 public partial class Answer : ObservableObject
 {
-    public string Text { get; set; }
+    [ObservableProperty]
+    string text;
 
     [ObservableProperty]
     bool isCorrect;
