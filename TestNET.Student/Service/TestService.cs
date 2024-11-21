@@ -4,14 +4,23 @@ namespace TestNET.Student.Service;
 
 public class TestService
 {
-    public async Task<Test> GetTest(string name)
+    public (string,int) ParseCode(string code)
+    {
+        //string temp = Encoding.UTF8.GetString(Convert.FromBase64String(code));
+        //string[] temp2 = temp.Split(":");
+        string[] temp2 = code.Split(":");
+        return (temp2[0], int.Parse(temp2[1]));
+    }
+
+    public async Task<Test> GetTest(string name, string code)
     {
         try
         {
             int port = 13000;
 
             {
-                using TcpClient client = new TcpClient("127.0.0.1", port);
+                //using TcpClient client = new TcpClient("192.168.80.146", port);
+                using TcpClient client = new TcpClient(ParseCode(code).Item1, ParseCode(code).Item2);
                 using NetworkStream stream = client.GetStream();
 
                 TestRequest request = new TestRequest { StudentName = name, Code = 13000 };

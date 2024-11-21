@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Student.View"
+    xmlns:serv="clr-namespace:TestNET.Student.Service"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Student.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
@@ -36,8 +37,17 @@
             </WrapPanel>
             <Button Content="Get test"
                     Command="{Binding GoToTestOverviewCommand}"
-                    CommandParameter="{Binding FullName}"
-                    IsEnabled="{Binding CanStart}"/>
+                    IsEnabled="{Binding CanStart}">
+                <Button.Resources>
+                    <serv:MultiBindConverter x:Key="Conv"/>
+                </Button.Resources>
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource Conv}">
+                        <Binding Path="FullName"/>
+                        <Binding Path="Code"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
         </StackPanel>
     </Grid>
 </UserControl>

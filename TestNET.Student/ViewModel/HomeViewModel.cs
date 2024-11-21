@@ -40,10 +40,10 @@ public partial class HomeViewModel : BaseViewModel
     public bool IsNotGettingTest { get => !IsGettingTest; }
 
     [RelayCommand]
-    async Task GoToTestOverview(string name)
+    async Task GoToTestOverview(object[] parameters)
     {
         IsGettingTest = true;
-        Test test = await Task.Run(() => testService.GetTest(name));
+        Test test = await Task.Run(() => testService.GetTest(parameters[0].ToString(), parameters[1].ToString()));
         if (test != null)
             Navigation.NavigateTo<TestOverviewViewModel, Test>(test);
         IsGettingTest = false;

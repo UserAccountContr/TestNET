@@ -1,5 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Net;
+using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace TestNET.Teacher.Service;
 
@@ -34,6 +36,32 @@ public class TestService
 
     TcpListener server = null;
 
+    private IPAddress? GetIP()
+    {
+        var ints = NetworkInterface
+        .GetAllNetworkInterfaces()
+        .Where(n => n.OperationalStatus == OperationalStatus.Up && n.NetworkInterfaceType != NetworkInterfaceType.Loopback)
+        .Where(n => n.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || n.NetworkInterfaceType == NetworkInterfaceType.Ethernet);
+        //.SelectMany(n => n.GetIPProperties()?.UnicastAddresses)
+        //.Where(n => n.Address.AddressFamily == AddressFamily.InterNetwork)
+        //.Select(g => g?.Address)
+        //.Where(a => a != null);
+
+        foreach (var i in ints)
+        {
+            IPAddress? ip = i.GetIPProperties().UnicastAddresses.Where(n => n.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(n => n.Address).Where(a => a != null).FirstOrDefault() ?? throw new Exception();
+            string msg = $"{i.Name}\n{ip}";
+            var result = MessageBox.Show(msg, "IP", MessageBoxButton.YesNo);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+                    return ip;
+            }
+        }
+        return null;
+    }
+
     public void ShareTest(Test test)
     {
         _ = Task.Run(() =>
@@ -42,8 +70,11 @@ public class TestService
             {
                 int port = 13000;
 
-                IPAddress localAddr;
-                localAddr = IPAddress.Parse("127.0.0.1");
+                IPAddress? localAddr = GetIP() ?? throw new Exception("No internet");
+
+                if (localAddr == null) return;
+
+                //localAddr = IPAddress.Parse("192.168.80.146");
 
                 server = new TcpListener(localAddr, port);
                 server.Start();
