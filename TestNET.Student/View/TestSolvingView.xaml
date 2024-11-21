@@ -34,7 +34,7 @@
                                    Content="{Binding Text}"
                                    Grid.Column="0"/>
 
-                            <TextBox Text="{Binding Answer}"
+                            <TextBox Text="{Binding Answer.Text}"
                                      Grid.Column="1"/>
                         </Grid>
                     </DataTemplate>
