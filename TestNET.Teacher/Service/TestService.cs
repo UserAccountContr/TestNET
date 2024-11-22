@@ -15,11 +15,9 @@ public class TestService
         if (File.Exists(filename))
         {
             using Stream stream = File.OpenRead(filename);
-            testList = (List<Test>)JsonSerializer.Deserialize(stream, typeof(List<Test>));
+            testList = JsonSerializer.Deserialize<List<Test>>(stream) ?? throw new ArgumentNullException();
         }
 
-        if (testList == null)
-            throw new Exception();
         return testList;
     }
 
@@ -34,7 +32,7 @@ public class TestService
         File.WriteAllText(filePath, jsonString);
     }
 
-    TcpListener server = null;
+    TcpListener? server = null;
 
     private IPAddress? GetIP()
     {
@@ -107,16 +105,11 @@ public class TestService
                         Array.Resize(ref requestBytes, requestLength - 1);
 
                         string requestJson = Encoding.UTF8.GetString(requestBytes);
-                        TestRequest? request = JsonSerializer.Deserialize<TestRequest>(requestJson);
-
-                        if (request is null)
-                        {
-                            throw new ArgumentNullException(nameof(request));
-                        }
+                        TestRequest? request = JsonSerializer.Deserialize<TestRequest>(requestJson) ?? throw new ArgumentNullException(nameof(request));
 
                         Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
 
-                        TestResponse response = new TestResponse { Error = "", Test = test };
+                        TestResponse response = new() { Error = "", Test = test };
 
                         string responseJson = JsonSerializer.Serialize(response);
                         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
@@ -141,13 +134,13 @@ public class TestService
             }
             finally
             {
-                server.Stop();
+                server?.Stop();
             }
         });
     }
 
     public void StopSharingTest()
     {
-        server.Stop();
+        server?.Stop();
     }
 }

@@ -16,14 +16,14 @@ public class TestService
     {
         try
         {
-            int port = 13000;
+            //int port = 13000;
 
             {
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
-                using TcpClient client = new TcpClient(ParseCode(code).Item1, ParseCode(code).Item2);
+                using TcpClient client = new(ParseCode(code).Item1, ParseCode(code).Item2);
                 using NetworkStream stream = client.GetStream();
 
-                TestRequest request = new TestRequest { StudentName = name, Code = 13000 };
+                TestRequest request = new() { StudentName = name, Code = 13000 };
                 string requestJson = JsonSerializer.Serialize(request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 
@@ -51,12 +51,7 @@ public class TestService
                 stream.Write([0xff], 0, 1); // Acknowledge
 
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
-                TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson);
-
-                if (response is null)
-                {
-                    throw new ArgumentNullException("Invalid response.");
-                }
+                TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
 
                 if (response.Test is null)
                 {

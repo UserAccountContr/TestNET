@@ -19,6 +19,7 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
+                <!--
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="100" />
@@ -39,18 +40,25 @@
                 <Button Content="Cancel"
                         Grid.Column="3"
                         Command="{Binding CancelCommand}"/>
-                <Menu Grid.Column="4">
+                -->
+                <Menu>  <!--Grid.Column="4"-->
+                    <MenuItem Header="Back"
+                              Command="{Binding BackCommand}"/>
                     <MenuItem Header="Add question">
                         <MenuItem Header="Short answer"
                                   Command="{Binding AddSAQuestionCommand}" />
                         <MenuItem Header="Multiple choice"
                                   Command="{Binding AddMCQuestionCommand}" />
                     </MenuItem>
+                    <MenuItem Header="Save"
+                              Command="{Binding SaveChangesCommand}"/>
+                    <MenuItem Header="Cancel"
+                              Command="{Binding CancelCommand}"/>
                 </Menu>
             </Grid>
             <WrapPanel Grid.Row="1">
                 <Label Content="Test Name: "/>
-                <TextBox Text="{Binding Name}"
+                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="1"
                          VerticalContentAlignment="Center"/>
             </WrapPanel>
@@ -63,9 +71,9 @@
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Text}"
+                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Answer.Text}"
+                            <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="1"/>
                         </Grid>
                     </DataTemplate>
@@ -76,7 +84,7 @@
                                 <ColumnDefinition Width="250"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Text="{Binding Text}"
+                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="0"/>
                             <StackPanel Grid.Column="1">
                                 <ItemsControl ItemsSource="{Binding PossibleAnswers}">
