@@ -1,15 +1,25 @@
-﻿using System.Net.Sockets;
+﻿using System.Net;
+using System.Net.Sockets;
 
 namespace TestNET.Student.Service;
 
 public class TestService
 {
-    public (string,int) ParseCode(string code)
+    private static (IPAddress, int) DecodeCode(string base64encoded)
     {
-        //string temp = Encoding.UTF8.GetString(Convert.FromBase64String(code));
-        //string[] temp2 = temp.Split(":");
-        string[] temp2 = code.Split(":");
-        return (temp2[0], int.Parse(temp2[1]));
+        string padded = base64encoded + new string('=', base64encoded.Length % 4);
+        byte[] code = Convert.FromBase64String(padded);
+
+        byte[] ip_bytes = new byte[code[0]];
+        code.AsSpan(1, code[0]).CopyTo(ip_bytes);
+
+        byte[] port_bytes = new byte[code.Length - code[0]];
+        code.AsSpan(code[0] + 1, code.Length - (code[0] + 1)).CopyTo(port_bytes);
+
+        IPAddress ip = new(ip_bytes);
+        int port = BitConverter.ToInt16(port_bytes);
+
+        return (ip, port);
     }
 
     public async Task<Test> GetTest(string name, string code)
@@ -20,7 +30,8 @@ public class TestService
 
             {
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
-                using TcpClient client = new(ParseCode(code).Item1, ParseCode(code).Item2);
+                var endpoint = DecodeCode(code);
+                using TcpClient client = new(endpoint.Item1.ToString(), endpoint.Item2);
                 using NetworkStream stream = client.GetStream();
 
                 TestRequest request = new() { StudentName = name, Code = 13000 };

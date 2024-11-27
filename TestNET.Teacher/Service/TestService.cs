@@ -34,6 +34,21 @@ public class TestService
 
     TcpListener? server = null;
 
+    private static string EncodeCode(IPAddress ip_addr, int port)
+    {
+        byte[] ip_bytes = ip_addr.GetAddressBytes();
+        byte address_size = (byte)(ip_bytes.Length);
+        byte[] port_bytes = BitConverter.GetBytes(port);
+
+        byte[] final = new byte[ip_bytes.Length + port_bytes.Length + 1];
+
+        final[0] = address_size;
+        ip_bytes.CopyTo(final, 1);
+        port_bytes.CopyTo(final, ip_bytes.Length + 1);
+
+        return System.Convert.ToBase64String(final).TrimEnd('=');
+    }
+
     private IPAddress? GetIP()
     {
         var ints = NetworkInterface
@@ -76,6 +91,11 @@ public class TestService
 
                 server = new TcpListener(localAddr, port);
                 server.Start();
+
+                Task.Run(() =>
+                {
+                    MessageBox.Show($"{EncodeCode(localAddr, port)}", "Code", MessageBoxButton.OK);
+                });
 
                 while (true)
                 {
