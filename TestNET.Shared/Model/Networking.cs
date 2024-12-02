@@ -1,8 +1,18 @@
 ﻿namespace TestNET.Shared.Model;
 
-public class TestRequest 
+[JsonDerivedType(typeof(TestRequest), typeDiscriminator: "testRequest")]
+[JsonDerivedType(typeof(SubmissionRequest), typeDiscriminator: "submitionRequest")]
+public class Request;
+
+public class TestRequest : Request
 {
     public required string StudentName { get; set; }
+    public int Code { get; set; }
+}
+
+public class SubmissionRequest : Request
+{
+    public required Test Submition { get; set; }
     public int Code { get; set; }
 }
 

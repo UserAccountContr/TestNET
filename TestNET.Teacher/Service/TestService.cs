@@ -2,6 +2,8 @@
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Linq;
+using System.IO;
+using TestNET.Shared.Model;
 
 namespace TestNET.Teacher.Service;
 
@@ -84,7 +86,7 @@ public class TestService
 
     public void ShareTest(Test test)
     {
-        _ = Task.Run(() =>
+        _ = Task.Run(async () =>
         {
             try
             {
@@ -127,24 +129,19 @@ public class TestService
                         Array.Resize(ref requestBytes, requestLength - 1);
 
                         string requestJson = Encoding.UTF8.GetString(requestBytes);
-                        TestRequest? request = JsonSerializer.Deserialize<TestRequest>(requestJson) ?? throw new ArgumentNullException(nameof(request));
+                        Request? request = JsonSerializer.Deserialize<Request>(requestJson) ?? throw new ArgumentNullException(nameof(request));
 
-                        Task.Run(() => MessageBox.Show($"{request.StudentName} connected."));
-
-                        TestResponse response = new() { Error = "", Test = test };
-
-                        string responseJson = JsonSerializer.Serialize(response);
-                        byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
-
-                        stream.Write(responseBytes, 0, responseBytes.Length);
-                        stream.Write([0xff], 0, 1);
-
-                        byte[] acknowledge = new byte[1];
-                        stream.Read(acknowledge, 0, 1);
-                        
-                        if (acknowledge[0] != 0xff)
+                        if (request is TestRequest testRequest)
                         {
-                            throw new ArgumentException($"Acknowledge was not 0: {acknowledge[0]}");
+                            await Task.Run(() => handleTestRequest(testRequest, test, stream));
+                        } 
+                        else if (request is SubmissionRequest submissionRequest)
+                        {
+                            await Task.Run(() => handleSubmissionRequest(submissionRequest, stream));
+                        } 
+                        else
+                        {
+                            MessageBox.Show("Something terribly wrong has happened");
                         }
                     }
                 }
@@ -159,6 +156,31 @@ public class TestService
                 server?.Stop();
             }
         });
+    }
+    public void handleTestRequest(TestRequest request, Test test, NetworkStream stream)
+    {
+        Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+
+        TestResponse response = new() { Error = "", Test = test };
+
+        string responseJson = JsonSerializer.Serialize(response);
+        byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
+
+        stream.Write(responseBytes, 0, responseBytes.Length);
+        stream.Write([0xff], 0, 1);
+
+        byte[] acknowledge = new byte[1];
+        stream.Read(acknowledge, 0, 1);
+
+        if (acknowledge[0] != 0xff)
+        {
+            throw new ArgumentException($"Acknowledge was not 0: {acknowledge[0]}");
+        }
+    }
+
+    public void handleSubmissionRequest(SubmissionRequest request, NetworkStream stream)
+    {
+
     }
 
     public void StopSharingTest()
