@@ -35,7 +35,7 @@ public class TestService
                 using NetworkStream stream = client.GetStream();
 
                 TestRequest request = new() { StudentName = name, Code = 13000 };
-                string requestJson = JsonSerializer.Serialize(request);
+                string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 
                 stream.Write(requestBytes, 0, requestBytes.Length);
