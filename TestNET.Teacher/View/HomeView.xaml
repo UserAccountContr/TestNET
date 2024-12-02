@@ -12,6 +12,40 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource add}"
+                      Command="{Binding NewTestCommand}" />
+            <MenuItem Header="{DynamicResource save}"
+                      Command="{Binding SaveTestCommand}" />
+            <MenuItem Header="{DynamicResource load}"
+                      Command="{Binding LoadTestCommand}" />
+            <MenuItem Header="Settings">
+                <MenuItem Header="Language">
+
+                    <MenuItem.Resources>
+                        <RadioButton x:Key="RadioButtonResource" 
+                                     x:Shared="false" 
+                                     HorizontalAlignment="Center"
+                                     GroupName="LangSel" 
+                                     IsHitTestVisible="False"
+                                     Command="{Binding SetLangCommand}"
+                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Header}"/>
+                    </MenuItem.Resources>
+
+                    <MenuItem.ItemContainerStyle>
+                        <Style TargetType="MenuItem">
+                            <Setter Property="Icon" Value="{DynamicResource RadioButtonResource}"/>
+                            <EventSetter Event="Click" Handler="MenuItem_Click"/>
+                        </Style>
+                    </MenuItem.ItemContainerStyle>
+
+                    <MenuItem Header="BG"/>
+                    <MenuItem Header="EN"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
@@ -72,4 +106,5 @@
             </ListView.ItemTemplate>
         </ListView>
     </Grid>
+    </DockPanel>
 </UserControl>

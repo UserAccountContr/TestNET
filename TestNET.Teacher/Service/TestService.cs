@@ -11,11 +11,18 @@ public class TestService
     {
         List<Test> testList = new();
 
-        string filename = Path.Combine(AppContext.BaseDirectory, "tests.json");
-        if (File.Exists(filename))
+        try
         {
-            using Stream stream = File.OpenRead(filename);
-            testList = JsonSerializer.Deserialize<List<Test>>(stream) ?? throw new ArgumentNullException();
+            string filename = Path.Combine(AppContext.BaseDirectory, "tests.json");
+            if (File.Exists(filename))
+            {
+                using Stream stream = File.OpenRead(filename);
+                testList = JsonSerializer.Deserialize<List<Test>>(stream) ?? throw new ArgumentNullException();
+            }
+        }
+        catch
+        {
+            MessageBox.Show("Unable to load tests", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         return testList;
