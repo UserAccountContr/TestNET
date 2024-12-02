@@ -11,43 +11,34 @@
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
-        <Label Grid.Row="0"
-               Content="Home"/>
-        <StackPanel Grid.Row="1">
-            <WrapPanel>
-                <Label Content="First name:"/>
-                <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+    <StackPanel Width="300">
+        <Label Content="{DynamicResource fname}"/>
+        <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsNotGettingTest}"/>
-            </WrapPanel>
-            <WrapPanel>
-                <Label Content="Last name:"/>
-                <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+        <Label Content="{DynamicResource lname}"/>
+        <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsNotGettingTest}"/>
-            </WrapPanel>
-            <WrapPanel>
-                <Label Content="Code:"/>
-                <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+
+        <Label Content="{DynamicResource testcode}"/>
+        <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          IsEnabled="{Binding IsNotGettingTest}"/>
-            </WrapPanel>
-            <Button Content="Get test"
+
+
+        <Button Content="Get test"
                     Command="{Binding GoToTestOverviewCommand}"
                     IsEnabled="{Binding CanStart}">
-                <Button.Resources>
-                    <serv:MultiBindConverter x:Key="Conv"/>
-                </Button.Resources>
-                <Button.CommandParameter>
-                    <MultiBinding Converter="{StaticResource Conv}">
-                        <Binding Path="FullName"/>
-                        <Binding Path="Code"/>
-                    </MultiBinding>
-                </Button.CommandParameter>
-            </Button>
-        </StackPanel>
-    </Grid>
+            <Button.Resources>
+                <serv:MultiBindConverter x:Key="Conv"/>
+            </Button.Resources>
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource Conv}">
+                    <Binding Path="FullName"/>
+                    <Binding Path="Code"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
+        
+    </StackPanel>
 </UserControl>

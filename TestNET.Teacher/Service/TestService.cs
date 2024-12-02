@@ -92,10 +92,6 @@ public class TestService
 
                 IPAddress? localAddr = GetIP() ?? throw new Exception("No internet");
 
-                if (localAddr == null) return;
-
-                //localAddr = IPAddress.Parse("192.168.80.146");
-
                 server = new TcpListener(localAddr, port);
                 server.Start();
 
@@ -116,8 +112,7 @@ public class TestService
                         int requestLength = 0;
 
                         // Exhaust the entire stream
-                        for (int currentLength = 0;
-                            (currentLength = stream.Read(requestBytes, requestLength, 1024)) != 0;)
+                        for (int currentLength = 0; (currentLength = stream.Read(requestBytes, requestLength, 1024)) != 0;)
                         {
                             requestLength += currentLength;
 
@@ -134,7 +129,7 @@ public class TestService
                         string requestJson = Encoding.UTF8.GetString(requestBytes);
                         TestRequest? request = JsonSerializer.Deserialize<TestRequest>(requestJson) ?? throw new ArgumentNullException(nameof(request));
 
-                        Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+                        Task.Run(() => MessageBox.Show($"{request.StudentName} connected."));
 
                         TestResponse response = new() { Error = "", Test = test };
 

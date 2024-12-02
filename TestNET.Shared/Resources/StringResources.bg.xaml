@@ -14,4 +14,7 @@
     <system:String x:Key="start">Старт</system:String>
     <system:String x:Key="stop">Стоп</system:String>
     <system:String x:Key="edit">Редактирай</system:String>
+    <system:String x:Key="fname">Име</system:String>
+    <system:String x:Key="lname">Фамилия</system:String>
+    <system:String x:Key="testcode">Код на теста</system:String>
 </ResourceDictionary>
