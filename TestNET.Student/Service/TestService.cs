@@ -82,4 +82,9 @@ public class TestService
         }
         return null;
     }
+
+    public async void ReturnTest(Test test)
+    {
+        MessageBox.Show(string.Join('\n', test.Questions.Select(x => x.Answer.Text)));
+    }
 }
