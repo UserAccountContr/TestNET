@@ -20,6 +20,8 @@ public partial class Question : ObservableObject
     }
 
     public virtual Question DeepCopy() => new Question(Text, Answer.DeepCopy());
+
+    public virtual Question WithoutAnswers() => new Question(Text, new(""));
 }
 
 public partial class MultipleChoiceQuestion : Question
@@ -32,6 +34,8 @@ public partial class MultipleChoiceQuestion : Question
     }
 
     public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer.DeepCopy(), new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())));
+
+    public override Question WithoutAnswers() => new MultipleChoiceQuestion(Text, new(""), new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.WithoutAnswer())));
 
     [RelayCommand]
     void SetCorrectAnswer(Answer answer)
@@ -56,5 +60,6 @@ public partial class Answer : ObservableObject
         Text = text;
     }
 
-    public Answer DeepCopy() => new(Text) { IsCorrect = IsCorrect};
+    public Answer DeepCopy() => new(Text) { IsCorrect = IsCorrect };
+    public Answer WithoutAnswer() => new(Text) { IsCorrect = false };
 }

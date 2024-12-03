@@ -53,6 +53,8 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <RadioButton Content="{Binding Text}"
+                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.SetCorrectAnswerCommand}"
+                                                     CommandParameter="{Binding .}"
                                                      GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
                                                      IsChecked="{Binding IsCorrect}"/>
                                     </DataTemplate>

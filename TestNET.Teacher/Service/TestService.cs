@@ -161,7 +161,7 @@ public class TestService
     {
         Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
 
-        TestResponse response = new() { Error = "", Test = test };
+        TestResponse response = new() { Error = "", Test = test.WithoutAnswers() };
 
         string responseJson = JsonSerializer.Serialize(response);
         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
