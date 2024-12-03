@@ -49,6 +49,10 @@ public partial class EditTestViewModel : BaseViewModel
         Test.Questions.Clear();
         foreach (Question question in Questions)
         {
+            if (question is MultipleChoiceQuestion)
+            {
+                question.Answer = (question as MultipleChoiceQuestion).PossibleAnswers.Where(x => x.IsCorrect).FirstOrDefault();
+            }
             Test.Questions.Add(question.DeepCopy());
         };
 

@@ -31,8 +31,6 @@ public partial class MultipleChoiceQuestion : Question
         PossibleAnswers = possibleanswers;
     }
 
-    Answer CorrectAns => PossibleAnswers.Where(x => x.IsCorrect).First();
-
     public override Question DeepCopy() => new MultipleChoiceQuestion(Text, Answer.DeepCopy(), new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())));
 
     [RelayCommand]
