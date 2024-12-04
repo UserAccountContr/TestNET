@@ -29,13 +29,13 @@ public partial class EditTestViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void AddQuestion() => Questions.Add(new Question("q", new("a")));
+    void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
 
     [RelayCommand]
-    void AddSAQuestion() => Questions.Add(new Question("", new("")));
+    void AddSAQuestion() => Questions.Add(new Question("", new(""), Guid.NewGuid().ToString()));
 
     [RelayCommand]
-    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", new(""), new()));
+    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", new(""), Guid.NewGuid().ToString(), new()));
 
     [RelayCommand]
     void SaveChanges()
@@ -49,6 +49,10 @@ public partial class EditTestViewModel : BaseViewModel
         Test.Questions.Clear();
         foreach (Question question in Questions)
         {
+            if (question is MultipleChoiceQuestion)
+            {
+                question.Answer = (question as MultipleChoiceQuestion).PossibleAnswers.Where(x => x.IsCorrect).FirstOrDefault();
+            }
             Test.Questions.Add(question.DeepCopy());
         };
 
@@ -114,12 +118,12 @@ public partial class EditTestViewModel : BaseViewModel
             foreach (Question newItem in e.NewItems)
             {
                 newItem.PropertyChanged += Question_PropertyChanged;
-                newItem.Answer.PropertyChanged += Question_PropertyChanged;
+                newItem.Answer.PropertyChanged += Posans_PropertyChanged;
                 if (newItem is MultipleChoiceQuestion question)
                 {
                     question.PossibleAnswers.CollectionChanged += Answers_CollectionChanged;
                     foreach (Answer posans in question.PossibleAnswers)
-                        posans.PropertyChanged += Question_PropertyChanged;
+                        posans.PropertyChanged += Posans_PropertyChanged; ;
                 }
             }
     }
@@ -131,17 +135,22 @@ public partial class EditTestViewModel : BaseViewModel
         if (e.OldItems != null)
             foreach (Answer oldItem in e.OldItems)
             {
-                oldItem.PropertyChanged -= Question_PropertyChanged;
+                oldItem.PropertyChanged -= Posans_PropertyChanged;
             }
 
         if (e.NewItems != null)
             foreach (Answer newItem in e.NewItems)
             {
-                newItem.PropertyChanged += Question_PropertyChanged;
+                newItem.PropertyChanged += Posans_PropertyChanged;
             }
     }
 
     void Question_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        IsDirty = true;
+    }
+
+    void Posans_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         IsDirty = true;
     }

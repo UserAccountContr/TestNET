@@ -108,8 +108,7 @@ public class TestService
                         int requestLength = 0;
 
                         // Exhaust the entire stream
-                        for (int currentLength = 0;
-                            (currentLength = stream.Read(requestBytes, requestLength, 1024)) != 0;)
+                        for (int currentLength = 0; (currentLength = stream.Read(requestBytes, requestLength, 1024)) != 0;)
                         {
                             requestLength += currentLength;
 
@@ -156,7 +155,7 @@ public class TestService
     {
         Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
 
-        TestResponse response = new() { Error = "", Test = test };
+        TestResponse response = new() { Error = "", Test = test.WithoutAnswers() };
 
         string responseJson = JsonSerializer.Serialize(response);
         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);

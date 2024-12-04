@@ -14,4 +14,7 @@
     <system:String x:Key="start">Start</system:String>
     <system:String x:Key="stop">Stop</system:String>
     <system:String x:Key="edit">Edit</system:String>
+    <system:String x:Key="fname">First name</system:String>
+    <system:String x:Key="lname">Last name</system:String>
+    <system:String x:Key="testcode">Test code</system:String>
 </ResourceDictionary>

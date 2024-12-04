@@ -1,15 +1,23 @@
-﻿namespace TestNET.Student.ViewModel;
+﻿using TestNET.Student.Service;
+
+namespace TestNET.Student.ViewModel;
 
 public partial class TestSolvingViewModel : BaseViewModel
 {
-    public TestSolvingViewModel(Test test)
+    public TestSolvingViewModel(Test test, TestService testService)
     {
+        this.testService = testService;
         Test = test;
     }
+
+    TestService testService;
 
     [ObservableProperty]
     Test test;
 
     [RelayCommand]
-    void Submit() => MessageBox.Show("yay :)");
+    void Submit()
+    {
+        testService.ReturnTest(Test);
+    }
 }
