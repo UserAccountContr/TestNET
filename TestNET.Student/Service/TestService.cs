@@ -5,21 +5,14 @@ namespace TestNET.Student.Service;
 
 public class TestService
 {
-    private static (IPAddress, int) DecodeCode(string base64encoded)
+    private static IPAddress DecodeCode(string base64encoded)
     {
-        string padded = base64encoded + new string('=', base64encoded.Length % 4);
+        string padded = base64encoded + new string('=', 4 - base64encoded.Length % 4);
         byte[] code = Convert.FromBase64String(padded);
 
-        byte[] ip_bytes = new byte[code[0]];
-        code.AsSpan(1, code[0]).CopyTo(ip_bytes);
+        IPAddress ip = new(code);
 
-        byte[] port_bytes = new byte[code.Length - code[0]];
-        code.AsSpan(code[0] + 1, code.Length - (code[0] + 1)).CopyTo(port_bytes);
-
-        IPAddress ip = new(ip_bytes);
-        int port = BitConverter.ToInt16(port_bytes);
-
-        return (ip, port);
+        return ip;
     }
 
     public async Task<Test> GetTest(string name, string code)
@@ -30,8 +23,8 @@ public class TestService
 
             {
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
-                var endpoint = DecodeCode(code);
-                using TcpClient client = new(endpoint.Item1.ToString(), endpoint.Item2);
+                IPAddress endpoint = DecodeCode(code) ?? throw new ArgumentException("Invalid IP.");
+                using TcpClient client = new(endpoint.ToString(), 61234);
                 using NetworkStream stream = client.GetStream();
 
                 TestRequest request = new() { StudentName = name, Code = 13000 };

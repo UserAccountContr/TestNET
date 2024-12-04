@@ -43,19 +43,11 @@ public class TestService
 
     TcpListener? server = null;
 
-    private static string EncodeCode(IPAddress ip_addr, int port)
+    private static string EncodeCode(IPAddress ip_addr)
     {
         byte[] ip_bytes = ip_addr.GetAddressBytes();
-        byte address_size = (byte)(ip_bytes.Length);
-        byte[] port_bytes = BitConverter.GetBytes(port);
 
-        byte[] final = new byte[ip_bytes.Length + port_bytes.Length + 1];
-
-        final[0] = address_size;
-        ip_bytes.CopyTo(final, 1);
-        port_bytes.CopyTo(final, ip_bytes.Length + 1);
-
-        return System.Convert.ToBase64String(final).TrimEnd('=');
+        return Convert.ToBase64String(ip_bytes).TrimEnd('=');
     }
 
     private IPAddress? GetIP()
@@ -90,20 +82,18 @@ public class TestService
         {
             try
             {
-                int port = 13000;
-
                 IPAddress? localAddr = GetIP() ?? throw new Exception("No internet");
 
                 if (localAddr == null) return;
 
                 //localAddr = IPAddress.Parse("192.168.80.146");
 
-                server = new TcpListener(localAddr, port);
+                server = new TcpListener(localAddr, 61234);
                 server.Start();
 
                 Task.Run(() =>
                 {
-                    MessageBox.Show($"{EncodeCode(localAddr, port)}", "Code", MessageBoxButton.OK);
+                    MessageBox.Show($"{EncodeCode(localAddr)}", "Code", MessageBoxButton.OK);
                 });
 
                 while (true)
