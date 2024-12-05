@@ -12,8 +12,7 @@ public class TestRequest : Request
 
 public class SubmissionRequest : Request
 {
-    public required Test Submition { get; set; }
-    public int Code { get; set; }
+    public required Dictionary<string, Answer> Submission { get; set; }
 }
 
 public class TestResponse

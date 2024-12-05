@@ -18,6 +18,6 @@ public partial class TestSolvingViewModel : BaseViewModel
     [RelayCommand]
     void Submit()
     {
-        testService.ReturnTest(Test);
+        testService.ReturnTest(Test.DeepCopy());
     }
 }

@@ -1,19 +1,22 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using System.Xml.Linq;
 
 namespace TestNET.Student.Service;
 
 public class TestService
 {
-    private static IPAddress DecodeCode(string base64encoded)
+    private IPAddress DecodeCode(string base64encoded)
     {
         string padded = base64encoded + new string('=', 4 - base64encoded.Length % 4);
         byte[] code = Convert.FromBase64String(padded);
 
-        IPAddress ip = new(code);
+        ip = new(code);
 
         return ip;
     }
+
+    IPAddress? ip;
 
     public async Task<Test> GetTest(string name, string code)
     {
@@ -78,6 +81,51 @@ public class TestService
 
     public async void ReturnTest(Test test)
     {
-        MessageBox.Show(string.Join('\n', test.Questions.Select(x => x.Answer.Text)));
+        try
+        {
+            {
+                using TcpClient client = new(ip.ToString(), 61234);
+                using NetworkStream stream = client.GetStream();
+
+                SubmissionRequest request = new() { Submission = test.Questions.ToDictionary(x => x.UniqueId, x => x.Answer) };
+                string requestJson = JsonSerializer.Serialize(request as Request);
+                byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
+
+                stream.Write(requestBytes, 0, requestBytes.Length);
+                stream.Write([0xff], 0, 1);
+
+                byte[] responseBytes = new byte[1024];
+                int responseLength = 0;
+
+                for (int currentLenght = 0; (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
+                {
+                    responseLength += currentLenght;
+
+                    if (responseBytes[responseLength - 1] == 0xff)
+                    {
+                        break;
+                    }
+
+                    Array.Resize(ref responseBytes, responseLength + 1024);
+                }
+
+                Array.Resize(ref responseBytes, responseLength - 1);
+
+                stream.Write([0xff], 0, 1); // Acknowledge
+
+                string responseJson = Encoding.UTF8.GetString(responseBytes);
+                MessageBox.Show(responseJson);
+            }
+        }
+        catch (ArgumentNullException e)
+        {
+            //Console.WriteLine("ArgumentNullException: {0}", e);
+        }
+        catch (SocketException e)
+        {
+            //Console.WriteLine("SocketException: {0}", e);
+        }
+
+        //MessageBox.Show(string.Join('\n', test.Questions.Select(x => x.Answer.Text)));
     }
 }

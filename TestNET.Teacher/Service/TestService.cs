@@ -175,6 +175,12 @@ public class TestService
     public void handleSubmissionRequest(SubmissionRequest request, NetworkStream stream)
     {
 
+        byte[] responseBytes = Encoding.UTF8.GetBytes("OK");
+
+        stream.Write(responseBytes, 0, responseBytes.Length);
+        stream.Write([0xff], 0, 1);
+
+        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Values)));
     }
 
     public void StopSharingTest()

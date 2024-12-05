@@ -11,11 +11,11 @@ public partial class Question : ObservableObject
 
     public string UniqueId { get; set; }
 
-    public Question(string text, Answer answer, string uid)
+    public Question(string text, Answer answer, string uniqueid)
     {
         Text = text;
         Answer = answer;
-        UniqueId = uid;
+        UniqueId = uniqueid;
     }
 
     public virtual Question DeepCopy() => new Question(Text, Answer.DeepCopy(), UniqueId);
