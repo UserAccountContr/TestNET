@@ -28,11 +28,11 @@ public partial class EditTestViewModel : BaseViewModel
         BackupTest();
     }
 
-    [RelayCommand]
-    void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
+    //[RelayCommand]
+    //void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
 
     [RelayCommand]
-    void AddSAQuestion() => Questions.Add(new Question("", new(""), Guid.NewGuid().ToString()));
+    void AddSAQuestion() => Questions.Add(new ShortAnswerQuestion("", new(""), Guid.NewGuid().ToString()));
 
     [RelayCommand]
     void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", new(""), Guid.NewGuid().ToString(), new()));
