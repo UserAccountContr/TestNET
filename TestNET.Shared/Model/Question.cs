@@ -27,7 +27,7 @@ public partial class MultipleChoiceQuestion : Question
 {
     public ObservableCollection<Answer> PossibleAnswers { get; set; }
 
-    public MultipleChoiceQuestion(string text, Answer answer, string uid, ObservableCollection<Answer> possibleanswers) : base(text, answer, uid)
+    public MultipleChoiceQuestion(string text, Answer answer, string uniqueid, ObservableCollection<Answer> possibleanswers) : base(text, answer, uniqueid)
     {
         PossibleAnswers = possibleanswers;
     }

@@ -22,7 +22,7 @@ public class TestService
                 testList = JsonSerializer.Deserialize<List<Test>>(stream) ?? throw new ArgumentNullException();
             }
         }
-        catch
+        catch (Exception e)
         {
             MessageBox.Show("Unable to load tests", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -180,7 +180,7 @@ public class TestService
         stream.Write(responseBytes, 0, responseBytes.Length);
         stream.Write([0xff], 0, 1);
 
-        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Values)));
+        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Values.Select(x => x.Text))));
     }
 
     public void StopSharingTest()
