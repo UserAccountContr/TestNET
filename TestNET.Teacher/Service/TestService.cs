@@ -9,9 +9,9 @@ namespace TestNET.Teacher.Service;
 
 public class TestService
 {
-    public async Task<List<Test>> GetTests()
+    public async Task<List<TeacherTest>> GetTests()
     {
-        List<Test> testList = new();
+        List<TeacherTest> testList = new();
 
         try
         {
@@ -19,7 +19,7 @@ public class TestService
             if (File.Exists(filename))
             {
                 using Stream stream = File.OpenRead(filename);
-                testList = JsonSerializer.Deserialize<List<Test>>(stream) ?? throw new ArgumentNullException();
+                testList = JsonSerializer.Deserialize<List<TeacherTest>>(stream) ?? throw new ArgumentNullException();
             }
         }
         catch (Exception e)
@@ -30,7 +30,7 @@ public class TestService
         return testList;
     }
 
-    public void SaveTests(List<Test> tests)
+    public void SaveTests(List<TeacherTest> tests)
     {
         string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
 
@@ -76,7 +76,7 @@ public class TestService
         return null;
     }
 
-    public void ShareTest(Test test)
+    public void ShareTest(TeacherTest test)
     {
         _ = Task.Run(async () =>
         {
@@ -131,7 +131,7 @@ public class TestService
                         } 
                         else if (request is SubmissionRequest submissionRequest)
                         {
-                            await Task.Run(() => handleSubmissionRequest(submissionRequest, stream));
+                            await Task.Run(() => handleSubmissionRequest(submissionRequest, test, stream));
                         } 
                         else
                         {
@@ -172,7 +172,7 @@ public class TestService
         }
     }
 
-    public void handleSubmissionRequest(SubmissionRequest request, NetworkStream stream)
+    public void handleSubmissionRequest(SubmissionRequest request, TeacherTest test, NetworkStream stream)
     {
 
         byte[] responseBytes = Encoding.UTF8.GetBytes("OK");
@@ -180,7 +180,13 @@ public class TestService
         stream.Write(responseBytes, 0, responseBytes.Length);
         stream.Write([0xff], 0, 1);
 
-        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Values.Select(x => x.Text))));
+        App.Current.Dispatcher.Invoke((Action)delegate
+        {
+            test.Submissions.Add(request.Submission);
+        });
+
+
+        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Values.Select(x => ((Answer)x).Text))));
     }
 
     public void StopSharingTest()

@@ -17,6 +17,7 @@ public class TestService
     }
 
     IPAddress? ip;
+    string name;
 
     public async Task<Test> GetTest(string name, string code)
     {
@@ -25,6 +26,7 @@ public class TestService
             //int port = 13000;
 
             {
+                this.name = name;
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
                 IPAddress endpoint = DecodeCode(code) ?? throw new ArgumentException("Invalid IP.");
                 using TcpClient client = new(endpoint.ToString(), 61234);
@@ -87,7 +89,7 @@ public class TestService
                 using TcpClient client = new(ip.ToString(), 61234);
                 using NetworkStream stream = client.GetStream();
 
-                SubmissionRequest request = new() { Submission = test.Questions.ToDictionary(x => x.UniqueId, x => x.Answer) };
+                SubmissionRequest request = new() { Submission = new(name, test.Questions.ToDictionary(x => x.UniqueId, x => x.Answer), DateTime.Now) };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 

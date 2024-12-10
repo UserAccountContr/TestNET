@@ -12,7 +12,7 @@ public class TestRequest : Request
 
 public class SubmissionRequest : Request
 {
-    public required Dictionary<string, Answer> Submission { get; set; }
+    public required Submission Submission { get; set; }
 }
 
 public class TestResponse

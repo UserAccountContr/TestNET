@@ -20,3 +20,15 @@ public class Test
 
     public Test WithoutAnswers() => new Test(Name, new ObservableCollection<Question>(Questions.Select(x => x.WithoutAnswers())));
 }
+
+public class TeacherTest : Test
+{
+    public ObservableCollection<Submission> Submissions { get; set; }
+
+    public TeacherTest(string name, ObservableCollection<Question> questions, ObservableCollection<Submission> submissions) : base(name, questions)
+    {
+        Submissions = submissions;
+    }
+
+    //public Test GenerateTest(options) { }
+}

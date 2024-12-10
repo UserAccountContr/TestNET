@@ -4,7 +4,7 @@ namespace TestNET.Teacher.ViewModel;
 
 public partial class TestViewModel : BaseViewModel
 {
-    public TestViewModel(Test test, TestService testService)
+    public TestViewModel(TeacherTest test, TestService testService)
     {
         Test = test;
         this.testService = testService;
@@ -13,7 +13,7 @@ public partial class TestViewModel : BaseViewModel
     TestService testService;
 
     [ObservableProperty]
-    Test test;
+    TeacherTest test;
 
     [RelayCommand]
     void ShareTest()
@@ -28,4 +28,6 @@ public partial class TestViewModel : BaseViewModel
         testService.StopSharingTest();
         IsBusy = false;
     }
+
+    public string GetQuestion(string uid) => Test.Questions.Where(x => x.UniqueId == uid).FirstOrDefault().Text;
 }

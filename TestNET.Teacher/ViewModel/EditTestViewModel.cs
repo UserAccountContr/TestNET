@@ -9,7 +9,7 @@ public partial class EditTestViewModel : BaseViewModel
     bool IsDirty = false;
 
     [ObservableProperty]
-    Test test;
+    TeacherTest test;
 
     [ObservableProperty]
     string name;
@@ -19,7 +19,7 @@ public partial class EditTestViewModel : BaseViewModel
     [ObservableProperty]
     INavigationService navigation;
 
-    public EditTestViewModel(Test test, INavigationService navigation)
+    public EditTestViewModel(TeacherTest test, INavigationService navigation)
     {
         Questions.CollectionChanged += Questions_CollectionChanged;
 

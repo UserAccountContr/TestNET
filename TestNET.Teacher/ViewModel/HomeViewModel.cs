@@ -4,7 +4,7 @@ namespace TestNET.Teacher.ViewModel;
 
 public partial class HomeViewModel : BaseViewModel
 {
-    public ObservableCollection<Test> Tests { get; } = new();
+    public ObservableCollection<TeacherTest> Tests { get; } = new();
     TestService testService;
     ISettingsService settingsService;
     INavigationService Navigation;
@@ -19,12 +19,12 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     void NewTest()
     {
-        Tests.Add(new Test("New test", new()));
+        Tests.Add(new TeacherTest("New test", new(), new()));
         Navigation.NavigateTo<EditTestViewModel, Test>(Tests[^1]);
     }
 
     [RelayCommand]
-    void RemoveTest(object selitem) => Tests.Remove((Test)selitem);
+    void RemoveTest(object selitem) => Tests.Remove((TeacherTest)selitem);
 
     [RelayCommand]
     void SaveTest() => testService.SaveTests(Tests.ToList());
