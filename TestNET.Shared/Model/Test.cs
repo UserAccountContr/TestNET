@@ -27,7 +27,7 @@ public class TeacherTest : Test
 
     public TeacherTest(string name, ObservableCollection<Question> questions, ObservableCollection<Submission> submissions) : base(name, questions)
     {
-        Submissions = submissions;
+        Submissions = submissions ?? new();
     }
 
     //public Test GenerateTest(options) { }
