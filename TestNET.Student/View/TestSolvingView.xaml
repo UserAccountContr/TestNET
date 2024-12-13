@@ -30,8 +30,7 @@
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
 
-                            <Label ContentStringFormat="Question: {0}"
-                                   Content="{Binding Text}"
+                            <Label Content="{Binding Text}"
                                    Grid.Column="0"/>
 
                             <TextBox Text="{Binding Answer.Text}"

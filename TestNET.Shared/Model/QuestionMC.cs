@@ -1,7 +1,8 @@
 ﻿namespace TestNET.Shared.Model;
+
 public partial class MultipleChoiceQuestion : Question
 {
-    public ObservableCollection<Answer> PossibleAnswers { get; set; }
+    public ObservableCollection<Answer> PossibleAnswers { get; set; } = new();
 
     public MultipleChoiceQuestion(string text, Answer answer, string uniqueid, ObservableCollection<Answer> possibleanswers) : base(text, answer, uniqueid)
     {

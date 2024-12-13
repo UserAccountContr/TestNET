@@ -4,7 +4,7 @@ public class Test
 {
     public string Name { get; set; }
 
-    public ObservableCollection<Question> Questions { get; set; }
+    public ObservableCollection<Question> Questions { get; set; } = new();
 
     public override string ToString() => Name;
 
@@ -23,7 +23,7 @@ public class Test
 
 public class TeacherTest : Test
 {
-    public ObservableCollection<Submission> Submissions { get; set; }
+    public ObservableCollection<Submission> Submissions { get; set; } = new();
 
     public TeacherTest(string name, ObservableCollection<Question> questions, ObservableCollection<Submission> submissions) : base(name, questions)
     {

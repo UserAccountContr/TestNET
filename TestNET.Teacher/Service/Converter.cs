@@ -42,7 +42,7 @@ public class QuestionIDConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        return (parameter as ObservableCollection<Question>).Where(x => x.UniqueId == value).FirstOrDefault();
+        return (parameter as ObservableCollection<Question>).FirstOrDefault(x => x.UniqueId == value.ToString());
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

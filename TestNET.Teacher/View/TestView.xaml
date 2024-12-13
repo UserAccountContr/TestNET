@@ -76,8 +76,8 @@
                                     </Grid.ColumnDefinitions>
 
                                     <Label ContentStringFormat="Question: {0}"
-                                   Content="{Binding Text}"
-                                   Grid.Column="0"/>
+                                           Content="{Binding Text}"
+                                           Grid.Column="0"/>
                                     <!--
                             <Label ContentStringFormat="Answer: {0}"
                                    Content="{Binding Answer.Text}"
@@ -107,17 +107,21 @@
                                 <Expander Header="{Binding Name}">
 
                                     <StackPanel>
+                                        <!--
                                         <StackPanel.Resources>
                                             <serv:AnswerConverter x:Key="AnswerConverter"/>
                                         </StackPanel.Resources>
+                                        -->
                                         <Label Content="{Binding TimeSubmitted}"/>
-                                        <ItemsControl ItemsSource="{Binding Answers}" >
+                                        <ItemsControl ItemsSource="{Binding Answers.Questions}" >
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Grid>
+                                                        <!--
                                                         <Grid.Resources>
                                                             <serv:QuestionIDConverter x:Key="QID"/>
                                                         </Grid.Resources>
+                                                        -->
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition/>
                                                             <ColumnDefinition/>
@@ -125,11 +129,11 @@
                                                         </Grid.ColumnDefinitions>
                                                         
                                                         <StackPanel Grid.Column="0">
-                                                            <Label Content="{Binding Key}"/>
+                                                            <Label Content="{Binding Text}"/>
                                                         </StackPanel>
 
                                                         <StackPanel Grid.Column="2">
-                                                            <Label Content="{Binding Value.Text}"/>
+                                                            <Label Content="{Binding Answer.Text}"/>
                                                         </StackPanel>
                                                     </Grid>
                                                 </DataTemplate>

@@ -17,7 +17,7 @@ public class TestService
     }
 
     IPAddress? ip;
-    string name;
+    string? name;
 
     public async Task<Test> GetTest(string name, string code)
     {
@@ -89,7 +89,7 @@ public class TestService
                 using TcpClient client = new(ip.ToString(), 61234);
                 using NetworkStream stream = client.GetStream();
 
-                SubmissionRequest request = new() { Submission = new(name, test.Questions.ToDictionary(x => x.UniqueId, x => x.Answer), DateTime.Now) };
+                SubmissionRequest request = new() { Submission = new(name, test/*.Questions.ToDictionary(x => x.UniqueId, x => x.Answer)*/, DateTime.Now) };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 

@@ -182,11 +182,11 @@ public class TestService
 
         App.Current.Dispatcher.Invoke((Action)delegate
         {
-            test.Submissions.Add(request.Submission);
+            (test.Submissions ??= new()).Add(request.Submission);
         });
 
 
-        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Values.Select(x => ((Answer)x).Text))));
+        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Questions.Select(x => x.Answer.Text))));
     }
 
     public void StopSharingTest()
