@@ -7,7 +7,8 @@
     xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
-	d:DataContext="{d:DesignInstance Type=viewmodel:EditTestViewModel}"
+    xmlns:serv="clr-namespace:TestNET.Teacher.Service"
+    d:DataContext="{d:DesignInstance Type=viewmodel:EditTestViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
@@ -65,28 +66,39 @@
             <ListView Grid.Row="2" 
                       ItemsSource="{Binding Questions}">
                 <ListView.Resources>
+
+                    <serv:IndexConverter x:Key="IndexConverter" />
+
                     <DataTemplate DataType="{x:Type model:Question}">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25"/>
                                 <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
-                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                   ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="1"/>
+                            <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="2"/>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25"/>
                                 <ColumnDefinition Width="250"/>
                                 <ColumnDefinition Width="250"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                   ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                            <StackPanel Grid.Column="1">
+                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                   Grid.Column="1"/>
+                            <StackPanel Grid.Column="2">
                                 <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate DataType="{x:Type model:Answer}">

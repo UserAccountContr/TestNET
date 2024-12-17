@@ -52,15 +52,20 @@
                           IsExpanded="True">
                     <ListView ItemsSource="{Binding Test.Questions}">
                         <ListView.Resources>
+                            
+                            <serv:IndexConverter x:Key="IndexConverter" />
+
                             <DataTemplate DataType="{x:Type model:Question}">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="150"/>
                                         <ColumnDefinition Width="150"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label ContentStringFormat="Question: {0}"
-                                           Content="{Binding Text}"
-                                           Grid.Column="0"/>
+                                    <WrapPanel Grid.Column="0">
+                                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                               ContentStringFormat="{}{0}."/>
+                                        <Label Content="{Binding Text}"/>
+                                    </WrapPanel>
                                     <!--
                             <Label ContentStringFormat="Answer: {0}"
                                    Content="{Binding Answer.Text}"
@@ -75,9 +80,11 @@
                                         <ColumnDefinition Width="150"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <Label ContentStringFormat="Question: {0}"
-                                           Content="{Binding Text}"
-                                           Grid.Column="0"/>
+                                    <WrapPanel Grid.Column="0">
+                                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                               ContentStringFormat="{}{0}."/>
+                                        <Label Content="{Binding Text}"/>
+                                    </WrapPanel>
                                     <!--
                             <Label ContentStringFormat="Answer: {0}"
                                    Content="{Binding Answer.Text}"

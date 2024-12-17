@@ -91,7 +91,8 @@
                         <serv:IndexConverter x:Key="IndexConverter" />
                     </DataTemplate.Resources>
                     <WrapPanel>
-                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                               ContentStringFormat="{}{0}."/>
                         <Label Content="{Binding Name}"/>
                         <Button Content="{DynamicResource open}" 
                                 Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
