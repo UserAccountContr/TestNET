@@ -12,15 +12,32 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
-                <!--
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <!--Grid.Column="4"-->
+            <MenuItem Header="Back"
+                              Command="{Binding BackCommand}"/>
+            <MenuItem Header="Add question">
+                <MenuItem Header="Short answer"
+                                  Command="{Binding AddSAQuestionCommand}" />
+                <MenuItem Header="Multiple choice"
+                                  Command="{Binding AddMCQuestionCommand}" />
+            </MenuItem>
+            <MenuItem Header="Save"
+                              Command="{Binding SaveChangesCommand}"/>
+            <MenuItem Header="Cancel"
+                              Command="{Binding CancelCommand}"/>
+        </Menu>
+
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                    <!--
+                <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="50" />
                     <ColumnDefinition Width="100" />
@@ -41,84 +58,71 @@
                 <Button Content="Cancel"
                         Grid.Column="3"
                         Command="{Binding CancelCommand}"/>
+                </Grid>
                 -->
-                <Menu>  <!--Grid.Column="4"-->
-                    <MenuItem Header="Back"
-                              Command="{Binding BackCommand}"/>
-                    <MenuItem Header="Add question">
-                        <MenuItem Header="Short answer"
-                                  Command="{Binding AddSAQuestionCommand}" />
-                        <MenuItem Header="Multiple choice"
-                                  Command="{Binding AddMCQuestionCommand}" />
-                    </MenuItem>
-                    <MenuItem Header="Save"
-                              Command="{Binding SaveChangesCommand}"/>
-                    <MenuItem Header="Cancel"
-                              Command="{Binding CancelCommand}"/>
-                </Menu>
-            </Grid>
-            <WrapPanel Grid.Row="1">
-                <Label Content="Test Name: "/>
-                <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <WrapPanel Grid.Row="0">
+                    <Label Content="Test Name: "/>
+                    <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="1"
                          VerticalContentAlignment="Center"/>
-            </WrapPanel>
-            <ListView Grid.Row="2" 
+                </WrapPanel>
+                <ListView Grid.Row="1" 
                       ItemsSource="{Binding Questions}">
-                <ListView.Resources>
+                    <ListView.Resources>
 
-                    <serv:IndexConverter x:Key="IndexConverter" />
+                        <serv:IndexConverter x:Key="IndexConverter" />
 
-                    <DataTemplate DataType="{x:Type model:Question}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                        <DataTemplate DataType="{x:Type model:Question}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="150"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="1"/>
-                            <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="2"/>
-                        </Grid>
-                    </DataTemplate>
-                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="250"/>
-                                <ColumnDefinition Width="250"/>
-                            </Grid.ColumnDefinitions>
+                            </Grid>
+                        </DataTemplate>
+                        <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="25"/>
+                                    <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition Width="250"/>
+                                </Grid.ColumnDefinitions>
 
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                            <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="1"/>
-                            <StackPanel Grid.Column="2">
-                                <ItemsControl ItemsSource="{Binding PossibleAnswers}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate DataType="{x:Type model:Answer}">
-                                            <WrapPanel>
-                                                <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
+                                <StackPanel Grid.Column="2">
+                                    <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type model:Answer}">
+                                                <WrapPanel>
+                                                    <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
                                                          Command="{Binding DataContext.SetCorrectAnswerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
                                                          CommandParameter="{Binding .}"
                                                          IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                                <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                            </WrapPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                                <Button Content="+"
+                                                    <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </WrapPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <Button Content="+"
                                         Command="{Binding AddPosAnsCommand}"/>
-                            </StackPanel>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.Resources>
-            </ListView>
-        </Grid>
-    </ScrollViewer>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.Resources>
+                </ListView>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>

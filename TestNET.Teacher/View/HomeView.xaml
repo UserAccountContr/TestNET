@@ -28,9 +28,7 @@
                                      x:Shared="false" 
                                      HorizontalAlignment="Center"
                                      GroupName="LangSel" 
-                                     IsHitTestVisible="False"
-                                     Command="{Binding SetLangCommand}"
-                                     CommandParameter="{Binding RelativeSource={RelativeSource AncestorType=MenuItem}, Path=Header}"/>
+                                     IsHitTestVisible="False"/>
                     </MenuItem.Resources>
 
                     <MenuItem.ItemContainerStyle>
@@ -40,72 +38,79 @@
                         </Style>
                     </MenuItem.ItemContainerStyle>
 
-                    <MenuItem Header="BG"/>
-                    <MenuItem Header="EN"/>
+                    <MenuItem Header="BG"
+                              Command="{Binding SetLangCommand}"
+                              CommandParameter="bg"/>
+                    <MenuItem Header="EN"
+                              Command="{Binding SetLangCommand}"
+                              CommandParameter="en"/>
                 </MenuItem>
             </MenuItem>
         </Menu>
 
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
-            <RowDefinition />
-        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+            </Grid.RowDefinitions>
 
-        <WrapPanel Grid.Row="0">
+                <!--
+            <WrapPanel Grid.Row="0">
+                
 
-            <Label Content="{DynamicResource tests}" 
-                   Style="{StaticResource LargeLabel}"/>
+                <Label Content="{DynamicResource tests}" 
+                       Style="{StaticResource LargeLabel}"/>
 
-            <Button Content="{DynamicResource add}" 
-                    Command="{Binding NewTestCommand}" 
-                    Style="{StaticResource Btn}"/>
+                <Button Content="{DynamicResource add}" 
+                        Command="{Binding NewTestCommand}" 
+                        Style="{StaticResource Btn}"/>
 
-            <Button Content="{DynamicResource save}" 
-                    Command="{Binding SaveTestCommand}"
-                    Style="{StaticResource Btn}"/>
+                <Button Content="{DynamicResource save}" 
+                        Command="{Binding SaveTestCommand}"
+                        Style="{StaticResource Btn}"/>
 
-            <Button Content="{DynamicResource load}" 
-                    Command="{Binding LoadTestCommand}"
-                    Style="{StaticResource Btn}"/>
+                <Button Content="{DynamicResource load}" 
+                        Command="{Binding LoadTestCommand}"
+                        Style="{StaticResource Btn}"/>
 
-            <RadioButton GroupName="Lang"
-                         Content="English"
-                         IsChecked="True"
-                         Command="{Binding SetLangCommand}"
-                         CommandParameter="en"/>
-            
-            <RadioButton GroupName="Lang"
-                         Content="Български"
-                         Command="{Binding SetLangCommand}"
-                         CommandParameter="bg"/>
+                <RadioButton GroupName="Lang"
+                             Content="English"
+                             IsChecked="True"
+                             Command="{Binding SetLangCommand}"
+                             CommandParameter="en"/>
+                
+                <RadioButton GroupName="Lang"
+                             Content="Български"
+                             Command="{Binding SetLangCommand}"
+                             CommandParameter="bg"/>
+                
+        
+            </WrapPanel>
+                -->
 
-        </WrapPanel>
-
-        <ListView ItemsSource="{Binding Path=Tests}" 
-                  Grid.Row="1"
+            <ListView ItemsSource="{Binding Path=Tests}" 
+                  Grid.Row="0"
                   Name="TestView">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <DataTemplate.Resources>
-                        <serv:IndexConverter x:Key="IndexConverter" />
-                    </DataTemplate.Resources>
-                    <WrapPanel>
-                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <DataTemplate.Resources>
+                            <serv:IndexConverter x:Key="IndexConverter" />
+                        </DataTemplate.Resources>
+                        <WrapPanel>
+                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                ContentStringFormat="{}{0}."/>
-                        <Label Content="{Binding Name}"/>
-                        <Button Content="{DynamicResource open}" 
+                            <Label Content="{Binding Name}"/>
+                            <Button Content="{DynamicResource open}" 
                                 Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
                                 CommandParameter="{Binding .}"
                                 Style="{StaticResource Btn}"/>
-                        <Button Content="{DynamicResource delete}" 
+                            <Button Content="{DynamicResource delete}" 
                                 Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
                                 CommandParameter="{Binding .}"
                                 Style="{StaticResource Btn}"/>
-                    </WrapPanel>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </Grid>
+                        </WrapPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
     </DockPanel>
 </UserControl>

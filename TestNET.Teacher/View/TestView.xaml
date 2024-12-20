@@ -12,14 +12,32 @@
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="30"/>
-                <RowDefinition Height="50"/>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource back}"
+              Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+              IsEnabled="{Binding IsNotBusy}"/>
+            <MenuItem Header="{DynamicResource start}"
+              Command="{Binding ShareTestCommand}"
+              IsEnabled="{Binding IsNotBusy}"/>
+            <MenuItem Header="{DynamicResource stop}"
+              Command="{Binding StopSharingTestCommand}"
+              IsEnabled="{Binding IsBusy}"/>
+            <MenuItem Header="{DynamicResource edit}"
+              Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+              CommandParameter="{Binding Test}"
+              IsEnabled="{Binding IsNotBusy}"/>
+        </Menu>
+    
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+                <!--
             <WrapPanel Grid.Row="0">
+                
                 <Label Content="Test"
                        Style="{DynamicResource LargeLabel}"/>
                 <Button Content="{DynamicResource back}" 
@@ -39,120 +57,125 @@
                         CommandParameter="{Binding Test}"
                         IsEnabled="{Binding IsNotBusy}"
                         Style="{DynamicResource Btn}"/>
+                
+                
             </WrapPanel>
-            <StackPanel Grid.Row="1">
-                <Label ContentStringFormat="Test Name: {0}"
+                -->
+
+                <StackPanel Grid.Row="0">
+                    <Label ContentStringFormat="Test Name: {0}"
                        Content="{Binding Test.Name}"/>
-                <Label ContentStringFormat="Number of questions: {0}"
+                    <Label ContentStringFormat="Number of questions: {0}"
                        Content="{Binding Test.Questions.Count}"/>
-            </StackPanel>
-            <StackPanel Grid.Row="2">
-                <Expander Header="{DynamicResource questions}"
+                </StackPanel>
+                <StackPanel Grid.Row="1">
+                    <Expander Header="{DynamicResource questions}"
                           ExpandDirection="Down"
                           IsExpanded="True">
-                    <ListView ItemsSource="{Binding Test.Questions}">
-                        <ListView.Resources>
-                            
-                            <serv:IndexConverter x:Key="IndexConverter" />
+                        <ListView ItemsSource="{Binding Test.Questions}">
+                            <ListView.Resources>
 
-                            <DataTemplate DataType="{x:Type model:Question}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="150"/>
-                                    </Grid.ColumnDefinitions>
-                                    <WrapPanel Grid.Column="0">
-                                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                <serv:IndexConverter x:Key="IndexConverter" />
+
+                                <DataTemplate DataType="{x:Type model:Question}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
+                                        <WrapPanel Grid.Column="0">
+                                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                                ContentStringFormat="{}{0}."/>
-                                        <Label Content="{Binding Text}"/>
-                                    </WrapPanel>
-                                    <!--
-                            <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer.Text}"
-                                   Grid.Column="1"/>
-                            -->
-                                </Grid>
-                            </DataTemplate>
-                            <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="150"/>
-                                    </Grid.ColumnDefinitions>
-
-                                    <WrapPanel Grid.Column="0">
-                                        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                               ContentStringFormat="{}{0}."/>
-                                        <Label Content="{Binding Text}"/>
-                                    </WrapPanel>
-                                    <!--
-                            <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer.Text}"
-                                   Grid.Column="1"/>
-                            -->
-                                    <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="1">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Label Content="{Binding Text}" />
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.Resources>
-                    </ListView>
-                </Expander>
-                <Expander Header="Test settings"
-                          ExpandDirection="Down">
-                    
-                </Expander>
-                <Expander Header="Submissions">
-                    <ListView ItemsSource="{Binding Test.Submissions}">
-                        <ListView.Resources>
-                            <DataTemplate DataType="{x:Type model:Submission}">
-                                <Expander Header="{Binding Name}">
-
-                                    <StackPanel>
+                                            <Label Content="{Binding Text}"/>
+                                        </WrapPanel>
                                         <!--
+                            <Label ContentStringFormat="Answer: {0}"
+                                   Content="{Binding Answer.Text}"
+                                   Grid.Column="1"/>
+                            -->
+                                    </Grid>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150"/>
+                                            <ColumnDefinition Width="150"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <WrapPanel Grid.Column="0">
+                                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                               ContentStringFormat="{}{0}."/>
+                                            <Label Content="{Binding Text}"/>
+                                        </WrapPanel>
+                                        <!--
+                            <Label ContentStringFormat="Answer: {0}"
+                                   Content="{Binding Answer.Text}"
+                                   Grid.Column="1"/>
+                            -->
+                                        <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          Grid.Column="1">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Text}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.Resources>
+                        </ListView>
+                    </Expander>
+                    <Expander Header="Test settings"
+                          ExpandDirection="Down">
+
+                    </Expander>
+                    <Expander Header="Submissions">
+                        <ListView ItemsSource="{Binding Test.Submissions}">
+                            <ListView.Resources>
+                                <DataTemplate DataType="{x:Type model:Submission}">
+                                    <Expander Header="{Binding Name}">
+
+                                        <StackPanel>
+                                            <!--
                                         <StackPanel.Resources>
                                             <serv:AnswerConverter x:Key="AnswerConverter"/>
                                         </StackPanel.Resources>
                                         -->
-                                        <Label Content="{Binding TimeSubmitted}"/>
-                                        <ItemsControl ItemsSource="{Binding Answers.Questions}" >
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Grid>
-                                                        <!--
+                                            <Label Content="{Binding TimeSubmitted}"/>
+                                            <ItemsControl ItemsSource="{Binding Answers.Questions}" >
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid>
+                                                            <!--
                                                         <Grid.Resources>
                                                             <serv:QuestionIDConverter x:Key="QID"/>
                                                         </Grid.Resources>
                                                         -->
-                                                        <Grid.ColumnDefinitions>
-                                                            <ColumnDefinition/>
-                                                            <ColumnDefinition/>
-                                                            <ColumnDefinition/>
-                                                        </Grid.ColumnDefinitions>
-                                                        
-                                                        <StackPanel Grid.Column="0">
-                                                            <Label Content="{Binding Text}"/>
-                                                        </StackPanel>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
 
-                                                        <StackPanel Grid.Column="2">
-                                                            <Label Content="{Binding Answer.Text}"/>
-                                                        </StackPanel>
-                                                    </Grid>
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
-                                        </ItemsControl>
-                                    </StackPanel>
-                                </Expander>
-                            </DataTemplate>
-                        </ListView.Resources>
-                    </ListView>
-                </Expander>
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+                                                            <StackPanel Grid.Column="0">
+                                                                <Label Content="{Binding Text}"/>
+                                                            </StackPanel>
+
+                                                            <StackPanel Grid.Column="2">
+                                                                <Label Content="{Binding Answer.Text}"/>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </Expander>
+                                </DataTemplate>
+                            </ListView.Resources>
+                        </ListView>
+                    </Expander>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
