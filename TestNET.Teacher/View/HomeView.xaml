@@ -97,16 +97,16 @@
                         </DataTemplate.Resources>
                         <WrapPanel>
                             <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                               ContentStringFormat="{}{0}."/>
+                                   ContentStringFormat="{}{0}."/>
                             <Label Content="{Binding Name}"/>
                             <Button Content="{DynamicResource open}" 
-                                Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                CommandParameter="{Binding .}"
-                                Style="{StaticResource Btn}"/>
+                                    Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource Btn}"/>
                             <Button Content="{DynamicResource delete}" 
-                                Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                CommandParameter="{Binding .}"
-                                Style="{StaticResource Btn}"/>
+                                    Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                    CommandParameter="{Binding .}"
+                                    Style="{StaticResource Btn}"/>
                         </WrapPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -22,7 +22,7 @@ public class SettingsService : ISettingsService
     {
         foreach (var dictionary in Application.Current.Resources.MergedDictionaries)
         {
-            if (dictionary.Source != null && dictionary.Source.ToString().Contains($"{property}"))
+            if (dictionary.Source is not null && dictionary.Source.ToString().Contains($"{property}"))
             {
                 Application.Current.Resources.MergedDictionaries.Remove(dictionary);
                 break;
