@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
+	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
 	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
@@ -75,7 +76,7 @@
                         <ListView ItemsSource="{Binding Test.Questions}">
                             <ListView.Resources>
 
-                                <serv:IndexConverter x:Key="IndexConverter" />
+                                <sharedserv:IndexConverter x:Key="IndexConverter" />
 
                                 <DataTemplate DataType="{x:Type model:Question}">
                                     <Grid>
@@ -136,21 +137,11 @@
                                     <Expander Header="{Binding Name}">
 
                                         <StackPanel>
-                                            <!--
-                                        <StackPanel.Resources>
-                                            <serv:AnswerConverter x:Key="AnswerConverter"/>
-                                        </StackPanel.Resources>
-                                        -->
                                             <Label Content="{Binding TimeSubmitted}"/>
                                             <ItemsControl ItemsSource="{Binding Answers.Questions}" >
                                                 <ItemsControl.Resources>
                                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                                                         <Grid>
-                                                            <!--
-                                                        <Grid.Resources>
-                                                            <serv:QuestionIDConverter x:Key="QID"/>
-                                                        </Grid.Resources>
-                                                        -->
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="100"/>
                                                                 <ColumnDefinition Width="100"/>
@@ -169,11 +160,6 @@
 
                                                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                                                         <Grid>
-                                                            <!--
-                                                        <Grid.Resources>
-                                                            <serv:QuestionIDConverter x:Key="QID"/>
-                                                        </Grid.Resources>
-                                                        -->
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="100"/>
                                                                 <ColumnDefinition Width="100"/>

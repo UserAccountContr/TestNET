@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Student.View"
     xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
+    xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
     xmlns:viewmodel="clr-namespace:TestNET.Student.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Student.Service" 
     d:DataContext="{d:DesignInstance Type=viewmodel:TestSolvingViewModel}"
@@ -25,7 +26,7 @@
             <ListView ItemsSource="{Binding Test.Questions}">
                 <ListView.Resources>
 
-                    <serv:IndexConverter x:Key="IndexConverter" />
+                    <sharedserv:IndexConverter x:Key="IndexConverter" />
 
                     <DataTemplate DataType="{x:Type model:Question}">
                         <Grid>
