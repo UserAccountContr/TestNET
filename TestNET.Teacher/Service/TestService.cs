@@ -186,7 +186,7 @@ public class TestService
         });
 
 
-        Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Questions.Select(x => x.Answer.Text))));
+        //Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Questions.Select(x => x.Answer.Text))));
     }
 
     public void StopSharingTest()

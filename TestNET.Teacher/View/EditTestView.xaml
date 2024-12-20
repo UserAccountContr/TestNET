@@ -107,9 +107,10 @@
                                             <DataTemplate DataType="{x:Type model:Answer}">
                                                 <WrapPanel>
                                                     <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
-                                                         Command="{Binding DataContext.SetCorrectAnswerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
-                                                         CommandParameter="{Binding .}"
                                                          IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
+                                                                 <!--
+                                                         Command="{Binding DataContext.SetCorrectAnswerCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                                                         CommandParameter="{Binding .}"-->
                                                     <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                                 </WrapPanel>
                                             </DataTemplate>

@@ -7,15 +7,11 @@ public abstract partial class Question : ObservableObject
     [ObservableProperty]
     string text;
 
-    [ObservableProperty]
-    Answer answer;
-
     public string UniqueId { get; set; }
 
-    public Question(string text, Answer answer, string uniqueid)
+    public Question(string text, string uniqueid)
     {
         Text = text;
-        Answer = answer;
         UniqueId = uniqueid;
     }
 

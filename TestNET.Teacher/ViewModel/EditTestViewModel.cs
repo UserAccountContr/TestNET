@@ -35,7 +35,7 @@ public partial class EditTestViewModel : BaseViewModel
     void AddSAQuestion() => Questions.Add(new ShortAnswerQuestion("", new(""), Guid.NewGuid().ToString()));
 
     [RelayCommand]
-    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", new(""), Guid.NewGuid().ToString(), new()));
+    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", Guid.NewGuid().ToString(), new()));
 
     [RelayCommand]
     void SaveChanges()
@@ -49,10 +49,6 @@ public partial class EditTestViewModel : BaseViewModel
         Test.Questions.Clear();
         foreach (Question question in Questions)
         {
-            if (question is MultipleChoiceQuestion)
-            {
-                question.Answer = (question as MultipleChoiceQuestion).PossibleAnswers.Where(x => x.IsCorrect).FirstOrDefault();
-            }
             Test.Questions.Add(question.DeepCopy());
         };
 
@@ -105,8 +101,11 @@ public partial class EditTestViewModel : BaseViewModel
             foreach (Question oldItem in e.OldItems)
             {
                 oldItem.PropertyChanged -= Question_PropertyChanged;
-                oldItem.Answer.PropertyChanged -= Question_PropertyChanged;
-                if (oldItem is MultipleChoiceQuestion question)
+                if (oldItem is ISingleAnswer o)
+                {
+                    o.Answer.PropertyChanged -= Question_PropertyChanged;
+                }
+                if (oldItem is IManyAnswers question)
                 { 
                     question.PossibleAnswers.CollectionChanged -= Answers_CollectionChanged;
                     foreach (Answer posans in question.PossibleAnswers)
@@ -118,8 +117,11 @@ public partial class EditTestViewModel : BaseViewModel
             foreach (Question newItem in e.NewItems)
             {
                 newItem.PropertyChanged += Question_PropertyChanged;
-                newItem.Answer.PropertyChanged += Posans_PropertyChanged;
-                if (newItem is MultipleChoiceQuestion question)
+                if (newItem is ISingleAnswer o)
+                {
+                    o.Answer.PropertyChanged += Posans_PropertyChanged;
+                }
+                if (newItem is IManyAnswers question)
                 {
                     question.PossibleAnswers.CollectionChanged += Answers_CollectionChanged;
                     foreach (Answer posans in question.PossibleAnswers)
