@@ -4,6 +4,7 @@ using System.Net.NetworkInformation;
 using System.Linq;
 using System.IO;
 using TestNET.Shared.Model;
+using TestNET.Shared.DB;
 
 namespace TestNET.Teacher.Service;
 
@@ -32,6 +33,19 @@ public class TestService
 
     public void SaveTests(List<TeacherTest> tests)
     {
+        DB db = new("test.db");
+        db.Init("Random Test Name", "Random Desc");
+
+        var q1 = new ShortAnswerQuestion("Tapirite sa", new("qki"), new Guid().ToString());
+        var q2 = new ShortAnswerQuestion("Kravite sa", new("oshte po-qki"), new Guid().ToString());
+
+        db.AddQuestion(q1);
+        db.AddQuestion(q2);
+
+        var test = new Test("Whateva", new(new Question[] { q1, q2 }));
+
+        db.Submit(new("Giovanni Giorgio", test, DateTime.Now));
+
         string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
 
         var options = new JsonSerializerOptions { WriteIndented = true, Converters = { new JsonStringEnumConverter() } };
