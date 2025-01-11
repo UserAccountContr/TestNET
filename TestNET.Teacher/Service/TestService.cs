@@ -4,7 +4,7 @@ using System.Net.NetworkInformation;
 using System.Linq;
 using System.IO;
 using TestNET.Shared.Model;
-using TestNET.Shared.DB;
+using TestNET.Shared.Service;
 
 namespace TestNET.Teacher.Service;
 
@@ -33,6 +33,7 @@ public class TestService
 
     public void SaveTests(List<TeacherTest> tests)
     {
+        /*
         DB db = new("test.db");
         db.Init("Random Test Name", "Random Desc");
 
@@ -45,6 +46,7 @@ public class TestService
         var test = new Test("Whateva", new(new Question[] { q1, q2 }));
 
         db.Submit(new("Giovanni Giorgio", test, DateTime.Now));
+        */
 
         string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
 
