@@ -4,13 +4,19 @@ namespace TestNET.Teacher.ViewModel;
 
 public partial class TestViewModel : BaseViewModel
 {
-    public TestViewModel(TeacherTest test, TestService testService)
+    public TestViewModel(TeacherTest test, TestService testService, LogService logService)
     {
         Test = test;
         this.testService = testService;
+        LogService = logService;
+        Log = "";
     }
 
     TestService testService;
+    public LogService LogService { get; }
+
+    [ObservableProperty]
+    string log;
 
     [ObservableProperty]
     TeacherTest test;

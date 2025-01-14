@@ -29,6 +29,22 @@ public class TeacherTest : Test
     {
         Submissions = submissions ?? new();
     }
+    public void Grade(Submission subm)
+    {
+        string msg = "";
+        foreach (Question question in subm.Answers.Questions)
+        {
+            if (question is ISingleAnswer)
+            {
+                msg += ((ISingleAnswer)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+            }
+            else if (question is IManyAnswers)
+            {
+                msg += ((IManyAnswers)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+            }
+        }
+        MessageBox.Show(msg);
+    }
 
     //public Test GenerateTest(options) { }
 }

@@ -7,8 +7,10 @@ using TestNET.Shared.Model;
 
 namespace TestNET.Teacher.Service;
 
-public class TestService
+public class TestService(LogService logService)
 {
+    LogService logService = logService;
+
     public async Task<List<TeacherTest>> GetTests()
     {
         List<TeacherTest> testList = new();
@@ -91,14 +93,16 @@ public class TestService
                 server = new TcpListener(localAddr, 61234);
                 server.Start();
 
-                Task.Run(() =>
-                {
-                    MessageBox.Show($"{EncodeCode(localAddr)}", "Code", MessageBoxButton.OK);
-                });
+                //Task.Run(() =>
+                //{
+                //    MessageBox.Show($"{EncodeCode(localAddr)}", "Code", MessageBoxButton.OK);
+                //});
+
+                logService.TestLog += $"{EncodeCode(localAddr)}\n";
 
                 while (true)
                 {
-                    Task.Run(() => MessageBox.Show("Waiting for a connection... "));
+                    logService.TestLog += $"Waiting for a connection... \n";
 
                     {
                         using TcpClient client = server.AcceptTcpClient();
@@ -151,9 +155,11 @@ public class TestService
             }
         });
     }
+
     public void handleTestRequest(TestRequest request, Test test, NetworkStream stream)
     {
-        Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+        //Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+        logService.TestLog += $"{request.StudentName} connected\n";
 
         TestResponse response = new() { Error = "", Test = test.WithoutAnswers() };
 
@@ -185,8 +191,7 @@ public class TestService
             (test.Submissions ??= new()).Add(request.Submission);
         });
 
-
-        //Task.Run(() => MessageBox.Show(string.Join('\n', request.Submission.Answers.Questions.Select(x => x.Answer.Text))));
+        test.Grade(request.Submission);
     }
 
     public void StopSharingTest()

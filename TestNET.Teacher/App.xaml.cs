@@ -35,5 +35,7 @@ public partial class App : Application
         services.AddSingleton<HomeViewModel>();
         //services.AddTransient<TestViewModel>();
         //services.AddTransient<EditTestViewModel>(); 
+
+        services.AddSingleton<LogService>();
     }
 }

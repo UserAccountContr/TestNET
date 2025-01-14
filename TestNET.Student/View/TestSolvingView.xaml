@@ -27,7 +27,7 @@
 
                     <serv:IndexConverter x:Key="IndexConverter" />
 
-                    <DataTemplate DataType="{x:Type model:Question}">
+                    <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25"/>
@@ -66,10 +66,34 @@
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <RadioButton Content="{Binding Text}"
-                                                     Command="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.SetCorrectAnswerCommand}"
-                                                     CommandParameter="{Binding .}"
                                                      GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
                                                      IsChecked="{Binding IsCorrect}"/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Grid>
+                    </DataTemplate>
+                    <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="25"/>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                   ContentStringFormat="{}{0}."
+                                   Grid.Column="0"/>
+
+                            <Label Content="{Binding Text}"
+                                   Grid.Column="1"/>
+
+                            <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          Grid.Column="2">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Text}"
+                                                  IsChecked="{Binding IsCorrect}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

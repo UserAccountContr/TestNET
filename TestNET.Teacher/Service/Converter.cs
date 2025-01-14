@@ -23,6 +23,18 @@ public class IndexConverter : IValueConverter
 
     }
 }
+public class IntConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return (string)value;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        return float.Parse((string)value);
+    }
+}
 
 public class AnswerConverter : IValueConverter
 {

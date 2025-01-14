@@ -77,41 +77,59 @@
 
                                 <serv:IndexConverter x:Key="IndexConverter" />
 
-                                <DataTemplate DataType="{x:Type model:Question}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="150"/>
-                                        </Grid.ColumnDefinitions>
-                                        <WrapPanel Grid.Column="0">
-                                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                               ContentStringFormat="{}{0}."/>
-                                            <Label Content="{Binding Text}"/>
-                                        </WrapPanel>
+                                <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                                    <StackPanel>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="400"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <WrapPanel Grid.Column="0">
+                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                       ContentStringFormat="{}{0}."
+                                                       FontSize="16"/>
+                                                <Label Content="{Binding Text}"
+                                                       FontSize="16"/>
+                                            </WrapPanel>
+                                            <Label Grid.Column="1"
+                                                   Content="{Binding Points}"
+                                                   ContentStringFormat="{}Pts: {0}"/>
+                                        </Grid>
+
+                                        <TextBlock Text="Short answer"/>
                                         <!--
                             <Label ContentStringFormat="Answer: {0}"
                                    Content="{Binding Answer.Text}"
                                    Grid.Column="1"/>
                             -->
-                                    </Grid>
+                                    </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="150"/>
-                                            <ColumnDefinition Width="150"/>
-                                        </Grid.ColumnDefinitions>
 
-                                        <WrapPanel Grid.Column="0">
-                                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                               ContentStringFormat="{}{0}."/>
-                                            <Label Content="{Binding Text}"/>
-                                        </WrapPanel>
-                                        <!--
-                            <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer.Text}"
-                                   Grid.Column="1"/>
-                            -->
+                                    <StackPanel>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="400"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <WrapPanel Grid.Column="0" >
+                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                       ContentStringFormat="{}{0}."
+                                                       FontSize="16"/>
+                                                <Label Content="{Binding Text}"
+                                                       FontSize="16"/>
+                                            </WrapPanel>
+                                            <Label Grid.Column="1"
+                                               Content="{Binding Points}"
+                                               ContentStringFormat="{}Pts: {0}"/>
+                                        </Grid>
+
+                                        <TextBlock Text="Possible answers"/>
+
                                         <ItemsControl ItemsSource="{Binding PossibleAnswers}"
                                           Grid.Column="1">
                                             <ItemsControl.ItemTemplate>
@@ -120,7 +138,41 @@
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
-                                    </Grid>
+                                    </StackPanel>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+
+                                    <StackPanel>
+
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="400"/>
+                                                <ColumnDefinition />
+                                            </Grid.ColumnDefinitions>
+
+                                            <WrapPanel Grid.Column="0" >
+                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                       ContentStringFormat="{}{0}."
+                                                       FontSize="16"/>
+                                                <Label Content="{Binding Text}"
+                                                       FontSize="16"/>
+                                            </WrapPanel>
+                                            <Label Grid.Column="1"
+                                               Content="{Binding Points}"
+                                               ContentStringFormat="{}Pts: {0}"/>
+                                        </Grid>
+
+                                        <TextBlock Text="Possible answers"/>
+
+                                        <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          Grid.Column="1">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Label Content="{Binding Text}" />
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
                                 </DataTemplate>
                             </ListView.Resources>
                         </ListView>
@@ -173,6 +225,9 @@
                                 </DataTemplate>
                             </ListView.Resources>
                         </ListView>
+                    </Expander>
+                    <Expander Header="Log">
+                        <TextBlock Text="{Binding LogService.TestLog}"/>
                     </Expander>
                 </StackPanel>
             </Grid>
