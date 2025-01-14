@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
+	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
     d:DataContext="{d:DesignInstance Type=viewmodel:EditTestViewModel}"
@@ -72,8 +73,7 @@
                       ItemsSource="{Binding Questions}">
                     <ListView.Resources>
 
-                        <serv:IndexConverter x:Key="IndexConverter" />
-                        <serv:IntConverter x:Key="IntConverter" />
+                        <sharedserv:IndexConverter x:Key="IndexConverter" />
 
                         <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                             <Grid>

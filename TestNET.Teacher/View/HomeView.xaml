@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:TestNET.Teacher.View"
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
+	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
     mc:Ignorable="d" 
@@ -93,7 +94,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DataTemplate.Resources>
-                            <serv:IndexConverter x:Key="IndexConverter" />
+                            <sharedserv:IndexConverter x:Key="IndexConverter" />
                         </DataTemplate.Resources>
                         <WrapPanel>
                             <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"

@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Teacher.View"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
+	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
 	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
@@ -28,7 +29,7 @@
               CommandParameter="{Binding Test}"
               IsEnabled="{Binding IsNotBusy}"/>
         </Menu>
-    
+
         <ScrollViewer>
             <Grid>
                 <Grid.RowDefinitions>
@@ -75,7 +76,7 @@
                         <ListView ItemsSource="{Binding Test.Questions}">
                             <ListView.Resources>
 
-                                <serv:IndexConverter x:Key="IndexConverter" />
+                                <sharedserv:IndexConverter x:Key="IndexConverter" />
 
                                 <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                                     <StackPanel>
@@ -188,24 +189,14 @@
                                     <Expander Header="{Binding Name}">
 
                                         <StackPanel>
-                                            <!--
-                                        <StackPanel.Resources>
-                                            <serv:AnswerConverter x:Key="AnswerConverter"/>
-                                        </StackPanel.Resources>
-                                        -->
                                             <Label Content="{Binding TimeSubmitted}"/>
                                             <ItemsControl ItemsSource="{Binding Answers.Questions}" >
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
+                                                <ItemsControl.Resources>
+                                                    <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                                                         <Grid>
-                                                            <!--
-                                                        <Grid.Resources>
-                                                            <serv:QuestionIDConverter x:Key="QID"/>
-                                                        </Grid.Resources>
-                                                        -->
                                                             <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition/>
-                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition Width="100"/>
+                                                                <ColumnDefinition Width="100"/>
                                                                 <ColumnDefinition/>
                                                             </Grid.ColumnDefinitions>
 
@@ -218,7 +209,33 @@
                                                             </StackPanel>
                                                         </Grid>
                                                     </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
+
+                                                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="100"/>
+                                                                <ColumnDefinition Width="100"/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <StackPanel Grid.Column="0">
+                                                                <Label Content="{Binding Text}"/>
+                                                            </StackPanel>
+
+                                                            <StackPanel Grid.Column="2">
+                                                                <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                                                    <ItemsControl.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <RadioButton Content="{Binding Text}"
+                                                                                         IsChecked="{Binding IsCorrect, Mode=OneWay}"
+                                                                                         IsEnabled="False"/>
+                                                                        </DataTemplate>
+                                                                    </ItemsControl.ItemTemplate>
+                                                                </ItemsControl>
+                                                            </StackPanel>
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.Resources>
                                             </ItemsControl>
                                         </StackPanel>
                                     </Expander>
