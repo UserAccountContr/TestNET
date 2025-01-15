@@ -90,11 +90,14 @@
                                    Grid.Column="1"/>
                                 <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="2"/>
-                                <WrapPanel Grid.Column="3">
-                                    <Label Content="Pts:"/>
-                                    <TextBox Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                <StackPanel Grid.Column="3">
+                                    <WrapPanel>
+                                        <Label Content="Pts:"/>
+                                        <TextBox Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                              Width="30"/>
-                                </WrapPanel>
+                                    </WrapPanel>
+                                    <CheckBox Content="Math" IsChecked="{Binding TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
@@ -103,6 +106,7 @@
                                     <ColumnDefinition Width="25"/>
                                     <ColumnDefinition Width="250"/>
                                     <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
@@ -125,6 +129,14 @@
                                     <Button Content="+"
                                         Command="{Binding AddPosAnsCommand}"/>
                                 </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <WrapPanel>
+                                        <Label Content="Pts:"/>
+                                        <TextBox Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Width="30"/>
+                                    </WrapPanel>
+                                    <CheckBox Content="Math" IsChecked="{Binding TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                         <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
@@ -133,6 +145,7 @@
                                     <ColumnDefinition Width="25"/>
                                     <ColumnDefinition Width="250"/>
                                     <ColumnDefinition Width="250"/>
+                                    <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
@@ -153,6 +166,14 @@
                                     </ItemsControl>
                                     <Button Content="+"
                                         Command="{Binding AddPosAnsCommand}"/>
+                                </StackPanel>
+                                <StackPanel Grid.Column="3">
+                                    <WrapPanel>
+                                        <Label Content="Pts:"/>
+                                        <TextBox Text="{Binding Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             Width="30"/>
+                                    </WrapPanel>
+                                    <CheckBox Content="Math" IsChecked="{Binding TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </Grid>
                         </DataTemplate>

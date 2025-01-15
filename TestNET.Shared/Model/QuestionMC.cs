@@ -4,14 +4,14 @@ public partial class MultipleChoiceQuestion : Question, IManyAnswers
 {
     public ObservableCollection<Answer> PossibleAnswers { get; set; } = new();
 
-    public MultipleChoiceQuestion(string text, string uniqueid, ObservableCollection<Answer> possibleanswers, float points) : base(text, uniqueid, points)
+    public MultipleChoiceQuestion(string text, bool textIsMath, string uniqueid, ObservableCollection<Answer> possibleanswers, float points) : base(text, textIsMath, uniqueid, points)
     {
         PossibleAnswers = possibleanswers;
     }
 
-    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())), Points);
+    public override Question DeepCopy() => new MultipleChoiceQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())), Points);
 
-    public override Question WithoutAnswers() => new MultipleChoiceQuestion(Text, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.WithoutAnswer())), Points);
+    public override Question WithoutAnswers() => new MultipleChoiceQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.WithoutAnswer())), Points);
 
     public float Grade(ObservableCollection<Answer> submAnswers)
     {

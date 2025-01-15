@@ -9,6 +9,7 @@
     xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
     xmlns:viewmodel="clr-namespace:TestNET.Student.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Student.Service" 
+    xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
     d:DataContext="{d:DesignInstance Type=viewmodel:TestSolvingViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -40,8 +41,43 @@
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
 
-                            <Label Content="{Binding Text}"
-                                   Grid.Column="1"/>
+                            <WrapPanel Grid.Column="1">
+
+                                <Label Content="{Binding Text}"
+                                       FontSize="16">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                             Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label>
+                                    <Label.Content>
+                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                    </Label.Content>
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                            Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </WrapPanel>
 
                             <TextBox Text="{Binding Answer.Text}"
                                      Grid.Column="2"/>
@@ -59,8 +95,43 @@
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
 
-                            <Label Content="{Binding Text}"
-                                   Grid.Column="1"/>
+                            <WrapPanel Grid.Column="1">
+
+                                <Label Content="{Binding Text}"
+                                       FontSize="16">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                             Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label>
+                                    <Label.Content>
+                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                    </Label.Content>
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                            Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </WrapPanel>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
                                           Grid.Column="2">
@@ -86,8 +157,43 @@
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
 
-                            <Label Content="{Binding Text}"
-                                   Grid.Column="1"/>
+                            <WrapPanel Grid.Column="1">
+
+                                <Label Content="{Binding Text}"
+                                       FontSize="16">
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                             Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label>
+                                    <Label.Content>
+                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                    </Label.Content>
+                                    <Label.Style>
+                                        <Style TargetType="Label">
+                                            <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding TextIsMath}"
+                                                             Value="True">
+                                                    <Setter Property="Visibility"
+                                                            Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                            </WrapPanel>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
                                           Grid.Column="2">
