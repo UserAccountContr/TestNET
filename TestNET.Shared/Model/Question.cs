@@ -26,6 +26,8 @@ public abstract partial class Question : ObservableObject
         TextIsMath = textIsMath;
     }
 
+    public abstract double Grade(Answer answer);
+
     public abstract Question DeepCopy();
 
     public abstract Question WithoutAnswers();

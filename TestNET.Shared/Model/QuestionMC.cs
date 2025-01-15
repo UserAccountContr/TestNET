@@ -34,6 +34,11 @@ public partial class MultipleChoiceQuestion : Question, IManyAnswers
 
     [RelayCommand]
     void AddPosAns() => PossibleAnswers.Add(new(""));
+
+    public override double Grade(Answer answer)
+    {
+        throw new NotImplementedException();
+    }
 }
 
 public interface IManyAnswers

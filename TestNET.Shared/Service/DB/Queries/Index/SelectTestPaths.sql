@@ -1,0 +1,1 @@
+SELECT Path FROM "TestNET.Index";
