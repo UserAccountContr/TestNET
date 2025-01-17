@@ -1,0 +1,1 @@
+SELECT Id, Username, SubmissionTime FROM "TestNET.Test.Submissions";
