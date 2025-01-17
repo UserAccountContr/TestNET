@@ -9,6 +9,7 @@
 	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
+    xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
     d:DataContext="{d:DesignInstance Type=viewmodel:EditTestViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -79,15 +80,36 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="25"/>
-                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="250"/>
                                     <ColumnDefinition Width="150"/>
                                     <ColumnDefinition Width="100"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Grid.Column="1"/>
+                                <StackPanel Grid.Column="1">
+
+                                    <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Grid.Column="1"/>
+                                    <Label>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsMath}"
+                                                             Value="True">
+                                                        <Setter Property="Visibility"
+                                                            Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                        <Label.Content>
+                                            <latex:FormulaControl Formula="{Binding Text}"/>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
                                 <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                    Grid.Column="2"/>
                                 <StackPanel Grid.Column="3">
@@ -112,8 +134,29 @@
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
-                                <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Grid.Column="1"/>
+                                <StackPanel Grid.Column="1">
+
+                                    <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              Grid.Column="1"/>
+                                    <Label>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
+                                                    Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsMath}"
+                                                             Value="True">
+                                                        <Setter Property="Visibility"
+                                                            Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                        <Label.Content>
+                                            <latex:FormulaControl Formula="{Binding Text}"/>
+                                        </Label.Content>
+                                    </Label>
+                                </StackPanel>
                                 <StackPanel Grid.Column="2">
                                     <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                         <ItemsControl.ItemTemplate>

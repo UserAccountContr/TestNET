@@ -141,6 +141,30 @@
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                    <DataTemplate.Resources>
+
+                                        <DataTemplate x:Key="NoMath">
+                                            <Label Content="{Binding Text}"/>
+                                        </DataTemplate>
+                                        <DataTemplate x:Key="WithMath">
+                                            <Label>
+                                                <Label.Content>
+                                                    <latex:FormulaControl Formula="{Binding Text}"/>
+                                                </Label.Content>
+                                            </Label>
+                                        </DataTemplate>
+
+                                        <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                            <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                     Value="True">
+                                                    <Setter Property="ContentTemplate" 
+                                                                    Value="{StaticResource WithMath}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataTemplate.Resources>
 
                                     <StackPanel>
 
@@ -197,16 +221,36 @@
                                         <TextBlock Text="Possible answers"/>
 
                                         <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="1">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Text}" />
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
+                                                      ItemContainerStyle="{StaticResource ContainerStyle}"
+                                                      Grid.Column="1">
                                         </ItemsControl>
                                     </StackPanel>
                                 </DataTemplate>
                                 <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                                    <DataTemplate.Resources>
+
+                                        <DataTemplate x:Key="NoMath">
+                                            <Label Content="{Binding Text}"/>
+                                        </DataTemplate>
+                                        <DataTemplate x:Key="WithMath">
+                                            <Label>
+                                                <Label.Content>
+                                                    <latex:FormulaControl Formula="{Binding Text}"/>
+                                                </Label.Content>
+                                            </Label>
+                                        </DataTemplate>
+
+                                        <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                            <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                     Value="True">
+                                                    <Setter Property="ContentTemplate" 
+                                                                    Value="{StaticResource WithMath}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataTemplate.Resources>
 
                                     <StackPanel>
 
@@ -263,12 +307,8 @@
                                         <TextBlock Text="Possible answers"/>
 
                                         <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          Grid.Column="1">
-                                            <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Label Content="{Binding Text}" />
-                                                </DataTemplate>
-                                            </ItemsControl.ItemTemplate>
+                                                      ItemContainerStyle="{StaticResource ContainerStyle}"
+                                                      Grid.Column="1">
                                         </ItemsControl>
                                     </StackPanel>
                                 </DataTemplate>
