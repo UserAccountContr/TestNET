@@ -4,10 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TestNET.Shared.Service.DB;
-
-using TestNET.Shared;
-using TestNET.Shared.Service.DB.Queries;
+namespace TestNET.Teacher.Service.DB;
+using TestNET.Teacher.Service.DB.Queries;
 
 public class IndexDB
 {

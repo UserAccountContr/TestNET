@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 
-namespace TestNET.Shared.Service.DB.Queries;
+namespace TestNET.Teacher.Service.DB.Queries;
 
 internal class Cached<T>(Func<T> get)
 {

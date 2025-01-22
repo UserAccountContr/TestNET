@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
-using TestNET.Shared.Service.DB.Queries;
+using TestNET.Teacher.Service.DB.Queries;
 
-namespace TestNET.Shared.Service.DB;
+namespace TestNET.Teacher.Service.DB;
 
 public class TestDB
 {

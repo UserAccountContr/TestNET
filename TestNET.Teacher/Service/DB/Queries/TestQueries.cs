@@ -9,7 +9,7 @@ using System.Xml.Linq;
 using Microsoft.Data.Sqlite;
 using TestNET.Shared.Model;
 
-namespace TestNET.Shared.Service.DB.Queries;
+namespace TestNET.Teacher.Service.DB.Queries;
 
 internal class TestQueries(string dbPath)
 {
