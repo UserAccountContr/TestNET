@@ -25,64 +25,104 @@
 
         <StackPanel Grid.Row="1">
             <ListView ItemsSource="{Binding Test.Questions}">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="Margin" Value="0,0,0,20"/>
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.Resources>
 
                     <sharedserv:IndexConverter x:Key="IndexConverter" />
 
                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
+                        <Border BorderThickness="2"
+                                BorderBrush="#FF80c0ff"
+                                CornerRadius="4"
+                                HorizontalAlignment="Stretch">
+                            
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
 
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                   ContentStringFormat="{}{0}."
-                                   Grid.Column="0"/>
+                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                       VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"
+                                       Background="#FF80c0ff"
+                                       FontWeight="SemiBold"
+                                       FontSize="18"
+                                       Padding="0,0,0,0"/>
 
-                            <WrapPanel Grid.Column="1">
+                                    <WrapPanel Grid.Column="1"
+                                               Background="#FFbfdFff"
+                                               HorizontalAlignment="Right">
+                                        <Label Content="{Binding Points}" 
+                                               FontSize="16"
+                                               Padding="5,2,0,0"
+                                               VerticalContentAlignment="Center"
+                                               VerticalAlignment="Stretch"/>
+                                        <Label Content=" Pts."
+                                               FontSize="16"
+                                               Padding="0,2,5,0"
+                                               VerticalContentAlignment="Center"
+                                               VerticalAlignment="Stretch"/>
+                                    </WrapPanel>
+                                </Grid>
 
-                                <Label Content="{Binding Text}"
-                                       FontSize="16">
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Setter Property="Visibility"
+                            <StackPanel Margin="15,0,15,15">
+                                <WrapPanel>
+                                    <Label Content="{Binding Text}"
+                                           FontSize="16">
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                                 Value="True">
+                                                        <Setter Property="Visibility"
+                                                                Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                    <Label>
+                                        <Label.Content>
+                                            <latex:FormulaControl Formula="{Binding Text}"/>
+                                        </Label.Content>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
                                                     Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsMath}"
                                                              Value="True">
-                                                    <Setter Property="Visibility"
-                                                             Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
-                                </Label>
-                                <Label>
-                                    <Label.Content>
-                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                    </Label.Content>
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding TextIsMath}"
-                                                             Value="True">
-                                                    <Setter Property="Visibility"
+                                                        <Setter Property="Visibility"
                                                             Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
-                                </Label>
-                            </WrapPanel>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                </WrapPanel>
 
-                            <TextBox Text="{Binding Answer.Text}"
-                                     Grid.Column="2"/>
-                        </Grid>
+                                <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </StackPanel>
+                        </StackPanel>
+                        </Border>
                     </DataTemplate>
+                    
+                    
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                         <DataTemplate.Resources>
 
@@ -111,18 +151,28 @@
                                 </Style.Triggers>
                             </Style>
                         </DataTemplate.Resources>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
+                        
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
 
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                   ContentStringFormat="{}{0}."
-                                   Grid.Column="0"/>
+                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                       VerticalAlignment="Stretch"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center"
+                                       Background="#FF80c0ff"
+                                       FontWeight="SemiBold"
+                                       FontSize="18"
+                                       Padding="0"/>
+                            </Grid>
 
-                            <WrapPanel Grid.Column="1">
+                            <WrapPanel Margin="0,0,0,20">
 
                                 <Label Content="{Binding Text}"
                                        FontSize="16">
@@ -161,10 +211,9 @@
                             </WrapPanel>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          ItemContainerStyle="{StaticResource ContainerStyle}"
-                                          Grid.Column="2">
+                                          ItemContainerStyle="{StaticResource ContainerStyle}">
                             </ItemsControl>
-                        </Grid>
+                        </StackPanel>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
                         <DataTemplate.Resources>

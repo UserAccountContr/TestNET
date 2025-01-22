@@ -1,11 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Linq;
-using System.IO;
-using TestNET.Shared.Model;
-using TestNET.Shared.Service;
-using TestNET.Shared.Service.DB;
 
 namespace TestNET.Teacher.Service;
 
