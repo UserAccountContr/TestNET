@@ -196,7 +196,9 @@
                                                 </Label>
                                                 <Label>
                                                     <Label.Content>
-                                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                                        <latex:FormulaControl Formula="{Binding Text}"
+                                                                              SystemTextFontName="Times New Roman"
+                                                                              Padding="0,0,0,10"/>
                                                     </Label.Content>
                                                     <Label.Style>
                                                         <Style TargetType="Label">

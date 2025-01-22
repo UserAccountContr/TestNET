@@ -84,6 +84,33 @@
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                        <DataTemplate.Resources>
+
+                            <DataTemplate x:Key="NoMath">
+                                <RadioButton Content="{Binding Text}"
+                                             GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
+                                             IsChecked="{Binding IsCorrect}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="WithMath">
+                                <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
+                                             IsChecked="{Binding IsCorrect}">
+                                    <RadioButton.Content>
+                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                    </RadioButton.Content>
+                                </RadioButton>
+                            </DataTemplate>
+
+                            <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                     Value="True">
+                                        <Setter Property="ContentTemplate" 
+                                                                    Value="{StaticResource WithMath}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataTemplate.Resources>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25"/>
@@ -134,18 +161,37 @@
                             </WrapPanel>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          ItemContainerStyle="{StaticResource ContainerStyle}"
                                           Grid.Column="2">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <RadioButton Content="{Binding Text}"
-                                                     GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
-                                                     IsChecked="{Binding IsCorrect}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Grid>
                     </DataTemplate>
                     <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                        <DataTemplate.Resources>
+
+                            <DataTemplate x:Key="NoMath">
+                                <CheckBox Content="{Binding Text}"
+                                          IsChecked="{Binding IsCorrect}"/>
+                            </DataTemplate>
+                            <DataTemplate x:Key="WithMath">
+                                <CheckBox IsChecked="{Binding IsCorrect}">
+                                    <CheckBox.Content>
+                                        <latex:FormulaControl Formula="{Binding Text}"/>
+                                    </CheckBox.Content>
+                                </CheckBox>
+                            </DataTemplate>
+
+                            <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                     Value="True">
+                                        <Setter Property="ContentTemplate" 
+                                                                    Value="{StaticResource WithMath}"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataTemplate.Resources>
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="25"/>
@@ -196,13 +242,8 @@
                             </WrapPanel>
 
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                          ItemContainerStyle="{StaticResource ContainerStyle}"
                                           Grid.Column="2">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <CheckBox Content="{Binding Text}"
-                                                  IsChecked="{Binding IsCorrect}"/>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </Grid>
                     </DataTemplate>
