@@ -13,7 +13,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodel:TestSolvingViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
-    
+
     <Grid>
 
         <Grid.Resources>
@@ -36,10 +36,10 @@
             </Style>
 
             <Style x:Key="QuestionBody" TargetType="StackPanel">
-                <Setter Property="Margin" Value="15,0,15,15"/>
+                <Setter Property="Margin" Value="15"/>
             </Style>
         </Grid.Resources>
-        
+
 
         <StackPanel>
             <Label Content="{Binding Test.Name}"
@@ -74,28 +74,28 @@
                                            Style="{StaticResource QuestionIndex}"/>
 
                                     <WrapPanel Grid.Column="1"
-                                               Background="#FFbfdFff"
-                                               HorizontalAlignment="Right">
+                                               Background="#FFbfdFff">
+
                                         <Label Content="{Binding Points}" 
                                                FontSize="16"
                                                Padding="5,2,0,0"
+                                               HorizontalAlignment="Right"
                                                VerticalContentAlignment="Center"
                                                VerticalAlignment="Stretch"/>
                                         <Label Content=" Pts."
                                                FontSize="16"
                                                Padding="0,2,5,0"
+                                               HorizontalAlignment="Right"
                                                VerticalContentAlignment="Center"
                                                VerticalAlignment="Stretch"/>
                                     </WrapPanel>
                                 </Grid>
                                 <StackPanel Style="{StaticResource QuestionBody}">
                                     <WrapPanel Margin="0,0,0,20">
-                                        <Label Content="{Binding Text}"
-                                               FontSize="16">
+                                        <Label FontSize="16">
                                             <Label.Style>
                                                 <Style TargetType="Label">
-                                                    <Setter Property="Visibility"
-                                                            Value="Collapsed"/>
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding TextIsNotMath}"
                                                                      Value="True">
@@ -105,6 +105,9 @@
                                                     </Style.Triggers>
                                                 </Style>
                                             </Label.Style>
+                                            <Label.Content>
+                                                <AccessText Text="{Binding Text}" TextWrapping="Wrap"/>
+                                            </Label.Content>
                                         </Label>
                                         <Label>
                                             <Label.Content>
@@ -131,8 +134,8 @@
                             </StackPanel>
                         </Border>
                     </DataTemplate>
-                    
-                    
+
+
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                         <DataTemplate.Resources>
 
@@ -151,6 +154,7 @@
                             </DataTemplate>
 
                             <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                <Setter Property="Margin" Value="2"/>
                                 <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
@@ -167,6 +171,7 @@
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="30"/>
@@ -174,28 +179,33 @@
 
                                     <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                            Style="{StaticResource QuestionIndex}"/>
+
+                                    <WrapPanel Grid.Column="1"
+                                               Background="#FFbfdFff">
+                                        
+                                    </WrapPanel>
                                 </Grid>
 
                                 <StackPanel Style="{StaticResource QuestionBody}">
 
 
-                                    <WrapPanel Margin="0,0,0,20">
+                                    <WrapPanel Margin="0,0,0,10">
 
-                                        <Label Content="{Binding Text}"
-                                               FontSize="16">
+                                        <Label FontSize="16">
                                             <Label.Style>
                                                 <Style TargetType="Label">
                                                     <Setter Property="Visibility"
                                                     Value="Collapsed"/>
                                                     <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding TextIsNotMath}"
-                                                             Value="True">
-                                                            <Setter Property="Visibility"
-                                                             Value="Visible"/>
+                                                        <DataTrigger Binding="{Binding TextIsNotMath}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
                                             </Label.Style>
+                                            <Label.Content>
+                                                <AccessText Text="{Binding Text}" TextWrapping="Wrap"/>
+                                            </Label.Content>
                                         </Label>
                                         <Label>
                                             <Label.Content>
@@ -204,12 +214,12 @@
                                             <Label.Style>
                                                 <Style TargetType="Label">
                                                     <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
+                                                            Value="Collapsed"/>
                                                     <Style.Triggers>
                                                         <DataTrigger Binding="{Binding TextIsMath}"
-                                                             Value="True">
+                                                                     Value="True">
                                                             <Setter Property="Visibility"
-                                                            Value="Visible"/>
+                                                                    Value="Visible"/>
                                                         </DataTrigger>
                                                     </Style.Triggers>
                                                 </Style>
@@ -218,8 +228,7 @@
                                     </WrapPanel>
 
                                     <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          ItemContainerStyle="{StaticResource ContainerStyle}">
-                                    </ItemsControl>
+                                                  ItemContainerStyle="{StaticResource ContainerStyle}"/>
                                 </StackPanel>
                             </StackPanel>
                         </Border>
@@ -240,70 +249,79 @@
                             </DataTemplate>
 
                             <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
+                                <Setter Property="Margin" Value="2"/>
                                 <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                     Value="True">
+                                                 Value="True">
                                         <Setter Property="ContentTemplate" 
-                                                                    Value="{StaticResource WithMath}"/>
+                                                Value="{StaticResource WithMath}"/>
                                     </DataTrigger>
                                 </Style.Triggers>
                             </Style>
                         </DataTemplate.Resources>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="25"/>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="150"/>
-                            </Grid.ColumnDefinitions>
+                        <Border Style="{StaticResource QuestionBorder}">
+                            <StackPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
 
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                   ContentStringFormat="{}{0}."
-                                   Grid.Column="0"/>
+                                    <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                           Style="{StaticResource QuestionIndex}"/>
 
-                            <WrapPanel Grid.Column="1">
+                                    <WrapPanel Grid.Column="1"
+                                               Background="#FFbfdFff">
 
-                                <Label Content="{Binding Text}"
-                                       FontSize="16">
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding TextIsNotMath}"
-                                                             Value="True">
-                                                    <Setter Property="Visibility"
-                                                             Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
-                                </Label>
-                                <Label>
-                                    <Label.Content>
-                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                    </Label.Content>
-                                    <Label.Style>
-                                        <Style TargetType="Label">
-                                            <Setter Property="Visibility"
-                                                    Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding TextIsMath}"
-                                                             Value="True">
-                                                    <Setter Property="Visibility"
-                                                            Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Label.Style>
-                                </Label>
-                            </WrapPanel>
+                                    </WrapPanel>
+                                </Grid>
 
-                            <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                          ItemContainerStyle="{StaticResource ContainerStyle}"
-                                          Grid.Column="2">
-                            </ItemsControl>
-                        </Grid>
+                                <StackPanel Style="{StaticResource QuestionBody}">
+
+                                    <Label Content="{Binding Text}"
+                                           FontSize="16">
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsNotMath}"
+                                                                 Value="True">
+                                                        <Setter Property="Visibility"
+                                                                Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                    <Label>
+                                        <Label.Content>
+                                            <latex:FormulaControl Formula="{Binding Text}"/>
+                                        </Label.Content>
+                                        <Label.Style>
+                                            <Style TargetType="Label">
+                                                <Setter Property="Visibility"
+                                                        Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding TextIsMath}"
+                                                                 Value="True">
+                                                        <Setter Property="Visibility"
+                                                                Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+
+                                    <ItemsControl ItemsSource="{Binding PossibleAnswers}"
+                                                  ItemContainerStyle="{StaticResource ContainerStyle}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
                     </DataTemplate>
                 </ListView.Resources>
             </ListView>
