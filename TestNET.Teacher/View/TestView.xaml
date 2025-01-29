@@ -10,6 +10,7 @@
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
     xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+    xmlns:CustomControls="clr-namespace:TestNET.Shared.CustomControls;assembly=TestNET.Shared"
 	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -92,6 +93,10 @@
                                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                                        ContentStringFormat="{}{0}."
                                                        FontSize="16"/>
+                                                <CustomControls:LatexLabel
+                                                    Text="{Binding Text}"
+                                                    IsMath="{Binding TextIsMath}"/>
+                                                <!--
                                                 <Label Content="{Binding Text}"
                                                        FontSize="16">
                                                     <Label.Style>
@@ -126,6 +131,7 @@
                                                         </Style>
                                                     </Label.Style>
                                                 </Label>
+                                                -->
                                             </WrapPanel>
                                             <Label Grid.Column="1"
                                                    Content="{Binding Points}"

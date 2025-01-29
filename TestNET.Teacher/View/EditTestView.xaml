@@ -195,7 +195,8 @@
                                    ContentStringFormat="{}{0}."
                                    Grid.Column="0"/>
                                 <TextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                   Grid.Column="1"/>
+                                         Grid.Column="1"
+                                         TextWrapping="Wrap"/>
                                 <StackPanel Grid.Column="2">
                                     <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                         <ItemsControl.ItemTemplate>
