@@ -246,9 +246,9 @@
                                             <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                     Value="True">
+                                                             Value="True">
                                                     <Setter Property="ContentTemplate" 
-                                                                    Value="{StaticResource WithMath}"/>
+                                                            Value="{StaticResource WithMath}"/>
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>
@@ -329,6 +329,7 @@
 
                                         <StackPanel>
                                             <Label Content="{Binding TimeSubmitted}"/>
+                                            <Label Content="{Binding Points}"/>
                                             <ItemsControl ItemsSource="{Binding Answers.Questions}" >
                                                 <ItemsControl.Resources>
                                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
