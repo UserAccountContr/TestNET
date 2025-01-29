@@ -69,8 +69,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LatexLabel}">
-                    <Label Content="{TemplateBinding Content}"/>
-                </ControlTemplate> 
+                    <ContentControl Content="{TemplateBinding Content}"/>
+                </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>

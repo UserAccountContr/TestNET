@@ -54,37 +54,9 @@
                             </StackPanel>
                         </CustomControls:QuestionPanel>
                     </DataTemplate>
-                    
+
 
                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                        <DataTemplate.Resources>
-
-                            <DataTemplate x:Key="NoMath">
-                                <RadioButton Content="{Binding Text}"
-                                             GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
-                                             IsChecked="{Binding IsCorrect}"/>
-                            </DataTemplate>
-                            <DataTemplate x:Key="WithMath">
-                                <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
-                                             IsChecked="{Binding IsCorrect}">
-                                    <RadioButton.Content>
-                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                    </RadioButton.Content>
-                                </RadioButton>
-                            </DataTemplate>
-
-                            <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
-                                <Setter Property="Margin" Value="2"/>
-                                <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                 Value="True">
-                                        <Setter Property="ContentTemplate" 
-                                                Value="{StaticResource WithMath}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataTemplate.Resources>
 
                         <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                                       Points="{Binding Points}">
@@ -94,43 +66,26 @@
                                                            Margin="0,0,0,10"/>
 
                                 <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                              ItemContainerStyle="{StaticResource ContainerStyle}"/>
+                                              Margin="2">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
+                                                         IsChecked="{Binding IsCorrect}">
+                                                <CustomControls:LatexLabel Text="{Binding Text}"
+                                                                           IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"/>
+                                            </RadioButton>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
                         </CustomControls:QuestionPanel>
                     </DataTemplate>
-                    
-                    
-                    
-                    
-                    
+
+
+
+
+
                     <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
-                        <DataTemplate.Resources>
-
-                            <DataTemplate x:Key="NoMath">
-                                <CheckBox Content="{Binding Text}"
-                                          IsChecked="{Binding IsCorrect}"/>
-                            </DataTemplate>
-                            <DataTemplate x:Key="WithMath">
-                                <CheckBox IsChecked="{Binding IsCorrect}">
-                                    <CheckBox.Content>
-                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                    </CheckBox.Content>
-                                </CheckBox>
-                            </DataTemplate>
-
-                            <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
-                                <Setter Property="Margin" Value="2"/>
-                                <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                 Value="True">
-                                        <Setter Property="ContentTemplate" 
-                                                Value="{StaticResource WithMath}"/>
-                                    </DataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </DataTemplate.Resources>
-
                         <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                                       Points="{Binding Points}">
                             <StackPanel Style="{StaticResource QuestionBody}">
@@ -139,11 +94,18 @@
                                                            Margin="0,0,0,10"/>
 
                                 <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                              ItemContainerStyle="{StaticResource ContainerStyle}"/>
+                                              Margin="2">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsCorrect}">
+                                                <CustomControls:LatexLabel Text="{Binding Text}"
+                                                                           IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"/>
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                             </StackPanel>
                         </CustomControls:QuestionPanel>
-                        
-                        
                     </DataTemplate>
                 </ListView.Resources>
             </ListView>
