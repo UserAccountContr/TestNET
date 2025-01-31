@@ -62,6 +62,7 @@ public class LatexLabel : ContentControl
         {
             var temp = new FormulaControl();
             temp.Formula = Text;
+            temp.SystemTextFontName = "Times New Roman";
             Content = temp;
         }
         else
