@@ -1,1 +1,1 @@
-SELECT Path FROM "TestNET.Index";
+SELECT Path FROM [TestNET.Index];

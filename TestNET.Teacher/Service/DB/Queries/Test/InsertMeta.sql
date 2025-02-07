@@ -1,2 +1,2 @@
-INSERT INTO "TestNET.Test.Meta" (Name, LastChanged)
+INSERT INTO [TestNET.Test.Meta] (Name, LastChanged)
 VALUES ($Name, $LastChanged);

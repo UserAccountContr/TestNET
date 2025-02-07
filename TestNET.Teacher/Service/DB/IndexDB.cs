@@ -32,7 +32,17 @@ public class IndexDB
 
     public void Add(TeacherTest test)
     {
-        indexQueries.InsertTest(test);
+        var paths = indexQueries.SelectTestPaths();
+
+        var path = $"{test.Name}.db";
+
+        var db = new TestDB(path);
+        db.Save(test);
+
+        if (!paths.Contains(path))
+        {
+            indexQueries.InsertTest(test);
+        }
     }
 
     // Add 'void Remove(TestDB testDb)' later

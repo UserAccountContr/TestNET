@@ -2,14 +2,16 @@
 using System.Net;
 using System.Net.NetworkInformation;
 
-namespace TestNET.Teacher.Service;
+using TestNET.Teacher.Service.DB;
 
+namespace TestNET.Teacher.Service;
 public class TestService(LogService logService)
 {
     LogService logService = logService;
 
     public async Task<List<TeacherTest>> GetTests()
     {
+        /*
         List<TeacherTest> testList = new();
 
         try
@@ -27,32 +29,28 @@ public class TestService(LogService logService)
         }
 
         return testList;
+        */
+
+        var tests = new List<TeacherTest>();
+
+        var testDBs = new IndexDB().LoadAll();
+
+        foreach (var testDB in testDBs)
+        {
+            tests.Add(testDB.Load());
+        }
+
+        return tests;
     }
 
     public void SaveTests(List<TeacherTest> tests)
     {
-        /*
-        DB db = new("test.db");
-        db.Init("Random Test Name", "Random Desc");
+        var index = new IndexDB();
 
-        var q1 = new ShortAnswerQuestion("Tapirite sa", new("qki"), new Guid().ToString());
-        var q2 = new ShortAnswerQuestion("Kravite sa", new("oshte po-qki"), new Guid().ToString());
-
-        db.AddQuestion(q1);
-        db.AddQuestion(q2);
-
-        var test = new Test("Whateva", new(new Question[] { q1, q2 }));
-
-        db.Submit(new("Giovanni Giorgio", test, DateTime.Now));
-        */
-
-        string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
-
-        var options = new JsonSerializerOptions { WriteIndented = true, Converters = { new JsonStringEnumConverter() } };
-
-        string jsonString = JsonSerializer.Serialize(tests, options);
-
-        File.WriteAllText(filePath, jsonString);
+        foreach (var test in tests)
+        {
+            index.Add(test);
+        }
     }
 
     TcpListener? server = null;
