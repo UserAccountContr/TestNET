@@ -81,7 +81,7 @@
 
                                 <sharedserv:IndexConverter x:Key="IndexConverter" />
 
-                                
+                                <!---
                                 <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
 
                                     <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
@@ -151,7 +151,17 @@
                                         </StackPanel>
                                     </CustomControls:QuestionPanel>
                                 </DataTemplate>
+                                -->
                             </ListView.Resources>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel>
+                                        <CustomControls:QuestionViewPanel 
+                                            Question="{Binding .}"
+                                            ShowAnswers="False"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
                         </ListView>
                     </Expander>
                     <Expander Header="Test settings"

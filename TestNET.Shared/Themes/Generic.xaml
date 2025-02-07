@@ -116,4 +116,220 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="{x:Type local:QuestionEditPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}">
+                    <Label Content="{Binding Question.Text, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QSAPreview">
+        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                                    Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                <TextBlock Text="Short answer"/>
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QSA">
+        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                                    Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Margin="0,0,0,10"/>
+                <TextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCPreview">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                                    Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Margin="0 0 0 15"/>
+
+                <TextBlock Text="Possible answers"/>
+
+                <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:LatexLabel Text="{Binding Text}"
+                                          IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                          Margin="3"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMC">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                                    Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Margin="0 0 0 15"/>
+
+                <TextBlock Text="Possible answers"/>
+
+                <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
+                              Margin="2">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
+                                         IsChecked="{Binding IsCorrect}">
+                                <local:LatexLabel Text="{Binding Text}"
+                                                  IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.TextIsMath}"/>
+                            </RadioButton>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCMPreview">
+        <local:QuestionPanel Points="{Binding QuestionMCM.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                    Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                    IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                    Margin="0 0 0 15"/>
+
+                <TextBlock Text="Possible answers"/>
+
+                <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:LatexLabel Text="{Binding Text}"
+                                              IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                              Margin="3"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCM">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+
+            <StackPanel Margin="15">
+
+                <local:LatexLabel
+                                    Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Margin="0 0 0 15"/>
+
+                <TextBlock Text="Possible answers"/>
+
+                <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
+                              Margin="2">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <CheckBox IsChecked="{Binding IsCorrect}">
+                                <local:LatexLabel Text="{Binding Text}"
+                                                  IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.TextIsMath}"/>
+                            </CheckBox>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </StackPanel>
+
+        </local:QuestionPanel>
+    </ControlTemplate>
+
+    <Style TargetType="{x:Type local:QuestionViewPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}">
+                    <Label Content="{Binding QType, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="SH"/>
+                    <Condition Property="ShowAnswers" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QSA}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="SH"/>
+                    <Condition Property="ShowAnswers" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QSAPreview}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="MC"/>
+                    <Condition Property="ShowAnswers" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QMC}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="MC"/>
+                    <Condition Property="ShowAnswers" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QMCPreview}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="MCM"/>
+                    <Condition Property="ShowAnswers" Value="True"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QMCM}"/>
+            </MultiTrigger>
+
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="QType" Value="MCM"/>
+                    <Condition Property="ShowAnswers" Value="False"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Template" Value="{StaticResource QMCMPreview}"/>
+            </MultiTrigger>
+        </Style.Triggers>
+
+    </Style>
 </ResourceDictionary>

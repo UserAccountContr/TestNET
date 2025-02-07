@@ -13,6 +13,8 @@ public partial class TestViewModel : BaseViewModel
     }
 
     TestService testService;
+
+    public ShortAnswerQuestion Testq => new ShortAnswerQuestion("",false, new Answer(""),"", 1);
     public LogService LogService { get; }
 
     [ObservableProperty]
