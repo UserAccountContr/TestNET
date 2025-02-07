@@ -77,6 +77,8 @@
                     <ListView.Resources>
 
                         <sharedserv:IndexConverter x:Key="IndexConverter" />
+                        
+                        <!--
 
                         <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
 
@@ -224,7 +226,15 @@
                                 </StackPanel>
                             </CustomControls:QuestionPanel>
                         </DataTemplate>
+                        -->
                     </ListView.Resources>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <CustomControls:QuestionEditPanel 
+                                Question="{Binding}"
+                                IsInEditMode="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </Grid>
         </ScrollViewer>
