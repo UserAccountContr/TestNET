@@ -2,8 +2,9 @@
 using System.Net;
 using System.Net.NetworkInformation;
 
-namespace TestNET.Teacher.Service;
+using TestNET.Teacher.Service.DB;
 
+namespace TestNET.Teacher.Service;
 public class TestService(LogService logService)
 {
     LogService logService = logService;
@@ -44,46 +45,12 @@ public class TestService(LogService logService)
 
     public void SaveTests(List<TeacherTest> tests)
     {
-        /*
-        DB db = new("test.db");
-        db.Init("Random Test Name", "Random Desc");
-
-        var q1 = new ShortAnswerQuestion("Tapirite sa", new("qki"), new Guid().ToString());
-        var q2 = new ShortAnswerQuestion("Kravite sa", new("oshte po-qki"), new Guid().ToString());
-
-        db.AddQuestion(q1);
-        db.AddQuestion(q2);
-
-        var test = new Test("Whateva", new(new Question[] { q1, q2 }));
-
-        db.Submit(new("Giovanni Giorgio", test, DateTime.Now));
-        */
-
-        /*
-        var indexDB = new IndexDB();
+        var index = new IndexDB();
 
         foreach (var test in tests)
         {
-            // Add a test Unique ID to have decent renaming
-            try
-            {
-                var testDB = new TestDB($"{test.Name}.db");
-                testDB.Save(test);
-            } catch (Exception e)
-            {
-                MessageBox.Show($"An exception was thrown {e}");
-                indexDB.Add(test);
-            }
+            index.Add(test);
         }
-        */
-
-        string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");
-
-        var options = new JsonSerializerOptions { WriteIndented = true, Converters = { new JsonStringEnumConverter() } };
-
-        string jsonString = JsonSerializer.Serialize(tests, options);
-
-        File.WriteAllText(filePath, jsonString);
     }
 
     TcpListener? server = null;

@@ -13,13 +13,13 @@ internal class IndexQueries(string dbPath)
 {
     private static string GetEmbeddedResource(string resourceName)
     {
-        MessageBox.Show(string.Join("\n", Assembly.GetExecutingAssembly().GetManifestResourceNames()) + $"\nFetching: {resourceName}\nJoined: TestNET.Teacher.Service.DB.Queries.Index.{resourceName}");
+        // MessageBox.Show(string.Join("\n", Assembly.GetExecutingAssembly().GetManifestResourceNames()) + $"\nFetching: {resourceName}\nJoined: TestNET.Teacher.Service.DB.Queries.Index.{resourceName}");
         using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TestNET.Teacher.Service.DB.Queries.Index.{resourceName}"))
         {
             using (var reader = new StreamReader(stream))
             {
                 var c = reader.ReadToEnd();
-                MessageBox.Show(c);
+                // MessageBox.Show(c);
                 return c;
             }
         }
@@ -50,7 +50,7 @@ internal class IndexQueries(string dbPath)
         Path.Combine(AppContext.BaseDirectory, "Resources", "InsertTest"));
     private string InsertTestQuery => insertTestQuery.Value; */
 
-    public long InsertTest(TeacherTest test)
+    public void InsertTest(TeacherTest test)
     {
         var path = $"{test.Name}.db";
 
@@ -63,23 +63,6 @@ internal class IndexQueries(string dbPath)
 
             command.ExecuteNonQuery();
         }
-
-        var testQueries = new TestQueries(path);
-        testQueries.InitializeTest();
-
-        testQueries.InsertMeta(test.Name, DateTime.Now);
-        
-        foreach (var submission in test.Submissions)
-        {
-            testQueries.InsertSubmission(submission);
-        }
-
-        foreach (var question in test.Questions)
-        {
-            testQueries.InsertQuestion(question);
-        }
-
-        return LastRowId();
     }
 
     /* private CachedQuery selectTestPathsQuery = new(

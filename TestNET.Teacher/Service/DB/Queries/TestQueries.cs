@@ -19,13 +19,13 @@ internal class TestQueries(string dbPath)
 
     private static string GetEmbeddedResource(string resourceName)
     {
-        MessageBox.Show(string.Join("\n", Assembly.GetExecutingAssembly().GetManifestResourceNames()) + $"\nFetching: {resourceName}\nJoined: TestNET.Teacher.Service.DB.Queries.Test.{resourceName}");
+        // MessageBox.Show(string.Join("\n", Assembly.GetExecutingAssembly().GetManifestResourceNames()) + $"\nFetching: {resourceName}\nJoined: TestNET.Teacher.Service.DB.Queries.Test.{resourceName}");
         using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TestNET.Teacher.Service.DB.Queries.Test.{resourceName}"))
         {
             using (var reader = new StreamReader(stream))
             {
                 var c = reader.ReadToEnd();
-                MessageBox.Show(c);
+                // MessageBox.Show(c);
                 return c;
             }
         }
