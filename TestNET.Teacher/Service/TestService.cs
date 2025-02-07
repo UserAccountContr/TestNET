@@ -5,7 +5,7 @@ using System.Linq;
 using System.IO;
 using TestNET.Shared.Model;
 using TestNET.Shared.Service;
-using TestNET.Shared.Service.DB;
+using TestNET.Teacher.Service.DB;
 
 namespace TestNET.Teacher.Service;
 
@@ -15,6 +15,7 @@ public class TestService(LogService logService)
 
     public async Task<List<TeacherTest>> GetTests()
     {
+        /*
         List<TeacherTest> testList = new();
 
         try
@@ -32,6 +33,18 @@ public class TestService(LogService logService)
         }
 
         return testList;
+        */
+
+        var tests = new List<TeacherTest>();
+
+        var testDBs = new IndexDB().LoadAll();
+
+        foreach (var testDB in testDBs)
+        {
+            tests.Add(testDB.Load());
+        }
+
+        return tests;
     }
 
     public void SaveTests(List<TeacherTest> tests)
@@ -49,6 +62,24 @@ public class TestService(LogService logService)
         var test = new Test("Whateva", new(new Question[] { q1, q2 }));
 
         db.Submit(new("Giovanni Giorgio", test, DateTime.Now));
+        */
+
+        /*
+        var indexDB = new IndexDB();
+
+        foreach (var test in tests)
+        {
+            // Add a test Unique ID to have decent renaming
+            try
+            {
+                var testDB = new TestDB($"{test.Name}.db");
+                testDB.Save(test);
+            } catch (Exception e)
+            {
+                MessageBox.Show($"An exception was thrown {e}");
+                indexDB.Add(test);
+            }
+        }
         */
 
         string filePath = Path.Combine(AppContext.BaseDirectory, "tests.json");

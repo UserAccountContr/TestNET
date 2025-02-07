@@ -9,6 +9,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Service\DB\Queries\Index\InitializeIndex.sql" />
+    <None Remove="Service\DB\Queries\Index\InsertTest.sql" />
+    <None Remove="Service\DB\Queries\Index\SelectTestPaths.sql" />
+    <None Remove="Service\DB\Queries\Test\InitializeTest.sql" />
+    <None Remove="Service\DB\Queries\Test\InsertAnswer.sql" />
+    <None Remove="Service\DB\Queries\Test\InsertMeta.sql" />
+    <None Remove="Service\DB\Queries\Test\InsertQuestion.sql" />
+    <None Remove="Service\DB\Queries\Test\InsertSubmission.sql" />
+    <None Remove="Service\DB\Queries\Test\SelectCurrentName.sql" />
+    <None Remove="Service\DB\Queries\Test\SelectQuestions.sql" />
+    <None Remove="Service\DB\Queries\Test\SelectSubmissionAnswers.sql" />
+    <None Remove="Service\DB\Queries\Test\SelectSubmissions.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.1" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0" />
@@ -17,6 +32,36 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TestNET.Shared\TestNET.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Service\DB\Queries\Index\InitializeIndex.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Index\InsertTest.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Index\SelectTestPaths.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InitializeTest.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertAnswer.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertMeta.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertQuestion.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertSubmission.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectCurrentName.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectQuestions.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionAnswers.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissions.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,7 @@
-CREATE TABLE "TestNET.Index" (
+CREATE TABLE IF NOT EXISTS [TestNET.Index] (
   Id INTEGER,
   Path TEXT,
   Name TEXT,
+
+  PRIMARY KEY (Id)
 );

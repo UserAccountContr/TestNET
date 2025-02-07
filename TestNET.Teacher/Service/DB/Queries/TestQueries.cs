@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -16,26 +17,41 @@ internal class TestQueries(string dbPath)
     private CachedConnection connection = new(dbPath);
     private SqliteConnection Connection => connection.Value;
 
-    private CachedQuery initializeTestQuery = new("./Queries/Test/InitializeTest.sql");
-    private string InitializeTestQuery => initializeTestQuery.Value;
+    private static string GetEmbeddedResource(string resourceName)
+    {
+        MessageBox.Show(string.Join("\n", Assembly.GetExecutingAssembly().GetManifestResourceNames()) + $"\nFetching: {resourceName}\nJoined: TestNET.Teacher.Service.DB.Queries.Test.{resourceName}");
+        using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream($"TestNET.Teacher.Service.DB.Queries.Test.{resourceName}"))
+        {
+            using (var reader = new StreamReader(stream))
+            {
+                var c = reader.ReadToEnd();
+                MessageBox.Show(c);
+                return c;
+            }
+        }
+    }
+
+    /* private CachedQuery initializeTestQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InitializeTest"));
+    private string InitializeTestQuery => initializeTestQuery.Value; */
 
     public void InitializeTest()
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = InitializeTestQuery;
+            command.CommandText = GetEmbeddedResource("InitializeTest.sql");
             command.ExecuteNonQuery();
         }
     }
 
-    private CachedQuery insertAnswerQuery = new("./Queries/Test/InsertAnswer.sql");
-    private string InsertAnswerQuery => insertAnswerQuery.Value;
+    /*
+    private CachedQuery insertAnswerQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertAnswer"));
+    private string InsertAnswerQuery => insertAnswerQuery.Value; */
 
     private void InsertAnswer(long submissionId, Question answer)
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = InsertAnswerQuery;
+            command.CommandText = GetEmbeddedResource("InsertAnswer.sql");
 
             command.Parameters.AddWithValue("$Submission", submissionId);
             command.Parameters.AddWithValue("$Question", answer.UniqueId);
@@ -45,14 +61,15 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private CachedQuery insertSubmissionQuery = new("./Queries/Test/InsertSubmission.sql");
-    private string InsertSubmissionQuery => insertSubmissionQuery.Value;
+    /*
+    private CachedQuery insertSubmissionQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertSubmission"));
+    private string InsertSubmissionQuery => insertSubmissionQuery.Value;*/
 
     public void InsertSubmission(Submission submission)
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = InsertSubmissionQuery;
+            command.CommandText = GetEmbeddedResource("InsertSubmission.sql");
 
             command.Parameters.AddWithValue(
                 "$Username", submission.Name);
@@ -69,14 +86,15 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private CachedQuery insertMetaQuery = new("./Queries/Test/InsertMeta.sql");
-    private string InsertMetaQuery => insertMetaQuery.Value;
+    /*
+    private CachedQuery insertMetaQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertMeta"));
+    private string InsertMetaQuery => insertMetaQuery.Value; */
 
     public void InsertMeta(string name, DateTime lastChanged)
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = InsertMetaQuery;
+            command.CommandText = GetEmbeddedResource("InsertMeta.sql");
 
             command.Parameters.AddWithValue("$Name", name);
             command.Parameters.AddWithValue("$LastChanged", lastChanged.ToString("U"));
@@ -85,14 +103,15 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private CachedQuery insertQuestionQuery = new("./Queries/Test/InsertMeta.sql");
-    private string InsertQuestionQuery => insertQuestionQuery.Value;
+    /*
+    private CachedQuery insertQuestionQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertQuestion"));
+    private string InsertQuestionQuery => insertQuestionQuery.Value; */
 
     public void InsertQuestion(Question question)
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = InsertQuestionQuery;
+            command.CommandText = GetEmbeddedResource("InsertQuestion.sql");
 
             command.Parameters.AddWithValue(
                 "$Id", question.UniqueId);
@@ -103,13 +122,15 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private CachedQuery selectCurrentNameQuery = new("./Queries/Test/SelectCurrentName.sql");
+    /*
+    private CachedQuery selectCurrentNameQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "SelectCurrentName"));
     private string SelectCurrentNameQuery => selectCurrentNameQuery.Value;
+    */
     public string SelectCurrentName()
     {
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = SelectCurrentNameQuery;
+            command.CommandText = GetEmbeddedResource("SelectCurrentName.sql");
 
             return (string)(command.ExecuteScalar() ??
             throw new NullReferenceException(
@@ -118,15 +139,17 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private CachedQuery selectQuestionsQuery = new("./Queries/Test/SelectQuestions.sql");
-    private string SelectQuestionsQuery => selectQuestionsQuery.Value;
+    /*
+    private CachedQuery selectQuestionsQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "SelectQuestions"));
+    private string SelectQuestionsQuery => selectQuestionsQuery.Value; */
+
     public List<Question> SelectQuestions()
     {
         var questions = new List<Question>();
 
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = SelectQuestionsQuery;
+            command.CommandText = GetEmbeddedResource("SelectQuestions.sql");
 
             var reader = command.ExecuteReader();
 
@@ -144,15 +167,16 @@ internal class TestQueries(string dbPath)
         return questions;
     }
 
-    private CachedQuery selectSubmissionAnswersQuery = new("./Queries/Test/SelectQuestions.sql");
-    private string SelectSubmissionAnswersQuery => selectSubmissionAnswersQuery.Value;
+    /*
+    private CachedQuery selectSubmissionAnswersQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "SelectQuestions"));
+    private string SelectSubmissionAnswersQuery => selectSubmissionAnswersQuery.Value; */
     private List<Question> SelectSubmissionAnswers(long submissionId)
     {
         var answers = new List<Question>();
 
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = SelectSubmissionAnswersQuery;
+            command.CommandText = GetEmbeddedResource("SelectSubmissionAnswers.sql");
 
             command.Parameters.AddWithValue("$SubmissionId", submissionId);
 
@@ -172,15 +196,18 @@ internal class TestQueries(string dbPath)
         return answers;
     }
 
-    private CachedQuery selectSubmissionsQuery = new("./Queries/Test/SelectQuestions.sql");
+    /*
+    private CachedQuery selectSubmissionsQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "SelectSubmissions"));
     private string SelectSubmissionsQuery => selectSubmissionsQuery.Value;
+    */
+
     public List<Submission> SelectSubmissions()
     {
         var submissions = new List<Submission>();
 
         using (var command = Connection.CreateCommand())
         {
-            command.CommandText = SelectSubmissionsQuery;
+            command.CommandText = GetEmbeddedResource("SelectSubmissions.sql");
 
             var reader = command.ExecuteReader();
 
