@@ -10,6 +10,7 @@
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
     xmlns:serv="clr-namespace:TestNET.Teacher.Service"
     xmlns:latex="clr-namespace:WpfMath.Controls;assembly=WpfMath"
+    xmlns:CustomControls="clr-namespace:TestNET.Shared.CustomControls;assembly=TestNET.Shared"
 	d:DataContext="{d:DesignInstance Type=viewmodel:TestViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -74,245 +75,81 @@
                     <Expander Header="{DynamicResource questions}"
                           ExpandDirection="Down"
                           IsExpanded="True">
-                        <ListView ItemsSource="{Binding Test.Questions}">
+                        <ListView ItemsSource="{Binding Test.Questions}" 
+                                  HorizontalContentAlignment="Stretch">
                             <ListView.Resources>
 
                                 <sharedserv:IndexConverter x:Key="IndexConverter" />
 
+                                
                                 <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
-                                    <StackPanel>
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="400"/>
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
+                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                                  Points="{Binding Points}">
+                                        <StackPanel Style="{StaticResource QuestionBody}">
 
-                                            <WrapPanel Grid.Column="0">
-                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                       ContentStringFormat="{}{0}."
-                                                       FontSize="16"/>
-                                                <Label Content="{Binding Text}"
-                                                       FontSize="16">
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsNotMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                                <Label>
-                                                    <Label.Content>
-                                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                                    </Label.Content>
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                            </WrapPanel>
-                                            <Label Grid.Column="1"
-                                                   Content="{Binding Points}"
-                                                   ContentStringFormat="{}Pts: {0}"/>
-                                        </Grid>
+                                            <CustomControls:LatexLabel
+                                                Text="{Binding Text}"
+                                                IsMath="{Binding TextIsMath}"/>
 
-                                        <TextBlock Text="Short answer"/>
-                                        <!--
-                            <Label ContentStringFormat="Answer: {0}"
-                                   Content="{Binding Answer.Text}"
-                                   Grid.Column="1"/>
-                            -->
-                                    </StackPanel>
+                                            <TextBlock Text="Short answer"/>
+                                        </StackPanel>
+                                    </CustomControls:QuestionPanel>
                                 </DataTemplate>
+
+
                                 <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                                    <DataTemplate.Resources>
 
-                                        <DataTemplate x:Key="NoMath">
-                                            <Label Content="{Binding Text}"/>
-                                        </DataTemplate>
-                                        <DataTemplate x:Key="WithMath">
-                                            <Label>
-                                                <Label.Content>
-                                                    <latex:FormulaControl Formula="{Binding Text}"/>
-                                                </Label.Content>
-                                            </Label>
-                                        </DataTemplate>
+                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                      Points="{Binding Points}">
+                                        <StackPanel Style="{StaticResource QuestionBody}">
 
-                                        <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
-                                            <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                     Value="True">
-                                                    <Setter Property="ContentTemplate" 
-                                                                    Value="{StaticResource WithMath}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataTemplate.Resources>
+                                            <CustomControls:LatexLabel
+                                                Text="{Binding Text}"
+                                                IsMath="{Binding TextIsMath}"
+                                                Margin="0 0 0 15"/>
 
-                                    <StackPanel>
+                                            <TextBlock Text="Possible answers"/>
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="400"/>
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
+                                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <CustomControls:LatexLabel Text="{Binding Text}"
+                                                                                   IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                                   Margin="3"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
 
-                                            <WrapPanel Grid.Column="0" >
-                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                       ContentStringFormat="{}{0}."
-                                                       FontSize="16"/>
-                                                <Label Content="{Binding Text}"
-                                                       FontSize="16">
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsNotMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                                <Label>
-                                                    <Label.Content>
-                                                        <latex:FormulaControl Formula="{Binding Text}"
-                                                                              SystemTextFontName="Times New Roman"
-                                                                              Padding="0,0,0,10"/>
-                                                    </Label.Content>
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                            </WrapPanel>
-                                            <Label Grid.Column="1"
-                                               Content="{Binding Points}"
-                                               ContentStringFormat="{}Pts: {0}"/>
-                                        </Grid>
-
-                                        <TextBlock Text="Possible answers"/>
-
-                                        <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                                      ItemContainerStyle="{StaticResource ContainerStyle}"
-                                                      Grid.Column="1">
-                                        </ItemsControl>
-                                    </StackPanel>
+                                        </StackPanel>
+                                    </CustomControls:QuestionPanel>
                                 </DataTemplate>
+
+
                                 <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
-                                    <DataTemplate.Resources>
+                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                                      Points="{Binding Points}">
+                                        <StackPanel Style="{StaticResource QuestionBody}">
 
-                                        <DataTemplate x:Key="NoMath">
-                                            <Label Content="{Binding Text}"/>
-                                        </DataTemplate>
-                                        <DataTemplate x:Key="WithMath">
-                                            <Label>
-                                                <Label.Content>
-                                                    <latex:FormulaControl Formula="{Binding Text}"/>
-                                                </Label.Content>
-                                            </Label>
-                                        </DataTemplate>
+                                            <CustomControls:LatexLabel
+                                                Text="{Binding Text}"
+                                                IsMath="{Binding TextIsMath}"
+                                                Margin="0 0 0 15"/>
 
-                                        <Style TargetType="ContentPresenter" x:Key="ContainerStyle">
-                                            <Setter Property="ContentTemplate" Value="{StaticResource NoMath}"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                     Value="True">
-                                                    <Setter Property="ContentTemplate" 
-                                                                    Value="{StaticResource WithMath}"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </DataTemplate.Resources>
+                                            <TextBlock Text="Possible answers"/>
 
-                                    <StackPanel>
+                                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <CustomControls:LatexLabel Text="{Binding Text}"
+                                                                                   IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                                                   Margin="3"/>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
 
-                                        <Grid>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="400"/>
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-
-                                            <WrapPanel Grid.Column="0" >
-                                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                       ContentStringFormat="{}{0}."
-                                                       FontSize="16"/>
-                                                <Label Content="{Binding Text}"
-                                                       FontSize="16">
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsNotMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                                <Label>
-                                                    <Label.Content>
-                                                        <latex:FormulaControl Formula="{Binding Text}"/>
-                                                    </Label.Content>
-                                                    <Label.Style>
-                                                        <Style TargetType="Label">
-                                                            <Setter Property="Visibility"
-                                                                    Value="Collapsed"/>
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextIsMath}"
-                                                                             Value="True">
-                                                                    <Setter Property="Visibility"
-                                                                            Value="Visible"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Label.Style>
-                                                </Label>
-                                            </WrapPanel>
-                                            <Label Grid.Column="1"
-                                               Content="{Binding Points}"
-                                               ContentStringFormat="{}Pts: {0}"/>
-                                        </Grid>
-
-                                        <TextBlock Text="Possible answers"/>
-
-                                        <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                                      ItemContainerStyle="{StaticResource ContainerStyle}"
-                                                      Grid.Column="1">
-                                        </ItemsControl>
-                                    </StackPanel>
+                                        </StackPanel>
+                                    </CustomControls:QuestionPanel>
                                 </DataTemplate>
                             </ListView.Resources>
                         </ListView>
@@ -329,6 +166,7 @@
 
                                         <StackPanel>
                                             <Label Content="{Binding TimeSubmitted}"/>
+                                            <Label Content="{Binding Points}"/>
                                             <ItemsControl ItemsSource="{Binding Answers.Questions}" >
                                                 <ItemsControl.Resources>
                                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">

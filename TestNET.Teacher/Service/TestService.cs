@@ -1,11 +1,6 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Net.NetworkInformation;
-using System.Linq;
-using System.IO;
-using TestNET.Shared.Model;
-using TestNET.Shared.Service;
-using TestNET.Teacher.Service.DB;
 
 namespace TestNET.Teacher.Service;
 
@@ -228,6 +223,9 @@ public class TestService(LogService logService)
 
     public void handleSubmissionRequest(SubmissionRequest request, TeacherTest test, NetworkStream stream)
     {
+        Submission temp = request.Submission;
+        temp.Points = test.Grade(request.Submission);
+
 
         byte[] responseBytes = Encoding.UTF8.GetBytes("OK");
 
@@ -236,10 +234,8 @@ public class TestService(LogService logService)
 
         App.Current.Dispatcher.Invoke((Action)delegate
         {
-            (test.Submissions ??= new()).Add(request.Submission);
+            (test.Submissions ??= new()).Add(temp);
         });
-
-        test.Grade(request.Submission);
     }
 
     public void StopSharingTest()

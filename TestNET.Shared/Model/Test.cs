@@ -29,9 +29,10 @@ public class TeacherTest : Test
     {
         Submissions = submissions ?? new();
     }
-    public void Grade(Submission subm)
+
+    public float Grade(Submission subm)
     {
-        string msg = "";
+        float msg = 0;
         foreach (Question question in subm.Answers.Questions)
         {
             if (question is ISingleAnswer)
@@ -43,7 +44,8 @@ public class TeacherTest : Test
                 msg += ((IManyAnswers)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
             }
         }
-        MessageBox.Show(msg);
+
+        return msg;
     }
 
     //public Test GenerateTest(options) { }

@@ -9,6 +9,7 @@
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
+    xmlns:CustomControls="clr-namespace:TestNET.Shared.CustomControls;assembly=TestNET.Shared"
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
     mc:Ignorable="d" 
     d:DesignHeight="450" d:DesignWidth="800">
@@ -91,24 +92,40 @@
             <ListView ItemsSource="{Binding Path=Tests}" 
                   Grid.Row="0"
                   Name="TestView">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <DataTemplate.Resources>
                             <sharedserv:IndexConverter x:Key="IndexConverter" />
                         </DataTemplate.Resources>
-                        <WrapPanel>
-                            <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <WrapPanel Grid.Column="0">
+
+                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                    ContentStringFormat="{}{0}."/>
-                            <Label Content="{Binding Name}"/>
-                            <Button Content="{DynamicResource open}" 
-                                    Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                    CommandParameter="{Binding .}"
-                                    Style="{StaticResource Btn}"/>
-                            <Button Content="{DynamicResource delete}" 
-                                    Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                    CommandParameter="{Binding .}"
-                                    Style="{StaticResource Btn}"/>
-                        </WrapPanel>
+                                <Label Content="{Binding Name}"/>
+                            </WrapPanel>
+                            <CustomControls:DropdownMenu Grid.Column="1">
+                                <StackPanel Background="White">
+                                    
+                                <Button Content="{DynamicResource open}" 
+                                        Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                        CommandParameter="{Binding .}"/>
+                                <Button Content="{DynamicResource delete}" 
+                                        Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                        CommandParameter="{Binding .}"/>
+                                </StackPanel>
+                            </CustomControls:DropdownMenu>
+                        </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
