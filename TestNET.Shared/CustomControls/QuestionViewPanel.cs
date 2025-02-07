@@ -70,17 +70,6 @@
             get { return (MultipleChoiceManyQuestion)GetValue(QuestionMCMProperty); }
         }
 
-        private static readonly DependencyPropertyKey QTypePropertyKey =
-           DependencyProperty.RegisterReadOnly("QType", typeof(string), typeof(QuestionViewPanel),
-               new PropertyMetadata(null));
-
-        public static readonly DependencyProperty QTypeProperty = QTypePropertyKey.DependencyProperty;
-
-        public string QType
-        {
-            get { return (string)GetValue(QTypeProperty); }
-        }
-
         private static void OnQuestionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is QuestionViewPanel q)
@@ -91,7 +80,6 @@
 
         private void OnQuestionPropertyChanged()
         {
-            SetValue(QTypePropertyKey, (Question is ShortAnswerQuestion sh) ? "SH" : ((Question is MultipleChoiceQuestion mc) ? "MC" : ((Question is MultipleChoiceManyQuestion mcm) ? "MCM" : null)));
             if (Question is ShortAnswerQuestion shq) SetValue(QuestionSHPropertyKey, shq);
             if (Question is MultipleChoiceQuestion mcq) SetValue(QuestionMCPropertyKey, mcq);
             if (Question is MultipleChoiceManyQuestion mcmq) SetValue(QuestionMCMPropertyKey, mcmq);

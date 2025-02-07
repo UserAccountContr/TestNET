@@ -16,5 +16,15 @@
             get { return (Question)GetValue(QuestionProperty); }
             set { SetValue(QuestionProperty, value); }
         }
+
+        public static readonly DependencyProperty IsInEditModeProperty =
+            DependencyProperty.Register("IsInEditMode", typeof(bool), typeof(QuestionEditPanel),
+                new PropertyMetadata(false));
+
+        public bool IsInEditMode
+        {
+            get { return (bool)GetValue(IsInEditModeProperty); }
+            set { SetValue(IsInEditModeProperty, value); }
+        }
     }
 }
