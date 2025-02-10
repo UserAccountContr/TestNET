@@ -114,8 +114,6 @@ internal class TestQueries(string dbPath)
             command.CommandText = GetEmbeddedResource("InsertQuestion.sql");
 
             command.Parameters.AddWithValue(
-                "$Id", question.UniqueId);
-            command.Parameters.AddWithValue(
                 "$QuestionJson", JsonSerializer.Serialize(question));
 
             command.ExecuteNonQuery();
