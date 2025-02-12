@@ -119,10 +119,10 @@
     </Style>
 
     <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}" x:Key="EditQSA">
-        <local:QuestionPanel>
+        <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
             <StackPanel Margin="15">
-                <TextBox Text="{Binding QuestionSH.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
-                <TextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:TemplateTextBox Placeholder="Question" Text="{Binding QuestionSH.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:TemplateTextBox Placeholder="Answer" Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
@@ -134,9 +134,9 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}" x:Key="EditQMC">
-        <local:QuestionPanel>
+        <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
             <StackPanel Margin="15">
-                <TextBox Text="{Binding QuestionMC.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:TemplateTextBox Text="{Binding QuestionMC.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -144,7 +144,7 @@
                             <WrapPanel>
                                 <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
                                              IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <local:TemplateTextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -162,22 +162,22 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}" x:Key="EditQMCM">
-        <local:QuestionPanel>
+        <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
             <StackPanel Margin="15">
-                <TextBox Text="{Binding QuestionMCM.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:TemplateTextBox Text="{Binding QuestionMCM.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
                             <WrapPanel>
                                 <CheckBox IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                <TextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <local:TemplateTextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <Button Content="+"
-                        Command="{Binding AddPosAnsCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        Command="{Binding QuestionMCM.AddPosAnsCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionMCM.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
@@ -194,6 +194,7 @@
                 <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}">
                     <local:QuestionViewPanel 
                         Question="{TemplateBinding Question}"
+                        QuestionIndex="{TemplateBinding QuestionIndex}"
                         EnableSolving="False"/>
                 </ControlTemplate>
             </Setter.Value>
@@ -229,7 +230,8 @@
     </Style>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QSAPreview">
-        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -244,7 +246,8 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QSA">
-        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -252,7 +255,7 @@
                                     Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0,0,0,10"/>
-                <TextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                <local:TemplateTextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                          IsEnabled="{TemplateBinding EnableSolving}"/>
                 
             </StackPanel>
@@ -261,7 +264,8 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCPreview">
-        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -288,7 +292,8 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMC">
-        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -328,7 +333,8 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCMPreview">
-        <local:QuestionPanel Points="{Binding QuestionMCM.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionMCM.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -355,7 +361,8 @@
     </ControlTemplate>
 
     <ControlTemplate TargetType="{x:Type local:QuestionViewPanel}" x:Key="QMCM">
-        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}">
+        <local:QuestionPanel Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                             QuestionIndex="{TemplateBinding QuestionIndex}">
 
             <StackPanel Margin="15">
 
@@ -371,6 +378,16 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <CheckBox IsChecked="{Binding IsCorrect}">
+                                <CheckBox.Style>
+                                    <Style TargetType="CheckBox">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding EnableSolving, RelativeSource={RelativeSource AncestorType=local:QuestionViewPanel}}" Value="True">
+                                                <Setter Property="IsEnabled" Value="True"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </Style>
+                                </CheckBox.Style>
                                 <local:LatexLabel Text="{Binding Text}"
                                                   IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.TextIsMath}"/>
                             </CheckBox>
@@ -442,5 +459,29 @@
             </MultiDataTrigger>
         </Style.Triggers>
 
+    </Style>
+
+    <Style TargetType="{x:Type local:TemplateTextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TemplateTextBox}">
+                    <Grid Margin="{TemplateBinding Margin}">
+                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBlock IsHitTestVisible="False" Text="{TemplateBinding Placeholder}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
+                            <TextBlock.Style>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" Value="">
+                                            <Setter Property="Visibility" Value="Visible"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

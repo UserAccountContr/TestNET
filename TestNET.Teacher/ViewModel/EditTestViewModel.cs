@@ -14,6 +14,9 @@ public partial class EditTestViewModel : BaseViewModel
     [ObservableProperty]
     string name;
 
+    [ObservableProperty]
+    int selIndex;
+
     public ObservableCollection<Question> Questions { get; set; } = new();
 
     [ObservableProperty]
@@ -32,20 +35,31 @@ public partial class EditTestViewModel : BaseViewModel
     //void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
 
     [RelayCommand]
-    void AddSAQuestion() => Questions.Add(new ShortAnswerQuestion("", false, new(""), Guid.NewGuid().ToString(), 1));
+    void AddSAQuestion() => AddQuestion(new ShortAnswerQuestion("", false, new(""), Guid.NewGuid().ToString(), 1));
 
     [RelayCommand]
-    void AddMCQuestion() => Questions.Add(new MultipleChoiceQuestion("", false, Guid.NewGuid().ToString(), new(), 1));
+    void AddMCQuestion() => AddQuestion(new MultipleChoiceQuestion("", false, Guid.NewGuid().ToString(), [new("Option 1"), new("Option 2")], 1));
 
     [RelayCommand]
-    void AddMCMQuestion() => Questions.Add(new MultipleChoiceManyQuestion("", false, Guid.NewGuid().ToString(), new(), 1));
+    void AddMCMQuestion() => AddQuestion(new MultipleChoiceManyQuestion("", false, Guid.NewGuid().ToString(), [new("Option 1"), new("Option 2")], 1));
 
-    [RelayCommand]
-    void SaveChanges()
+    void AddQuestion(Question question)
     {
-        if (!Questions.OfType<MultipleChoiceQuestion>().All(x => x.PossibleAnswers.Any(y => y.IsCorrect)))
+        Questions.Insert(Questions.Count == 0 ? Questions.Count : SelIndex + 1, question);
+        SelIndex = Math.Min(SelIndex + 1, Questions.Count - 1);
+    }
+
+    [RelayCommand]
+    void Save()
+    {
+        SaveChanges(out _);
+    }
+
+    void SaveChanges(out bool success)
+    {
+        if (!CanSave())
         {
-            MessageBox.Show("Not all questions have a selected answer.... u stooooopid");
+            success = false;
             return;
         }
         Test.Name = Name;
@@ -55,7 +69,25 @@ public partial class EditTestViewModel : BaseViewModel
             Test.Questions.Add(question.DeepCopy());
         };
 
+        success = true;
         IsDirty = false;
+    }
+
+    bool CanSave()
+    {
+        if (!Questions.OfType<IManyAnswers>().All(x => x.PossibleAnswers.Any(y => y.IsCorrect)))
+        {
+            MessageBox.Show("Not all questions have a selected answer.... u stooooopid");
+            return false;
+        }
+
+        if (Questions.OfType<IManyAnswers>().Any(x => x.PossibleAnswers.Select(y => y.Text).ToHashSet().Count != x.PossibleAnswers.Count))
+        {
+            MessageBox.Show("All options must be unique");
+            return false;
+        }
+
+        return true;
     }
 
     [RelayCommand]
@@ -67,13 +99,14 @@ public partial class EditTestViewModel : BaseViewModel
     [RelayCommand]
     void Back() 
     {
+        bool savesuccess = true;
         if (IsDirty)
         {
             var result = MessageBox.Show("You have unsaved changes!", Title, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
             switch (result)
             {
                 case MessageBoxResult.Yes:
-                    SaveChanges();
+                    SaveChanges(out savesuccess);
                     break;
                 case MessageBoxResult.No:
                     break;
@@ -81,7 +114,7 @@ public partial class EditTestViewModel : BaseViewModel
                     return;
             }
         }
-        Navigation.NavigateTo<TestViewModel, Test>(Test);
+        if (savesuccess) Navigation.NavigateTo<TestViewModel, Test>(Test);
     }
 
     void BackupTest()

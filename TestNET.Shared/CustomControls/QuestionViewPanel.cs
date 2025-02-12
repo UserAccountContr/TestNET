@@ -17,6 +17,16 @@
             set { SetValue(QuestionProperty, value); }
         }
 
+        public static readonly DependencyProperty QuestionIndexProperty =
+            DependencyProperty.Register("QuestionIndex", typeof(int), typeof(QuestionViewPanel),
+                new PropertyMetadata(0));
+
+        public int QuestionIndex
+        {
+            get { return (int)GetValue(QuestionIndexProperty); }
+            set { SetValue(QuestionIndexProperty, value); }
+        }
+
         public static readonly DependencyProperty ShowAnswersProperty=
             DependencyProperty.Register("ShowAnswers", typeof(bool), typeof(QuestionViewPanel),
                 new PropertyMetadata(true));

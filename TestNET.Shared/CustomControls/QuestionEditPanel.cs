@@ -27,6 +27,16 @@
             set { SetValue(IsInEditModeProperty, value); }
         }
 
+        public static readonly DependencyProperty QuestionIndexProperty =
+            DependencyProperty.Register("QuestionIndex", typeof(int), typeof(QuestionEditPanel),
+                new PropertyMetadata(0));
+
+        public int QuestionIndex
+        {
+            get { return (int)GetValue(QuestionIndexProperty); }
+            set { SetValue(QuestionIndexProperty, value); }
+        }
+
         private static readonly DependencyPropertyKey QuestionSHPropertyKey =
            DependencyProperty.RegisterReadOnly("QuestionSH", typeof(ShortAnswerQuestion), typeof(QuestionEditPanel),
                new PropertyMetadata(null));

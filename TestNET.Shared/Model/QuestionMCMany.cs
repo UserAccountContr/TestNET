@@ -35,5 +35,5 @@ public partial class MultipleChoiceManyQuestion : Question, IManyAnswers
     }
 
     [RelayCommand]
-    void AddPosAns() => PossibleAnswers.Add(new(""));
+    void AddPosAns() => PossibleAnswers.Add(new($"Option {PossibleAnswers.Count + 1}"));
 }

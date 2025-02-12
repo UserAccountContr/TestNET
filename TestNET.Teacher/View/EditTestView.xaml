@@ -30,7 +30,7 @@
                                   Command="{Binding AddMCMQuestionCommand}" />
             </MenuItem>
             <MenuItem Header="Save"
-                              Command="{Binding SaveChangesCommand}"/>
+                              Command="{Binding SaveCommand}"/>
             <MenuItem Header="Cancel"
                               Command="{Binding CancelCommand}"/>
         </Menu>
@@ -72,8 +72,9 @@
                          VerticalContentAlignment="Center"/>
                 </WrapPanel>
                 <ListView Grid.Row="1" 
-                      ItemsSource="{Binding Questions}"
-                          HorizontalContentAlignment="Stretch">
+                          ItemsSource="{Binding Questions}"
+                          HorizontalContentAlignment="Stretch"
+                          SelectedIndex="{Binding SelIndex}">
                     <ListView.Resources>
 
                         <sharedserv:IndexConverter x:Key="IndexConverter" />
@@ -232,7 +233,8 @@
                         <DataTemplate>
                             <CustomControls:QuestionEditPanel 
                                 Question="{Binding}"
-                                IsInEditMode="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}"/>
+                                IsInEditMode="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListViewItem}}"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>

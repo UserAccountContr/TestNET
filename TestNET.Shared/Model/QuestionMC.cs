@@ -33,7 +33,7 @@ public partial class MultipleChoiceQuestion : Question, IManyAnswers
     }
 
     [RelayCommand]
-    void AddPosAns() => PossibleAnswers.Add(new(""));
+    void AddPosAns() => PossibleAnswers.Add(new($"Option {PossibleAnswers.Count + 1}"));
 }
 
 public interface IManyAnswers
