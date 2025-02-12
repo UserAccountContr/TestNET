@@ -50,6 +50,9 @@ public partial class EditTestViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    void RemoveQuestion(Question q) => Questions.Remove(q);
+
+    [RelayCommand]
     void Save()
     {
         SaveChanges(out _);

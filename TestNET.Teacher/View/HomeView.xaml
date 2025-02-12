@@ -117,12 +117,12 @@
                             <CustomControls:DropdownMenu Grid.Column="1">
                                 <StackPanel Background="White">
                                     
-                                <Button Content="{DynamicResource open}" 
-                                        Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                        CommandParameter="{Binding .}"/>
-                                <Button Content="{DynamicResource delete}" 
-                                        Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                        CommandParameter="{Binding .}"/>
+                                    <Button Content="{DynamicResource open}" 
+                                            Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding .}"/>
+                                    <Button Content="{DynamicResource delete}" 
+                                            Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                            CommandParameter="{Binding .}"/>
                                 </StackPanel>
                             </CustomControls:DropdownMenu>
                         </Grid>

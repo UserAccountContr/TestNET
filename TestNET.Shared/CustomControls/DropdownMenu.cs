@@ -33,6 +33,7 @@ public class DropdownMenu : ContentControl
         if (_popup != null)
         {
             _popup.Closed += Popup_Closed;
+            _popup.MouseUp += (s, e) => IsOpen = false;
         }
 
         _toggle = Template.FindName(PART_TOGGLE_NAME, this) as CheckBox;

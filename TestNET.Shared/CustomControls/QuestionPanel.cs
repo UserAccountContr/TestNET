@@ -26,4 +26,53 @@ public class QuestionPanel : ContentControl
         get { return (float)GetValue(PointsProperty); }
         set { SetValue(PointsProperty, value); }
     }
+
+    public static readonly DependencyProperty DropdownContentProperty =
+        DependencyProperty.Register("DropdownContent", typeof(object), typeof(QuestionPanel),
+            new PropertyMetadata(null));
+
+    public object DropdownContent
+    {
+        get { return GetValue(DropdownContentProperty); }
+        set { SetValue(DropdownContentProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShowDropdownProperty =
+        DependencyProperty.Register("ShowDropdown", typeof(bool), typeof(QuestionPanel),
+            new PropertyMetadata(false, OnPropertyChanged));
+
+    public bool ShowDropdown
+    {
+        get { return (bool)GetValue(ShowDropdownProperty); }
+        set { SetValue(ShowDropdownProperty, value); }
+    }
+
+    private static readonly DependencyPropertyKey ShowPointsPropertyKey =
+       DependencyProperty.RegisterReadOnly("ShowPoints", typeof(bool), typeof(QuestionPanel),
+           new PropertyMetadata(true));
+
+    public static readonly DependencyProperty ShowPointsProperty = ShowPointsPropertyKey.DependencyProperty;
+
+    public bool ShowPoints
+    {
+        get { return (bool)GetValue(ShowPointsProperty); }
+    }
+
+    static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is QuestionPanel q)
+            q.OnPropertyChanged();
+    }
+
+    void OnPropertyChanged()
+    {
+        SetValue(ShowPointsPropertyKey, !ShowDropdown);
+    }
+
+    public override void OnApplyTemplate()
+    {
+        SetValue(ShowPointsPropertyKey, !ShowDropdown);
+
+        base.OnApplyTemplate();
+    }
 }

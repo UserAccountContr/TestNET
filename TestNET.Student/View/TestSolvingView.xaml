@@ -108,7 +108,8 @@
                         <StackPanel>
                             <CustomControls:QuestionViewPanel 
                                 Question="{Binding .}"
-                                ShowAnswers="True"/>
+                                ShowAnswers="True"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>

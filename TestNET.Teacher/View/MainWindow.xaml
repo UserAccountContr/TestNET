@@ -9,7 +9,7 @@
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:WindowViewModel}"
 	mc:Ignorable="d"
-	Title="TestNET Teacher" Height="450" Width="800">
+	Title="TestNET Teacher" Height="720" Width="1280">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">
