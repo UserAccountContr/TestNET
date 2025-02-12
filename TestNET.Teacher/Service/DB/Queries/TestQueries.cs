@@ -43,6 +43,15 @@ internal class TestQueries(string dbPath)
         }
     }
 
+    public void DeleteTest()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = GetEmbeddedResource("DeleteTest.sql");
+            command.ExecuteNonQuery();
+        }
+    }
+
     /*
     private CachedQuery insertAnswerQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertAnswer"));
     private string InsertAnswerQuery => insertAnswerQuery.Value; */

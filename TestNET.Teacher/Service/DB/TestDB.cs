@@ -20,6 +20,7 @@ public class TestDB
 
     public void Save(TeacherTest test)
     {
+        testQueries.DeleteTest();
         testQueries.InsertMeta(test.Name, DateTime.Now);
 
         foreach (var question in test.Questions)

@@ -39,6 +39,7 @@
     <EmbeddedResource Include="Service\DB\Queries\Index\InitializeIndex.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Index\InsertTest.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Index\SelectTestPaths.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\DeleteTest.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\InitializeTest.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\InsertAnswer.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\InsertMeta.sql" />
