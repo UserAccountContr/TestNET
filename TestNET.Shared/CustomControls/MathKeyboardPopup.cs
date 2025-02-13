@@ -103,10 +103,18 @@ public class MathKeyboardPopup : Control
         if (_popup != null)
         {
             _popup.Closed += Popup_Closed;
-            //_popup.PreviewKeyDown += (s, e) => 
-            //{
-            //    if (e.Key == Key.Space) e.Handled = true; else return;
-            //};
+            _popup.PreviewKeyDown += async (s, e) =>
+            {
+                if (e.Key == Key.Space)
+                {
+                    if (IsInTextNode())
+                    {
+                        keyboardMemory.Insert(new StandardLeafNode(" "));
+                        await DisplayResultAsync();
+                    }
+                    e.Handled = true;
+                }
+            };
             _popup.KeyDown += Popup_KeyDown;
             _popup.TextInput += Popup_TextInput;
             _popup.KeyUp += Popup_KeyUp;
@@ -139,13 +147,13 @@ public class MathKeyboardPopup : Control
         base.OnApplyTemplate();
     }
 
-    private void NewText()
+    private async void NewText()
     {
         var parsedNodes = Parse.Latex(Text).SyntaxTreeRoot.Nodes;
         keyboardMemory.SyntaxTreeRoot.Nodes.Clear();
         keyboardMemory.Insert(parsedNodes);
 
-        DisplayResultAsync();
+        await DisplayResultAsync();
     }
 
     private void Popup_Closed(object sender, EventArgs e)
@@ -356,6 +364,7 @@ public class MathKeyboardPopup : Control
             yield return new PhysicalKeyHandler((key) => key == "OemPeriod" || key == "OemComma", (k, key) => k.Insert(GetDecimalSeparatorNode()));
             yield return new PhysicalKeyHandler("OemOpenBrackets", (k, key) => k.Insert(GetSquareBracketsNode()));
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => k.MoveRight());
+            yield return new PhysicalKeyHandler("OemSemicolon", (k, key) => k.Insert(new StandardLeafNode(";")));
         }
     }
 
