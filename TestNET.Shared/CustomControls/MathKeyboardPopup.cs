@@ -333,7 +333,7 @@ public class MathKeyboardPopup : Control
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => k.MoveRight());
             yield return new PhysicalKeyHandler("OemComma", (k, key) => k.Insert(new StandardLeafNode("<")));
             yield return new PhysicalKeyHandler("OemPeriod", (k, key) => k.Insert(new StandardLeafNode(">")));
-            yield return new PhysicalKeyHandler("OemSemicolon", (k, key) => k.Insert(new StandardLeafNode(":")));
+            yield return new PhysicalKeyHandler("Oem1", (k, key) => k.Insert(new StandardLeafNode(":")));
         }
     }
 
@@ -364,7 +364,7 @@ public class MathKeyboardPopup : Control
             yield return new PhysicalKeyHandler((key) => key == "OemPeriod" || key == "OemComma", (k, key) => k.Insert(GetDecimalSeparatorNode()));
             yield return new PhysicalKeyHandler("OemOpenBrackets", (k, key) => k.Insert(GetSquareBracketsNode()));
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => k.MoveRight());
-            yield return new PhysicalKeyHandler("OemSemicolon", (k, key) => k.Insert(new StandardLeafNode(";")));
+            yield return new PhysicalKeyHandler("Oem1", (k, key) => k.Insert(new StandardLeafNode(";")));
         }
     }
 
