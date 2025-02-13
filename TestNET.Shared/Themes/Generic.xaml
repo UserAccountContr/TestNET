@@ -134,10 +134,12 @@
             <local:QuestionPanel.DropdownContent>
                 <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
             </local:QuestionPanel.DropdownContent>
-            
+
             <StackPanel Margin="15">
-                <local:TemplateTextBox Placeholder="Question" Text="{Binding QuestionSH.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
-                <local:TemplateTextBox Placeholder="Answer" Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
@@ -155,10 +157,8 @@
                 <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
-                <WrapPanel>
-                    <local:TemplateTextBox Text="{Binding QuestionMC.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
-                    <local:MathKeyboardPopup Text="{Binding QuestionMC.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
-                </WrapPanel>
+                <local:LatexTextBox IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -166,7 +166,8 @@
                             <WrapPanel>
                                 <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
                                              IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                <local:TemplateTextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -190,14 +191,16 @@
                 <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
-                <local:TemplateTextBox Text="{Binding QuestionMCM.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <local:LatexTextBox IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
                             <WrapPanel>
                                 <CheckBox IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
-                                <local:TemplateTextBox Text="{Binding Path=Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                                    IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -558,21 +561,96 @@
                             Placement="Center"
                             PlacementTarget="{Binding RelativeSource={RelativeSource AncestorType=Window}}"
                             StaysOpen="True">
+                            
+                            <Border BorderThickness="1" BorderBrush="DarkGray">
+                                
                             <Grid Background="White">
-                                <StackPanel>
+                                <StackPanel MaxWidth="800">
                                     <local:LatexLabel Margin="20"
                                                       IsMath="True"
                                                       Text="{Binding TempView, RelativeSource={RelativeSource TemplatedParent}}"/>
                                     <TextBlock Margin="20"
                                                       Text="{Binding TempText, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                        <WrapPanel Margin="20">
+                                            <TabControl>
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Button Name="SQRT_BTN">
+                                                            <local:LatexLabel Text="\sqrt{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="Cust_SQRT_BTN">
+                                                            <local:LatexLabel Text="\sqrt[\square]{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="FRAC_BTN">
+                                                            <local:LatexLabel Text="\frac{\square}{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="SBR_BTN">
+                                                            <local:LatexLabel Text="\left( \square \right)" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="PIPE_BTN">
+                                                            <local:LatexLabel Text="\left| \square \right|" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="Pi_BTN">
+                                                            <local:LatexLabel Text="\pi" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="POWER_BTN">
+                                                            <local:LatexLabel Text="a^{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="TEXT_BTN" Content="Text"/>
+                                                        <Button Name="IN_BTN">
+                                                            <local:LatexLabel Text="\in" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="DEG_BTN">
+                                                            <local:LatexLabel Text="\square^{\circ}" IsMath="True"/>
+                                                        </Button>
+                                                    </WrapPanel>
+                                                </TabItem>
+                                            </TabControl>
+                                        </WrapPanel>
                                     <Button Content="Save" Name="SAVE_BTN"/>
                                     <Button Content="Cancel"/>
                                 </StackPanel>
                             </Grid>
+                            </Border>
                         </Popup>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:LatexTextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:LatexTextBox}">
+                    <local:TemplateTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding IsMath, RelativeSource={RelativeSource Self}}" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:LatexTextBox}">
+                            <StackPanel>
+                                <WrapPanel>
+                                    <local:LatexLabel Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" IsMath="True"/>
+                                    <local:MathKeyboardPopup Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                </WrapPanel>
+                                <Expander Header="Latex">
+                                    <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    IsEnabled="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}"/>
+                                </Expander>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

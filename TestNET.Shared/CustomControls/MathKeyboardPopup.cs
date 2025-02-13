@@ -7,6 +7,7 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = PART_POPUP_NAME, Type = typeof(Popup))]
 [TemplatePart(Name = PART_TOGGLE_NAME, Type = typeof(CheckBox))]
 [TemplatePart(Name = PART_SAVEBTN_NAME, Type =typeof(Button))]
+[TemplatePart(Name = TEXT_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPopup : Control
 {
     LatexConfiguration latexConfiguration = new LatexConfiguration();
@@ -15,14 +16,31 @@ public class MathKeyboardPopup : Control
     private const string PART_POPUP_NAME = "PART_Popup";
     private const string PART_TOGGLE_NAME = "PART_Toggle";
     private const string PART_SAVEBTN_NAME = "SAVE_BTN";
+    private const string TEXT_BTN_NAME = "TEXT_BTN";
 
     private Popup _popup;
     private CheckBox _toggle;
-    private Button _savebtn;  
+    private Button _savebtn;
+    private Button _textbtn;
+
+    #region Properties
+
+    private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is MathKeyboardPopup q)
+        {
+            q.OnPropertyChanged();
+        }
+    }
+
+    private void OnPropertyChanged()
+    {
+        if (IsOpen == true) _popup.Focus();
+    }
 
     public static readonly DependencyProperty IsOpenProperty =
         DependencyProperty.Register("IsOpen", typeof(bool), typeof(MathKeyboardPopup),
-            new PropertyMetadata(false));
+            new PropertyMetadata(false, OnPropertyChanged));
 
     public bool IsOpen
     {
@@ -32,7 +50,16 @@ public class MathKeyboardPopup : Control
 
     public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register("Text", typeof(string), typeof(MathKeyboardPopup),
-            new PropertyMetadata(string.Empty));
+            new PropertyMetadata(string.Empty, OnTextEdit));
+
+    private static void OnTextEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.OldValue == e.NewValue) return;
+        if (d is MathKeyboardPopup q)
+        {
+            q.NewText();
+        }
+    }
 
     public string Text
     {
@@ -68,14 +95,20 @@ public class MathKeyboardPopup : Control
         DefaultStyleKeyProperty.OverrideMetadata(typeof(MathKeyboardPopup), new FrameworkPropertyMetadata(typeof(MathKeyboardPopup)));
     }
 
+    #endregion
+
     public override void OnApplyTemplate()
     {
         _popup = Template.FindName(PART_POPUP_NAME, this) as Popup;
         if (_popup != null)
         {
             _popup.Closed += Popup_Closed;
+            //_popup.PreviewKeyDown += (s, e) => 
+            //{
+            //    if (e.Key == Key.Space) e.Handled = true; else return;
+            //};
             _popup.KeyDown += Popup_KeyDown;
-            _popup.PreviewTextInput += (s, e) => MessageBox.Show(e.Text);
+            _popup.TextInput += Popup_TextInput;
             _popup.KeyUp += Popup_KeyUp;
         }
 
@@ -85,14 +118,34 @@ public class MathKeyboardPopup : Control
             _savebtn.Click += SaveBtn_Click;
         }
 
-        _toggle = Template.FindName(PART_TOGGLE_NAME, this) as CheckBox;
+        _textbtn = Template.FindName(TEXT_BTN_NAME, this) as Button;
+        if (_textbtn is not null)
+        {
+            _textbtn.Click += (s, e) => keyboardMemory.Insert(GetTextNode());
+        }
 
+        _toggle = Template.FindName(PART_TOGGLE_NAME, this) as CheckBox;
+        if(_toggle is not null)
+        {
+            _toggle.MouseUp += (s, e) =>
+            {
+                if (IsOpen)
+                    Keyboard.Focus(_popup);
+            };
+        }
+
+        NewText();
+
+        base.OnApplyTemplate();
+    }
+
+    private void NewText()
+    {
         var parsedNodes = Parse.Latex(Text).SyntaxTreeRoot.Nodes;
+        keyboardMemory.SyntaxTreeRoot.Nodes.Clear();
         keyboardMemory.Insert(parsedNodes);
 
         DisplayResultAsync();
-
-        base.OnApplyTemplate();
     }
 
     private void Popup_Closed(object sender, EventArgs e)
@@ -126,6 +179,7 @@ public class MathKeyboardPopup : Control
     private static BranchingNode GetSumNode() => new AscendingBranchingNode(@"\sum_{", "}^{", "}");
     private static BranchingNode GetProductNode() => new AscendingBranchingNode(@"\prod_{", "}^{", "}");
     private static BranchingNode GetLimitNode() => new StandardBranchingNode(@"\lim_{", "}");
+    private static BranchingNode GetTextNode() => new StandardBranchingNode(@"\text{", "}");
 
     #endregion
 
@@ -135,9 +189,45 @@ public class MathKeyboardPopup : Control
         //return inputTextToParse?.Length > 0 || await JS.InvokeAsync<bool>("document.activeElement.classList.contains", "disable-physical-keypress-math-input-when-focused");
     }
 
+    public bool IsInTextNode()
+    {
+        if (keyboardMemory.Current is Placeholder pl)
+        {
+            if(pl.ParentNode is not null && pl.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text{"))
+                return true;
+        } 
+        else if (keyboardMemory.Current is StandardLeafNode leaf)
+        {
+            if (leaf.ParentPlaceholder is not null && leaf.ParentPlaceholder.ParentNode is not null && leaf.ParentPlaceholder.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text{"))
+                return true;
+        }
+        return false;
+    }
+
+    public async Task OnRealTextInput(string text)
+    {
+        if (IsInTextNode())
+        {
+            if (await ShouldIgnorePhysicalKeyPresses())
+            {
+                return;
+            }
+            else if (keyboardMemory.InSelectionMode())
+            {
+                keyboardMemory.LeaveSelectionMode();
+            }
+            keyboardMemory.Insert(new StandardLeafNode(text));
+            await DisplayResultAsync();
+        }
+    }
+
     public async Task OnPhysicalKeyDownAsync(string key)
     {
-        if (await ShouldIgnorePhysicalKeyPresses())
+        if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back")
+        {
+            return; 
+        }
+        else if (await ShouldIgnorePhysicalKeyPresses())
         {
             return;
         }
@@ -186,7 +276,7 @@ public class MathKeyboardPopup : Control
         }
         else
         {
-            if (!inShift && key == "Back")
+            if (!inShift && key == "Oem5")
             {
                 //await inputToParse.FocusAsync();
                 return;
@@ -318,6 +408,12 @@ public class MathKeyboardPopup : Control
     private void Popup_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
     {
         OnPhysicalKeyUp(e.Key.ToString());
+    }
+
+    private void Popup_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    {
+        if (e.Text == "\b") return;
+        OnRealTextInput(e.Text);
     }
 
     public Action<KeyboardMemory, TreeNode> InsertAction { get; set; } = (k, node) => k.Insert(node);
