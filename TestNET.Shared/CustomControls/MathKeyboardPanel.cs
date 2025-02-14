@@ -73,7 +73,8 @@ public class MathKeyboardPanel : Control
 
     private void OnPropertyChanged()
     {
-        if (IsOpen == true && _grid is not null) _grid.Focus();
+        if (IsOpen == true && _grid is not null) 
+            Keyboard.Focus(_grid);
     }
 
     public static readonly DependencyProperty IsOpenProperty =
@@ -190,6 +191,7 @@ public class MathKeyboardPanel : Control
         if (_grid != null)
         {
             //_popup.Closed += Popup_Closed;
+            if (IsOpen) _grid.Focus();
             _grid.PreviewKeyDown += async (s, e) =>
             {
                 if (e.Key == Key.Space)
@@ -201,10 +203,11 @@ public class MathKeyboardPanel : Control
                     }
                     e.Handled = true;
                 }
+                else if (e.Key == Key.Tab) e.Handled = true;
             };
-            _grid.KeyDown += Popup_KeyDown;
-            _grid.TextInput += Popup_TextInput;
-            _grid.KeyUp += Popup_KeyUp;
+            _grid.KeyDown += Panel_KeyDown;
+            _grid.TextInput += Panel_TextInput;
+            _grid.KeyUp += Panel_KeyUp;
         }
 
         _savebtn = Template.FindName(PART_SAVEBTN_NAME, this) as Button;
@@ -439,7 +442,7 @@ public class MathKeyboardPanel : Control
         await DisplayResultAsync();
     }
 
-    private void Popup_Closed(object sender, EventArgs e)
+    private void Panel_Closed(object sender, EventArgs e)
     {
         if (!_toggle.IsMouseOver)
         {
@@ -695,18 +698,23 @@ public class MathKeyboardPanel : Control
         //StateHasChanged();
     }
 
-    private void Popup_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    private void Panel_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         //MessageBox.Show(e.Key.ToString());
         OnPhysicalKeyDownAsync(e.Key.ToString());
+
+        if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
+        {
+            e.Handled = true;
+        }
     }
 
-    private void Popup_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+    private void Panel_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
     {
         OnPhysicalKeyUp(e.Key.ToString());
     }
 
-    private void Popup_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    private void Panel_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
         if (e.Text == "\b") return;
         OnRealTextInput(e.Text);

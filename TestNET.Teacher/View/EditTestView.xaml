@@ -74,7 +74,8 @@
                 <ListView Grid.Row="1" 
                           ItemsSource="{Binding Questions}"
                           HorizontalContentAlignment="Stretch"
-                          SelectedIndex="{Binding SelIndex}">
+                          SelectedIndex="{Binding SelIndex}"
+                          PreviewMouseWheel="ListView_PreviewMouseWheel">
                     <ListView.Resources>
 
                         <sharedserv:IndexConverter x:Key="IndexConverter" />

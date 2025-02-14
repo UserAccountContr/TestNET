@@ -686,7 +686,7 @@
                         <ControlTemplate TargetType="{x:Type local:MathKeyboardPanel}">
                             <Border BorderBrush="DarkGray"
                                     BorderThickness="1">
-                                <Grid Name="PART_GRID" Background="Transparent">
+                                <Grid Name="PART_GRID" Background="Transparent" Focusable="True">
                                     <StackPanel>
                                         <local:LatexLabel Margin="20"
                                                       IsMath="True"

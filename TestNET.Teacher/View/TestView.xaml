@@ -76,7 +76,8 @@
                           ExpandDirection="Down"
                           IsExpanded="True">
                         <ListView ItemsSource="{Binding Test.Questions}" 
-                                  HorizontalContentAlignment="Stretch">
+                                  HorizontalContentAlignment="Stretch"
+                                  PreviewMouseWheel="ListView_PreviewMouseWheel">
                             <ListView.Resources>
 
                                 <sharedserv:IndexConverter x:Key="IndexConverter" />

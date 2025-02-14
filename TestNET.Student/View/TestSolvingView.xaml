@@ -23,7 +23,8 @@
                    FontSize="25"/>
 
             <ListView ItemsSource="{Binding Test.Questions}"
-                      BorderThickness="0">
+                      BorderThickness="0"
+                      PreviewMouseWheel="ListView_PreviewMouseWheel">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Focusable" Value="False"/>
