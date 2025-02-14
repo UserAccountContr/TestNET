@@ -16,9 +16,10 @@
     d:DesignHeight="450" d:DesignWidth="800">
 
     <Grid>
+        <ScrollViewer>
+            <StackPanel>
 
-        <StackPanel>
-            <Label Content="{Binding Test.Name}"
+                <Label Content="{Binding Test.Name}"
                    FontSize="25"/>
 
             <ListView ItemsSource="{Binding Test.Questions}"
@@ -118,5 +119,6 @@
             <Button Content="Submit"
                     Command="{Binding SubmitCommand}"/>
         </StackPanel>
+            </ScrollViewer>
     </Grid>
 </UserControl>

@@ -639,18 +639,142 @@
                         <ControlTemplate TargetType="{x:Type local:LatexTextBox}">
                             <StackPanel>
                                 <WrapPanel>
+                                    
+                                    <!--
                                     <local:LatexLabel Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}" IsMath="True"/>
                                     <local:MathKeyboardPopup Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    -->
+
+                                    <local:MathKeyboardPanel Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                                 </WrapPanel>
-                                <Expander Header="Latex">
-                                    <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                    IsEnabled="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}"/>
-                                </Expander>
                             </StackPanel>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
             </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:MathKeyboardPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:MathKeyboardPanel}">
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="DarkGray"
+                            BorderThickness="1">
+                        <Grid Background="Transparent">
+                            <CheckBox IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                                <CheckBox.Template>
+                                    <ControlTemplate TargetType="CheckBox">
+                                        <Grid Background="Transparent">
+                                            <local:LatexLabel Text="{Binding Text, RelativeSource={RelativeSource AncestorType=local:MathKeyboardPanel}, UpdateSourceTrigger=PropertyChanged}" 
+                                                              IsMath="True"
+                                                              Margin="5 3 5 5"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </CheckBox.Template>
+                            </CheckBox>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsOpen" Value="True">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:MathKeyboardPanel}">
+                            <Border BorderBrush="DarkGray"
+                                    BorderThickness="1">
+                                <Grid Name="PART_GRID" Background="Transparent">
+                                    <StackPanel>
+                                        <local:LatexLabel Margin="20"
+                                                      IsMath="True"
+                                                      Text="{Binding TempView, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                        <WrapPanel Margin="20">
+                                            <WrapPanel.Resources>
+
+                                                <Style TargetType="Button">
+                                                    <Setter Property="Background" Value="Transparent"/>
+                                                    <Setter Property="MinWidth" Value="50"/>
+                                                </Style>
+                                            </WrapPanel.Resources>
+                                            <TabControl>
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Button Name="SQRT_BTN">
+                                                            <local:LatexLabel Text="\sqrt{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="NTHRT_BTN">
+                                                            <local:LatexLabel Text="\sqrt[\square]{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="FRAC_BTN">
+                                                            <local:LatexLabel Text="\frac{\square}{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="SBR_BTN">
+                                                            <local:LatexLabel Text="\left( \square \right)" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="PIPE_BTN">
+                                                            <local:LatexLabel Text="\left| \square \right|" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="Pi_BTN">
+                                                            <local:LatexLabel Text="\pi" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="POWER_BTN">
+                                                            <local:LatexLabel Text="a^{\square}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="TEXT_BTN" Content="Text"/>
+                                                        <Button Name="IN_BTN">
+                                                            <local:LatexLabel Text="\in" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="CUP_BTN">
+                                                            <local:LatexLabel Text="\cup" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="CAP_BTN">
+                                                            <local:LatexLabel Text="\cap" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="DEG_BTN">
+                                                            <local:LatexLabel Text="\square^{\circ}" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="INF_BTN">
+                                                            <local:LatexLabel Text="\infty" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="SIN_BTN">
+                                                            <local:LatexLabel Text="\sin" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="COS_BTN">
+                                                            <local:LatexLabel Text="\cos" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="TG_BTN">
+                                                            <local:LatexLabel Text="\tg" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="COTG_BTN">
+                                                            <local:LatexLabel Text="\cot" IsMath="True"/>
+                                                        </Button>
+                                                    </WrapPanel>
+                                                </TabItem>
+                                            </TabControl>
+                                        </WrapPanel>
+                                        <!--
+                                    <Expander Header="Latex">
+                                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                             IsEnabled="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}"/>
+                                    </Expander>
+                                    -->
+                                        <Button Content="Save" Name="SAVE_BTN"/>
+                                        <Button Content="Cancel" Name="CANCEL_BTN"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
         </Style.Triggers>
     </Style>
 </ResourceDictionary>

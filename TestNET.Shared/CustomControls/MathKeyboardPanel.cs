@@ -1,33 +1,66 @@
-﻿using System.Windows.Controls.Primitives;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MathKeyboardEngine;
 
 namespace TestNET.Shared.CustomControls;
 
-[TemplatePart(Name = PART_POPUP_NAME, Type = typeof(Popup))]
+
+[TemplatePart(Name = PART_GRID_NAME, Type = typeof(Grid))]
 [TemplatePart(Name = PART_TOGGLE_NAME, Type = typeof(CheckBox))]
-[TemplatePart(Name = PART_SAVEBTN_NAME, Type =typeof(Button))]
+[TemplatePart(Name = PART_SAVEBTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = PART_CANCELBTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = TEXT_BTN_NAME, Type = typeof(Button))]
-public class MathKeyboardPopup : Control
+[TemplatePart(Name = SQRT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NTHRT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = DEG_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = INF_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = SIN_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = COS_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = CUP_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = CAP_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = TG_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = COTG_BTN_NAME, Type = typeof(Button))]
+public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new LatexConfiguration();
     KeyboardMemory keyboardMemory = new KeyboardMemory();
 
-    private const string PART_POPUP_NAME = "PART_Popup";
+    private const string PART_GRID_NAME = "PART_GRID";
     private const string PART_TOGGLE_NAME = "PART_Toggle";
     private const string PART_SAVEBTN_NAME = "SAVE_BTN";
+    private const string PART_CANCELBTN_NAME = "CANCEL_BTN";
     private const string TEXT_BTN_NAME = "TEXT_BTN";
+    private const string SQRT_BTN_NAME = "SQRT_BTN";
+    private const string NTHRT_BTN_NAME = "NTHRT_BTN";
+    private const string DEG_BTN_NAME = "DEG_BTN";
+    private const string INF_BTN_NAME = "INF_BTN";
+    private const string SIN_BTN_NAME = "SIN_BTN";
+    private const string COS_BTN_NAME = "COS_BTN";
+    private const string CUP_BTN_NAME = "CUP_BTN";
+    private const string CAP_BTN_NAME = "CAP_BTN";
+    private const string TG_BTN_NAME = "TG_BTN";
+    private const string COTG_BTN_NAME = "COTG_BTN";
 
-    private Popup _popup;
+    private Grid _grid;
     private CheckBox _toggle;
     private Button _savebtn;
+    private Button _cancelbtn;
     private Button _textbtn;
+    private Button _sqrtbtn;
+    private Button _nthrtbtn;
+    private Button _degbtn;
+    private Button _infbtn;
+    private Button _sinbtn;
+    private Button _cosbtn;
+    private Button _cupbtn;
+    private Button _capbtn;
+    private Button _tgbtn;
+    private Button _cotgbtn;
 
     #region Properties
 
     private static void OnPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is MathKeyboardPopup q)
+        if (d is MathKeyboardPanel q)
         {
             q.OnPropertyChanged();
         }
@@ -35,11 +68,11 @@ public class MathKeyboardPopup : Control
 
     private void OnPropertyChanged()
     {
-        if (IsOpen == true) _popup.Focus();
+        if (IsOpen == true && _grid is not null) _grid.Focus();
     }
 
     public static readonly DependencyProperty IsOpenProperty =
-        DependencyProperty.Register("IsOpen", typeof(bool), typeof(MathKeyboardPopup),
+        DependencyProperty.Register("IsOpen", typeof(bool), typeof(MathKeyboardPanel),
             new PropertyMetadata(false, OnPropertyChanged));
 
     public bool IsOpen
@@ -49,13 +82,13 @@ public class MathKeyboardPopup : Control
     }
 
     public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register("Text", typeof(string), typeof(MathKeyboardPopup),
+        DependencyProperty.Register("Text", typeof(string), typeof(MathKeyboardPanel),
             new PropertyMetadata(string.Empty, OnTextEdit));
 
     private static void OnTextEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (e.OldValue == e.NewValue) return;
-        if (d is MathKeyboardPopup q)
+        if (d is MathKeyboardPanel q)
         {
             q.NewText();
         }
@@ -68,7 +101,7 @@ public class MathKeyboardPopup : Control
     }
 
     private static readonly DependencyPropertyKey TempTextPropertyKey =
-        DependencyProperty.RegisterReadOnly("TempText", typeof(string), typeof(MathKeyboardPopup),
+        DependencyProperty.RegisterReadOnly("TempText", typeof(string), typeof(MathKeyboardPanel),
             new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty TempTextProperty = TempTextPropertyKey.DependencyProperty;
@@ -79,7 +112,7 @@ public class MathKeyboardPopup : Control
     }
 
     private static readonly DependencyPropertyKey TempViewPropertyKey =
-        DependencyProperty.RegisterReadOnly("TempView", typeof(string), typeof(MathKeyboardPopup),
+        DependencyProperty.RegisterReadOnly("TempView", typeof(string), typeof(MathKeyboardPanel),
             new PropertyMetadata(string.Empty));
 
     public static readonly DependencyProperty TempViewProperty = TempViewPropertyKey.DependencyProperty;
@@ -89,21 +122,21 @@ public class MathKeyboardPopup : Control
         get { return (string)GetValue(TempViewProperty); }
     }
 
-
-    static MathKeyboardPopup()
+    static MathKeyboardPanel()
     {
-        DefaultStyleKeyProperty.OverrideMetadata(typeof(MathKeyboardPopup), new FrameworkPropertyMetadata(typeof(MathKeyboardPopup)));
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(MathKeyboardPanel), new FrameworkPropertyMetadata(typeof(MathKeyboardPanel)));
     }
 
     #endregion
 
+
     public override void OnApplyTemplate()
     {
-        _popup = Template.FindName(PART_POPUP_NAME, this) as Popup;
-        if (_popup != null)
+        _grid = Template.FindName(PART_GRID_NAME, this) as Grid;
+        if (_grid != null)
         {
-            _popup.Closed += Popup_Closed;
-            _popup.PreviewKeyDown += async (s, e) =>
+            //_popup.Closed += Popup_Closed;
+            _grid.PreviewKeyDown += async (s, e) =>
             {
                 if (e.Key == Key.Space)
                 {
@@ -115,9 +148,9 @@ public class MathKeyboardPopup : Control
                     e.Handled = true;
                 }
             };
-            _popup.KeyDown += Popup_KeyDown;
-            _popup.TextInput += Popup_TextInput;
-            _popup.KeyUp += Popup_KeyUp;
+            _grid.KeyDown += Popup_KeyDown;
+            _grid.TextInput += Popup_TextInput;
+            _grid.KeyUp += Popup_KeyUp;
         }
 
         _savebtn = Template.FindName(PART_SAVEBTN_NAME, this) as Button;
@@ -126,19 +159,151 @@ public class MathKeyboardPopup : Control
             _savebtn.Click += SaveBtn_Click;
         }
 
+        _cancelbtn = Template.FindName(PART_CANCELBTN_NAME, this) as Button;
+        if (_cancelbtn is not null)
+        {
+            _cancelbtn.Click += (s, e) => IsOpen = false;
+        }
+
         _textbtn = Template.FindName(TEXT_BTN_NAME, this) as Button;
         if (_textbtn is not null)
         {
-            _textbtn.Click += (s, e) => keyboardMemory.Insert(GetTextNode());
+            _textbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetTextNode());
+                await DisplayResultAsync();
+            };
         }
 
+        _degbtn = Template.FindName(DEG_BTN_NAME, this) as Button;
+        if (_degbtn is not null)
+        {
+            _degbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetDegreeNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _sqrtbtn = Template.FindName(SQRT_BTN_NAME, this) as Button;
+        if (_sqrtbtn is not null)
+        {
+            _sqrtbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetSquareRootNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _nthrtbtn = Template.FindName(NTHRT_BTN_NAME, this) as Button;
+        if (_nthrtbtn is not null)
+        {
+            _nthrtbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetNthRootNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _infbtn = Template.FindName(INF_BTN_NAME, this) as Button;
+        if (_infbtn is not null)
+        {
+            _infbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\infty"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _sinbtn = Template.FindName(SIN_BTN_NAME, this) as Button;
+        if (_sinbtn is not null)
+        {
+            _sinbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardBranchingNode(@"\sin{","}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _cosbtn = Template.FindName(COS_BTN_NAME, this) as Button;
+        if (_cosbtn is not null)
+        {
+            _cosbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardBranchingNode(@"\cos{", "}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _tgbtn = Template.FindName(TG_BTN_NAME, this) as Button;
+        if (_tgbtn is not null)
+        {
+            _tgbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardBranchingNode(@"\tg{", "}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _cotgbtn = Template.FindName(COTG_BTN_NAME, this) as Button;
+        if (_cotgbtn is not null)
+        {
+            _cotgbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardBranchingNode(@"\cot{", "}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _cupbtn = Template.FindName(CUP_BTN_NAME, this) as Button;
+        if (_cupbtn is not null)
+        {
+            _cupbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\cup"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _capbtn = Template.FindName(CAP_BTN_NAME, this) as Button;
+        if (_capbtn is not null)
+        {
+            _capbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\cap"));
+                await DisplayResultAsync();
+            };
+        }
+
+        //_infbtn = Template.FindName(INF_BTN_NAME, this) as Button;
+        //if (_infbtn is not null)
+        //{
+        //    _infbtn.Click += async (s, e) =>
+        //    {
+        //        if (IsInTextNode()) return;
+        //        keyboardMemory.Insert(GetLimitNode());
+        //        await DisplayResultAsync();
+        //    };
+        //}
+
         _toggle = Template.FindName(PART_TOGGLE_NAME, this) as CheckBox;
-        if(_toggle is not null)
+        if (_toggle is not null)
         {
             _toggle.MouseUp += (s, e) =>
             {
                 if (IsOpen)
-                    Keyboard.Focus(_popup);
+                    Keyboard.Focus(_grid);
             };
         }
 
@@ -150,7 +315,10 @@ public class MathKeyboardPopup : Control
     private async void NewText()
     {
         var parsedNodes = Parse.Latex(Text).SyntaxTreeRoot.Nodes;
-        keyboardMemory.SyntaxTreeRoot.Nodes.Clear();
+        keyboardMemory = new KeyboardMemory
+        {
+
+        };
         keyboardMemory.Insert(parsedNodes);
 
         await DisplayResultAsync();
@@ -170,12 +338,14 @@ public class MathKeyboardPopup : Control
         IsOpen = false;
     }
 
+
     #region Nodes
     private StandardLeafNode GetMultiplicationNode() => new StandardLeafNode(".");
     private DecimalSeparatorNode GetDecimalSeparatorNode() => new DecimalSeparatorNode("{,}");
     private static BranchingNode GetFractionNode() => new DescendingBranchingNode(@"\frac{", "}{", "}");
     private static BranchingNode GetBinomialNode() => new DescendingBranchingNode(@"\binom{", "}{", "}");
     private static BranchingNode GetPowerNode() => new AscendingBranchingNode("", "^{", "}");
+    private static BranchingNode GetDegreeNode() => new StandardBranchingNode("", @"^{\circ}");
     private static BranchingNode GetSubscriptNode() => new DescendingBranchingNode("", "_{", "}");
     private static BranchingNode GetSquareRootNode() => new StandardBranchingNode(@"\sqrt{", "}");
     private static BranchingNode GetNthRootNode() => new DescendingBranchingNode(@"\sqrt[", "]{", "}");
@@ -191,6 +361,7 @@ public class MathKeyboardPopup : Control
 
     #endregion
 
+
     public async Task<bool> ShouldIgnorePhysicalKeyPresses()
     {
         return false;
@@ -201,9 +372,9 @@ public class MathKeyboardPopup : Control
     {
         if (keyboardMemory.Current is Placeholder pl)
         {
-            if(pl.ParentNode is not null && pl.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text{"))
+            if (pl.ParentNode is not null && pl.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text{"))
                 return true;
-        } 
+        }
         else if (keyboardMemory.Current is StandardLeafNode leaf)
         {
             if (leaf.ParentPlaceholder is not null && leaf.ParentPlaceholder.ParentNode is not null && leaf.ParentPlaceholder.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text{"))
@@ -233,7 +404,7 @@ public class MathKeyboardPopup : Control
     {
         if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back")
         {
-            return; 
+            return;
         }
         else if (await ShouldIgnorePhysicalKeyPresses())
         {
@@ -434,3 +605,44 @@ public class MathKeyboardPopup : Control
         AfterKeyboardMemoryUpdatedAsync = DisplayResultAsync
     };
 }
+
+    
+
+#region Helpers
+
+public class MathTextboxInfo
+{
+    public LatexConfiguration LatexConfiguration { get; set; } = new();
+    public KeyboardMemory KeyboardMemory { get; set; } = new();
+    public Func<Task> AfterKeyboardMemoryUpdatedAsync { get; set; } = () => throw new ArgumentNullException($"{nameof(MathTextboxInfo)}.{nameof(AfterKeyboardMemoryUpdatedAsync)}");
+}
+
+public class PhysicalKeyHandler
+{
+    private readonly Func<string, bool> _keyPredicate;
+    private readonly Action<KeyboardMemory, string> _actionForKeyboardMemoryAndKey;
+
+    public PhysicalKeyHandler(string key, Action<KeyboardMemory, string> actionForKeyboardMemoryAndKey)
+    {
+        _keyPredicate = (inputKey) => inputKey == key;
+        _actionForKeyboardMemoryAndKey = actionForKeyboardMemoryAndKey;
+    }
+
+    public PhysicalKeyHandler(Func<string, bool> keyPredicate, Action<KeyboardMemory, string> actionForKeyboardMemoryAndKey)
+    {
+        _keyPredicate = keyPredicate;
+        _actionForKeyboardMemoryAndKey = actionForKeyboardMemoryAndKey;
+    }
+
+    public bool CanHandle(string key)
+    {
+        return _keyPredicate(key);
+    }
+
+    public void Handle(KeyboardMemory k, string key)
+    {
+        _actionForKeyboardMemoryAndKey(k, key);
+    }
+}
+
+#endregion
