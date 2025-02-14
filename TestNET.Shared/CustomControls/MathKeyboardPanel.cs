@@ -33,6 +33,7 @@ public class MathKeyboardPanel : Control
     private const string NEWLINE_BTN_NAME = "NEWLINE_BTN";
     private const string SQRT_BTN_NAME = "SQRT_BTN";
     private const string NTHRT_BTN_NAME = "NTHRT_BTN";
+    private const string FRAC_BTN_NAME = "FRAC_BTN";
     private const string DEG_BTN_NAME = "DEG_BTN";
     private const string INF_BTN_NAME = "INF_BTN";
     private const string SIN_BTN_NAME = "SIN_BTN";
@@ -50,6 +51,7 @@ public class MathKeyboardPanel : Control
     private Button _nlbtn;
     private Button _sqrtbtn;
     private Button _nthrtbtn;
+    private Button _fracbtn;
     private Button _degbtn;
     private Button _infbtn;
     private Button _sinbtn;
@@ -224,6 +226,17 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(GetTextNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _fracbtn = Template.FindName(FRAC_BTN_NAME, this) as Button;
+        if (_fracbtn is not null)
+        {
+            _fracbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetFractionNode());
                 await DisplayResultAsync();
             };
         }
