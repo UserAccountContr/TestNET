@@ -81,6 +81,41 @@ public class MathKeyboardPanel : Control
         set { SetValue(IsOpenProperty, value); }
     }
 
+    public static readonly DependencyProperty TBTextProperty =
+        DependencyProperty.Register("TBText", typeof(string), typeof(MathKeyboardPanel),
+            new PropertyMetadata(string.Empty, OnTBTextEdit));
+
+    private static void OnTBTextEdit(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.OldValue == e.NewValue) return;
+        if (d is MathKeyboardPanel q)
+        {
+            q.TBNewText();
+        }
+    }
+
+    private async void TBNewText()
+    {
+        try
+        {
+            var parsedNodes = Parse.Latex(TBText).SyntaxTreeRoot.Nodes;
+            keyboardMemory = new KeyboardMemory
+            {
+
+            };
+            keyboardMemory.Insert(parsedNodes);
+
+            await DisplayResultAsync();
+        }
+        catch {}
+    }
+
+    public string TBText
+    {
+        get { return (string)GetValue(TBTextProperty); }
+        set { SetValue(TBTextProperty, value); }
+    }
+
     public static readonly DependencyProperty TextProperty =
         DependencyProperty.Register("Text", typeof(string), typeof(MathKeyboardPanel),
             new PropertyMetadata(string.Empty, OnTextEdit));
@@ -103,6 +138,20 @@ public class MathKeyboardPanel : Control
     private static readonly DependencyPropertyKey TempTextPropertyKey =
         DependencyProperty.RegisterReadOnly("TempText", typeof(string), typeof(MathKeyboardPanel),
             new PropertyMetadata(string.Empty));
+
+    private static void OnTempTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (e.OldValue == e.NewValue) return;
+        if (d is MathKeyboardPanel q)
+        {
+            q.NewTempText();
+        }
+    }
+
+    private void NewTempText()
+    {
+        TBText = TempText;
+    }
 
     public static readonly DependencyProperty TempTextProperty = TempTextPropertyKey.DependencyProperty;
 
@@ -320,6 +369,8 @@ public class MathKeyboardPanel : Control
 
         };
         keyboardMemory.Insert(parsedNodes);
+
+        TBText = Text; 
 
         await DisplayResultAsync();
     }

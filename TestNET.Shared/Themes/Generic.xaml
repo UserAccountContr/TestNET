@@ -760,9 +760,11 @@
                                                 </TabItem>
                                             </TabControl>
                                         </WrapPanel>
+                                    
+                                        
                                         <!--
-                                    <Expander Header="Latex">
-                                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                        <Expander Header="Latex">
+                                        <TextBox Text="{Binding TBText, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                                              IsEnabled="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}"/>
                                     </Expander>
                                     -->
