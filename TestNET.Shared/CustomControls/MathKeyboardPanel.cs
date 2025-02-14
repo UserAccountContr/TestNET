@@ -647,16 +647,19 @@ public class MathKeyboardPanel : Control
     {
         get
         {
-            yield return new PhysicalKeyHandler("D0", (k, key) => k.Insert(new DigitNode("0")));
-            yield return new PhysicalKeyHandler("D1", (k, key) => k.Insert(new DigitNode("1")));
-            yield return new PhysicalKeyHandler("D2", (k, key) => k.Insert(new DigitNode("2")));
-            yield return new PhysicalKeyHandler("D3", (k, key) => k.Insert(new DigitNode("3")));
-            yield return new PhysicalKeyHandler("D4", (k, key) => k.Insert(new DigitNode("4")));
-            yield return new PhysicalKeyHandler("D5", (k, key) => k.Insert(new DigitNode("5")));
-            yield return new PhysicalKeyHandler("D6", (k, key) => k.Insert(new DigitNode("6")));
-            yield return new PhysicalKeyHandler("D7", (k, key) => k.Insert(new DigitNode("7")));
-            yield return new PhysicalKeyHandler("D8", (k, key) => k.Insert(new DigitNode("8")));
-            yield return new PhysicalKeyHandler("D9", (k, key) => k.Insert(new DigitNode("9")));
+            //yield return new PhysicalKeyHandler("D0", (k, key) => k.Insert(new DigitNode("0")));
+            //yield return new PhysicalKeyHandler("D1", (k, key) => k.Insert(new DigitNode("1")));
+            //yield return new PhysicalKeyHandler("D2", (k, key) => k.Insert(new DigitNode("2")));
+            //yield return new PhysicalKeyHandler("D3", (k, key) => k.Insert(new DigitNode("3")));
+            //yield return new PhysicalKeyHandler("D4", (k, key) => k.Insert(new DigitNode("4")));
+            //yield return new PhysicalKeyHandler("D5", (k, key) => k.Insert(new DigitNode("5")));
+            //yield return new PhysicalKeyHandler("D6", (k, key) => k.Insert(new DigitNode("6")));
+            //yield return new PhysicalKeyHandler("D7", (k, key) => k.Insert(new DigitNode("7")));
+            //yield return new PhysicalKeyHandler("D8", (k, key) => k.Insert(new DigitNode("8")));
+            //yield return new PhysicalKeyHandler("D9", (k, key) => k.Insert(new DigitNode("9")));
+
+            yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 34 && (int)Enum.Parse<Key>(key) <= 43; }, (k, key) => k.Insert(new DigitNode(key[^1].ToString())));
+            yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 74 && (int)Enum.Parse<Key>(key) <= 83; }, (k, key) => k.Insert(new DigitNode(key[^1].ToString())));
             yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 44 && (int)Enum.Parse<Key>(key) <= 69; }, (k, key) => k.Insert(new StandardLeafNode(key.ToLower)));
             yield return new PhysicalKeyHandler("Back", (k, key) => k.DeleteLeft());
             yield return new PhysicalKeyHandler("Delete", (k, key) => k.DeleteRight());
@@ -665,9 +668,12 @@ public class MathKeyboardPanel : Control
             yield return new PhysicalKeyHandler("Up", (k, key) => k.MoveUp());
             yield return new PhysicalKeyHandler("Down", (k, key) => k.MoveDown());
             yield return new PhysicalKeyHandler("OemQuestion", (k, key) => k.InsertWithEncapsulateCurrent(GetFractionNode(), InsertWithEncapsulateCurrentOptions.DeleteOuterRoundBracketsIfAny));
+            yield return new PhysicalKeyHandler("Add", (k, key) => k.Insert(new StandardLeafNode("+")));
+            yield return new PhysicalKeyHandler("Multiply", (k, key) => k.Insert(GetMultiplicationNode()));
+            yield return new PhysicalKeyHandler("Divide", (k, key) => k.Insert(new StandardLeafNode(":")));
             yield return new PhysicalKeyHandler("OemPlus", (k, key) => k.Insert(new StandardLeafNode("=")));
-            yield return new PhysicalKeyHandler("OemMinus", (k, key) => k.Insert(new StandardLeafNode("-")));
-            yield return new PhysicalKeyHandler((key) => key == "OemPeriod" || key == "OemComma", (k, key) => k.Insert(GetDecimalSeparatorNode()));
+            yield return new PhysicalKeyHandler((key) => key == "OemMinus"|| key == "Subtract", (k, key) => k.Insert(new StandardLeafNode("-")));
+            yield return new PhysicalKeyHandler((key) => key == "OemPeriod" || key == "OemComma" || key == "Decimal", (k, key) => k.Insert(GetDecimalSeparatorNode()));
             yield return new PhysicalKeyHandler("OemOpenBrackets", (k, key) => k.Insert(GetSquareBracketsNode()));
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => k.MoveRight());
             yield return new PhysicalKeyHandler("Oem1", (k, key) => k.Insert(new StandardLeafNode(";")));
