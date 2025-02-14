@@ -266,28 +266,38 @@ public class MathKeyboardPanel : Control
         {
             _nlbtn.Click += async (s, e) =>
             {
-                //if (!IsInTextNode()) return;
-                if (keyboardMemory.Current is Placeholder pl)
-                {
-                    if (pl is not null && pl.ParentNode is not null && pl.ParentNode is StandardBranchingNode sbrn)
-                    {
-                        if (sbrn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
-                        {
-                    
-                        }
-                    }
-
-                    //var a = sbrn.GetLatex(keyboardMemory, latexConfiguration);
-
-                    //keyboardMemory.Insert(GetTextNode());
-                }
+                if (keyboardMemory.Current is null) return;
                 else if (IsInTextNode())
                 {
-                    TreeNode tr = ((TreeNode)keyboardMemory.Current).ParentPlaceholder.ParentNode;
-                    if (tr.GetViewModeLatex(latexConfiguration).Contains(@"\text")) {
+                    if (keyboardMemory.Current is Placeholder pl) return;
+                    else
+                    {
+                        if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.ParentNode is StandardBranchingNode brn)
+                        {
+                            if (brn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+                            {
+                                int n = brn.Placeholders[0].Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
 
+                                StandardBranchingNode after = new StandardBranchingNode(@"\text{", "}");
+
+                                foreach (TreeNode trn in brn.Placeholders[0].Nodes[(n + 1)..])
+                                    after.Placeholders[0].Nodes.Add(trn);
+
+                                brn.Placeholders[0].Nodes.RemoveRange(n + 1, brn.Placeholders[0].Nodes.Count - n - 1);
+                                keyboardMemory.MoveRight();
+                                keyboardMemory.Insert(new StandardLeafNode(@"\\"));
+                                keyboardMemory.Insert(after);
+                            }
+                        }
                     }
                 }
+                else
+                {
+                    if (keyboardMemory.Current is Placeholder pl && pl.ParentNode is not null && pl.ParentNode is BranchingNode) return;
+                    else if ((keyboardMemory.Current as TreeNode)?.ParentPlaceholder is not null && (keyboardMemory.Current as TreeNode).ParentPlaceholder != keyboardMemory.SyntaxTreeRoot) return;
+                    keyboardMemory.Insert(new StandardLeafNode(@"\\"));
+                }
+  
                 await DisplayResultAsync();
             };
         }
