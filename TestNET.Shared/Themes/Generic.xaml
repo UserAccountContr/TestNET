@@ -729,6 +729,7 @@
                                                             <local:LatexLabel Text="a^{\square}" IsMath="True"/>
                                                         </Button>
                                                         <Button Name="TEXT_BTN" Content="Text"/>
+                                                        <Button Name="NEWLINE_BTN" Content="Newline"/>
                                                         <Button Name="IN_BTN">
                                                             <local:LatexLabel Text="\in" IsMath="True"/>
                                                         </Button>

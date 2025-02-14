@@ -9,6 +9,7 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = PART_SAVEBTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = PART_CANCELBTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = TEXT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NEWLINE_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = SQRT_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = NTHRT_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = DEG_BTN_NAME, Type = typeof(Button))]
@@ -29,6 +30,7 @@ public class MathKeyboardPanel : Control
     private const string PART_SAVEBTN_NAME = "SAVE_BTN";
     private const string PART_CANCELBTN_NAME = "CANCEL_BTN";
     private const string TEXT_BTN_NAME = "TEXT_BTN";
+    private const string NEWLINE_BTN_NAME = "NEWLINE_BTN";
     private const string SQRT_BTN_NAME = "SQRT_BTN";
     private const string NTHRT_BTN_NAME = "NTHRT_BTN";
     private const string DEG_BTN_NAME = "DEG_BTN";
@@ -45,6 +47,7 @@ public class MathKeyboardPanel : Control
     private Button _savebtn;
     private Button _cancelbtn;
     private Button _textbtn;
+    private Button _nlbtn;
     private Button _sqrtbtn;
     private Button _nthrtbtn;
     private Button _degbtn;
@@ -221,6 +224,54 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(GetTextNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        //_nlbtn = Template.FindName(NEWLINE_BTN_NAME, this) as Button;
+        //if (_nlbtn is not null)
+        //{
+        //    _nlbtn.Click += async (s, e) =>
+        //    {
+        //        //if (!IsInTextNode()) return;
+        //        if (keyboardMemory.Current is StandardBranchingNode)
+        //        {
+        //            StandardBranchingNode sbn = (StandardBranchingNode)keyboardMemory.Current;
+        //            var a = sbn.GetLatex(keyboardMemory, latexConfiguration);
+
+        //            keyboardMemory.Insert(GetTextNode());
+        //        }
+        //        await DisplayResultAsync();
+        //    };
+        //}
+
+        _nlbtn = Template.FindName(NEWLINE_BTN_NAME, this) as Button;
+        if (_nlbtn is not null)
+        {
+            _nlbtn.Click += async (s, e) =>
+            {
+                //if (!IsInTextNode()) return;
+                if (keyboardMemory.Current is Placeholder pl)
+                {
+                    if (pl is not null && pl.ParentNode is not null && pl.ParentNode is StandardBranchingNode sbrn)
+                    {
+                        if (sbrn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+                        {
+                    
+                        }
+                    }
+
+                    //var a = sbrn.GetLatex(keyboardMemory, latexConfiguration);
+
+                    //keyboardMemory.Insert(GetTextNode());
+                }
+                else if (IsInTextNode())
+                {
+                    TreeNode tr = ((TreeNode)keyboardMemory.Current).ParentPlaceholder.ParentNode;
+                    if (tr.GetViewModeLatex(latexConfiguration).Contains(@"\text")) {
+
+                    }
+                }
                 await DisplayResultAsync();
             };
         }
