@@ -587,6 +587,7 @@ public class MathKeyboardPanel : Control
             yield return new PhysicalKeyHandler("OemOpenBrackets", (k, key) => k.Insert(GetSquareBracketsNode()));
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => k.MoveRight());
             yield return new PhysicalKeyHandler("Oem1", (k, key) => k.Insert(new StandardLeafNode(";")));
+            yield return new PhysicalKeyHandler("Insert", (k, key) => k.Insert(GetTextNode()));
         }
     }
 
