@@ -203,6 +203,11 @@ public class MathKeyboardPanel : Control
                     }
                     e.Handled = true;
                 }
+                else if (e.Key == Key.Enter)
+                {
+                    await NewLine();
+                    e.Handled = true;
+                }
                 else if (e.Key == Key.Tab) e.Handled = true;
             };
             _grid.KeyDown += Panel_KeyDown;
@@ -264,42 +269,7 @@ public class MathKeyboardPanel : Control
         _nlbtn = Template.FindName(NEWLINE_BTN_NAME, this) as Button;
         if (_nlbtn is not null)
         {
-            _nlbtn.Click += async (s, e) =>
-            {
-                if (keyboardMemory.Current is null) return;
-                else if (IsInTextNode())
-                {
-                    if (keyboardMemory.Current is Placeholder pl) return;
-                    else
-                    {
-                        if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.ParentNode is StandardBranchingNode brn)
-                        {
-                            if (brn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
-                            {
-                                int n = brn.Placeholders[0].Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
-
-                                StandardBranchingNode after = new StandardBranchingNode(@"\text{", "}");
-
-                                foreach (TreeNode trn in brn.Placeholders[0].Nodes[(n + 1)..])
-                                    after.Placeholders[0].Nodes.Add(trn);
-
-                                brn.Placeholders[0].Nodes.RemoveRange(n + 1, brn.Placeholders[0].Nodes.Count - n - 1);
-                                keyboardMemory.MoveRight();
-                                keyboardMemory.Insert(new StandardLeafNode(@"\\"));
-                                keyboardMemory.Insert(after);
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    if (keyboardMemory.Current is Placeholder pl && pl.ParentNode is not null && pl.ParentNode is BranchingNode) return;
-                    else if ((keyboardMemory.Current as TreeNode)?.ParentPlaceholder is not null && (keyboardMemory.Current as TreeNode).ParentPlaceholder != keyboardMemory.SyntaxTreeRoot) return;
-                    keyboardMemory.Insert(new StandardLeafNode(@"\\"));
-                }
-  
-                await DisplayResultAsync();
-            };
+            _nlbtn.Click += async (s, e) => await NewLine();
         }
 
         _degbtn = Template.FindName(DEG_BTN_NAME, this) as Button;
@@ -436,6 +406,43 @@ public class MathKeyboardPanel : Control
         NewText();
 
         base.OnApplyTemplate();
+    }
+
+    private async Task NewLine()
+    {
+        if (keyboardMemory.Current is null) return;
+        else if (IsInTextNode())
+        {
+            if (keyboardMemory.Current is Placeholder pl) return;
+            else
+            {
+                if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.ParentNode is StandardBranchingNode brn)
+                {
+                    if (brn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+                    {
+                        int n = brn.Placeholders[0].Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
+
+                        StandardBranchingNode after = new StandardBranchingNode(@"\text{", "}");
+
+                        foreach (TreeNode trn in brn.Placeholders[0].Nodes[(n + 1)..])
+                            after.Placeholders[0].Nodes.Add(trn);
+
+                        brn.Placeholders[0].Nodes.RemoveRange(n + 1, brn.Placeholders[0].Nodes.Count - n - 1);
+                        keyboardMemory.MoveRight();
+                        keyboardMemory.Insert(new StandardLeafNode(@"\\"));
+                        keyboardMemory.Insert(after);
+                    }
+                }
+            }
+        }
+        else
+        {
+            if (keyboardMemory.Current is Placeholder pl && pl.ParentNode is not null && pl.ParentNode is BranchingNode) return;
+            else if ((keyboardMemory.Current as TreeNode)?.ParentPlaceholder is not null && (keyboardMemory.Current as TreeNode).ParentPlaceholder != keyboardMemory.SyntaxTreeRoot) return;
+            keyboardMemory.Insert(new StandardLeafNode(@"\\"));
+        }
+
+        await DisplayResultAsync();
     }
 
     private async void NewText()
