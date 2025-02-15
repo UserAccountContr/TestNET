@@ -694,11 +694,11 @@
 
                                         <WrapPanel Margin="20">
                                             <WrapPanel.Resources>
-
-                                                <Style TargetType="Button">
+                                                <Style TargetType="Button" x:Key="MathBtnSt">
                                                     <Setter Property="Background" Value="Transparent"/>
                                                     <Setter Property="MinWidth" Value="50"/>
                                                 </Style>
+                                                <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}"/>
                                             </WrapPanel.Resources>
                                             <TabControl>
                                                 <TabItem>
@@ -728,7 +728,17 @@
                                                         <Button Name="POWER_BTN">
                                                             <local:LatexLabel Text="a^{\square}" IsMath="True"/>
                                                         </Button>
-                                                        <Button Name="TEXT_BTN" Content="Text"/>
+                                                        <Button Name="TEXT_BTN" Content="Text">
+                                                            <Button.Style>
+                                                                <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
+                                                                    <Style.Triggers>
+                                                                        <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                                                            <Setter Property="Background" Value="PaleGreen"/>
+                                                                        </DataTrigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </Button.Style>
+                                                        </Button>
                                                         <Button Name="NEWLINE_BTN" Content="Newline"/>
                                                         <Button Name="IN_BTN">
                                                             <local:LatexLabel Text="\in" IsMath="True"/>

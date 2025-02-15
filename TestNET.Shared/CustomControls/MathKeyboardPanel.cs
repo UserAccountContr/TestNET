@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Runtime.CompilerServices;
+using System.Windows.Input;
 using MathKeyboardEngine;
 
 namespace TestNET.Shared.CustomControls;
@@ -175,6 +176,17 @@ public class MathKeyboardPanel : Control
     public string TempView
     {
         get { return (string)GetValue(TempViewProperty); }
+    }
+
+    private static readonly DependencyPropertyKey TextNodeActivePropertyKey =
+        DependencyProperty.RegisterReadOnly("TextNodeActive", typeof(bool), typeof(MathKeyboardPanel),
+            new PropertyMetadata(false));
+
+    public static readonly DependencyProperty TextNodeActiveProperty = TextNodeActivePropertyKey.DependencyProperty;
+
+    public bool TextNodeActive
+    {
+        get { return (bool)GetValue(TextNodeActiveProperty); }
     }
 
     static MathKeyboardPanel()
@@ -635,6 +647,7 @@ public class MathKeyboardPanel : Control
 
         await DisplayResultAsync();
     }
+
     public Task OnPhysicalKeyUp(string key)
     {
         if (key.Contains("Shift"))
@@ -643,8 +656,6 @@ public class MathKeyboardPanel : Control
         }
         return Task.CompletedTask;
     }
-
-
 
     private bool inShift = false;
 
@@ -748,6 +759,9 @@ public class MathKeyboardPanel : Control
         SetValue(TempViewPropertyKey, keyboardMemory.GetEditModeLatex(latexConfiguration));
 
         SetValue(TempTextPropertyKey, keyboardMemory.GetViewModeLatex(latexConfiguration));
+
+        SetValue(TextNodeActivePropertyKey, IsInTextNode());
+
         //StateHasChanged();
     }
 
