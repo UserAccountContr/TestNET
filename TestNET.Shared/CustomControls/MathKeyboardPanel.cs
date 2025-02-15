@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using MathKeyboardEngine;
 
 namespace TestNET.Shared.CustomControls;
@@ -224,6 +225,8 @@ public class MathKeyboardPanel : Control
             _grid.KeyDown += Panel_KeyDown;
             _grid.TextInput += Panel_TextInput;
             _grid.KeyUp += Panel_KeyUp;
+            _grid.MouseUp += (s, e) => _grid.Focus();
+            _grid.LostFocus += (s, e) => { if (!IsMouseOver) IsOpen = false; };
         }
 
         _savebtn = Template.FindName(PART_SAVEBTN_NAME, this) as Button;
