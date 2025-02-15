@@ -422,15 +422,17 @@ public class MathKeyboardPanel : Control
                     {
                         int n = brn.Placeholders[0].Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
 
-                        StandardBranchingNode after = new StandardBranchingNode(@"\text{", "}");
-
-                        foreach (TreeNode trn in brn.Placeholders[0].Nodes[(n + 1)..])
-                            after.Placeholders[0].Nodes.Add(trn);
+                        List<TreeNode> after = brn.Placeholders[0].Nodes[(n + 1)..];
 
                         brn.Placeholders[0].Nodes.RemoveRange(n + 1, brn.Placeholders[0].Nodes.Count - n - 1);
                         keyboardMemory.MoveRight();
                         keyboardMemory.Insert(new StandardLeafNode(@"\\"));
+
+                        keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
+
+                        SyntaxTreeComponent stc = keyboardMemory.Current;
                         keyboardMemory.Insert(after);
+                        keyboardMemory.Current = stc;
                     }
                 }
             }
@@ -539,7 +541,33 @@ public class MathKeyboardPanel : Control
     {
         if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back" && key != "Delete")
         {
-            return;
+            if (key == "Insert")
+            {
+                if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
+                {
+                    if (pl.Nodes.Count == 0) keyboardMemory.DeleteLeft();
+                    else keyboardMemory.MoveLeft();
+                }
+                else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) keyboardMemory.MoveRight();
+                else
+                {
+                    Placeholder plh = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
+                    int n = plh.Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
+
+                    List<TreeNode> after = plh.Nodes[(n + 1)..];
+
+                    plh.Nodes.RemoveRange(n + 1, plh.Nodes.Count - n - 1);
+                    keyboardMemory.MoveRight();
+
+                    SyntaxTreeComponent stc = keyboardMemory.Current;
+
+                    keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
+                    keyboardMemory.Insert(after);
+
+                    keyboardMemory.Current = stc;
+                }
+            }
+            else return;
         }
         else if (await ShouldIgnorePhysicalKeyPresses())
         {
