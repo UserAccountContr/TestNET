@@ -1,5 +1,4 @@
-﻿using System.Runtime.CompilerServices;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using MathKeyboardEngine;
 
 namespace TestNET.Shared.CustomControls;

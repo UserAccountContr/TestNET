@@ -164,7 +164,7 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
                             <WrapPanel>
-                                <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"
+                                <RadioButton GroupName="{Binding QuestionMC.UniqueId, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"
                                              IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
@@ -218,13 +218,11 @@
     </ControlTemplate>
 
     <Style TargetType="{x:Type local:QuestionEditPanel}">
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}">
-                    <local:QuestionViewPanel 
-                        Question="{TemplateBinding Question}"
-                        QuestionIndex="{TemplateBinding QuestionIndex}"
-                        EnableSolving="False"/>
+
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -255,6 +253,19 @@
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource EditQMCM}"/>
             </MultiDataTrigger>
+
+            <DataTrigger Binding="{Binding IsInEditMode, RelativeSource={RelativeSource Self}}" Value="False">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type local:QuestionEditPanel}">
+                            <local:QuestionViewPanel 
+                                Question="{Binding Question, RelativeSource={RelativeSource TemplatedParent}}"
+                                QuestionIndex="{Binding QuestionIndex, RelativeSource={RelativeSource TemplatedParent}}"
+                                EnableSolving="False"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </DataTrigger>
         </Style.Triggers>
     </Style>
 
@@ -358,12 +369,12 @@
                                                 <Setter Property="IsEnabled" Value="True"/>
                                             </DataTrigger>
                                         </Style.Triggers>
-                                                <Setter Property="GroupName" Value="{Binding RelativeSource={RelativeSource AncestorType=ItemsControl}, Path=DataContext.UniqueId}"/>
+                                        <Setter Property="GroupName" Value="{Binding QuestionMC.UniqueId, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionViewPanel}}}"/>
                                         <Setter Property="IsEnabled" Value="False"/>
                                     </Style>
                                 </RadioButton.Style>
                                 <local:LatexLabel Text="{Binding Text}"
-                                                  IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.TextIsMath}"/>
+                                                  IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionViewPanel}}}"/>
                             </RadioButton>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -431,7 +442,7 @@
                                     </Style>
                                 </CheckBox.Style>
                                 <local:LatexLabel Text="{Binding Text}"
-                                                  IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}, Path=DataContext.TextIsMath}"/>
+                                                  IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionViewPanel}}}"/>
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
