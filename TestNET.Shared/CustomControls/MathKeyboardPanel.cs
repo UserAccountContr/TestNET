@@ -537,7 +537,7 @@ public class MathKeyboardPanel : Control
 
     public async Task OnPhysicalKeyDownAsync(string key)
     {
-        if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back")
+        if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back" && key != "Delete")
         {
             return;
         }
@@ -615,6 +615,8 @@ public class MathKeyboardPanel : Control
         }
         return Task.CompletedTask;
     }
+
+
 
     private bool inShift = false;
 
@@ -707,7 +709,7 @@ public class MathKeyboardPanel : Control
 
     private async Task DisplayResultAsync()
     {
-        if (keyboardMemory.Current is Placeholder p && p.Nodes.Count == 0)
+        if (keyboardMemory.Current is Placeholder p && p.Nodes.Count == 0 && !(p.ParentNode is not null && p.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\text")))
         {
             latexConfiguration.ActivePlaceholderShape = @"\blacksquare";
         }
