@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Submissions] (
 );
 
 CREATE TABLE IF NOT EXISTS [TestNET.Test.Questions] (
-  Id INTEGER NOT NULL,
+  Id TEXT NOT NULL,
   QuestionJson TEXT NOT NULL,
 
   PRIMARY KEY (Id)

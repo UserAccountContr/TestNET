@@ -64,6 +64,18 @@ internal class IndexQueries(string dbPath)
             command.ExecuteNonQuery();
         }
     }
+    public void RemoveTest(string path)
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = "DELETE FROM [TestNET.Index] WHERE Path = $Path";
+
+            command.Parameters.AddWithValue("$Path", path);
+
+            command.ExecuteNonQuery();
+        }
+    }
+
 
     /* private CachedQuery selectTestPathsQuery = new(
         Path.Combine(AppContext.BaseDirectory, "Resources", "SelectTestPaths"));
