@@ -1,6 +1,7 @@
 ﻿using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using MathKeyboardEngine;
+using MathKeyboardEngine.__Helpers;
 
 namespace TestNET.Shared.CustomControls;
 
@@ -559,7 +560,7 @@ public class MathKeyboardPanel : Control
             {
                 if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
                 {
-                    if (pl.Nodes.Count == 0) keyboardMemory.DeleteLeft();
+                    if (pl.Nodes.Count == 0) DelLeft();
                     else keyboardMemory.MoveLeft();
                 }
                 else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) keyboardMemory.MoveRight();
@@ -704,8 +705,8 @@ public class MathKeyboardPanel : Control
             yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 34 && (int)Enum.Parse<Key>(key) <= 43; }, (k, key) => k.Insert(new DigitNode(key[^1].ToString())));
             yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 74 && (int)Enum.Parse<Key>(key) <= 83; }, (k, key) => k.Insert(new DigitNode(key[^1].ToString())));
             yield return new PhysicalKeyHandler((key) => { return (int)Enum.Parse<Key>(key) >= 44 && (int)Enum.Parse<Key>(key) <= 69; }, (k, key) => k.Insert(new StandardLeafNode(key.ToLower)));
-            yield return new PhysicalKeyHandler("Back", (k, key) => k.DeleteLeft());
-            yield return new PhysicalKeyHandler("Delete", (k, key) => k.DeleteRight());
+            yield return new PhysicalKeyHandler("Back", (k, key) => DelLeft());
+            yield return new PhysicalKeyHandler("Delete", (k, key) => DelRight());
             yield return new PhysicalKeyHandler("Left", (k, key) => k.MoveLeft());
             yield return new PhysicalKeyHandler("Right", (k, key) => k.MoveRight());
             yield return new PhysicalKeyHandler("Up", (k, key) => k.MoveUp());
@@ -797,6 +798,37 @@ public class MathKeyboardPanel : Control
         LatexConfiguration = latexConfiguration,
         AfterKeyboardMemoryUpdatedAsync = DisplayResultAsync
     };
+
+    public void DelLeft()
+    {
+        if (keyboardMemory.Current is not Placeholder && (keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+        {
+            keyboardMemory.MoveLeft();
+        }
+        keyboardMemory.DeleteLeft();
+    }
+
+    public void DelRight()
+    {
+        if (keyboardMemory.Current is Placeholder pl1)
+        {
+            if (pl1.Nodes.Count != 0 && pl1.Nodes[0].GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+            {
+                keyboardMemory.MoveRight();
+            }
+        }
+        else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder is not null)
+        {
+            Placeholder pl = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
+            if (pl.Nodes[^1] != keyboardMemory.Current)
+            if (pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+            {
+                keyboardMemory.MoveRight();
+            }
+        }
+
+        keyboardMemory.DeleteRight();
+    }
 }
 
     
