@@ -227,7 +227,30 @@ public class MathKeyboardPanel : Control
             _grid.TextInput += Panel_TextInput;
             _grid.KeyUp += Panel_KeyUp;
             _grid.MouseUp += (s, e) => _grid.Focus();
-            _grid.LostFocus += (s, e) => { if (!IsMouseOver) IsOpen = false; };
+            _grid.LostKeyboardFocus += (s, e) =>
+            {
+                if (!IsMouseOver && IsOpen)
+                {
+                    if (Text != TempText)
+                    {
+                        var result = MessageBox.Show("Save changes?", "Leave math", MessageBoxButton.YesNoCancel);
+                        switch (result)
+                        {
+                            case MessageBoxResult.Yes:
+                                Text = TempText;
+                                IsOpen = false;
+                                break;
+                            case MessageBoxResult.No:
+                                IsOpen = false;
+                                break;
+                            case MessageBoxResult.Cancel:
+                                _grid.Focus();
+                                break;
+                        }
+                    }
+                    else IsOpen = false;
+                }
+            };
         }
 
         _savebtn = Template.FindName(PART_SAVEBTN_NAME, this) as Button;
