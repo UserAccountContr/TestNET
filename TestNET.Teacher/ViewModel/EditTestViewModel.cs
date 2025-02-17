@@ -6,7 +6,7 @@ namespace TestNET.Teacher.ViewModel;
 
 public partial class EditTestViewModel : BaseViewModel
 {
-    bool IsDirty = false;
+    public bool IsDirty = false;
 
     [ObservableProperty]
     TeacherTest test;
@@ -58,7 +58,7 @@ public partial class EditTestViewModel : BaseViewModel
         SaveChanges(out _);
     }
 
-    void SaveChanges(out bool success)
+    public void SaveChanges(out bool success)
     {
         if (!CanSave())
         {

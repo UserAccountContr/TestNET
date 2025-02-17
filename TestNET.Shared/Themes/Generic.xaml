@@ -165,7 +165,9 @@
                         <DataTemplate DataType="{x:Type model:Answer}">
                             <WrapPanel>
                                 <RadioButton GroupName="{Binding QuestionMC.UniqueId, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"
-                                             IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
+                                             IsChecked="{Binding IsCorrect, Mode=TwoWay}" 
+                                             VerticalAlignment="Stretch"
+                                             VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
                             </WrapPanel>
@@ -198,7 +200,9 @@
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
                             <WrapPanel>
-                                <CheckBox IsChecked="{Binding IsCorrect, Mode=TwoWay}" />
+                                <CheckBox IsChecked="{Binding IsCorrect, Mode=TwoWay}" 
+                                          VerticalAlignment="Stretch"
+                                          VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
                             </WrapPanel>
@@ -777,6 +781,9 @@
                                                         </Button>
                                                         <Button Name="COTG_BTN">
                                                             <local:LatexLabel Text="\cot" IsMath="True"/>
+                                                        </Button>
+                                                        <Button Name="LIM_BTN">
+                                                            <local:LatexLabel Text="\lim" IsMath="True"/>
                                                         </Button>
                                                     </WrapPanel>
                                                 </TabItem>

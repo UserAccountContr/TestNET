@@ -22,6 +22,7 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = CAP_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = TG_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = COTG_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = LIM_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new LatexConfiguration();
@@ -44,6 +45,7 @@ public class MathKeyboardPanel : Control
     private const string CAP_BTN_NAME = "CAP_BTN";
     private const string TG_BTN_NAME = "TG_BTN";
     private const string COTG_BTN_NAME = "COTG_BTN";
+    private const string LIM_BTN_NAME = "LIM_BTN";
 
     private Grid _grid;
     private CheckBox _toggle;
@@ -62,6 +64,7 @@ public class MathKeyboardPanel : Control
     private Button _capbtn;
     private Button _tgbtn;
     private Button _cotgbtn;
+    private Button _limbtn;
 
     #region Properties
 
@@ -416,6 +419,17 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(new StandardLeafNode(@"\cap"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _limbtn = Template.FindName(LIM_BTN_NAME, this) as Button;
+        if (_limbtn is not null)
+        {
+            _limbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetLimitNode());
                 await DisplayResultAsync();
             };
         }
