@@ -9,31 +9,14 @@ public class TestService(LogService logService)
 {
     LogService logService = logService;
 
+    private bool cleaned = false;
+
     public async Task<List<TeacherTest>> GetTests()
     {
-        /*
-        List<TeacherTest> testList = new();
-
-        try
-        {
-            string filename = Path.Combine(AppContext.BaseDirectory, "tests.json");
-            if (File.Exists(filename))
-            {
-                using Stream stream = File.OpenRead(filename);
-                testList = JsonSerializer.Deserialize<List<TeacherTest>>(stream) ?? throw new ArgumentNullException();
-            }
-        }
-        catch (Exception e)
-        {
-            MessageBox.Show("Unable to load tests", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        }
-
-        return testList;
-        */
-
         var tests = new List<TeacherTest>();
 
-        var testDBs = new IndexDB().LoadAll();
+        var testDBs = new IndexDB(cleaned).LoadAll();
+        cleaned = true;
 
         foreach (var testDB in testDBs)
         {
@@ -51,6 +34,12 @@ public class TestService(LogService logService)
         {
             index.Add(test);
         }
+    }
+
+    public void DeleteTest(TeacherTest test)
+    {
+        var index = new IndexDB();
+        index.Remove(test);
     }
 
     TcpListener? server = null;

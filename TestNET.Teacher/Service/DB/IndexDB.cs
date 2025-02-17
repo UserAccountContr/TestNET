@@ -5,20 +5,45 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace TestNET.Teacher.Service.DB;
+
+using TestNET.Shared.Model;
 using TestNET.Teacher.Service.DB.Queries;
 
 public class IndexDB
 {
     private IndexQueries indexQueries;
+    private bool cleaned; 
 
-    public IndexDB(string dbPath = ".index.db")
+    public IndexDB(bool cleaned = true, string dbPath = ".index.db.log")
     {
+        this.cleaned = cleaned;
         indexQueries = new(dbPath);
         indexQueries.InitializeIndex();
+    }
+
+    public void InitialCleanup()
+    {
+        var paths = indexQueries.SelectTestPaths();
+
+        string[] allFiles = Directory.GetFiles(".", "*.db", SearchOption.AllDirectories);
+
+        foreach (string file in allFiles)
+        {
+            if (!paths.Contains(Path.GetRelativePath(".", file)))
+            {
+                File.Delete(file);
+            }
+        }
     }
     
     public List<TestDB> LoadAll()
     {
+        if (!cleaned)
+        {
+            InitialCleanup();
+            cleaned = true;
+        }
+
         var paths = indexQueries.SelectTestPaths();
         var tests = new List<TestDB>();
 
@@ -45,5 +70,10 @@ public class IndexDB
         }
     }
 
-    // Add 'void Remove(TestDB testDb)' later
+    public void Remove(TeacherTest test)
+    {
+        var path = $"{test.Name}.db";
+
+        indexQueries.RemoveTest(path);
+    }
 }

@@ -24,7 +24,11 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void RemoveTest(object selitem) => Tests.Remove((TeacherTest)selitem);
+    void RemoveTest(object selitem) 
+    {
+        Tests.Remove((TeacherTest)selitem);
+        testService.DeleteTest((TeacherTest)selitem);
+    }
 
     [RelayCommand]
     void SaveTest() => testService.SaveTests(Tests.ToList());

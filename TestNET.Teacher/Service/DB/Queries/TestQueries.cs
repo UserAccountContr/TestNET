@@ -89,9 +89,11 @@ internal class TestQueries(string dbPath)
             command.ExecuteNonQuery();
         }
 
+        var submissionId = LastRowId();
+
         foreach (var answer in submission.Answers.Questions)
         {
-            InsertAnswer(LastRowId(), answer);
+            InsertAnswer(submissionId, answer);
         }
     }
 
@@ -124,6 +126,9 @@ internal class TestQueries(string dbPath)
 
             command.Parameters.AddWithValue(
                 "$QuestionJson", JsonSerializer.Serialize(question));
+
+            command.Parameters.AddWithValue(
+                "$Id", question.UniqueId);
 
             command.ExecuteNonQuery();
         }
