@@ -9,9 +9,7 @@ public abstract partial class Question : ObservableObject
     string text;
 
     [ObservableProperty]
-    [NotifyPropertyChangedFor(nameof(TextIsNotMath))]
     bool textIsMath;
-    public bool TextIsNotMath => !TextIsMath;
 
     [ObservableProperty]
     float points;
@@ -26,18 +24,18 @@ public abstract partial class Question : ObservableObject
         TextIsMath = textIsMath;
     }
 
-    public string QType
-    {
-        get
-        {
-            if (this is ShortAnswerQuestion) return "SH";
-            if (this is MultipleChoiceQuestion) return "MC";
-            if (this is MultipleChoiceManyQuestion) return "MCM";
-            return "unknown";
-        }
-    }
+    //public string QType
+    //{
+    //    get
+    //    {
+    //        if (this is ShortAnswerQuestion) return "SH";
+    //        if (this is MultipleChoiceQuestion) return "MC";
+    //        if (this is MultipleChoiceManyQuestion) return "MCM";
+    //        return "unknown";
+    //    }
+    //}
 
-    public abstract Question DeepCopy();
+    //public abstract Question DeepCopy();
 
-    public abstract Question WithoutAnswers();
+    //public abstract Question WithoutAnswers();
 }

@@ -23,3 +23,34 @@ public class IndexConverter : IValueConverter
 
     }
 }
+
+public class MultiBindConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return values.Clone();
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class QTypeConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        var q = value as Question;
+
+        if (q is ShortAnswerQuestion) return "SH";
+        if (q is MultipleChoiceQuestion) return "MC";
+        if (q is MultipleChoiceManyQuestion) return "MCM";
+        return "unknown";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

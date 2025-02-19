@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:local="clr-namespace:TestNET.Student.View"
     xmlns:serv="clr-namespace:TestNET.Student.Service"
+    xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Student.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
@@ -30,7 +31,7 @@
                     Command="{Binding GoToTestOverviewCommand}"
                     IsEnabled="{Binding CanStart}">
             <Button.Resources>
-                <serv:MultiBindConverter x:Key="Conv"/>
+                <sharedserv:MultiBindConverter x:Key="Conv"/>
             </Button.Resources>
             <Button.CommandParameter>
                 <MultiBinding Converter="{StaticResource Conv}">

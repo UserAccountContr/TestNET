@@ -35,6 +35,24 @@ public partial class EditTestViewModel : BaseViewModel
     //void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
 
     [RelayCommand]
+    void RemAnsFromQ(object parameters)
+    {
+        if (parameters is object[] objs)
+        {
+            if (objs[0] is IManyAnswers q && objs[1] is Answer a)
+            {
+                q.RemAns(a);
+            }
+        }
+    }
+
+    [RelayCommand]
+    void AddPosAnsToQ(IManyAnswers q)
+    {
+        q.AddPosAns();
+    }
+
+    [RelayCommand]
     void AddSAQuestion() => AddQuestion(new ShortAnswerQuestion("", false, new(""), Guid.NewGuid().ToString(), 1));
 
     [RelayCommand]

@@ -2,8 +2,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:TestNET.Shared.CustomControls"
+    xmlns:serv="clr-namespace:TestNET.Shared.Service"
     xmlns:model="clr-namespace:TestNET.Shared.Model">
 
+    <serv:QTypeConverter x:Key="QType"/>
+    <serv:MultiBindConverter x:Key="MultiConv"/>
 
     <Style TargetType="{x:Type local:QuestionPanel}">
         <Setter Property="Template">
@@ -140,7 +143,7 @@
                                     Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <WrapPanel>
+                <WrapPanel HorizontalAlignment="Stretch">
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                              MinWidth="30"/>
@@ -163,19 +166,41 @@
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
-                            <WrapPanel>
+                            <WrapPanel HorizontalAlignment="Stretch" Background="Transparent">
                                 <RadioButton GroupName="{Binding QuestionMC.UniqueId, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"
                                              IsChecked="{Binding IsCorrect, Mode=TwoWay}" 
                                              VerticalAlignment="Stretch"
                                              VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
+                                <WrapPanel>
+                                    <WrapPanel.Style>
+                                        <Style TargetType="WrapPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=WrapPanel}}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </Style>
+                                    </WrapPanel.Style>
+                                    <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        kofa
+                                    </Button>
+                                </WrapPanel>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <Button Content="+"
-                        Command="{Binding QuestionMC.AddPosAnsCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
+                        Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                        CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}"/>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
@@ -199,12 +224,21 @@
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type model:Answer}">
-                            <WrapPanel>
+                            <WrapPanel HorizontalAlignment="Stretch">
                                 <CheckBox IsChecked="{Binding IsCorrect, Mode=TwoWay}" 
                                           VerticalAlignment="Stretch"
                                           VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
+                                <WrapPanel.Style>
+                                    <Style TargetType="WrapPanel">
+                                        <Style.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter Property="Background" Value="Green"/>
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </WrapPanel.Style>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -235,7 +269,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding IsInEditMode, RelativeSource={RelativeSource Self}}" Value="True"/>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="SH"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="SH"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource EditQSA}"/>
             </MultiDataTrigger>
@@ -244,7 +278,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding IsInEditMode, RelativeSource={RelativeSource Self}}" Value="True"/>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MC"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MC"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource EditQMC}"/>
             </MultiDataTrigger>
@@ -253,7 +287,7 @@
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
                     <Condition Binding="{Binding IsInEditMode, RelativeSource={RelativeSource Self}}" Value="True"/>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MCM"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MCM"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource EditQMCM}"/>
             </MultiDataTrigger>
@@ -469,7 +503,7 @@
             
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="SH"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="SH"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QSA}"/>
@@ -477,7 +511,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="SH"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="SH"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="False"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QSAPreview}"/>
@@ -485,7 +519,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MC"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MC"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QMC}"/>
@@ -493,7 +527,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MC"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MC"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="False"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QMCPreview}"/>
@@ -501,7 +535,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MCM"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MCM"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="True"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QMCM}"/>
@@ -509,7 +543,7 @@
 
             <MultiDataTrigger>
                 <MultiDataTrigger.Conditions>
-                    <Condition Binding="{Binding Question.QType, RelativeSource={RelativeSource Self}}" Value="MCM"/>
+                    <Condition Binding="{Binding Converter={StaticResource QType}}" Value="MCM"/>
                     <Condition Binding="{Binding ShowAnswers, RelativeSource={RelativeSource Self}}" Value="False"/>
                 </MultiDataTrigger.Conditions>
                 <Setter Property="Template" Value="{StaticResource QMCMPreview}"/>
@@ -712,10 +746,153 @@
                                                 <Style TargetType="Button" x:Key="MathBtnSt">
                                                     <Setter Property="Background" Value="Transparent"/>
                                                     <Setter Property="MinWidth" Value="50"/>
+                                                    <Setter Property="MinHeight" Value="45"/>
                                                 </Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}"/>
                                             </WrapPanel.Resources>
                                             <TabControl>
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <local:LatexLabel Text="123" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <Button Name="NUMGT_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\gt" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMGTE_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\geq" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMLT_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\lt" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMLTE_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\leq" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMDOT_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="." IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMPLUS_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="+" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMMINUS_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="-" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMTIMES_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\times" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMDIVIDE_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\div" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMEQ_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="=" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM0_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="0" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM1_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="1" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM2_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="2" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM3_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="3" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM4_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="4" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM5_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="5" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM6_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="6" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM7_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="7" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM8_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="8" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM9_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="9" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
                                                 <TabItem>
                                                     <TabItem.Header>
                                                         <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>

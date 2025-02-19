@@ -9,9 +9,9 @@ public partial class MultipleChoiceManyQuestion : Question, IManyAnswers
         PossibleAnswers = possibleanswers;
     }
 
-    public override Question DeepCopy() => new MultipleChoiceManyQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())), Points);
+    //public override Question DeepCopy() => new MultipleChoiceManyQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.DeepCopy())), Points);
 
-    public override Question WithoutAnswers() => new MultipleChoiceManyQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.WithoutAnswer())), Points);
+    //public override Question WithoutAnswers() => new MultipleChoiceManyQuestion(Text, TextIsMath, UniqueId, new ObservableCollection<Answer>(PossibleAnswers.Select(x => x.WithoutAnswer())), Points);
 
     public float Grade(ObservableCollection<Answer> submAnswers)
     {
@@ -34,6 +34,9 @@ public partial class MultipleChoiceManyQuestion : Question, IManyAnswers
         return Math.Max(p, 0);
     }
 
-    [RelayCommand]
-    void AddPosAns() => PossibleAnswers.Add(new($"Option {PossibleAnswers.Count + 1}"));
+    //[RelayCommand]
+    //void AddPosAns() => PossibleAnswers.Add(new($"Option {PossibleAnswers.Count + 1}"));
+    //
+    //[RelayCommand]
+    //void RemAns(Answer ans) => PossibleAnswers.Remove(ans);
 }

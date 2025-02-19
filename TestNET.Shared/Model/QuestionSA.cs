@@ -10,9 +10,9 @@ public partial class ShortAnswerQuestion : Question, ISingleAnswer
         Answer = answer;
     }
 
-    public override Question DeepCopy() => new ShortAnswerQuestion(Text, TextIsMath, Answer.DeepCopy(), UniqueId, Points);
+    //public override Question DeepCopy() => new ShortAnswerQuestion(Text, TextIsMath, Answer.DeepCopy(), UniqueId, Points);
 
-    public override Question WithoutAnswers() => new ShortAnswerQuestion(Text, TextIsMath, new(""), UniqueId, Points);
+    //public override Question WithoutAnswers() => new ShortAnswerQuestion(Text, TextIsMath, new(""), UniqueId, Points);
 
     public float Grade(Answer submAnswer)
     {
