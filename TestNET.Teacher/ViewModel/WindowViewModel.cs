@@ -8,6 +8,11 @@ public partial class WindowViewModel : BaseViewModel
     {
         Navigation = navigationService;
         GoToHomeView();
+
+        if (Navigation.CurrentViewModel is HomeViewModel hvm)
+        {
+            hvm.LoadTestCommand.Execute(null);
+        }
     }
 
     [ObservableProperty]
