@@ -55,6 +55,11 @@ public class IndexDB
         return tests;
     }
 
+    public void Wipe()
+    {
+        indexQueries.DeleteIndex();
+    }
+
     public void Add(TeacherTest test)
     {
         var paths = indexQueries.SelectTestPaths();

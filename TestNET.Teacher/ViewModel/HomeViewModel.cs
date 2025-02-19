@@ -1,4 +1,5 @@
-﻿using TestNET.Teacher.Service;
+﻿using Microsoft.Win32;
+using TestNET.Teacher.Service;
 
 namespace TestNET.Teacher.ViewModel;
 
@@ -24,10 +25,26 @@ public partial class HomeViewModel : BaseViewModel
     }
 
     [RelayCommand]
-    void RemoveTest(object selitem) 
+    void RemoveTest(object selitem)
     {
         Tests.Remove((TeacherTest)selitem);
         testService.DeleteTest((TeacherTest)selitem);
+    }
+
+    [RelayCommand]
+    void ImportTest() 
+    {
+        OpenFileDialog openFileDialog = new OpenFileDialog();
+
+        if (openFileDialog.ShowDialog() == true)
+        {
+            var test = testService.ImportTest(openFileDialog.FileName);
+
+            if (test != null)
+            {
+                Tests.Add(test);
+            }
+        }
     }
 
     [RelayCommand]

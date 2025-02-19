@@ -46,6 +46,15 @@ internal class IndexQueries(string dbPath)
         }
     }
 
+    public void DeleteIndex()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = GetEmbeddedResource("DeleteIndex.sql");
+            command.ExecuteNonQuery();
+        }
+    }
+
     /* private CachedQuery insertTestQuery = new(
         Path.Combine(AppContext.BaseDirectory, "Resources", "InsertTest"));
     private string InsertTestQuery => insertTestQuery.Value; */

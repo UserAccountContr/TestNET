@@ -30,6 +30,8 @@ public class TestService(LogService logService)
     {
         var index = new IndexDB();
 
+        index.Wipe();
+
         foreach (var test in tests)
         {
             index.Add(test);
@@ -40,6 +42,38 @@ public class TestService(LogService logService)
     {
         var index = new IndexDB();
         index.Remove(test);
+    }
+
+    public TeacherTest? ImportTest(string path)
+    {
+        var importedPath = Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(path));
+
+        if (File.Exists(importedPath))
+        {
+            var testDB = new TestDB(importedPath);
+            var test = testDB.Load();
+
+            return test;
+        }
+
+        try
+        {
+            File.Copy(path, importedPath);
+
+            var testDB = new TestDB(Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(path)));
+            var test = testDB.Load();
+
+            var index = new IndexDB();
+            index.Add(test);
+
+            return test;
+        }
+        catch
+        {
+
+        }
+
+        return null;
     }
 
     TcpListener? server = null;

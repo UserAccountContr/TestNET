@@ -22,6 +22,8 @@
                       Command="{Binding SaveTestCommand}" />
             <MenuItem Header="{DynamicResource load}"
                       Command="{Binding LoadTestCommand}" />
+            <MenuItem Header="{DynamicResource import}"
+                      Command="{Binding ImportTestCommand}" />
             <MenuItem Header="Settings">
                 <MenuItem Header="Language">
 
