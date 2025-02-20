@@ -1,2 +1,2 @@
-INSERT INTO [TestNET.Test.Submissions] (Username, SubmissionTime)
-VALUES ($Username, $SubmissionTime);
+INSERT INTO [TestNET.Test.Submissions] (Username, SubmissionTime, Points)
+VALUES ($Username, $SubmissionTime, $Points);

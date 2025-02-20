@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace TestNET.Teacher.Service.DB;
 
+using System.Text.RegularExpressions;
 using TestNET.Shared.Model;
 using TestNET.Teacher.Service.DB.Queries;
 
@@ -66,13 +67,34 @@ public class IndexDB
 
         var path = $"{test.Name}.db";
 
-        var db = new TestDB(path);
-        db.Save(test);
-
         if (!paths.Contains(path))
         {
             indexQueries.InsertTest(test);
+        } 
+        else
+        {
+            do {
+                var match = Regex.Match(test.Name, @"(.+)\((\d+)\)");
+
+                if (match.Success)
+                {
+                    int nextId = int.Parse(match.Groups[2].Value) + 1;
+                    test.Name = $"{match.Groups[1].Value}({nextId})";
+                }
+                else
+                {
+                    test.Name = $"{test.Name}(1)";
+                }
+
+                path = $"{test.Name}.db";
+
+            } while (paths.Contains(path));
+
+            indexQueries.InsertTest(test);
         }
+
+        var db = new TestDB(path);
+        db.Save(test);
     }
 
     public void Remove(TeacherTest test)
