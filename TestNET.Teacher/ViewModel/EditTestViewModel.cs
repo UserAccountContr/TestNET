@@ -98,7 +98,7 @@ public partial class EditTestViewModel : BaseViewModel
     {
         if (!Questions.OfType<IManyAnswers>().All(x => x.PossibleAnswers.Any(y => y.IsCorrect)))
         {
-            MessageBox.Show("Not all questions have a selected answer.... u stooooopid");
+            MessageBox.Show("Not all questions have a selected answer.");
             return false;
         }
 

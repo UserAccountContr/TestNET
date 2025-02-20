@@ -191,7 +191,7 @@
                                                 <Binding Path="."/>
                                             </MultiBinding>
                                         </Button.CommandParameter>
-                                        kofa
+                                        <Label>-</Label>
                                     </Button>
                                 </WrapPanel>
                             </WrapPanel>
