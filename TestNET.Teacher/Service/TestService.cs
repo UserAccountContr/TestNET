@@ -46,34 +46,24 @@ public class TestService(LogService logService)
 
     public TeacherTest? ImportTest(string path)
     {
-        var importedPath = Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(path));
+        var testDB = new TestDB(path);
+        var test = testDB.Load();
 
-        if (File.Exists(importedPath))
-        {
-            var testDB = new TestDB(importedPath);
-            var test = testDB.Load();
-
-            return test;
-        }
+        var importedPath = Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(test.Name));
 
         try
         {
             File.Copy(path, importedPath);
-
-            var testDB = new TestDB(Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(path)));
-            var test = testDB.Load();
-
-            var index = new IndexDB();
-            index.Add(test);
-
-            return test;
         }
-        catch
+        catch (IOException)
         {
 
         }
 
-        return null;
+        var index = new IndexDB();
+        index.Add(test);
+
+        return test;
     }
 
     TcpListener? server = null;
