@@ -49,6 +49,7 @@
     <EmbeddedResource Include="Service\DB\Queries\Test\InsertSubmission.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectCurrentName.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectQuestions.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionCorrectAnswers.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionAnswers.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissions.sql" />
   </ItemGroup>

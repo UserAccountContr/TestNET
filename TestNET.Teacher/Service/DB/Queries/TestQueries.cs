@@ -94,7 +94,7 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private void InsertAnswer(long submissionId, Question answer)
+    private void InsertAnswer(long submissionId, Question answer, Question correct)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -103,6 +103,7 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue("$Submission", submissionId);
             command.Parameters.AddWithValue("$Question", answer.UniqueId);
             command.Parameters.AddWithValue("$Answer", JsonSerializer.Serialize(answer));
+            command.Parameters.AddWithValue("$Correct", JsonSerializer.Serialize(correct));
 
             command.ExecuteNonQuery();
         }
@@ -132,14 +133,14 @@ internal class TestQueries(string dbPath)
 
         var submissionId = LastRowId();
 
-        submission.CorrectAnswers = test.NormalTest();
+        submission.CorrectAnswers ??= test.NormalTest();
 
         foreach (var answer in submission.Answers.Questions)
         {
-            InsertAnswer(submissionId, answer);
+            InsertAnswer(submissionId, answer, submission.CorrectAnswers.Questions.Where(x=>x.UniqueId == answer.UniqueId).FirstOrDefault());
         }
 
-        InsertCorrectAnswers(submission.CorrectAnswers, submissionId);
+        //InsertCorrectAnswers(submission.CorrectAnswers, submissionId);
     }
 
     /*
@@ -255,6 +256,31 @@ internal class TestQueries(string dbPath)
 
         return answers;
     }
+    private List<Question> SelectSubmissionCorrectAnswers(long submissionId)
+    {
+        var answers = new List<Question>();
+
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = GetEmbeddedResource("SelectSubmissionCorrectAnswers.sql");
+
+            command.Parameters.AddWithValue("$SubmissionId", submissionId);
+
+            var reader = command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                answers.Add(
+                    JsonSerializer.Deserialize<Question>(reader.GetString(0)) ??
+                    throw new NullReferenceException(
+                        "Json Deserialization of Answer failed."
+                    )
+                );
+            }
+        }
+
+        return answers;
+    }
 
     /*
     private CachedQuery selectSubmissionsQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "SelectSubmissions"));
@@ -284,7 +310,10 @@ internal class TestQueries(string dbPath)
                         SelectCurrentName(),
                         new ObservableCollection<Question>(SelectSubmissionAnswers(id))),
                     DateTime.Parse(submissionTime),
-                    points));
+                    points,
+                    new Test(
+                        SelectCurrentName(),
+                        new ObservableCollection<Question>(SelectSubmissionCorrectAnswers(id)))));
             }
         }
 
