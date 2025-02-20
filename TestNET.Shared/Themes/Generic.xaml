@@ -1158,7 +1158,7 @@
                             <ItemsControl ItemsSource="{Binding Answers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <local:QuestionSubmPanel/>
+                                        <local:QuestionSubmPanel Question="{Binding .}"/>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
