@@ -12,11 +12,11 @@ public class Submission
 
     public float Points { get; set; }
 
-    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? currentAnswers = null)
+    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null)
     {
         Name = name;
         Answers = answers;
-        CorrectAnswers = currentAnswers;
+        CorrectAnswers = correctAnswers;
         TimeSubmitted = timesubmitted;
         Points = points;
     }

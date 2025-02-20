@@ -37,6 +37,46 @@ public class MultiBindConverter : IMultiValueConverter
     }
 }
 
+public class TestUIDToSAQuestionConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values[1] is Test test && values[0] is string uid)
+        {
+            return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
+            {
+                ShortAnswerQuestion sh => sh.Answer.Text
+            };
+        }
+        return null;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class TestUIDToMCQuestionConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values[1] is Test test && values[0] is string uid && int.TryParse(values[2].ToString(), out int index))
+        {
+            return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
+            {
+                MultipleChoiceQuestion mc => mc.PossibleAnswers[index - 1].IsCorrect
+            };
+        }
+        return null;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class QTypeConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

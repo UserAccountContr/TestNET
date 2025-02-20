@@ -1,20 +1,58 @@
 ﻿namespace TestNET.Shared.CustomControls
 {
-    public class QuestionSubmPanel : Control
+    public class QuestionSubmPanelSH : Control
     {
-        static QuestionSubmPanel()
+        static QuestionSubmPanelSH()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(QuestionSubmPanel), new FrameworkPropertyMetadata(typeof(QuestionSubmPanel)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(QuestionSubmPanelSH), new FrameworkPropertyMetadata(typeof(QuestionSubmPanelSH)));
         }
 
         public static readonly DependencyProperty QuestionProperty =
-           DependencyProperty.Register("Question", typeof(Question), typeof(QuestionSubmPanel),
+           DependencyProperty.Register("Question", typeof(ShortAnswerQuestion), typeof(QuestionSubmPanelSH),
                new PropertyMetadata(null));
 
-        public Question Question
+        public ShortAnswerQuestion Question
         {
-            get { return (Question)GetValue(QuestionProperty); }
+            get { return (ShortAnswerQuestion)GetValue(QuestionProperty); }
             set { SetValue(QuestionProperty, value); }
+        }
+
+        public static readonly DependencyProperty TestProperty =
+           DependencyProperty.Register("Test", typeof(Test), typeof(QuestionSubmPanelSH),
+               new PropertyMetadata(null));
+
+        public Test Test
+        {
+            get { return (Test)GetValue(TestProperty); }
+            set { SetValue(TestProperty, value); }
+        }
+    }
+
+    public class QuestionSubmPanelMC : Control
+    {
+        static QuestionSubmPanelMC()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(QuestionSubmPanelMC), new FrameworkPropertyMetadata(typeof(QuestionSubmPanelMC)));
+        }
+
+        public static readonly DependencyProperty QuestionProperty =
+           DependencyProperty.Register("Question", typeof(MultipleChoiceQuestion), typeof(QuestionSubmPanelMC),
+               new PropertyMetadata(null));
+
+        public MultipleChoiceQuestion Question
+        {
+            get { return (MultipleChoiceQuestion)GetValue(QuestionProperty); }
+            set { SetValue(QuestionProperty, value); }
+        }
+
+        public static readonly DependencyProperty TestProperty =
+           DependencyProperty.Register("Test", typeof(Test), typeof(QuestionSubmPanelMC),
+               new PropertyMetadata(null));
+
+        public Test Test
+        {
+            get { return (Test)GetValue(TestProperty); }
+            set { SetValue(TestProperty, value); }
         }
     }
 }

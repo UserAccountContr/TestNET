@@ -7,6 +7,9 @@
 
     <serv:QTypeConverter x:Key="QType"/>
     <serv:MultiBindConverter x:Key="MultiConv"/>
+    <serv:TestUIDToSAQuestionConverter x:Key="TestUIDSHConv"/>
+    <serv:TestUIDToMCQuestionConverter x:Key="TestUIDMCConv"/>
+    <serv:IndexConverter x:Key="IndexConverter"/>
 
     <Style TargetType="{x:Type local:QuestionPanel}">
         <Setter Property="Template">
@@ -1135,11 +1138,70 @@
         </Style.Triggers>
     </Style>
 
-    <Style TargetType="{x:Type local:QuestionSubmPanel}">
+    <Style TargetType="{x:Type local:QuestionSubmPanelSH}">
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:QuestionSubmPanel}">
-                    
+                <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelSH}">
+
+                    <local:QuestionPanel>
+                        <StackPanel Margin="15">
+                            <local:LatexLabel Text="{Binding Text}" 
+                                          IsMath="{Binding TextIsMath}"/>
+                            <local:LatexLabel Text="{Binding Answer.Text}" 
+                                          IsMath="{Binding TextIsMath}"/>
+                            
+                            <local:LatexLabel IsMath="{Binding TextIsMath}">
+                                <local:LatexLabel.Text>
+                                    <MultiBinding Converter="{StaticResource TestUIDSHConv}">
+                                        <Binding Path="UniqueId"/>
+                                        <Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                    </MultiBinding>
+                                </local:LatexLabel.Text>
+                            </local:LatexLabel>
+                        </StackPanel>
+                    </local:QuestionPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:QuestionSubmPanelMC}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMC}">
+
+                    <local:QuestionPanel>
+                        <StackPanel Margin="15">
+                            <local:LatexLabel Text="{Binding Text}" 
+                                          IsMath="{Binding TextIsMath}"/>
+                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <RadioButton IsChecked="{Binding IsCorrect}"
+                                                         IsEnabled="False">
+                                                <WrapPanel>
+                                                    
+                                                    <local:LatexLabel Text="{Binding Text}"
+                                                                      IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMC}}"/>
+                                                    <CheckBox IsEnabled="False">
+                                                        <CheckBox.IsChecked>
+                                                            <MultiBinding Converter="{StaticResource TestUIDMCConv}">
+                                                                <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
+                                                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
+                                                                <Binding Path="." RelativeSource="{RelativeSource TemplatedParent}"
+                                                                         Converter="{StaticResource IndexConverter}"/>
+                                                            </MultiBinding>
+                                                        </CheckBox.IsChecked>
+                                                    </CheckBox>
+                                                </WrapPanel>
+                                            </RadioButton>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </local:QuestionPanel>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1155,12 +1217,16 @@
                             <Label Content="{Binding TimeSubmitted}"/>
                             <Label Content="{Binding Points}"/>
                             
-                            <ItemsControl ItemsSource="{Binding Answers}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <local:QuestionSubmPanel Question="{Binding .}"/>
+                            <ItemsControl ItemsSource="{Binding Answers.Questions}">
+                                <ItemsControl.Resources>
+                                    <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                                        <local:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
                                     </DataTemplate>
-                                </ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                        <local:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
+
+                                    </DataTemplate>
+                                </ItemsControl.Resources>
                             </ItemsControl>
                         </StackPanel>
                     </Expander>
