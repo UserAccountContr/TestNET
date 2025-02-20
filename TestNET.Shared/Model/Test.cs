@@ -14,8 +14,6 @@ public class Test
         Questions = questions;
     }
 
-    //public void AddQuestion() => Questions.Add(new Question("q", new("a"), Guid.NewGuid().ToString()));
-
     public Test DeepCopy() => new Test(Name, new ObservableCollection<Question>(Questions.Select(x => x.DeepCopy())));
 
     public Test WithoutAnswers() => new Test(Name, new ObservableCollection<Question>(Questions.Select(x => x.WithoutAnswers())));

@@ -171,7 +171,17 @@
 
                     </Expander>
                     <Expander Header="Submissions">
-                        <ListView ItemsSource="{Binding Test.Submissions}">
+                        <ListView ItemsSource="{Binding Test.Submissions}"
+                                  PreviewMouseWheel="ListView_PreviewMouseWheel">
+                            <!---
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <CustomControls:TestSubmPanel Submission="{Binding .}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                            -->
+                            
+                            
                             <ListView.Resources>
                                 <DataTemplate DataType="{x:Type model:Submission}">
                                     <Expander Header="{Binding Name}">
@@ -230,6 +240,7 @@
                                     </Expander>
                                 </DataTemplate>
                             </ListView.Resources>
+                            
                         </ListView>
                     </Expander>
                     <Expander Header="Log">

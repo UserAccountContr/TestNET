@@ -215,6 +215,7 @@ public class TestService(LogService logService)
     {
         Submission temp = request.Submission;
         temp.Points = test.Grade(request.Submission);
+        temp.CorrectAnswers = test.NormalTest();                //must be reworked for the nac. krug :)
 
 
         byte[] responseBytes = Encoding.UTF8.GetBytes("OK");

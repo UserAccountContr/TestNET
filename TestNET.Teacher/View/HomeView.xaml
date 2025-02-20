@@ -18,10 +18,12 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource add}"
                       Command="{Binding NewTestCommand}" />
+            <!--
             <MenuItem Header="{DynamicResource save}"
                       Command="{Binding SaveTestCommand}" />
             <MenuItem Header="{DynamicResource load}"
                       Command="{Binding LoadTestCommand}" />
+            -->
             <MenuItem Header="{DynamicResource import}"
                       Command="{Binding ImportTestCommand}" />
             <MenuItem Header="Settings">

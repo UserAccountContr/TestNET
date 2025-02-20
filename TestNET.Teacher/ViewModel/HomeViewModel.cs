@@ -35,6 +35,7 @@ public partial class HomeViewModel : BaseViewModel
     void ImportTest() 
     {
         OpenFileDialog openFileDialog = new OpenFileDialog();
+        openFileDialog.Filter = "Test Database Files | *.db";
 
         if (openFileDialog.ShowDialog() == true)
         {

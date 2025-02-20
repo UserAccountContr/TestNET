@@ -35,4 +35,8 @@ public static class QuestionHelpers
 
     public static void AddPosAns(this IManyAnswers q) => q.PossibleAnswers.Add(new($"Option {q.PossibleAnswers.Count + 1}"));
     public static void RemAns(this IManyAnswers q, Answer ans) => q.PossibleAnswers.Remove(ans);
+
+    public static float MaxPoints(this Test t) => t.Questions.Sum(x => x.Points);
+
+    public static Test NormalTest(this TeacherTest t) => new (t.Name, new ObservableCollection<Question>(t.Questions.Select(x => x.DeepCopy())));
 }

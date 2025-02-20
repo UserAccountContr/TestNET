@@ -258,7 +258,7 @@
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
-                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="QuestionMCM" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
                                                 <Binding Path="."/>
                                             </MultiBinding>
                                         </Button.CommandParameter>
@@ -278,7 +278,7 @@
                 <WrapPanel HorizontalAlignment="Left">
                     <Button Content="+"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                            CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
+                            CommandParameter="{Binding QuestionMCM, RelativeSource={RelativeSource TemplatedParent}}" 
                             Width="20"
                             Margin="15 5"/>
                 </WrapPanel>
@@ -370,9 +370,11 @@
                                     Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0,0,0,10"/>
-                <local:TemplateTextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                         IsEnabled="{TemplateBinding EnableSolving}"/>
-                
+
+                <local:LatexTextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                                    IsEnabled="{TemplateBinding EnableSolving}"/>
+
             </StackPanel>
 
         </local:QuestionPanel>
@@ -778,23 +780,34 @@
                                                       IsMath="True"
                                                       Text="{Binding TempView, RelativeSource={RelativeSource TemplatedParent}}"/>
 
-                                        <WrapPanel Margin="20">
-                                            <WrapPanel.Resources>
+                                        <StackPanel Margin="20">
+                                            <StackPanel.Resources>
                                                 <Style TargetType="Button" x:Key="MathBtnSt">
                                                     <Setter Property="Background" Value="Transparent"/>
                                                     <Setter Property="MinWidth" Value="50"/>
                                                     <Setter Property="MinHeight" Value="45"/>
                                                 </Style>
                                                 <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}"/>
-                                            </WrapPanel.Resources>
+                                            </StackPanel.Resources>
                                             <TabControl>
                                                 <TabItem>
                                                     <TabItem.Header>
-                                                        <local:LatexLabel Text="123" IsMath="True"/>
+                                                        <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>
                                                     </TabItem.Header>
                                                     <WrapPanel>
+
                                                         <Grid>
                                                             <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
                                                                 <ColumnDefinition/>
                                                                 <ColumnDefinition/>
                                                                 <ColumnDefinition/>
@@ -927,48 +940,78 @@
                                                                     Grid.Column="2">
                                                                 <local:LatexLabel Text="9" IsMath="True"/>
                                                             </Button>
+                                                            <Button Name="SBR_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="5">
+                                                                <local:LatexLabel Text="\left( \square \right)" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SQBR_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="5">
+                                                                <local:LatexLabel Text="\left[ \square \right]" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CBR_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="5">
+                                                                <local:LatexLabel Text="\left\{ \square \right\}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PIPE_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="5">
+                                                                <local:LatexLabel Text="\left| \square \right|" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="FRAC_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="6">
+                                                                <local:LatexLabel Text="\frac{\square}{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SQRT_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="6">
+                                                                <local:LatexLabel Text="\sqrt{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NTHRT_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="6">
+                                                                <local:LatexLabel Text="\sqrt[\square]{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="Pi_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="6">
+                                                                <local:LatexLabel Text="\pi" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="POWERSND_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="7">
+                                                                <local:LatexLabel Text="a^{2}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="POWER_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="7">
+                                                                <local:LatexLabel Text="a^{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="INDEX_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="7">
+                                                                <local:LatexLabel Text="a_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PROC_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="7">
+                                                                <local:LatexLabel Text="\%" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="INF_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="8">
+                                                                <local:LatexLabel Text="\infty" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="R_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="8">
+                                                                <local:LatexLabel Text="" IsMath="True"/>
+                                                            </Button>
                                                         </Grid>
-                                                    </WrapPanel>
-                                                </TabItem>
-                                                <TabItem>
-                                                    <TabItem.Header>
-                                                        <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>
-                                                    </TabItem.Header>
-                                                    <WrapPanel>
-
-                                                        <Button Name="SQRT_BTN">
-                                                            <local:LatexLabel Text="\sqrt{\square}" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="NTHRT_BTN">
-                                                            <local:LatexLabel Text="\sqrt[\square]{\square}" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="FRAC_BTN">
-                                                            <local:LatexLabel Text="\frac{\square}{\square}" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="SBR_BTN">
-                                                            <local:LatexLabel Text="\left( \square \right)" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="PIPE_BTN">
-                                                            <local:LatexLabel Text="\left| \square \right|" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="Pi_BTN">
-                                                            <local:LatexLabel Text="\pi" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="POWER_BTN">
-                                                            <local:LatexLabel Text="a^{\square}" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="TEXT_BTN" Content="Text">
-                                                            <Button.Style>
-                                                                <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
-                                                                    <Style.Triggers>
-                                                                        <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                                                            <Setter Property="Background" Value="PaleGreen"/>
-                                                                        </DataTrigger>
-                                                                    </Style.Triggers>
-                                                                </Style>
-                                                            </Button.Style>
-                                                        </Button>
-                                                        <Button Name="NEWLINE_BTN" Content="Newline"/>
+                                                        
                                                         <Button Name="IN_BTN">
                                                             <local:LatexLabel Text="\in" IsMath="True"/>
                                                         </Button>
@@ -980,9 +1023,6 @@
                                                         </Button>
                                                         <Button Name="DEG_BTN">
                                                             <local:LatexLabel Text="\square^{\circ}" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="INF_BTN">
-                                                            <local:LatexLabel Text="\infty" IsMath="True"/>
                                                         </Button>
                                                         <Button Name="SIN_BTN">
                                                             <local:LatexLabel Text="\sin" IsMath="True"/>
@@ -996,13 +1036,85 @@
                                                         <Button Name="COTG_BTN">
                                                             <local:LatexLabel Text="\cot" IsMath="True"/>
                                                         </Button>
-                                                        <Button Name="LIM_BTN">
-                                                            <local:LatexLabel Text="\lim" IsMath="True"/>
-                                                        </Button>
+                                                    </WrapPanel>
+                                                </TabItem>
+
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <local:LatexLabel Text="\log_{\square}\square" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+
+                                                            <Button Name="LOG_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\log_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LOGTEN_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\lg" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LN_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\ln" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LIMX_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\lim_{x\to\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LIM_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\lim_{\square\to\square}" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
                                                     </WrapPanel>
                                                 </TabItem>
                                             </TabControl>
-                                        </WrapPanel>
+                                            <WrapPanel>
+                                                <Button Name="TEXT_BTN" Content="T">
+                                                    <Button.Style>
+                                                        <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                                                    <Setter Property="Background" Value="PaleGreen"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Button.Style>
+                                                </Button>
+                                                <Button Name="NEWLINE_BTN" Content="Newline"/>
+                                            </WrapPanel>
+                                        </StackPanel>
                                     
                                         
                                         <!--
@@ -1021,5 +1133,39 @@
                 </Setter>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type local:QuestionSubmPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuestionSubmPanel}">
+                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:TestSubmPanel}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:TestSubmPanel}">
+                    <Expander Header="{Binding Name}">
+                        <StackPanel>
+
+                            <Label Content="{Binding TimeSubmitted}"/>
+                            <Label Content="{Binding Points}"/>
+                            
+                            <ItemsControl ItemsSource="{Binding Answers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <local:QuestionSubmPanel/>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Expander>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>
