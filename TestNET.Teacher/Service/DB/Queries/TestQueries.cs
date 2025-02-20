@@ -86,6 +86,9 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue(
                 "$SubmissionTime", submission.TimeSubmitted.ToString("U"));
 
+            command.Parameters.AddWithValue(
+                    "$Points", submission.Points);
+
             command.ExecuteNonQuery();
         }
 
@@ -228,13 +231,15 @@ internal class TestQueries(string dbPath)
                 var id = reader.GetInt64(0);
                 var username = reader.GetString(1);
                 var submissionTime = reader.GetString(2);
+                var points = reader.GetFloat(3);
 
                 submissions.Add(new Submission(
                     username,
                     new Test(
                         SelectCurrentName(),
                         new ObservableCollection<Question>(SelectSubmissionAnswers(id))),
-                    DateTime.Parse(submissionTime)));
+                    DateTime.Parse(submissionTime),
+                    points));
             }
         }
 

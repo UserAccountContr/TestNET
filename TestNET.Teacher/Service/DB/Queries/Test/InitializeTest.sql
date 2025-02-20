@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Submissions] (
   Id INTEGER NOT NULL, 
   Username TEXT NOT NULL,
   SubmissionTime TEXT NOT NULL,
+  Points FLOAT NOT NULL,
 
   PRIMARY KEY (Id)
 );
