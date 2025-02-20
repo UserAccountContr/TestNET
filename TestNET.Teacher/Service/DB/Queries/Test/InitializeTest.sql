@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Meta] (
 CREATE TABLE IF NOT EXISTS [TestNET.Test.Questions] (
   Id TEXT NOT NULL,
   QuestionJson TEXT NOT NULL,
-  OrderId INTEGER NOT NULL,
+  --OrderId INTEGER NOT NULL,
 
   PRIMARY KEY (Id)
 );

@@ -175,8 +175,8 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue(
                 "$Id", question.UniqueId);
 
-            command.Parameters.AddWithValue(
-                "$OrderId", order);
+            //command.Parameters.AddWithValue(
+            //    "$OrderId", order);
 
             command.ExecuteNonQuery();
         }
