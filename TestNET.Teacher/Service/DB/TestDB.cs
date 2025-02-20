@@ -33,7 +33,7 @@ public class TestDB
 
         foreach (var submission in test.Submissions)
         {
-            testQueries.InsertSubmission(submission);
+            testQueries.InsertSubmission(submission, test);
         }
 
         testQueries.EndTransaction();

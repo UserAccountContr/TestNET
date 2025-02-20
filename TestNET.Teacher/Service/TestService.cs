@@ -150,6 +150,7 @@ public class TestService(LogService logService)
                         Array.Resize(ref requestBytes, requestLength - 1);
 
                         string requestJson = Encoding.UTF8.GetString(requestBytes);
+
                         Request? request = JsonSerializer.Deserialize<Request>(requestJson) ?? throw new ArgumentNullException(nameof(request));
 
                         if (request is TestRequest testRequest)
