@@ -34,6 +34,24 @@ internal class TestQueries(string dbPath)
     /* private CachedQuery initializeTestQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InitializeTest"));
     private string InitializeTestQuery => initializeTestQuery.Value; */
 
+    public void BeginTransaction()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = "BEGIN TRANSACTION";
+            command.ExecuteNonQuery();
+        }
+    }
+
+    public void EndTransaction()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = "END TRANSACTION";
+            command.ExecuteNonQuery();
+        }
+    }
+
     public void InitializeTest()
     {
         using (var command = Connection.CreateCommand())
@@ -121,7 +139,7 @@ internal class TestQueries(string dbPath)
     private CachedQuery insertQuestionQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertQuestion"));
     private string InsertQuestionQuery => insertQuestionQuery.Value; */
 
-    public void InsertQuestion(Question question)
+    public void InsertQuestion(Question question, int order)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -132,6 +150,9 @@ internal class TestQueries(string dbPath)
 
             command.Parameters.AddWithValue(
                 "$Id", question.UniqueId);
+
+            //command.Parameters.AddWithValue(
+            //    "$OrderId", order);
 
             command.ExecuteNonQuery();
         }

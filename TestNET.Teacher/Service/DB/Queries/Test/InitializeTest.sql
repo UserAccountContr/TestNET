@@ -6,20 +6,32 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Meta] (
 	PRIMARY KEY (Id)
 );
 
+CREATE TABLE IF NOT EXISTS [TestNET.Test.Questions] (
+  Id TEXT NOT NULL,
+  QuestionJson TEXT NOT NULL,
+--  OrderId INTEGER NOT NULL,
+
+  PRIMARY KEY (Id)
+);
+
+-- CREATE TABLE IF NOT EXISTS [TestNET.Test.Correct] (
+--	Id INTEGER NOT NULL,
+--	UniqueTestId INTEGER NOT NULL,
+--	QuestionId TEXT NOT NULL,
+--	CorrectJson TEXT NOT NULL,
+
+--	FOREIGN KEY (QuestionId) REFERENCES [TestNET.Test.Questions] (Id)
+-- );
+
 CREATE TABLE IF NOT EXISTS [TestNET.Test.Submissions] (
   Id INTEGER NOT NULL, 
   Username TEXT NOT NULL,
   SubmissionTime TEXT NOT NULL,
   Points FLOAT NOT NULL,
+  -- UniqueTestId INTEGER NOT NULL,
 
   PRIMARY KEY (Id)
-);
-
-CREATE TABLE IF NOT EXISTS [TestNET.Test.Questions] (
-  Id TEXT NOT NULL,
-  QuestionJson TEXT NOT NULL,
-
-  PRIMARY KEY (Id)
+  -- FOREIGN KEY (UniqueTestId) REFERENCES [TestNET.Test.Correct]
 );
 
 CREATE TABLE IF NOT EXISTS [TestNET.Test.Answers] (
