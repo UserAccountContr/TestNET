@@ -69,7 +69,8 @@
                     <Label Content="Test Name: "/>
                     <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="1"
-                         VerticalContentAlignment="Center"/>
+                         VerticalContentAlignment="Center"
+                             MinWidth="150"/>
                 </WrapPanel>
                 <ListView Grid.Row="1" 
                           ItemsSource="{Binding Questions}"

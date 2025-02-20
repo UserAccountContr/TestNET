@@ -173,7 +173,7 @@
                                              VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
-                                <WrapPanel>
+                                <WrapPanel VerticalAlignment="Center">
                                     <WrapPanel.Style>
                                         <Style TargetType="WrapPanel">
                                             <Style.Triggers>
@@ -184,23 +184,35 @@
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </Style>
                                     </WrapPanel.Style>
-                                    <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}">
+                                    <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
                                                 <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
                                                 <Binding Path="."/>
                                             </MultiBinding>
                                         </Button.CommandParameter>
-                                        <Label>-</Label>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
                                     </Button>
                                 </WrapPanel>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="+"
-                        Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                        CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <WrapPanel HorizontalAlignment="Left">
+                    <Button Content="+"
+                            Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                            CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Width="20"
+                            Margin="15 5"/>
+                </WrapPanel>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
@@ -230,21 +242,46 @@
                                           VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
-                                <WrapPanel.Style>
-                                    <Style TargetType="WrapPanel">
-                                        <Style.Triggers>
-                                            <Trigger Property="IsMouseOver" Value="True">
-                                                <Setter Property="Background" Value="Green"/>
-                                            </Trigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </WrapPanel.Style>
+                                <WrapPanel>
+                                    <WrapPanel.Style>
+                                        <Style TargetType="WrapPanel">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource AncestorType=WrapPanel}}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                        </Style>
+                                    </WrapPanel.Style>
+                                    <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Button>
+                                </WrapPanel>
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <Button Content="+"
-                        Command="{Binding QuestionMCM.AddPosAnsCommand, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <WrapPanel HorizontalAlignment="Left">
+                    <Button Content="+"
+                            Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                            CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
+                            Width="20"
+                            Margin="15 5"/>
+                </WrapPanel>
                 <WrapPanel>
                     <Label Content="Pts:"/>
                     <TextBox Text="{Binding QuestionMCM.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
