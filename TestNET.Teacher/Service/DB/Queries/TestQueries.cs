@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -34,6 +35,24 @@ internal class TestQueries(string dbPath)
     /* private CachedQuery initializeTestQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InitializeTest"));
     private string InitializeTestQuery => initializeTestQuery.Value; */
 
+    public void BeginTransaction()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = "BEGIN TRANSACTION";
+            command.ExecuteNonQuery();
+        }
+    }
+
+    public void EndTransaction()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = "END TRANSACTION";
+            command.ExecuteNonQuery();
+        }
+    }
+
     public void InitializeTest()
     {
         using (var command = Connection.CreateCommand())
@@ -56,6 +75,25 @@ internal class TestQueries(string dbPath)
     private CachedQuery insertAnswerQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertAnswer"));
     private string InsertAnswerQuery => insertAnswerQuery.Value; */
 
+    public void InsertCorrectAnswers(Test test, long submissionId)
+    {
+        // $SubmissionId, $QuestionId, $CorrectJson
+
+        foreach (var question in test.Questions)
+        {
+            using (var command = Connection.CreateCommand())
+            {
+                command.CommandText = GetEmbeddedResource("InsertCorrectAnswers.sql");
+
+                command.Parameters.AddWithValue("$SubmissionId", submissionId);
+                command.Parameters.AddWithValue("$QuestionId", question.UniqueId);
+                command.Parameters.AddWithValue("$CorrectJson", JsonSerializer.Serialize(question));
+
+                command.ExecuteNonQuery();
+            }
+        }
+    }
+
     private void InsertAnswer(long submissionId, Question answer)
     {
         using (var command = Connection.CreateCommand())
@@ -74,7 +112,7 @@ internal class TestQueries(string dbPath)
     private CachedQuery insertSubmissionQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertSubmission"));
     private string InsertSubmissionQuery => insertSubmissionQuery.Value;*/
 
-    public void InsertSubmission(Submission submission)
+    public void InsertSubmission(Submission submission, TeacherTest test)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -94,10 +132,14 @@ internal class TestQueries(string dbPath)
 
         var submissionId = LastRowId();
 
+        submission.CorrectAnswers = test.NormalTest();
+
         foreach (var answer in submission.Answers.Questions)
         {
             InsertAnswer(submissionId, answer);
         }
+
+        InsertCorrectAnswers(submission.CorrectAnswers, submissionId);
     }
 
     /*
@@ -121,7 +163,7 @@ internal class TestQueries(string dbPath)
     private CachedQuery insertQuestionQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertQuestion"));
     private string InsertQuestionQuery => insertQuestionQuery.Value; */
 
-    public void InsertQuestion(Question question)
+    public void InsertQuestion(Question question, int order)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -132,6 +174,9 @@ internal class TestQueries(string dbPath)
 
             command.Parameters.AddWithValue(
                 "$Id", question.UniqueId);
+
+            command.Parameters.AddWithValue(
+                "$OrderId", order);
 
             command.ExecuteNonQuery();
         }

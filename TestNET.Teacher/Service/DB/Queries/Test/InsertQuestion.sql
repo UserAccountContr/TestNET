@@ -1,2 +1,10 @@
-INSERT INTO [TestNET.Test.Questions] (Id, QuestionJson)
-VALUES ($Id, $QuestionJson);
+INSERT INTO [TestNET.Test.Questions] (
+	Id, 
+	QuestionJson,
+    OrderId
+)
+VALUES (
+	$Id, 
+	$QuestionJson,
+	$OrderId
+);

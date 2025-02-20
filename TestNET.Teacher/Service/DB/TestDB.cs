@@ -20,18 +20,23 @@ public class TestDB
 
     public void Save(TeacherTest test)
     {
+        testQueries.BeginTransaction();
+
         testQueries.DeleteTest();
         testQueries.InsertMeta(test.Name, DateTime.Now);
 
+        int i = 1;
         foreach (var question in test.Questions)
         {
-            testQueries.InsertQuestion(question);
+            testQueries.InsertQuestion(question, i++);
         }
 
         foreach (var submission in test.Submissions)
         {
-            testQueries.InsertSubmission(submission);
+            testQueries.InsertSubmission(submission, test);
         }
+
+        testQueries.EndTransaction();
     }
 
     public TeacherTest Load()
