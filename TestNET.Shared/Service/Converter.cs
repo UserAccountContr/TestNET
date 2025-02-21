@@ -58,6 +58,27 @@ public class TestUIDToSAQuestionConverter : IMultiValueConverter
     }
 }
 
+public class TestUIDToSAQuestionBOOLConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values[1] is Test test && values[0] is string uid && values[2] is string s)
+        {
+            return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
+            {
+                ShortAnswerQuestion sh => sh.Answer.Text == s,
+                _ => false
+            };
+        }
+        return null;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class TestUIDToMCQuestionConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

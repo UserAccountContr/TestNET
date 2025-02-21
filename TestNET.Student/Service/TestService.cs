@@ -92,7 +92,7 @@ public class TestService
         return null;
     }
 
-    public async void ReturnTest(Test test)
+    public async Task<bool> ReturnTest(Test test)
     {
         try
         {
@@ -127,7 +127,9 @@ public class TestService
                 stream.Write([0xff], 0, 1); // Acknowledge
 
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
-                MessageBox.Show(responseJson);
+
+                if (responseJson == "OK") return true;
+                else return false;
             }
         }
         catch (ArgumentNullException e)
@@ -140,5 +142,6 @@ public class TestService
         }
 
         //MessageBox.Show(string.Join('\n', test.Questions.Select(x => x.Answer.Text)));
+        return false;
     }
 }

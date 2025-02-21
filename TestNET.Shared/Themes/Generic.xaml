@@ -8,6 +8,7 @@
     <serv:QTypeConverter x:Key="QType"/>
     <serv:MultiBindConverter x:Key="MultiConv"/>
     <serv:TestUIDToSAQuestionConverter x:Key="TestUIDSHConv"/>
+    <serv:TestUIDToSAQuestionBOOLConverter x:Key="TestUIDSHBOOLConv"/>
     <serv:TestUIDToMCQuestionConverter x:Key="TestUIDMCConv"/>
     <serv:IndexConverter x:Key="IndexConverter"/>
 
@@ -1148,8 +1149,33 @@
                             <local:LatexLabel Text="{Binding Text}" 
                                           IsMath="{Binding TextIsMath}"
                                     Margin="0,0,0,15"/>
-                            <local:LatexLabel Text="{Binding Answer.Text}" 
+                            <WrapPanel>
+                                <local:LatexLabel Text="{Binding Answer.Text}" 
                                           IsMath="{Binding TextIsMath}"/>
+                                <Viewbox Height="12"
+                                         Margin="8 0">
+                                    <Viewbox.Style>
+                                        <Style TargetType="Viewbox">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Value="True">
+                                                    <DataTrigger.Binding>
+                                                        <MultiBinding Converter="{StaticResource TestUIDSHBOOLConv}">
+                                                            <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                            <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                            <Binding Path="Question.Answer.Text" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                        </MultiBinding>
+                                                    </DataTrigger.Binding>
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Viewbox.Style>
+                                    <Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
+                                                              Fill="Green"
+                                                              Stretch="Fill"/>
+                                </Viewbox>
+                            </WrapPanel>
                             
                             <local:LatexLabel IsMath="{Binding TextIsMath}">
                                 <local:LatexLabel.Text>
@@ -1244,12 +1270,13 @@
                                     <DataTemplate>
                                         <WrapPanel>
                                             <CheckBox IsChecked="{Binding IsCorrect}"
-                                                         IsEnabled="False">
+                                                      IsEnabled="False">
                                                 <WrapPanel>
 
                                                     <local:LatexLabel Text="{Binding Text}"
                                                                       IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMCM}}"/>
-                                                    <Viewbox Height="15">
+                                                    <Viewbox Height="12"
+                                                             Margin="8 0">
                                                         <Viewbox.Style>
                                                             <Style TargetType="Viewbox">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
