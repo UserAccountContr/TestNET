@@ -106,7 +106,12 @@
                         <DataTemplate.Resources>
                             <sharedserv:IndexConverter x:Key="IndexConverter" />
                         </DataTemplate.Resources>
-                        <Grid>
+                        <Grid Background="Transparent">
+                            <Grid.InputBindings>
+                                <MouseBinding Gesture="LeftDoubleClick"
+                                              Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                              CommandParameter="{Binding }"/>
+                            </Grid.InputBindings>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="auto"/>
@@ -115,12 +120,12 @@
                             <WrapPanel Grid.Column="0">
 
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                   ContentStringFormat="{}{0}."/>
+                                       ContentStringFormat="{}{0}."/>
                                 <Label Content="{Binding Name}"/>
                             </WrapPanel>
                             <CustomControls:DropdownMenu Grid.Column="1">
                                 <StackPanel Background="White">
-                                    
+
                                     <Button Content="{DynamicResource open}" 
                                             Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
                                             CommandParameter="{Binding .}"/>
