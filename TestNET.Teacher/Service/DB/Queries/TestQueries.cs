@@ -133,7 +133,8 @@ internal class TestQueries(string dbPath)
 
         var submissionId = LastRowId();
 
-        submission.CorrectAnswers ??= test.NormalTest();
+        if (submission.CorrectAnswers is null || submission.CorrectAnswers.Questions.Count == 0)
+            submission.CorrectAnswers = test.NormalTest();
 
         foreach (var answer in submission.Answers.Questions)
         {
@@ -270,6 +271,7 @@ internal class TestQueries(string dbPath)
 
             while (reader.Read())
             {
+                if (reader.IsDBNull(0)) continue;
                 answers.Add(
                     JsonSerializer.Deserialize<Question>(reader.GetString(0)) ??
                     throw new NullReferenceException(

@@ -45,7 +45,8 @@ public class TestUIDToSAQuestionConverter : IMultiValueConverter
         {
             return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
             {
-                ShortAnswerQuestion sh => sh.Answer.Text
+                ShortAnswerQuestion sh => sh.Answer.Text,
+                _ => ""
             };
         }
         return null;
@@ -65,7 +66,9 @@ public class TestUIDToMCQuestionConverter : IMultiValueConverter
         {
             return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
             {
-                MultipleChoiceQuestion mc => mc.PossibleAnswers[index - 1].IsCorrect
+                MultipleChoiceQuestion mc => mc.PossibleAnswers[index - 1].IsCorrect,
+                MultipleChoiceManyQuestion mcm => mcm.PossibleAnswers[index - 1].IsCorrect,
+                _ => false
             };
         }
         return null;

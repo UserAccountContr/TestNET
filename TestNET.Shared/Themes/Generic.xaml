@@ -1184,18 +1184,86 @@
                                                     
                                                     <local:LatexLabel Text="{Binding Text}"
                                                                       IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMC}}"/>
-                                                    <CheckBox IsEnabled="False">
-                                                        <CheckBox.IsChecked>
-                                                            <MultiBinding Converter="{StaticResource TestUIDMCConv}">
-                                                                <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
-                                                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
-                                                                <Binding Path="." RelativeSource="{RelativeSource TemplatedParent}"
-                                                                         Converter="{StaticResource IndexConverter}"/>
-                                                            </MultiBinding>
-                                                        </CheckBox.IsChecked>
-                                                    </CheckBox>
+                                                    <Viewbox Height="15">
+                                                        <Viewbox.Style>
+                                                            <Style TargetType="Viewbox">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Value="True">
+                                                                        <DataTrigger.Binding>
+                                                                            <MultiBinding Converter="{StaticResource TestUIDMCConv}">
+                                                                                <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
+                                                                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
+                                                                                <Binding Path="." RelativeSource="{RelativeSource TemplatedParent}"
+                                                                                         Converter="{StaticResource IndexConverter}"/>
+                                                                            </MultiBinding>
+                                                                        </DataTrigger.Binding>
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Viewbox.Style>
+                                                        <Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
+                                                              Fill="Green"
+                                                              Stretch="Fill"/>
+                                                    </Viewbox>
                                                 </WrapPanel>
                                             </RadioButton>
+                                        </WrapPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </local:QuestionPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="{x:Type local:QuestionSubmPanelMCM}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMCM}">
+
+                    <local:QuestionPanel>
+                        <StackPanel Margin="15">
+                            <local:LatexLabel Text="{Binding Text}" 
+                                          IsMath="{Binding TextIsMath}"/>
+                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <WrapPanel>
+                                            <CheckBox IsChecked="{Binding IsCorrect}"
+                                                         IsEnabled="False">
+                                                <WrapPanel>
+
+                                                    <local:LatexLabel Text="{Binding Text}"
+                                                                      IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMCM}}"/>
+                                                    <Viewbox Height="15">
+                                                        <Viewbox.Style>
+                                                            <Style TargetType="Viewbox">
+                                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Value="True">
+                                                                        <DataTrigger.Binding>
+                                                                            <MultiBinding Converter="{StaticResource TestUIDMCConv}">
+                                                                                <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMCM}}"/>
+                                                                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMCM}}"/>
+                                                                                <Binding Path="." RelativeSource="{RelativeSource TemplatedParent}"
+                                                                                         Converter="{StaticResource IndexConverter}"/>
+                                                                            </MultiBinding>
+                                                                        </DataTrigger.Binding>
+                                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Viewbox.Style>
+                                                        <Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
+                                                              Fill="Green"
+                                                              Stretch="Fill"/>
+                                                    </Viewbox>
+                                                </WrapPanel>
+                                            </CheckBox>
                                         </WrapPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
@@ -1224,7 +1292,9 @@
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                                         <local:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
-
+                                    </DataTemplate>
+                                    <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                                        <local:QuestionSubmPanelMCM Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
                                     </DataTemplate>
                                 </ItemsControl.Resources>
                             </ItemsControl>
