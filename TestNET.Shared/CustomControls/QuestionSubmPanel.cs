@@ -26,6 +26,16 @@
             get { return (Test)GetValue(TestProperty); }
             set { SetValue(TestProperty, value); }
         }
+
+        public static readonly DependencyProperty QuestionIndexProperty =
+           DependencyProperty.Register("QuestionIndex", typeof(int), typeof(QuestionSubmPanelSH),
+               new PropertyMetadata(0));
+
+        public int QuestionIndex
+        {
+            get { return (int)GetValue(QuestionIndexProperty); }
+            set { SetValue(QuestionIndexProperty, value); }
+        }
     }
 
     public class QuestionSubmPanelMC : Control
@@ -54,6 +64,16 @@
             get { return (Test)GetValue(TestProperty); }
             set { SetValue(TestProperty, value); }
         }
+
+        public static readonly DependencyProperty QuestionIndexProperty =
+           DependencyProperty.Register("QuestionIndex", typeof(int), typeof(QuestionSubmPanelMC),
+               new PropertyMetadata(0));
+
+        public int QuestionIndex
+        {
+            get { return (int)GetValue(QuestionIndexProperty); }
+            set { SetValue(QuestionIndexProperty, value); }
+        }
     }
 
     public class QuestionSubmPanelMCM : Control
@@ -81,6 +101,16 @@
         {
             get { return (Test)GetValue(TestProperty); }
             set { SetValue(TestProperty, value); }
+        }
+
+        public static readonly DependencyProperty QuestionIndexProperty =
+           DependencyProperty.Register("QuestionIndex", typeof(int), typeof(QuestionSubmPanelMCM),
+               new PropertyMetadata(0));
+
+        public int QuestionIndex
+        {
+            get { return (int)GetValue(QuestionIndexProperty); }
+            set { SetValue(QuestionIndexProperty, value); }
         }
     }
 }

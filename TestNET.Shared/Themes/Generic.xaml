@@ -1143,10 +1143,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelSH}">
 
-                    <local:QuestionPanel>
+                    <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"/>
+                                          IsMath="{Binding TextIsMath}"
+                                    Margin="0,0,0,15"/>
                             <local:LatexLabel Text="{Binding Answer.Text}" 
                                           IsMath="{Binding TextIsMath}"/>
                             
@@ -1170,21 +1171,29 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMC}">
 
-                    <local:QuestionPanel>
+                    <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"/>
+                                          IsMath="{Binding TextIsMath}"
+                                    Margin="0,0,0,15"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Margin" Value="0 5"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <WrapPanel>
                                             <RadioButton IsChecked="{Binding IsCorrect}"
-                                                         IsEnabled="False">
+                                                         IsEnabled="False"
+                                                         VerticalContentAlignment="Center">
                                                 <WrapPanel>
                                                     
                                                     <local:LatexLabel Text="{Binding Text}"
                                                                       IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMC}}"/>
-                                                    <Viewbox Height="15">
+                                                    <Viewbox Height="12"
+                                                             Margin="8 0">
                                                         <Viewbox.Style>
                                                             <Style TargetType="Viewbox">
                                                                 <Setter Property="Visibility" Value="Collapsed"/>
@@ -1225,10 +1234,11 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMCM}">
 
-                    <local:QuestionPanel>
+                    <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"/>
+                                          IsMath="{Binding TextIsMath}"
+                                    Margin="0,0,0,15"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -1288,13 +1298,16 @@
                             <ItemsControl ItemsSource="{Binding Answers.Questions}">
                                 <ItemsControl.Resources>
                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
-                                        <local:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
+                                        <local:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"
+                                                                   QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                                        <local:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
+                                        <local:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"
+                                                                   QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
-                                        <local:QuestionSubmPanelMCM Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
+                                        <local:QuestionSubmPanelMCM Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"
+                                                                    QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
                                     </DataTemplate>
                                 </ItemsControl.Resources>
                             </ItemsControl>
