@@ -17,7 +17,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource add}"
-                      Command="{Binding NewTestCommand}" />
+                      Command="{Binding NewTestCommand}"/>
             <!--
             <MenuItem Header="{DynamicResource save}"
                       Command="{Binding SaveTestCommand}" />
@@ -118,6 +118,9 @@
                             </Grid.ColumnDefinitions>
 
                             <WrapPanel Grid.Column="0">
+                                <WrapPanel.Resources>
+                                    <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
+                                </WrapPanel.Resources>
 
                                 <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
                                        ContentStringFormat="{}{0}."/>

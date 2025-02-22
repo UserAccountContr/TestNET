@@ -35,7 +35,7 @@
         <ScrollViewer>
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="auto"/>
                     <RowDefinition />
                 </Grid.RowDefinitions>
                 <!--
@@ -66,10 +66,20 @@
                 -->
 
                 <StackPanel Grid.Row="0">
-                    <Label ContentStringFormat="Test Name: {0}"
-                       Content="{Binding Test.Name}"/>
+                    <WrapPanel>
+                        <WrapPanel.Resources>
+                            <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
+                        </WrapPanel.Resources>
+                        <Label ContentStringFormat="Test Name: {0}"
+                               Content="{Binding Test.Name}"
+                               MaxWidth="500"/>
+                        <Label ContentStringFormat="Test Code: {0}"
+                               Content="wKgB8Q"
+                               Margin="25 0 0 0"/>
+                    </WrapPanel>
                     <Label ContentStringFormat="Number of questions: {0}"
-                       Content="{Binding Test.Questions.Count}"/>
+                           Content="{Binding Test.Questions.Count}"
+                           Style="{StaticResource MediumLabel}"/>
                 </StackPanel>
                 <StackPanel Grid.Row="1">
                     <Expander Header="{DynamicResource questions}"

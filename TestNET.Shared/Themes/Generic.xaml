@@ -400,9 +400,14 @@
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:LatexLabel Text="{Binding Text}"
-                                          IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                          Margin="3"/>
+                            <WrapPanel><!--
+                                <TextBlock Text="- "
+                                           VerticalAlignment="Center"/>
+                                -->
+                                <local:LatexLabel Text="{Binding Text}"
+                                              IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                              Margin="3"/>
+                            </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -482,9 +487,14 @@
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:LatexLabel Text="{Binding Text}"
-                                              IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                              Margin="3"/>
+                            <WrapPanel><!--
+                                <TextBlock Text="- "
+                                           VerticalAlignment="Center"/>
+                                -->
+                                <local:LatexLabel Text="{Binding Text}"
+                                                  IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
+                                                  Margin="3"/>
+                            </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -1321,7 +1331,9 @@
 
                             <Label Content="{Binding TimeSubmitted}"/>
                             <Label Content="{Binding Points}"/>
-                            
+
+                            <Button Name="RGR_BTN" Content="Re-grade"/>
+
                             <ItemsControl ItemsSource="{Binding Answers.Questions}">
                                 <ItemsControl.Resources>
                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">

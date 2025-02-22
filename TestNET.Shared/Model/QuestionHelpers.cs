@@ -39,4 +39,22 @@ public static class QuestionHelpers
     public static float MaxPoints(this Test t) => t.Questions.Sum(x => x.Points);
 
     public static Test NormalTest(this TeacherTest t) => new (t.Name, new ObservableCollection<Question>(t.Questions.Select(x => x.DeepCopy())));
+
+    public static float Grade(this Submission s)
+    {
+        float msg = 0;
+        if (s.CorrectAnswers == null || s.CorrectAnswers.Questions.Count == 0) return 0;
+        foreach (Question question in s.Answers.Questions)
+        {
+            if (question is ISingleAnswer)
+            {
+                msg += ((ISingleAnswer)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+            }
+            else if (question is IManyAnswers)
+            {
+                msg += ((IManyAnswers)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+            }
+        }
+        return msg;
+    }
 }
