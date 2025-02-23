@@ -14,12 +14,13 @@ public class Submission
 
     public float Points { get; set; }
 
-    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null)
+    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null, string code = "")
     {
         Name = name;
         Answers = answers;
         CorrectAnswers = correctAnswers;
         TimeSubmitted = timesubmitted;
         Points = points;
+        Code = code;
     }
 }

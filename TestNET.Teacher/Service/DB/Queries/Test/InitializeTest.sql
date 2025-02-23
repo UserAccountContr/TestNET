@@ -31,6 +31,7 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Submissions] (
   Username TEXT NOT NULL,
   SubmissionTime TEXT NOT NULL,
   Points FLOAT NOT NULL,
+  ReviewCode TEXT NOT NULL,
 
   PRIMARY KEY (Id)
 );

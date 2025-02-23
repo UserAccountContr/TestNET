@@ -128,6 +128,9 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue(
                     "$Points", submission.Points);
 
+            command.Parameters.AddWithValue(
+                    "$ReviewCode", submission.Code);
+
             command.ExecuteNonQuery();
         }
 
@@ -305,6 +308,7 @@ internal class TestQueries(string dbPath)
                 var username = reader.GetString(1);
                 var submissionTime = reader.GetString(2);
                 var points = reader.GetFloat(3);
+                var code = reader.GetString(4);
 
                 submissions.Add(new Submission(
                     username,
@@ -315,7 +319,8 @@ internal class TestQueries(string dbPath)
                     points,
                     new Test(
                         SelectCurrentName(),
-                        new ObservableCollection<Question>(SelectSubmissionCorrectAnswers(id)))));
+                        new ObservableCollection<Question>(SelectSubmissionCorrectAnswers(id))),
+                    code));
             }
         }
 
