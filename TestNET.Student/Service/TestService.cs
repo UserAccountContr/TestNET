@@ -138,7 +138,7 @@ public class TestService
                 stream.Write([0xff], 0, 1); // Acknowledge
 
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
-                SubmResponse? response = JsonSerializer.Deserialize<SubmResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
+                TestReviewResponse? response = JsonSerializer.Deserialize<TestReviewResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
 
                 if (response.Subm is null)
                 {
@@ -190,9 +190,19 @@ public class TestService
                 stream.Write([0xff], 0, 1); // Acknowledge
 
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
+                SubmissionResponse? response = JsonSerializer.Deserialize<SubmissionResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
 
-                if (responseJson == "OK") return true;
-                else return false;
+                if (response.ReviewCode == "")
+                    return false;
+
+                MessageBox.Show(
+                    $"When the teacher tells you, use this code to check your results:\n{response.ReviewCode}",
+                    "Info",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+
+                return true;
             }
         }
         catch (ArgumentNullException e)

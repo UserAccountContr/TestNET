@@ -23,14 +23,20 @@ public class SubmissionRequest : Request
     public required Submission Submission { get; set; }
 }
 
+public class SubmissionResponse
+{
+    public required string ReviewCode { get; set; }
+}
+
 public class TestResponse
 {
     public required string Error { get; set; }
     public Test? Test { get; set; }
 }
 
-public class SubmResponse
+public class TestReviewResponse
 {
     public required string Error { get; set; }
+    public string ReviewCode { get; set; }
     public Submission? Subm { get; set; }
 }

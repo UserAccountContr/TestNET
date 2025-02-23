@@ -4,6 +4,8 @@ public class Submission
 {
     public string Name { get; set; }
 
+    public string Code { get; set; }
+
     public Test Answers { get; set; }
 
     public Test? CorrectAnswers { get; set; }

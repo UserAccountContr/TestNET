@@ -76,13 +76,26 @@ public class TestService(LogService logService)
         return Convert.ToBase64String(ip_bytes).TrimEnd('=');
     }
 
-    string reviewCode = "";
-
     private string GenerateReviewCode()
     {
-        var rng = new Random();
-        reviewCode = rng.Next(0, 10_000).ToString("0000");
-        return reviewCode;
+        string[] bannedCodes =
+        {
+            "1234",
+            "0000", "1111", "2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999",
+            "8520"
+        };
+
+        string code = "1234";
+
+        do
+        {
+            var rng = new Random();
+            code = rng.Next(0, 10_000).ToString("0000");
+        } while (
+            bannedCodes.Contains(code)
+        );
+
+        return code;
     }
 
     private IPAddress? GetIP()
@@ -132,7 +145,6 @@ public class TestService(LogService logService)
                 //});
 
                 logService.TestLog += $"{EncodeCode(localAddr)}\n";
-                logService.TestLog += $"{GenerateReviewCode()}\n";
 
                 while (true)
                 {
@@ -221,13 +233,14 @@ public class TestService(LogService logService)
         //Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
         logService.TestLog += $"{request.StudentName} connected\n";
 
-        SubmResponse response;
+        TestReviewResponse response;
+        Submission? submission = test.Submissions.Where(x => x.Name == request.StudentName).LastOrDefault();
 
-        if (request.ReviewCode != reviewCode)
+        if (submission is null || (request.ReviewCode != submission.Code))
         {
             response = new()
             {
-                Error = "Wrong review code!",
+                Error = "Wrong credentials.",
                 Subm = null
             };
         }
@@ -235,8 +248,8 @@ public class TestService(LogService logService)
         {
             response = new() 
             { 
-                Error = "", 
-                Subm = test.Submissions.Where(x => x.Name == request.StudentName).FirstOrDefault() 
+                Error = "",
+                Subm = submission
             };
         }
 
@@ -260,12 +273,23 @@ public class TestService(LogService logService)
         Submission temp = request.Submission;
         temp.Points = test.Grade(request.Submission);
         temp.CorrectAnswers = test.NormalTest();                //must be reworked for the nac. krug :)
+        temp.Code = GenerateReviewCode();
 
+        SubmissionResponse response = new() { ReviewCode = temp.Code };
 
-        byte[] responseBytes = Encoding.UTF8.GetBytes("OK");
+        string responseJson = JsonSerializer.Serialize(response);
+        byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
 
         stream.Write(responseBytes, 0, responseBytes.Length);
         stream.Write([0xff], 0, 1);
+
+        byte[] acknowledge = new byte[1];
+        stream.Read(acknowledge, 0, 1);
+
+        if (acknowledge[0] != 0xff)
+        {
+            throw new ArgumentException($"Acknowledge was not 0: {acknowledge[0]}");
+        }
 
         App.Current.Dispatcher.Invoke((Action)delegate
         {
