@@ -1331,6 +1331,7 @@
 
                             <Label Content="{Binding TimeSubmitted}"/>
                             <Label Content="{Binding Points}"/>
+                            <Label Content="{Binding Code}"/>
 
                             <Button Name="RGR_BTN" Content="Re-grade"/>
 
