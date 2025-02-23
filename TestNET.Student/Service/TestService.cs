@@ -30,8 +30,6 @@ public class TestService
     {
         try
         {
-            //int port = 13000;
-
             {
                 this.name = name;
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
@@ -46,7 +44,7 @@ public class TestService
 
                 using NetworkStream stream = client.GetStream();
 
-                TestRequest request = new() { StudentName = name, Code = 13000 };
+                TestRequest request = new() { StudentName = name };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 
@@ -96,8 +94,6 @@ public class TestService
     {
         try
         {
-            //int port = 13000;
-
             {
                 IPAddress endpoint = DecodeCode(code) ?? throw new ArgumentException("Invalid IP.");
                 using var client = new TcpClient();
@@ -110,7 +106,7 @@ public class TestService
 
                 using NetworkStream stream = client.GetStream();
 
-                TestReviewRequest request = new() { StudentName = name, Code = 13000, ReviewCode = revPass };
+                TestReviewRequest request = new() { StudentName = name, ReviewCode = revPass };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
 
