@@ -22,7 +22,7 @@ public partial class TestSolvingViewModel : BaseViewModel
     {
         if (await testService.ReturnTest(Test.DeepCopy()))
         {
-            MessageBox.Show("Test submission was successful.", Title, MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show("Test submission was successful.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             navService.NavigateTo<HomeViewModel>();
         }
     }

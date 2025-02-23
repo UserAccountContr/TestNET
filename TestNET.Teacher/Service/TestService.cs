@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.NetworkInformation;
 
 using TestNET.Teacher.Service.DB;
+using System.Printing;
 
 namespace TestNET.Teacher.Service;
 public class TestService(LogService logService)
@@ -75,6 +76,15 @@ public class TestService(LogService logService)
         return Convert.ToBase64String(ip_bytes).TrimEnd('=');
     }
 
+    string reviewCode = "";
+
+    private string GenerateReviewCode()
+    {
+        var rng = new Random();
+        reviewCode = rng.Next(0, 10_000).ToString("0000");
+        return reviewCode;
+    }
+
     private IPAddress? GetIP()
     {
         var ints = NetworkInterface
@@ -122,6 +132,7 @@ public class TestService(LogService logService)
                 //});
 
                 logService.TestLog += $"{EncodeCode(localAddr)}\n";
+                logService.TestLog += $"{GenerateReviewCode()}\n";
 
                 while (true)
                 {
@@ -210,7 +221,24 @@ public class TestService(LogService logService)
         //Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
         logService.TestLog += $"{request.StudentName} connected\n";
 
-        SubmResponse response = new() { Error = "", Subm = test.Submissions.Where(x=> x.Name == request.StudentName).FirstOrDefault() };
+        SubmResponse response;
+
+        if (request.ReviewCode != reviewCode)
+        {
+            response = new()
+            {
+                Error = "Wrong review code!",
+                Subm = null
+            };
+        }
+        else
+        {
+            response = new() 
+            { 
+                Error = "", 
+                Subm = test.Submissions.Where(x => x.Name == request.StudentName).FirstOrDefault() 
+            };
+        }
 
         string responseJson = JsonSerializer.Serialize(response);
         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
