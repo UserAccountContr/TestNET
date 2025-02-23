@@ -8,13 +8,11 @@ public class Request;
 public class TestRequest : Request
 {
     public required string StudentName { get; set; }
-    public int Code { get; set; }
 }
 
 public class TestReviewRequest : Request
 {
     public required string StudentName { get; set; }
-    public int Code { get; set; }
     public required string ReviewCode { get; set; }
 }
 
