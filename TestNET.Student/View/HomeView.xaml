@@ -9,37 +9,129 @@
     xmlns:sharedserv="clr-namespace:TestNET.Shared.Service;assembly=TestNET.Shared"
 	xmlns:model="clr-namespace:TestNET.Shared.Model;assembly=TestNET.Shared"
 	xmlns:viewmodel="clr-namespace:TestNET.Student.ViewModel" 
+    xmlns:CustomControls="clr-namespace:TestNET.Shared.CustomControls;assembly=TestNET.Shared"
 	d:DataContext="{d:DesignInstance Type=viewmodel:HomeViewModel}"
     mc:Ignorable="d" 
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="720" d:DesignWidth="1280">
 
-    <StackPanel Width="300">
-        <Label Content="{DynamicResource fname}"/>
-        <TextBox Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsEnabled="{Binding IsNotGettingTest}"/>
-
-        <Label Content="{DynamicResource lname}"/>
-        <TextBox Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsEnabled="{Binding IsNotGettingTest}"/>
-
-        <Label Content="{DynamicResource testcode}"/>
-        <TextBox Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                         IsEnabled="{Binding IsNotGettingTest}"/>
-
-
-        <Button Content="Get test"
-                    Command="{Binding GoToTestOverviewCommand}"
-                    IsEnabled="{Binding CanStart}">
-            <Button.Resources>
-                <sharedserv:MultiBindConverter x:Key="Conv"/>
-            </Button.Resources>
-            <Button.CommandParameter>
-                <MultiBinding Converter="{StaticResource Conv}">
-                    <Binding Path="FullName"/>
-                    <Binding Path="Code"/>
-                </MultiBinding>
-            </Button.CommandParameter>
-        </Button>
+    <UserControl.Resources>
+        <Style x:Key="BorderSt" TargetType="Border">
+            <Setter Property="BorderBrush" Value="#FF80c0ff"/>
+            <Setter Property="Background" Value="#FFa0d0ff"/>
+            <Setter Property="BorderThickness" Value="2"/>
+            <Setter Property="CornerRadius" Value="4"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        </Style>
         
-    </StackPanel>
+        <BooleanToVisibilityConverter x:Key="bvc"/>
+    </UserControl.Resources>
+
+    <Border Style="{StaticResource BorderSt}"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+        <StackPanel Width="500"
+                    Margin="20">
+            <Label Content="TestNET" 
+                   FontSize="40"
+                   Margin="0 0 0 30"
+                   HorizontalAlignment="Center"/>
+            <Label Content="{DynamicResource fname}"
+                   Style="{StaticResource MediumLabel}"/>
+            <CustomControls:TemplateTextBox 
+                Text="{Binding FirstName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Placeholder="{StaticResource fname}"
+                IsEnabled="{Binding IsNotGettingTest}"
+                FontSize="14"
+                Margin="0 0 0 5"/>
+
+            <Label Content="{DynamicResource lname}"
+                   Style="{StaticResource MediumLabel}"/>
+            <CustomControls:TemplateTextBox 
+                Text="{Binding LastName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Placeholder="{StaticResource lname}"
+                IsEnabled="{Binding IsNotGettingTest}"
+                FontSize="14"
+                Margin="0 0 0 5"/>
+
+            <Label Content="Review password"
+                   Style="{StaticResource MediumLabel}"
+                   Visibility="{Binding RevMode, Converter={StaticResource bvc}}"/>
+            <CustomControls:TemplateTextBox 
+                Text="{Binding RevPass, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Placeholder="Review password"
+                IsEnabled="{Binding IsNotGettingTest}"
+                FontSize="14"
+                Margin="0 0 0 5"
+                Visibility="{Binding RevMode, Converter={StaticResource bvc}}"/>
+
+            <Label Content="{DynamicResource testcode}"
+                   Style="{StaticResource MediumLabel}"/>
+            <CustomControls:TemplateTextBox 
+                Text="{Binding Code, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Placeholder="{StaticResource testcode}"
+                IsEnabled="{Binding IsNotGettingTest}"
+                FontSize="14"
+                Margin="0 0 0 20"/>
+
+
+            <Button Content="Get test"
+                    Command="{Binding GoToTestOverviewCommand}"
+                    IsEnabled="{Binding CanStart}"
+                    Margin="190 0"
+                    Padding="10"
+                    Visibility="{Binding NotRevMode, Converter={StaticResource bvc}}">
+                <Button.Resources>
+                    <sharedserv:MultiBindConverter x:Key="Conv"/>
+                </Button.Resources>
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource Conv}">
+                        <Binding Path="FullName"/>
+                        <Binding Path="Code"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+
+            <Button Content="Review test"
+                    Command="{Binding GoToSubmReviewCommand}"
+                    IsEnabled="{Binding CanStartReview}"
+                    Margin="190 0"
+                    Padding="10"
+                    Visibility="{Binding RevMode, Converter={StaticResource bvc}}">
+                <Button.Resources>
+                    <sharedserv:MultiBindConverter x:Key="Conv"/>
+                </Button.Resources>
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource Conv}">
+                        <Binding Path="FullName"/>
+                        <Binding Path="Code"/>
+                        <Binding Path="RevPass"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+            <Grid>
+                <WrapPanel HorizontalAlignment="Right"
+                           Visibility="{Binding NotRevMode, Converter={StaticResource bvc}}">
+                    <Label Content="Review submission"
+                           Style="{StaticResource MediumLabel}"/>
+                    <Button Content="&gt;"
+                            Padding="5 0"
+                            IsEnabled="{Binding IsNotGettingTest}"
+                            Command="{Binding EnableRevModeCommand}"/>
+                </WrapPanel>
+
+                <WrapPanel HorizontalAlignment="Left"
+                           Visibility="{Binding RevMode, Converter={StaticResource bvc}}">
+                    <Button Content="&lt;"
+                            Padding="5 0"
+                            IsEnabled="{Binding IsNotGettingTest}"
+                            Command="{Binding DisableRevModeCommand}"/>
+                    <Label Content="Cancel Review"
+                           Style="{StaticResource MediumLabel}"/>
+                </WrapPanel>
+            </Grid>
+            
+        </StackPanel>
+    </Border>
 </UserControl>

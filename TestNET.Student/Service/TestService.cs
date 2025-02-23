@@ -17,7 +17,7 @@ public class TestService
         } 
         catch
         {
-            MessageBox.Show("Invalid Test Code\nНевалиден Код за Тест");
+            MessageBox.Show("Invalid Test Code\nНевалиден Код за Тест", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
 
         return ip;
@@ -40,7 +40,7 @@ public class TestService
 
                 if (!client.ConnectAsync(endpoint.ToString(), 61234).Wait(10_000))
                 {
-                    MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра");
+                    MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
                     throw new ArgumentNullException();
                 }
 
@@ -82,6 +82,69 @@ public class TestService
                 }
 
                 return response.Test;
+            }
+        }
+        catch
+        {
+
+        }
+
+        return null;
+    }
+
+    public async Task<Submission> GetSubm(string name, string code, string revPass)
+    {
+        try
+        {
+            //int port = 13000;
+
+            {
+                IPAddress endpoint = DecodeCode(code) ?? throw new ArgumentException("Invalid IP.");
+                using var client = new TcpClient();
+
+                if (!client.ConnectAsync(endpoint.ToString(), 61234).Wait(10_000))
+                {
+                    MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    throw new ArgumentNullException();
+                }
+
+                using NetworkStream stream = client.GetStream();
+
+                TestReviewRequest request = new() { StudentName = name, Code = 13000, ReviewCode = revPass };
+                string requestJson = JsonSerializer.Serialize(request as Request);
+                byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
+
+                stream.Write(requestBytes, 0, requestBytes.Length);
+                stream.Write([0xff], 0, 1);
+
+                byte[] responseBytes = new byte[1024];
+                int responseLength = 0;
+
+                for (int currentLenght = 0;
+                    (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
+                {
+                    responseLength += currentLenght;
+
+                    if (responseBytes[responseLength - 1] == 0xff)
+                    {
+                        break;
+                    }
+
+                    Array.Resize(ref responseBytes, responseLength + 1024);
+                }
+
+                Array.Resize(ref responseBytes, responseLength - 1);
+
+                stream.Write([0xff], 0, 1); // Acknowledge
+
+                string responseJson = Encoding.UTF8.GetString(responseBytes);
+                SubmResponse? response = JsonSerializer.Deserialize<SubmResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
+
+                if (response.Subm is null)
+                {
+                    MessageBox.Show("Couldn't get submission", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                else return response.Subm;
             }
         }
         catch

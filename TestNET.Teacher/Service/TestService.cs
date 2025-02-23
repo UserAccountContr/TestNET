@@ -153,17 +153,20 @@ public class TestService(LogService logService)
 
                         Request? request = JsonSerializer.Deserialize<Request>(requestJson) ?? throw new ArgumentNullException(nameof(request));
 
-                        if (request is TestRequest testRequest)
+                        switch (request)
                         {
-                            await Task.Run(() => handleTestRequest(testRequest, test, stream));
-                        } 
-                        else if (request is SubmissionRequest submissionRequest)
-                        {
-                            await Task.Run(() => handleSubmissionRequest(submissionRequest, test, stream));
-                        } 
-                        else
-                        {
-                            MessageBox.Show("Something terribly wrong has happened");
+                            case TestRequest testRequest:
+                                await Task.Run(() => handleTestRequest(testRequest, test, stream));
+                                break;
+                            case SubmissionRequest submissionRequest:
+                                await Task.Run(() => handleSubmissionRequest(submissionRequest, test, stream));
+                                break;
+                            case TestReviewRequest testReviewRequest:
+                                await Task.Run(() => handleTestReviewRequest(testReviewRequest, test, stream));
+                                break;
+                            default:
+                                MessageBox.Show("Something terribly wrong has happened", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                break;
                         }
                     }
                 }
@@ -186,6 +189,28 @@ public class TestService(LogService logService)
         logService.TestLog += $"{request.StudentName} connected\n";
 
         TestResponse response = new() { Error = "", Test = test.WithoutAnswers() };
+
+        string responseJson = JsonSerializer.Serialize(response);
+        byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
+
+        stream.Write(responseBytes, 0, responseBytes.Length);
+        stream.Write([0xff], 0, 1);
+
+        byte[] acknowledge = new byte[1];
+        stream.Read(acknowledge, 0, 1);
+
+        if (acknowledge[0] != 0xff)
+        {
+            throw new ArgumentException($"Acknowledge was not 0: {acknowledge[0]}");
+        }
+    }
+
+    public void handleTestReviewRequest(TestReviewRequest request, TeacherTest test, NetworkStream stream)
+    {
+        //Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
+        logService.TestLog += $"{request.StudentName} connected\n";
+
+        SubmResponse response = new() { Error = "", Subm = test.Submissions.Where(x=> x.Name == request.StudentName).FirstOrDefault() };
 
         string responseJson = JsonSerializer.Serialize(response);
         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
