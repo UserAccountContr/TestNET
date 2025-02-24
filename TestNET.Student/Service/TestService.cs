@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Sockets;
-using System.Xml.Linq;
 
 namespace TestNET.Student.Service;
 
@@ -145,7 +144,7 @@ public class TestService
 
                 if (response.Subm is null)
                 {
-                    MessageBox.Show("Couldn't get submission", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show("Couldn't find submission", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else return response.Subm;
             }

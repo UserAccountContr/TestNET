@@ -7,4 +7,13 @@ public partial class LogService : ObservableObject
 
     [ObservableProperty]
     bool submissionsViewable;
+
+    [ObservableProperty]
+    string iPCode;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(TestNotStarted))]
+    bool testStarted = false;
+
+    public bool TestNotStarted => !TestStarted;
 }

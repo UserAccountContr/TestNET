@@ -1,11 +1,10 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Net.NetworkInformation;
-
 using TestNET.Teacher.Service.DB;
-using System.Printing;
 
 namespace TestNET.Teacher.Service;
+
 public class TestService(LogService logService)
 {
     LogService logService = logService;
@@ -124,27 +123,34 @@ public class TestService(LogService logService)
         return null;
     }
 
-    public void ShareTest(TeacherTest test)
+    public void StartSharingTest(TeacherTest test)
+    {
+        try
+        {
+            IPAddress? localAddr = GetIP() ?? throw new Exception("No internet");
+
+            if (localAddr == null) return;
+
+            logService.TestLog += $"Started test server with code {EncodeCode(localAddr)}\n";
+            logService.IPCode = EncodeCode(localAddr);
+            logService.TestStarted = true;
+
+            ShareTest(test, localAddr);
+        }
+        catch (Exception e)
+        {
+            MessageBox.Show(e.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+    }
+
+    public void ShareTest(TeacherTest test, IPAddress localAddr)
     {
         _ = Task.Run(async () =>
         {
             try
             {
-                IPAddress? localAddr = GetIP() ?? throw new Exception("No internet");
-
-                if (localAddr == null) return;
-
-                //localAddr = IPAddress.Parse("192.168.80.146");
-
                 server = new TcpListener(localAddr, 61234);
                 server.Start();
-
-                //Task.Run(() =>
-                //{
-                //    MessageBox.Show($"{EncodeCode(localAddr)}", "Code", MessageBoxButton.OK);
-                //});
-
-                logService.TestLog += $"{EncodeCode(localAddr)}\n";
 
                 while (true)
                 {
@@ -206,6 +212,7 @@ public class TestService(LogService logService)
             finally
             {
                 server?.Stop();
+                logService.TestStarted = false;
             }
         });
     }
@@ -255,7 +262,7 @@ public class TestService(LogService logService)
         logService.TestLog += $"{request.StudentName} connected\n";
 
         TestReviewResponse response;
-        Submission? submission = test.Submissions.Where(x => x.Name == request.StudentName).LastOrDefault();
+        Submission? submission = test.Submissions.Where(x => x.Name == request.StudentName).Where(x => x.Code == request.ReviewCode).LastOrDefault();
 
         /*
          * In order to see your results:
@@ -328,5 +335,6 @@ public class TestService(LogService logService)
     public void StopSharingTest()
     {
         server?.Stop();
+        logService.TestStarted = false;
     }
 }

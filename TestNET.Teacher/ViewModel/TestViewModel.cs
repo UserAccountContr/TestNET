@@ -12,7 +12,7 @@ public partial class TestViewModel : BaseViewModel
         Log = "";
     }
 
-    TestService testService;
+    private TestService testService;
 
     public ShortAnswerQuestion Testq => new ShortAnswerQuestion("",false, new Answer(""),"", 1);
     public LogService LogService { get; }
@@ -27,7 +27,7 @@ public partial class TestViewModel : BaseViewModel
     void ShareTest()
     {
         IsBusy = true;
-        testService.ShareTest(Test);
+        testService.StartSharingTest(Test);
     }
 
     [RelayCommand]

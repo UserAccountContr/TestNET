@@ -32,79 +32,34 @@
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
                 </ListView.ItemContainerStyle>
-                <ListView.Resources>
+                    <ListView.Resources>
 
-                    <sharedserv:IndexConverter x:Key="IndexConverter" />
+                        <sharedserv:IndexConverter x:Key="IndexConverter" />
 
-                    <!--
-                    <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                        <!--
+                        <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                            <CustomControls:QuestionViewPanelSH
+                                QuestionSH="{Binding .}"
+                                ShowAnswers="False"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                        </DataTemplate>
 
-                        <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                      Points="{Binding Points}">
-                            <StackPanel Style="{StaticResource QuestionBody}">
-                                <CustomControls:LatexLabel Text="{Binding Text}"
-                                                           IsMath="{Binding TextIsMath}"
-                                                           Margin="0,0,0,10"/>
+                        <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                            <CustomControls:QuestionViewPanelMC
+                                QuestionMC="{Binding .}"
+                                ShowAnswers="False"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                        </DataTemplate>
 
-                                <TextBox Text="{Binding Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </CustomControls:QuestionPanel>
-                    </DataTemplate>
+                        <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                            <CustomControls:QuestionViewPanelMCM
+                                QuestionMCM="{Binding .}"
+                                ShowAnswers="False"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                        </DataTemplate>
+                        -->
 
-
-                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-
-                        <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                      Points="{Binding Points}">
-                            <StackPanel Style="{StaticResource QuestionBody}">
-                                <CustomControls:LatexLabel Text="{Binding Text}"
-                                                           IsMath="{Binding TextIsMath}"
-                                                           Margin="0,0,0,10"/>
-
-                                <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                              Margin="2">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <RadioButton GroupName="{Binding RelativeSource={RelativeSource AncestorType=ListViewItem}, Path=DataContext.UniqueId}"
-                                                         IsChecked="{Binding IsCorrect}">
-                                                <CustomControls:LatexLabel Text="{Binding Text}"
-                                                                           IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"/>
-                                            </RadioButton>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </CustomControls:QuestionPanel>
-                    </DataTemplate>
-
-
-
-
-
-                    <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
-                        <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                      Points="{Binding Points}">
-                            <StackPanel Style="{StaticResource QuestionBody}">
-                                <CustomControls:LatexLabel Text="{Binding Text}"
-                                                           IsMath="{Binding TextIsMath}"
-                                                           Margin="0,0,0,10"/>
-
-                                <ItemsControl ItemsSource="{Binding PossibleAnswers}"
-                                              Margin="2">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <CheckBox IsChecked="{Binding IsCorrect}">
-                                                <CustomControls:LatexLabel Text="{Binding Text}"
-                                                                           IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"/>
-                                            </CheckBox>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </StackPanel>
-                        </CustomControls:QuestionPanel>
-                    </DataTemplate>
-                    -->
-                </ListView.Resources>
+                    </ListView.Resources>
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
@@ -115,7 +70,7 @@
                         </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
-            </ListView>
+                </ListView>
 
             <Button Content="Submit"
                     Command="{Binding SubmitCommand}"/>
