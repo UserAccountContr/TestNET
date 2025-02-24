@@ -1,1 +1,1 @@
-﻿SELECT QuestionJson FROM [TestNET.Test.Questions];
+﻿SELECT QuestionJson FROM [TestNET.Test.Questions] ORDER BY OrderId ASC;

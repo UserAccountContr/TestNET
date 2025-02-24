@@ -1,10 +1,10 @@
 INSERT INTO [TestNET.Test.Questions] (
 	Id, 
-	QuestionJson
-    --OrderId
+	QuestionJson,
+    OrderId
 )
 VALUES (
 	$Id, 
-	$QuestionJson
-	--$OrderId
+	$QuestionJson,
+	$OrderId
 );
