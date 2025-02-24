@@ -22,6 +22,7 @@ public class Test
 public class TeacherTest : Test
 {
     public ObservableCollection<Submission> Submissions { get; set; } = new();
+    public bool Shuffled { get; set; }
 
     public TeacherTest(string name, ObservableCollection<Question> questions, ObservableCollection<Submission> submissions) : base(name, questions)
     {

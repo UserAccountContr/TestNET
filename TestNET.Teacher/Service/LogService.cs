@@ -4,4 +4,7 @@ public partial class LogService : ObservableObject
 {
     [ObservableProperty]
     string testLog;
+
+    [ObservableProperty]
+    bool submissionsViewable;
 }

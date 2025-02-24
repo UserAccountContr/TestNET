@@ -151,6 +151,10 @@ public class TestService(LogService logService)
                     logService.TestLog += $"Waiting for a connection... \n";
 
                     {
+                        /*
+                         * The server and client communicate with JSON
+                         * messages which are defined in TestNET.Shared/Networking.cs
+                         */
                         using TcpClient client = server.AcceptTcpClient();
                         using NetworkStream stream = client.GetStream();
 
@@ -206,12 +210,29 @@ public class TestService(LogService logService)
         });
     }
 
-    public void handleTestRequest(TestRequest request, Test test, NetworkStream stream)
+    public void handleTestRequest(TestRequest request, TeacherTest test, NetworkStream stream)
     {
         //Task.Run(() => MessageBox.Show($"{request.StudentName} connected with code {request.Code}."));
         logService.TestLog += $"{request.StudentName} connected\n";
 
-        TestResponse response = new() { Error = "", Test = test.WithoutAnswers() };
+        TestResponse response;
+
+        if (false /*test.Submissions.Select(x => x.Name).Contains(request.StudentName)*/)
+        {
+            response = new() { Error = "Already submitted", Test = null };
+        }
+        else
+        {
+            Test studentTest = test.NormalTest().WithoutAnswers();
+
+            if (test.Shuffled)
+            {
+                var rnd = new Random();
+                studentTest.Questions = new ObservableCollection<Question>(studentTest.Questions.OrderBy(item => rnd.Next()));
+            } 
+
+            response = new() { Error = "", Test = studentTest };
+        }
 
         string responseJson = JsonSerializer.Serialize(response);
         byte[] responseBytes = Encoding.UTF8.GetBytes(responseJson);
@@ -236,11 +257,18 @@ public class TestService(LogService logService)
         TestReviewResponse response;
         Submission? submission = test.Submissions.Where(x => x.Name == request.StudentName).LastOrDefault();
 
-        if (submission is null || (request.ReviewCode != submission.Code))
+        /*
+         * In order to see your results:
+         * - The teachers needs to have enabled it
+         * - You need to have submitted smth
+         * - The codes need to match
+         */
+
+        if (!logService.SubmissionsViewable || submission is null || (request.ReviewCode != submission.Code))
         {
             response = new()
             {
-                Error = "Wrong credentials.",
+                Error = "Forbidden",
                 Subm = null
             };
         }

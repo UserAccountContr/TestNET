@@ -74,6 +74,13 @@ public class TestService
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
                 TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
 
+                switch (response.Error)
+                {
+                    case "Already submitted":
+                        MessageBox.Show("You have already sent a submission.\nВече сте подали отговорите си.", "Forbidden", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
+                }
+
                 if (response.Test is null)
                 {
                     throw new ArgumentNullException(response.Error);
