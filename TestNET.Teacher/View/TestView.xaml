@@ -100,16 +100,13 @@
                 </Expander>
                 <Expander Header="Test settings"
                           ExpandDirection="Down">
-                        <StackPanel>
-                            <CheckBox Content="Allow students to view their submissions" 
-                                      IsChecked="{Binding LogService.SubmissionsViewable}"></CheckBox>
+                    <StackPanel>
+                        <CheckBox Content="Allow students to view their submissions" 
+                                      IsChecked="{Binding LogService.SubmissionsViewable}"/>
 
-                            <CheckBox Content="Shuffle test questions"
-                                      IsChecked="{Binding Test.Shuffled}"></CheckBox>
-                        </StackPanel>
-                    </Expander>
-                    <Expander Header="Submissions">
-                        <ListView ItemsSource="{Binding Test.Submissions}"
+                        <CheckBox Content="Shuffle test questions"
+                                      IsChecked="{Binding Test.Shuffled}"/>
+                    </StackPanel>
                 </Expander>
                 <Expander Header="Submissions">
                     <ListView ItemsSource="{Binding Test.Submissions}"

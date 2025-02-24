@@ -262,7 +262,10 @@ public class TestService(LogService logService)
         logService.TestLog += $"{request.StudentName} connected\n";
 
         TestReviewResponse response;
-        Submission? submission = test.Submissions.Where(x => x.Name == request.StudentName).Where(x => x.Code == request.ReviewCode).LastOrDefault();
+        Submission? submission = test.Submissions
+            .Where(x => x.Name == request.StudentName)
+            .Where(x => x.Code == request.ReviewCode)
+            .LastOrDefault();
 
         /*
          * In order to see your results:
