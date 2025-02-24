@@ -94,7 +94,7 @@ internal class TestQueries(string dbPath)
         }
     }
 
-    private void InsertAnswer(long submissionId, Question answer, Question correct)
+    private void InsertAnswer(long submissionId, Question answer, Question correct, int order)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -104,6 +104,7 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue("$Question", answer.UniqueId);
             command.Parameters.AddWithValue("$Answer", JsonSerializer.Serialize(answer));
             command.Parameters.AddWithValue("$Correct", JsonSerializer.Serialize(correct));
+            command.Parameters.AddWithValue("$OrderId", JsonSerializer.Serialize(order));
 
             command.ExecuteNonQuery();
         }
@@ -139,9 +140,10 @@ internal class TestQueries(string dbPath)
         if (submission.CorrectAnswers is null || submission.CorrectAnswers.Questions.Count == 0)
             submission.CorrectAnswers = test.NormalTest();
 
+        int order = 1;
         foreach (var answer in submission.Answers.Questions)
         {
-            InsertAnswer(submissionId, answer, submission.CorrectAnswers.Questions.Where(x=>x.UniqueId == answer.UniqueId).FirstOrDefault());
+            InsertAnswer(submissionId, answer, submission.CorrectAnswers.Questions.Where(x=>x.UniqueId == answer.UniqueId).FirstOrDefault(), order++);
         }
 
         //InsertCorrectAnswers(submission.CorrectAnswers, submissionId);
@@ -180,8 +182,8 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue(
                 "$Id", question.UniqueId);
 
-            //command.Parameters.AddWithValue(
-            //    "$OrderId", order);
+            command.Parameters.AddWithValue(
+                "$OrderId", order);
 
             command.ExecuteNonQuery();
         }
