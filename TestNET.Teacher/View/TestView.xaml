@@ -19,151 +19,73 @@
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource back}"
               Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-              IsEnabled="{Binding IsNotBusy}"/>
+              IsEnabled="{Binding LogService.TestNotStarted}"/>
             <MenuItem Header="{DynamicResource start}"
               Command="{Binding ShareTestCommand}"
-              IsEnabled="{Binding IsNotBusy}"/>
+              IsEnabled="{Binding LogService.TestNotStarted}"/>
             <MenuItem Header="{DynamicResource stop}"
               Command="{Binding StopSharingTestCommand}"
-              IsEnabled="{Binding IsBusy}"/>
+              IsEnabled="{Binding LogService.TestStarted}"/>
             <MenuItem Header="{DynamicResource edit}"
               Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
               CommandParameter="{Binding Test}"
-              IsEnabled="{Binding IsNotBusy}"/>
+              IsEnabled="{Binding LogService.TestNotStarted}"/>
         </Menu>
 
         <ScrollViewer>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-                <!--
-            <WrapPanel Grid.Row="0">
-                
-                <Label Content="Test"
-                       Style="{DynamicResource LargeLabel}"/>
-                <Button Content="{DynamicResource back}" 
-                        Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        IsEnabled="{Binding IsNotBusy}"
-                        Style="{DynamicResource Btn}"/>
-                <Button Content="{DynamicResource start}" 
-                        Command="{Binding ShareTestCommand}"
-                        IsEnabled="{Binding IsNotBusy}"
-                        Style="{DynamicResource Btn}"/>
-                <Button Content="{DynamicResource stop}" 
-                        Command="{Binding StopSharingTestCommand}"
-                        IsEnabled="{Binding IsBusy}"
-                        Style="{DynamicResource Btn}"/>
-                <Button Content="{DynamicResource edit}" 
-                        Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                        CommandParameter="{Binding Test}"
-                        IsEnabled="{Binding IsNotBusy}"
-                        Style="{DynamicResource Btn}"/>
-                
-                
-            </WrapPanel>
-                -->
 
-                <StackPanel Grid.Row="0">
-                    <WrapPanel>
-                        <WrapPanel.Resources>
-                            <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
-                        </WrapPanel.Resources>
-                        <Label ContentStringFormat="Test Name: {0}"
-                               Content="{Binding Test.Name}"
-                               MaxWidth="500"/>
-                        <Label ContentStringFormat="Test Code: {0}"
-                               Content="wKgB8Q"
-                               Margin="25 0 0 0"/>
-                    </WrapPanel>
-                    <Label ContentStringFormat="Number of questions: {0}"
-                           Content="{Binding Test.Questions.Count}"
-                           Style="{StaticResource MediumLabel}"/>
-                </StackPanel>
-                <StackPanel Grid.Row="1">
-                    <Expander Header="{DynamicResource questions}"
+            <StackPanel MaxWidth="1200">
+                <WrapPanel>
+                    <WrapPanel.Resources>
+                        <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
+                        <BooleanToVisibilityConverter x:Key="bvc"/>
+                    </WrapPanel.Resources>
+                    <Label ContentStringFormat="Test Name: {0}"
+                           Content="{Binding Test.Name}"
+                           MaxWidth="500"/>
+                    <Label ContentStringFormat="Test Code: {0}"
+                           Content="{Binding LogService.IPCode}"
+                           Visibility="{Binding LogService.TestStarted, Converter={StaticResource bvc}}"
+                           Margin="25 0 0 0"/>
+                </WrapPanel>
+                <Label ContentStringFormat="Number of questions: {0}"
+                       Content="{Binding Test.Questions.Count}"
+                       Style="{StaticResource MediumLabel}"/>
+                <Expander Header="{DynamicResource questions}"
                           ExpandDirection="Down"
                           IsExpanded="True">
-                        <ListView ItemsSource="{Binding Test.Questions}" 
-                                  HorizontalContentAlignment="Stretch"
-                                  PreviewMouseWheel="ListView_PreviewMouseWheel">
-                            <ListView.Resources>
+                    <ListView ItemsSource="{Binding Test.Questions}" 
+                              HorizontalContentAlignment="Stretch"
+                              PreviewMouseWheel="ListView_PreviewMouseWheel"
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                        <ListView.Resources>
+                            <sharedserv:IndexConverter x:Key="IndexConverter" />
+                            
+                            <!--
 
-                                <sharedserv:IndexConverter x:Key="IndexConverter" />
+                            <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                                <CustomControls:QuestionViewPanelSH
+                                    QuestionSH="{Binding .}"
+                                    ShowAnswers="False"
+                                    QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                            </DataTemplate>
 
-                                <!---
-                                <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                            <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                <CustomControls:QuestionViewPanelMC
+                                    QuestionMC="{Binding .}"
+                                    ShowAnswers="False"
+                                    QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                            </DataTemplate>
 
-                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                                  Points="{Binding Points}">
-                                        <StackPanel Style="{StaticResource QuestionBody}">
+                            <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                                <CustomControls:QuestionViewPanelMCM
+                                    QuestionMCM="{Binding .}"
+                                    ShowAnswers="False"
+                                    QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                            </DataTemplate>
+                            -->
 
-                                            <CustomControls:LatexLabel
-                                                Text="{Binding Text}"
-                                                IsMath="{Binding TextIsMath}"/>
-
-                                            <TextBlock Text="Short answer"/>
-                                        </StackPanel>
-                                    </CustomControls:QuestionPanel>
-                                </DataTemplate>
-
-
-                                <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-
-                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                      Points="{Binding Points}">
-                                        <StackPanel Style="{StaticResource QuestionBody}">
-
-                                            <CustomControls:LatexLabel
-                                                Text="{Binding Text}"
-                                                IsMath="{Binding TextIsMath}"
-                                                Margin="0 0 0 15"/>
-
-                                            <TextBlock Text="Possible answers"/>
-
-                                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <CustomControls:LatexLabel Text="{Binding Text}"
-                                                                                   IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                                   Margin="3"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-
-                                        </StackPanel>
-                                    </CustomControls:QuestionPanel>
-                                </DataTemplate>
-
-
-                                <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
-                                    <CustomControls:QuestionPanel QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                                      Points="{Binding Points}">
-                                        <StackPanel Style="{StaticResource QuestionBody}">
-
-                                            <CustomControls:LatexLabel
-                                                Text="{Binding Text}"
-                                                IsMath="{Binding TextIsMath}"
-                                                Margin="0 0 0 15"/>
-
-                                            <TextBlock Text="Possible answers"/>
-
-                                            <ItemsControl ItemsSource="{Binding PossibleAnswers}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <CustomControls:LatexLabel Text="{Binding Text}"
-                                                                                   IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListViewItem}}, Path=DataContext.TextIsMath}"
-                                                                                   Margin="3"/>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-
-                                        </StackPanel>
-                                    </CustomControls:QuestionPanel>
-                                </DataTemplate>
-                                -->
-                            </ListView.Resources>
+                        </ListView.Resources>
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel>
@@ -174,89 +96,26 @@
                                     </StackPanel>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
-                        </ListView>
-                    </Expander>
-                    <Expander Header="Test settings"
+                    </ListView>
+                </Expander>
+                <Expander Header="Test settings"
                           ExpandDirection="Down">
 
-                    </Expander>
-                    <Expander Header="Submissions">
-                        <ListView ItemsSource="{Binding Test.Submissions}"
+                </Expander>
+                <Expander Header="Submissions">
+                    <ListView ItemsSource="{Binding Test.Submissions}"
                                   PreviewMouseWheel="ListView_PreviewMouseWheel">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <CustomControls:TestSubmPanel Submission="{Binding .}"/>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                            
-                            <!--
-                            <ListView.Resources>
-                                <DataTemplate DataType="{x:Type model:Submission}">
-                                    <Expander Header="{Binding Name}">
-
-                                        <StackPanel>
-                                            <Label Content="{Binding TimeSubmitted}"/>
-                                            <Label Content="{Binding Points}"/>
-                                            <ItemsControl ItemsSource="{Binding Answers.Questions}" >
-                                                <ItemsControl.Resources>
-                                                    <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="100"/>
-                                                                <ColumnDefinition Width="100"/>
-                                                                <ColumnDefinition/>
-                                                            </Grid.ColumnDefinitions>
-
-                                                            <StackPanel Grid.Column="0">
-                                                                <Label Content="{Binding Text}"/>
-                                                            </StackPanel>
-
-                                                            <StackPanel Grid.Column="2">
-                                                                <Label Content="{Binding Answer.Text}"/>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </DataTemplate>
-
-                                                    <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
-                                                        <Grid>
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="100"/>
-                                                                <ColumnDefinition Width="100"/>
-                                                                <ColumnDefinition/>
-                                                            </Grid.ColumnDefinitions>
-
-                                                            <StackPanel Grid.Column="0">
-                                                                <Label Content="{Binding Text}"/>
-                                                            </StackPanel>
-
-                                                            <StackPanel Grid.Column="2">
-                                                                <ItemsControl ItemsSource="{Binding PossibleAnswers}">
-                                                                    <ItemsControl.ItemTemplate>
-                                                                        <DataTemplate>
-                                                                            <RadioButton Content="{Binding Text}"
-                                                                                         IsChecked="{Binding IsCorrect, Mode=OneWay}"
-                                                                                         IsEnabled="False"/>
-                                                                        </DataTemplate>
-                                                                    </ItemsControl.ItemTemplate>
-                                                                </ItemsControl>
-                                                            </StackPanel>
-                                                        </Grid>
-                                                    </DataTemplate>
-                                                </ItemsControl.Resources>
-                                            </ItemsControl>
-                                        </StackPanel>
-                                    </Expander>
-                                </DataTemplate>
-                            </ListView.Resources>
-                            -->
-                            
-                        </ListView>
-                    </Expander>
-                    <Expander Header="Log">
-                        <TextBlock Text="{Binding LogService.TestLog}"/>
-                    </Expander>
-                </StackPanel>
-            </Grid>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <CustomControls:TestSubmPanel Submission="{Binding .}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Expander>
+                <Expander Header="Log">
+                    <TextBlock Text="{Binding LogService.TestLog}"/>
+                </Expander>
+            </StackPanel>
         </ScrollViewer>
     </DockPanel>
 </UserControl>
