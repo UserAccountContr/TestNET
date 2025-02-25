@@ -1161,32 +1161,14 @@
                                                                     Grid.Column="7">
                                                                 <local:LatexLabel Text="\%" IsMath="True"/>
                                                             </Button>
-                                                            <Button Name="R_BTN"
-                                                                    Grid.Row="2"
-                                                                    Grid.Column="8">
-                                                                <local:LatexLabel Text="" IsMath="True"/>
-                                                            </Button>
                                                         </Grid>
-                                                        
-                                                        <Button Name="IN_BTN">
-                                                            <local:LatexLabel Text="\in" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="CUP_BTN">
-                                                            <local:LatexLabel Text="\cup" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="CAP_BTN">
-                                                            <local:LatexLabel Text="\cap" IsMath="True"/>
-                                                        </Button>
-                                                        <Button Name="DEG_BTN">
-                                                            <local:LatexLabel Text="\square^{\circ}" IsMath="True"/>
-                                                        </Button>
                                                     </WrapPanel>
                                                 </TabItem>
 
 
                                                 <TabItem>
                                                     <TabItem.Header>
-                                                        <local:LatexLabel Text="+-\\\times \div" IsMath="True"/>
+                                                        <local:LatexLabel Text="\alpha" IsMath="True"/>
                                                     </TabItem.Header>
                                                     <WrapPanel>
 
@@ -1286,6 +1268,138 @@
                                                                     Grid.Column="2">
                                                                 <local:LatexLabel Text="\Omega" IsMath="True"/>
                                                             </Button>
+
+                                                            <Button Name="veca_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\vec{a}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vecb_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\vec{b}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vecc_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\vec{c}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vec_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="3">
+                                                                <local:LatexLabel Text="\vec{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="perp_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\perp" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="parallel_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="4">
+                                                                <local:LatexLabel Text="\parallel" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="DEG_BTN">
+                                                                <local:LatexLabel Text="\square^{\circ}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="ANG_BTN">
+                                                            <local:LatexLabel Text="\angle" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
+
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <local:LatexLabel Text="\in" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+
+                                                            <Button Name="in_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\in" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="notin_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\not\in" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="ni_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\ni" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="subset_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <local:LatexLabel Text="\subset" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CUP_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\cup" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CAP_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\cap" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SETM_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\setminus" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NOTHING_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <local:LatexLabel Text="\emptyset" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="EXISTS_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\exists" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="EXISTS1_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\exists!" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NEXISTS_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\not\exists" IsMath="True"/>
+                                                            </Button>
                                                         </Grid>
                                                     </WrapPanel>
                                                 </TabItem>
@@ -1381,6 +1495,16 @@
                                                                     Grid.Row="3"
                                                                     Grid.Column="5">
                                                                 <local:LatexLabel Text="\cot" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="sys_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="|" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="cases_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\{" IsMath="True"/>
                                                             </Button>
                                                         </Grid>
                                                     </WrapPanel>
