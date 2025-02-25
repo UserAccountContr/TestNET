@@ -50,6 +50,12 @@ public class IndexDB
 
         foreach (var path in paths)
         {
+            if (!File.Exists(path))
+            {
+                indexQueries.RemoveTest(path);
+                continue;
+            }
+
             tests.Add(new TestDB(path));
         }
 

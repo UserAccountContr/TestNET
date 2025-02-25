@@ -75,23 +75,23 @@ public class TestService(LogService logService)
         return Convert.ToBase64String(ip_bytes).TrimEnd('=');
     }
 
-    private string GenerateReviewCode()
-    {
-        string[] bannedCodes =
-        {
-            "1234",
-            "0000", "1111", "2222", "3333", "4444", "5555", "6666", "7777", "8888", "9999",
-            "8520"
-        };
+    int codeSize = 10_000;
 
-        string code = "1234";
+    private string GenerateReviewCode(List<string> usedCodes)
+    {
+        string code = "0000";
+
+        if (usedCodes.Count > codeSize / 2)
+        {
+            codeSize *= 10;
+        }
 
         do
         {
             var rng = new Random();
-            code = rng.Next(0, 10_000).ToString("0000");
+            code = rng.Next(0, codeSize).ToString(new string('0', (int)Math.Log10(codeSize)));
         } while (
-            bannedCodes.Contains(code)
+            code.Distinct().Count() == 1 || usedCodes.Contains(code)
         );
 
         return code;
@@ -311,7 +311,10 @@ public class TestService(LogService logService)
         Submission temp = request.Submission;
         temp.Points = test.Grade(request.Submission);
         temp.CorrectAnswers = test.NormalTest();                //must be reworked for the nac. krug :)
-        temp.Code = GenerateReviewCode();
+
+        var usedCodes = test.Submissions.Select(x => x.Code).ToList();
+        
+        temp.Code = GenerateReviewCode(usedCodes);
 
         SubmissionResponse response = new() { ReviewCode = temp.Code };
 
