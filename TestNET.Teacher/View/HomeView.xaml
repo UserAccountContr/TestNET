@@ -26,8 +26,8 @@
             -->
             <MenuItem Header="{DynamicResource import}"
                       Command="{Binding ImportTestCommand}" />
-            <MenuItem Header="Settings">
-                <MenuItem Header="Language">
+            <MenuItem Header="{DynamicResource settings}">
+                <MenuItem Header="{DynamicResource language}">
 
                     <MenuItem.Resources>
                         <RadioButton x:Key="RadioButtonResource" 
@@ -44,7 +44,7 @@
                         </Style>
                     </MenuItem.ItemContainerStyle>
 
-                    <MenuItem Header="BG"
+                    <MenuItem Header="БГ"
                               Command="{Binding SetLangCommand}"
                               CommandParameter="bg"/>
                     <MenuItem Header="EN"

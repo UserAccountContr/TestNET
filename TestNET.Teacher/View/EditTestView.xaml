@@ -19,19 +19,19 @@
 
         <Menu DockPanel.Dock="Top">
             <!--Grid.Column="4"-->
-            <MenuItem Header="Back"
+            <MenuItem Header="{DynamicResource back}"
                               Command="{Binding BackCommand}"/>
-            <MenuItem Header="Add question">
-                <MenuItem Header="Short answer"
+            <MenuItem Header="{DynamicResource addQuestion}">
+                <MenuItem Header="{DynamicResource shortAnswer}"
                                   Command="{Binding AddSAQuestionCommand}" />
-                <MenuItem Header="Multiple choice"
+                <MenuItem Header="{DynamicResource multipleChoice}"
                                   Command="{Binding AddMCQuestionCommand}" />
-                <MenuItem Header="Multiple choice (Many correct)"
+                <MenuItem Header="{DynamicResource multipleChoiceManyCorrect}"
                                   Command="{Binding AddMCMQuestionCommand}" />
             </MenuItem>
-            <MenuItem Header="Save"
+            <MenuItem Header="{DynamicResource save}"
                               Command="{Binding SaveCommand}"/>
-            <MenuItem Header="Cancel"
+            <MenuItem Header="{DynamicResource cancel}"
                               Command="{Binding CancelCommand}"/>
         </Menu>
 
@@ -66,7 +66,7 @@
                 </Grid>
                 -->
                 <WrapPanel Grid.Row="0">
-                    <Label Content="Test Name: "/>
+                    <Label Content="{DynamicResource testName}"/>
                     <TextBox Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Grid.Row="1"
                          VerticalContentAlignment="Center"

@@ -78,7 +78,7 @@
                                     <Label.Content>
                                         <WrapPanel>
                                             <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=DataContext.Points}"/>
-                                            <TextBlock Text=" Pts."/>
+                                            <TextBlock Text="{DynamicResource points}"/>
                                         </WrapPanel>
                                     </Label.Content>
                                 </Label>
@@ -156,7 +156,7 @@
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel HorizontalAlignment="Stretch">
-                    <Label Content="Pts:"/>
+                    <Label Content="{DynamicResource points}"/>
                     <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                              MinWidth="30"/>
                 </WrapPanel>
@@ -226,7 +226,7 @@
                             Margin="15 5"/>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Content="Pts:"/>
+                    <Label Content="{DynamicResource points}"/>
                     <TextBox Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                              MinWidth="30"/>
                 </WrapPanel>
@@ -403,7 +403,7 @@
                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0 0 0 15"/>
 
-                <TextBlock Text="Possible answers"/>
+                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -436,7 +436,7 @@
                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0 0 0 15"/>
 
-                <TextBlock Text="Possible answers"/>
+                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
                               Margin="2">
@@ -490,7 +490,7 @@
                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                     Margin="0 0 0 15"/>
 
-                <TextBlock Text="Possible answers"/>
+                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -523,7 +523,7 @@
                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0 0 0 15"/>
 
-                <TextBlock Text="Possible answers"/>
+                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
                               Margin="2">
