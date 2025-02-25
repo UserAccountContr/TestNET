@@ -23,7 +23,7 @@ public class TestDB
         testQueries.BeginTransaction();
 
         testQueries.DeleteTest();
-        testQueries.InsertMeta(test.Name, DateTime.Now);
+        testQueries.InsertMeta(test.Name, DateTime.Now, test.Shuffled);
 
         int i = 1;
         foreach (var question in test.Questions)
@@ -42,12 +42,14 @@ public class TestDB
     public TeacherTest Load()
     {
         var name = testQueries.SelectCurrentName();
+        var shuffled = testQueries.SelectShuffled();
         var questions = testQueries.SelectQuestions();
         var submissions = testQueries.SelectSubmissions();
 
         return new TeacherTest(
             name, 
             new ObservableCollection<Question>(questions),
-            new ObservableCollection<Submission>(submissions));
+            new ObservableCollection<Submission>(submissions),
+            shuffled);
     }
 }

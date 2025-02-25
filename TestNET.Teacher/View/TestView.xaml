@@ -105,6 +105,7 @@
                                       IsChecked="{Binding LogService.SubmissionsViewable}"/>
 
                         <CheckBox Content="Shuffle test questions"
+                                      IsEnabled="{Binding LogService.TestNotStarted}"
                                       IsChecked="{Binding Test.Shuffled}"/>
                     </StackPanel>
                 </Expander>

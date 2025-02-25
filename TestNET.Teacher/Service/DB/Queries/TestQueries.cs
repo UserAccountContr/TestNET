@@ -153,7 +153,7 @@ internal class TestQueries(string dbPath)
     private CachedQuery insertMetaQuery = new(Path.Combine(AppContext.BaseDirectory, "Resources", "InsertMeta"));
     private string InsertMetaQuery => insertMetaQuery.Value; */
 
-    public void InsertMeta(string name, DateTime lastChanged)
+    public void InsertMeta(string name, DateTime lastChanged, bool shuffled)
     {
         using (var command = Connection.CreateCommand())
         {
@@ -161,6 +161,7 @@ internal class TestQueries(string dbPath)
 
             command.Parameters.AddWithValue("$Name", name);
             command.Parameters.AddWithValue("$LastChanged", lastChanged.ToString("U"));
+            command.Parameters.AddWithValue("$Shuffled", shuffled);
 
             command.ExecuteNonQuery();
         }
@@ -203,6 +204,19 @@ internal class TestQueries(string dbPath)
             throw new NullReferenceException(
                 "The DB returned null when querying the Name of the Test."
             ));
+        }
+    }
+
+    public bool SelectShuffled()
+    {
+        using (var command = Connection.CreateCommand())
+        {
+            command.CommandText = GetEmbeddedResource("SelectShuffled.sql");
+
+            return Convert.ToBoolean((long)(command.ExecuteScalar() ??
+            throw new NullReferenceException(
+                "The DB returned null when querying the Name of the Test."
+            )));
         }
     }
 
