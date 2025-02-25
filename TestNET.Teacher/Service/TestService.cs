@@ -274,11 +274,19 @@ public class TestService(LogService logService)
          * - The codes need to match
          */
 
-        if (!logService.SubmissionsViewable || submission is null || (request.ReviewCode != submission.Code))
+        if (!logService.SubmissionsViewable)
         {
             response = new()
             {
-                Error = "Forbidden",
+                Error = "Teacher has not allowed viewing tests yet",
+                Subm = null
+            };
+        }
+        else if (submission is null || (request.ReviewCode != submission.Code))
+        {
+            response = new()
+            {
+                Error = "Invalid credentials",
                 Subm = null
             };
         }

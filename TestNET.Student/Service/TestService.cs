@@ -142,11 +142,17 @@ public class TestService
                 string responseJson = Encoding.UTF8.GetString(responseBytes);
                 TestReviewResponse? response = JsonSerializer.Deserialize<TestReviewResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
 
-                if (response.Subm is null)
+                switch (response.Error)
                 {
-                    MessageBox.Show("Couldn't find submission", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    case "Teacher has not allowed viewing tests yet":
+                        MessageBox.Show("Cannot review test now.", "Review", MessageBoxButton.OK, MessageBoxImage.Information);
+                        break;
+                    case "Invalid credentials":
+                        MessageBox.Show("Invalid credentials.", "Review", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
                 }
-                else return response.Subm;
+
+                return response.Subm;
             }
         }
         catch
