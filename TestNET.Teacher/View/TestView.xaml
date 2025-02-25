@@ -40,15 +40,15 @@
                         <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
                         <BooleanToVisibilityConverter x:Key="bvc"/>
                     </WrapPanel.Resources>
-                    <Label ContentStringFormat="Test Name: {0}"
+                    <Label ContentStringFormat="{DynamicResource testNameView}"
                            Content="{Binding Test.Name}"
                            MaxWidth="500"/>
-                    <Label ContentStringFormat="Test Code: {0}"
+                    <Label ContentStringFormat="{DynamicResource testCodeView}"
                            Content="{Binding LogService.IPCode}"
                            Visibility="{Binding LogService.TestStarted, Converter={StaticResource bvc}}"
                            Margin="25 0 0 0"/>
                 </WrapPanel>
-                <Label ContentStringFormat="Number of questions: {0}"
+                <Label ContentStringFormat="{DynamicResource testNumberQuestions}"
                        Content="{Binding Test.Questions.Count}"
                        Style="{StaticResource MediumLabel}"/>
                 <Expander Header="{DynamicResource questions}"
@@ -98,17 +98,18 @@
                             </ListView.ItemTemplate>
                     </ListView>
                 </Expander>
-                <Expander Header="Test settings"
+                <Expander Header="{DynamicResource testSettings}"
                           ExpandDirection="Down">
                     <StackPanel>
-                        <CheckBox Content="Allow students to view their submissions" 
+                        <CheckBox Content="{DynamicResource testAllowReviewing}" 
                                       IsChecked="{Binding LogService.SubmissionsViewable}"/>
 
-                        <CheckBox Content="Shuffle test questions"
+                        <CheckBox Content="{DynamicResource testShuffle}"
+                                      IsEnabled="{Binding LogService.TestNotStarted}"
                                       IsChecked="{Binding Test.Shuffled}"/>
                     </StackPanel>
                 </Expander>
-                <Expander Header="Submissions">
+                <Expander Header="{DynamicResource testSubmissions}">
                     <ListView ItemsSource="{Binding Test.Submissions}"
                                   PreviewMouseWheel="ListView_PreviewMouseWheel">
                         <ListView.ItemTemplate>
@@ -118,7 +119,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </Expander>
-                <Expander Header="Log">
+                <Expander Header="{DynamicResource testLog}">
                     <TextBlock Text="{Binding LogService.TestLog}"/>
                 </Expander>
             </StackPanel>

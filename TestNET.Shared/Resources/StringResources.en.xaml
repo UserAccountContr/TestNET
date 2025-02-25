@@ -19,4 +19,25 @@
     <system:String x:Key="lname">Last name</system:String>
     <system:String x:Key="testcode">Test code</system:String>
     <system:String x:Key="notext">No text entered</system:String>
+    <system:String x:Key="settings">Settings</system:String>
+    <system:String x:Key="language">Language</system:String>
+    <system:String x:Key="testName">Test Name:</system:String>
+    <system:String x:Key="testNameView">Test Name: {0}</system:String>
+    
+    <system:String x:Key="testCodeView">Test Code: {0}</system:String>
+    <system:String x:Key="testNumberQuestions">Number of questions: {0}</system:String>
+    <system:String x:Key="testSettings">Test settings</system:String>
+    <system:String x:Key="testSubmissions">Submissions</system:String>
+    <system:String x:Key="testLog">Log</system:String>
+
+    <system:String x:Key="testShuffle">Shuffle test questions</system:String>
+    <system:String x:Key="testAllowReviewing">Allow viewing submissions</system:String>
+    <system:String x:Key="possibleAnswers">Possible answers</system:String>
+    <system:String x:Key="points"> Points</system:String>
+
+    <system:String x:Key="addQuestion">Add question</system:String>
+
+    <system:String x:Key="shortAnswer">Short answer</system:String>
+    <system:String x:Key="multipleChoice">Multiple choice</system:String>
+    <system:String x:Key="multipleChoiceManyCorrect">Multiple choice (Many correct)</system:String>
 </ResourceDictionary>

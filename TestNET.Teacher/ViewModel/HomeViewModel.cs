@@ -20,7 +20,7 @@ public partial class HomeViewModel : BaseViewModel
     [RelayCommand]
     void NewTest()
     {
-        Tests.Add(new TeacherTest("New test", new(), new()));
+        Tests.Add(new TeacherTest("New test", new(), new(), false));
         Navigation.NavigateTo<EditTestViewModel, Test>(Tests[^1]);
     }
 

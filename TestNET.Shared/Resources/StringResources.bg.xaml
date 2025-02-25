@@ -19,4 +19,25 @@
     <system:String x:Key="lname">Фамилия</system:String>
     <system:String x:Key="testcode">Код на теста</system:String>
     <system:String x:Key="notext">Не е въведен текст</system:String>
+    <system:String x:Key="settings">Настройки</system:String>
+    <system:String x:Key="language">Език</system:String>
+    <system:String x:Key="testName">Име на теста:</system:String>
+    <system:String x:Key="testNameView">Име на теста: {0}</system:String>
+
+    <system:String x:Key="testCodeView">Код на теста: {0}</system:String>
+    <system:String x:Key="testNumberQuestions">Брой въпроси: {0}</system:String>
+    <system:String x:Key="testSettings">Настройки на теста</system:String>
+    <system:String x:Key="testSubmissions">Подадени отговори</system:String>
+    <system:String x:Key="testLog">Записи</system:String>
+
+    <system:String x:Key="testShuffle">Размести въпросите на теста</system:String>
+    <system:String x:Key="testAllowReviewing">Разреши преглед на резултати</system:String>
+    <system:String x:Key="possibleAnswers">Възможни отговори</system:String>
+    <system:String x:Key="points"> Точки</system:String>
+
+    <system:String x:Key="addQuestion">Добави въпрос</system:String>
+
+    <system:String x:Key="shortAnswer">Кратък отворен отговор</system:String>
+    <system:String x:Key="multipleChoice">Избираем отговор</system:String>
+    <system:String x:Key="multipleChoiceManyCorrect">Избираем отговор (Множество верни)</system:String>
 </ResourceDictionary>
