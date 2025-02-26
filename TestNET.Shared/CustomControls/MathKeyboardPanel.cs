@@ -51,6 +51,16 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = NUM7_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = NUM8_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = NUM9_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = SBR_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = SQBR_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = CBR_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = PIPE_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Pi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = pi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = POWERSND_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = POWER_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = INDEX_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = PROC_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new LatexConfiguration();
@@ -79,6 +89,7 @@ public class MathKeyboardPanel : Control
     private const string vecb_BTN_NAME = "vecb_BTN";
     private const string vecc_BTN_NAME = "vecc_BTN";
     private const string vec_BTN_NAME = "vec_BTN";
+    private const string Pi_BTN_NAME = "Pi_BTN";
     private const string pi_BTN_NAME = "pi_BTN";
     private const string IN_BTN_NAME = "IN_BTN";
     private const string sys_BTN_NAME = "sys_BTN";
@@ -103,6 +114,14 @@ public class MathKeyboardPanel : Control
     private const string NUM7_BTN_NAME = "NUM7_BTN";
     private const string NUM8_BTN_NAME = "NUM8_BTN";
     private const string NUM9_BTN_NAME = "NUM9_BTN";
+    private const string SBR_BTN_NAME = "SBR_BTN";
+    private const string SQBR_BTN_NAME = "SQBR_BTN";
+    private const string CBR_BTN_NAME = "CBR_BTN";
+    private const string PIPE_BTN_NAME = "PIPE_BTN";
+    private const string POWERSND_BTN_NAME = "POWERSND_BTN";
+    private const string POWER_BTN_NAME = "POWER_BTN";
+    private const string INDEX_BTN_NAME = "INDEX_BTN";
+    private const string PROC_BTN_NAME = "PROC_BTN";
 
     private Grid _grid;
     private CheckBox _toggle;
@@ -128,6 +147,7 @@ public class MathKeyboardPanel : Control
     private Button _veccbtn;
     private Button _vecbtn;
     private Button _pibtn;
+    private Button _pibtn2;
     private Button _inbtn;
     private Button _sysbtn;
     private Button _casesbtn;
@@ -151,6 +171,14 @@ public class MathKeyboardPanel : Control
     private Button _numtimesbtn;
     private Button _numdividebtn;
     private Button _numeqbtn;
+    private Button _sbrbtn;
+    private Button _sqbrbtn;
+    private Button _cbrbtn;
+    private Button _pipebtn;
+    private Button _powersndbtn;
+    private Button _powerbtn;
+    private Button _indexbtn;
+    private Button _procbtn;
 
     #region Properties
 
@@ -371,7 +399,7 @@ public class MathKeyboardPanel : Control
             _fracbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(GetFractionNode());
+                keyboardMemory.InsertWithEncapsulateCurrent(GetFractionNode());
                 await DisplayResultAsync();
             };
         }
@@ -596,6 +624,92 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _sbrbtn = Template.FindName(SBR_BTN_NAME, this) as Button;
+        if (_sbrbtn is not null)
+        {
+            _sbrbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new RoundBracketsNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _sqbrbtn = Template.FindName(SQBR_BTN_NAME, this) as Button;
+        if (_sqbrbtn is not null) {
+            _sqbrbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetSquareBracketsNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _cbrbtn = Template.FindName(CBR_BTN_NAME, this) as Button;
+        if (_cbrbtn is not null)
+        {
+            _cbrbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetCurlyBracketsNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _pipebtn = Template.FindName(PIPE_BTN_NAME, this) as Button;
+        if (_pipebtn is not null)
+        {
+            _pipebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetPipesNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _powersndbtn = Template.FindName(POWERSND_BTN_NAME, this) as Button;
+        if (_powersndbtn is not null) {
+            _powersndbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.InsertWithEncapsulateCurrent(GetPowerNode());
+                keyboardMemory.Insert(new DigitNode(@"2"));
+                MoveRight();
+                await DisplayResultAsync();
+            };
+        }
+
+        _powerbtn = Template.FindName(POWER_BTN_NAME, this) as Button;
+        if (_powerbtn is not null)
+        {
+            _powerbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.InsertWithEncapsulateCurrent(GetPowerNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _indexbtn = Template.FindName(INDEX_BTN_NAME, this) as Button;
+        if (_indexbtn is not null) {
+            _indexbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.InsertWithEncapsulateCurrent(GetSubscriptNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _procbtn = Template.FindName(PROC_BTN_NAME, this) as Button;
+        if (_procbtn is not null) {
+            _procbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode("%"));
+                await DisplayResultAsync();
+            };
+        }
+
         //_nlbtn = Template.FindName(NEWLINE_BTN_NAME, this) as Button;
         //if (_nlbtn is not null)
         //{
@@ -770,6 +884,17 @@ public class MathKeyboardPanel : Control
         if (_pibtn is not null)
         {
             _pibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\pi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _pibtn2 = Template.FindName(Pi_BTN_NAME, this) as Button;
+        if (_pibtn2 is not null)
+        {
+            _pibtn2.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(new StandardLeafNode(@"\pi"));
@@ -1323,14 +1448,14 @@ public class MathKeyboardPanel : Control
             TreeNode treeNode = (keyboardMemory.Current is Placeholder) ? pl.Nodes.FirstOrDefault() : pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
             if (treeNode?.GetViewModeLatex(latexConfiguration) == @"}")
             {
-                if (pl.Nodes.FirstAfterOrDefault(treeNode).GetViewModeLatex(latexConfiguration) == @"\right.")
+                if (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\right.")
                 {
                     keyboardMemory.MoveRight();
                 }
             }
             else if (treeNode?.GetViewModeLatex(latexConfiguration) == @"\left|" || treeNode?.GetViewModeLatex(latexConfiguration) == @"\left\{")
             {
-                if (pl.Nodes.FirstAfterOrDefault(treeNode).GetViewModeLatex(latexConfiguration) == @"{")
+                if (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"{")
                 {
                     keyboardMemory.MoveRight();
                 }
@@ -1355,8 +1480,8 @@ public class MathKeyboardPanel : Control
             }
             else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == "{")
             {
-                string temp = (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current).GetViewModeLatex(latexConfiguration);
-                if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current).GetViewModeLatex(latexConfiguration) == "}")
+                string temp = (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration);
+                if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
                 {
                     keyboardMemory.DeleteLeft();
                     keyboardMemory.DeleteLeft();
