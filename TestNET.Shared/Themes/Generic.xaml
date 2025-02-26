@@ -226,7 +226,7 @@
                             Margin="15 5"/>
                 </WrapPanel>
                 <WrapPanel>
-                    <Label Content="{DynamicResource points}"/>
+                    <Label Content="{DynamicResource pointsFull}"/>
                     <TextBox Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                              MinWidth="30"/>
                 </WrapPanel>
