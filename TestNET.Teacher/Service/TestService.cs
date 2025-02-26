@@ -49,17 +49,6 @@ public class TestService(LogService logService)
         var testDB = new TestDB(path);
         var test = testDB.Load();
 
-        var importedPath = Path.Combine(Directory.GetCurrentDirectory(), Path.GetFileName(test.Name));
-
-        try
-        {
-            File.Copy(path, importedPath);
-        }
-        catch (IOException)
-        {
-
-        }
-
         var index = new IndexDB();
         index.Add(test);
 

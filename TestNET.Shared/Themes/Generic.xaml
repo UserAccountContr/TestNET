@@ -156,7 +156,7 @@
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel HorizontalAlignment="Stretch">
-                    <Label Content="{DynamicResource points}"/>
+                    <Label Content="{DynamicResource pointsFull}"/>
                     <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                              MinWidth="30"/>
                 </WrapPanel>
