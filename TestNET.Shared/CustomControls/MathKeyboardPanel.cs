@@ -776,7 +776,7 @@ public class MathKeyboardPanel : Control
             _numdividebtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(new StandardLeafNode(@"\div"));
+                keyboardMemory.Insert(new StandardLeafNode(@":"));
                 await DisplayResultAsync();
             };
         }
