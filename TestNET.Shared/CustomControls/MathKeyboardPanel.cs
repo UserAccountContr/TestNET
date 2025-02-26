@@ -29,6 +29,15 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = vecc_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = vec_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = IN_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NOTIN_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NI_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = SUBSET_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = SETM_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NOTHING_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = EXISTS_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = FORALL_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NEXISTS_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = EXISTS1_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = sys_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = cases_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = NUMGT_BTN_NAME, Type = typeof(Button))]
@@ -61,6 +70,53 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = POWER_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = INDEX_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = PROC_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = alpha_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Alpha_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = beta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Beta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = gamma_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Gamma_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = delta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Delta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = epsilon_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Epsilon_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = zeta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Zeta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = eta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Eta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = theta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Theta_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = iota_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Iota_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = kappa_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Kappa_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = lambda_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Lambda_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = mu_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Mu_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = nu_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Nu_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = xi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Xi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = rho_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Rho_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = sigma_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Sigma_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = tau_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Tau_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = upsilon_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Upsilon_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = phi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Phi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = chi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Chi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = psi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Psi_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = omega_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Omega_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = perp_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = parallel_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = ang_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -91,7 +147,16 @@ public class MathKeyboardPanel : Control
     private const string vec_BTN_NAME = "vec_BTN";
     private const string Pi_BTN_NAME = "Pi_BTN";
     private const string pi_BTN_NAME = "pi_BTN";
-    private const string IN_BTN_NAME = "IN_BTN";
+    private const string IN_BTN_NAME = "in_BTN";
+    private const string NOTIN_BTN_NAME = "notin_BTN";
+    private const string NI_BTN_NAME = "ni_BTN";
+    private const string SUBSET_BTN_NAME = "subset_BTN";
+    private const string SETM_BTN_NAME = "SETM_BTN";
+    private const string NOTHING_BTN_NAME = "NOTHING_BTN";
+    private const string EXISTS_BTN_NAME = "EXISTS_BTN";
+    private const string FORALL_BTN_NAME = "FORALL_BTN";
+    private const string NEXISTS_BTN_NAME = "NEXISTS_BTN";
+    private const string EXISTS1_BTN_NAME = "EXISTS1_BTN";
     private const string sys_BTN_NAME = "sys_BTN";
     private const string cases_BTN_NAME = "cases_BTN";
     private const string NUMGT_BTN_NAME = "NUMGT_BTN";
@@ -122,7 +187,54 @@ public class MathKeyboardPanel : Control
     private const string POWER_BTN_NAME = "POWER_BTN";
     private const string INDEX_BTN_NAME = "INDEX_BTN";
     private const string PROC_BTN_NAME = "PROC_BTN";
-
+    private const string alpha_BTN_NAME = "alpha_BTN";
+    private const string Alpha_BTN_NAME = "Alpha_BTN";
+    private const string beta_BTN_NAME = "beta_BTN";
+    private const string Beta_BTN_NAME = "Beta_BTN";
+    private const string gamma_BTN_NAME = "gamma_BTN";
+    private const string Gamma_BTN_NAME = "Gamma_BTN";
+    private const string delta_BTN_NAME = "delta_BTN";
+    private const string Delta_BTN_NAME = "Delta_BTN";
+    private const string epsilon_BTN_NAME = "epsilon_BTN";
+    private const string Epsilon_BTN_NAME = "Epsilon_BTN";
+    private const string zeta_BTN_NAME = "zeta_BTN";
+    private const string Zeta_BTN_NAME = "Zeta_BTN";
+    private const string eta_BTN_NAME = "eta_BTN";
+    private const string Eta_BTN_NAME = "Eta_BTN";
+    private const string theta_BTN_NAME = "theta_BTN";
+    private const string Theta_BTN_NAME = "Theta_BTN";
+    private const string iota_BTN_NAME = "iota_BTN";
+    private const string Iota_BTN_NAME = "Iota_BTN";
+    private const string kappa_BTN_NAME = "kappa_BTN";
+    private const string Kappa_BTN_NAME = "Kappa_BTN";
+    private const string lambda_BTN_NAME = "lambda_BTN";
+    private const string Lambda_BTN_NAME = "Lambda_BTN";
+    private const string mu_BTN_NAME = "mu_BTN";
+    private const string Mu_BTN_NAME = "Mu_BTN";
+    private const string nu_BTN_NAME = "nu_BTN";
+    private const string Nu_BTN_NAME = "Nu_BTN";
+    private const string xi_BTN_NAME = "xi_BTN";
+    private const string Xi_BTN_NAME = "Xi_BTN";
+    private const string rho_BTN_NAME = "rho_BTN";
+    private const string Rho_BTN_NAME = "Rho_BTN";
+    private const string sigma_BTN_NAME = "sigma_BTN";
+    private const string Sigma_BTN_NAME = "Sigma_BTN";
+    private const string tau_BTN_NAME = "tau_BTN";
+    private const string Tau_BTN_NAME = "Tau_BTN";
+    private const string upsilon_BTN_NAME = "upsilon_BTN";
+    private const string Upsilon_BTN_NAME = "Upsilon_BTN";
+    private const string phi_BTN_NAME = "phi_BTN";
+    private const string Phi_BTN_NAME = "Phi_BTN";
+    private const string chi_BTN_NAME = "chi_BTN";
+    private const string Chi_BTN_NAME = "Chi_BTN";
+    private const string psi_BTN_NAME = "psi_BTN";
+    private const string Psi_BTN_NAME = "Psi_BTN";
+    private const string omega_BTN_NAME = "omega_BTN";
+    private const string Omega_BTN_NAME = "Omega_BTN";
+    private const string perp_BTN_NAME = "perp_BTN";
+    private const string parallel_BTN_NAME = "parallel_BTN";
+    private const string ang_BTN_NAME = "ANG_BTN";
+    
     private Grid? _grid;
     private CheckBox? _toggle;
     private Button? _savebtn;
@@ -149,6 +261,15 @@ public class MathKeyboardPanel : Control
     private Button? _pibtn;
     private Button? _pibtn2;
     private Button? _inbtn;
+    private Button? _notinbtn;
+    private Button? _nibtn;
+    private Button? _subsetbtn;
+    private Button? _setmbtn;
+    private Button? _nothingbtn;
+    private Button? _existsbtn;
+    private Button? _forallbtn;
+    private Button? _nexistsbtn;
+    private Button? _exists1btn;
     private Button? _sysbtn;
     private Button? _casesbtn;
     private Button? _num0btn;
@@ -179,6 +300,53 @@ public class MathKeyboardPanel : Control
     private Button? _powerbtn;
     private Button? _indexbtn;
     private Button? _procbtn;
+    private Button? _alphabtn;
+    private Button? _Alphabtn;
+    private Button? _betabtn;
+    private Button? _Betabtn;
+    private Button? _gammabtn;
+    private Button? _Gammabtn;
+    private Button? _deltabtn;
+    private Button? _Deltabtn;
+    private Button? _epsilonbtn;
+    private Button? _Epsilonbtn;
+    private Button? _zetabtn;
+    private Button? _Zetabtn;
+    private Button? _etabtn;
+    private Button? _Etabtn;
+    private Button? _thetabtn;
+    private Button? _Thetabtn;
+    private Button? _iotabtn;
+    private Button? _Iotabtn;
+    private Button? _kappabtn;
+    private Button? _Kappabtn;
+    private Button? _lambdabtn;
+    private Button? _Lambdabtn;
+    private Button? _mubtn;
+    private Button? _Mubtn;
+    private Button? _nubtn;
+    private Button? _Nubtn;
+    private Button? _xibtn;
+    private Button? _Xibtn;
+    private Button? _rhobtn;
+    private Button? _Rhobtn;
+    private Button? _sigmabtn;
+    private Button? _Sigmabtn;
+    private Button? _taubtn;
+    private Button? _Taubtn;
+    private Button? _upsilonbtn;
+    private Button? _Upsilonbtn;
+    private Button? _phibtn;
+    private Button? _Phibtn;
+    private Button? _chibtn;
+    private Button? _Chibtn;
+    private Button? _psibtn;
+    private Button? _Psibtn;
+    private Button? _omegabtn;
+    private Button? _Omegabtn;
+    private Button? _perpbtn;
+    private Button? _parallelbtn;
+    private Button? _angbtn;
 
     #region Properties
 
@@ -346,7 +514,7 @@ public class MathKeyboardPanel : Control
             _grid.MouseUp += (s, e) => _grid.Focus();
             _grid.LostKeyboardFocus += (s, e) =>
             {
-                if (!IsMouseOver && IsOpen)
+                if (!IsMouseOver && IsOpen && e.NewFocus != null)
                 {
                     if (Text != TempText)
                     {
@@ -361,7 +529,7 @@ public class MathKeyboardPanel : Control
                                 IsOpen = false;
                                 break;
                             case MessageBoxResult.Cancel:
-                                _grid.Focus();
+                                _grid?.Focus();
                                 break;
                         }
                     }
@@ -369,7 +537,7 @@ public class MathKeyboardPanel : Control
                 }
             };
         }
-
+        
         _savebtn = Template.FindName(PART_SAVEBTN_NAME, this) as Button;
         if (_savebtn is not null)
         {
@@ -705,7 +873,7 @@ public class MathKeyboardPanel : Control
             _procbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(new StandardLeafNode("%"));
+                keyboardMemory.Insert(new StandardLeafNode(@"\%"));
                 await DisplayResultAsync();
             };
         }
@@ -832,6 +1000,104 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _notinbtn = Template.FindName(NOTIN_BTN_NAME, this) as Button;
+        if (_notinbtn is not null)
+        {
+            _notinbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\not\in"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _nibtn = Template.FindName(NI_BTN_NAME, this) as Button;
+        if (_nibtn is not null)
+        {
+            _nibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\ni"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _subsetbtn = Template.FindName(SUBSET_BTN_NAME, this) as Button;
+        if (_subsetbtn is not null)
+        {
+            _subsetbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\subset"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _setmbtn = Template.FindName(SETM_BTN_NAME, this) as Button;
+        if (_setmbtn is not null)
+        {
+            _setmbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\setminus"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _nothingbtn = Template.FindName(NOTHING_BTN_NAME, this) as Button;
+        if (_nothingbtn is not null) {
+            _nothingbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\emptyset"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _existsbtn = Template.FindName(EXISTS_BTN_NAME, this) as Button;
+        if (_existsbtn is not null)
+        {
+            _existsbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\exists"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _forallbtn = Template.FindName(FORALL_BTN_NAME, this) as Button;
+        if (_forallbtn is not null)
+        {
+            _forallbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\forall"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _nexistsbtn = Template.FindName(NEXISTS_BTN_NAME, this) as Button;
+        if (_nexistsbtn is not null)
+        {
+            _nexistsbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\not\exists"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _exists1btn = Template.FindName(EXISTS1_BTN_NAME, this) as Button;
+        if (_exists1btn is not null)
+        {
+            _exists1btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\exists!"));
+                await DisplayResultAsync();
+            };
+        }
+
         _cupbtn = Template.FindName(CUP_BTN_NAME, this) as Button;
         if (_cupbtn is not null)
         {
@@ -902,6 +1168,467 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _alphabtn = Template.FindName(alpha_BTN_NAME, this) as Button;
+        if (_alphabtn is not null) {
+            _alphabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\alpha"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Alphabtn = Template.FindName(Alpha_BTN_NAME, this) as Button;
+        if (_Alphabtn is not null) {
+            _Alphabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Alpha"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _betabtn = Template.FindName(beta_BTN_NAME, this) as Button;
+        if (_betabtn is not null) {
+            _betabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\beta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Betabtn = Template.FindName(Beta_BTN_NAME, this) as Button;
+        if (_Betabtn is not null)
+        {
+            _Betabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Beta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _gammabtn = Template.FindName(gamma_BTN_NAME, this) as Button;
+        if (_gammabtn is not null) {
+            _gammabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\gamma"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Gammabtn = Template.FindName(Gamma_BTN_NAME, this) as Button;
+        if (_Gammabtn is not null) {
+            _Gammabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Gamma"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _deltabtn = Template.FindName(delta_BTN_NAME, this) as Button;
+        if (_deltabtn is not null)
+        {
+            _deltabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\delta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Deltabtn = Template.FindName(Delta_BTN_NAME, this) as Button;
+        if (_Deltabtn is not null) {
+            _Deltabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Delta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _epsilonbtn = Template.FindName(epsilon_BTN_NAME, this) as Button;
+        if (_epsilonbtn is not null) {
+            _epsilonbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\epsilon"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Epsilonbtn = Template.FindName(Epsilon_BTN_NAME, this) as Button;
+        if (_Epsilonbtn is not null) {
+            _Epsilonbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Epsilon"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _zetabtn = Template.FindName(zeta_BTN_NAME, this) as Button;
+        if (_zetabtn is not null)
+        {
+            _zetabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\zeta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Zetabtn = Template.FindName(Zeta_BTN_NAME, this) as Button;
+        if (_Zetabtn is not null)
+        {
+            _Zetabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Zeta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _etabtn = Template.FindName(eta_BTN_NAME, this) as Button;
+        if (_etabtn is not null)
+        {
+            _etabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\eta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Etabtn = Template.FindName(Eta_BTN_NAME, this) as Button;
+        if (_Etabtn is not null) {
+            _Etabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Eta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _thetabtn = Template.FindName(theta_BTN_NAME, this) as Button;
+        if (_thetabtn is not null)
+        {
+            _thetabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\theta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Thetabtn = Template.FindName(Theta_BTN_NAME, this) as Button;
+        if (_Thetabtn is not null)
+        {
+            _Thetabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Theta"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _iotabtn = Template.FindName(iota_BTN_NAME, this) as Button;
+        if (_iotabtn is not null) {
+            _iotabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\iota"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Iotabtn = Template.FindName(Iota_BTN_NAME, this) as Button;
+        if (_Iotabtn is not null)
+        {
+            _Iotabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Iota"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _kappabtn = Template.FindName(kappa_BTN_NAME, this) as Button;
+        if (_kappabtn is not null)
+        {
+            _kappabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\kappa"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Kappabtn = Template.FindName(Kappa_BTN_NAME, this) as Button;
+        if (_Kappabtn is not null)
+        {
+            _Kappabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Kappa"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _lambdabtn = Template.FindName(lambda_BTN_NAME, this) as Button;
+        if (_lambdabtn is not null)
+        {
+            _lambdabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\lambda"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Lambdabtn = Template.FindName(Lambda_BTN_NAME, this) as Button;
+        if (_Lambdabtn is not null)
+        {
+            _Lambdabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Lambda"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _mubtn = Template.FindName(mu_BTN_NAME, this) as Button;
+        if (_mubtn is not null) {
+            _mubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\mu"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Mubtn = Template.FindName(Mu_BTN_NAME, this) as Button;
+        if (_Mubtn is not null) {
+
+            _Mubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Mu"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _nubtn = Template.FindName(nu_BTN_NAME, this) as Button;
+        if (_nubtn is not null) 
+        {
+            _nubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\nu"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Nubtn = Template.FindName(Nu_BTN_NAME, this) as Button;
+        if (_Nubtn is not null) 
+        {
+            _Nubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Nu"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _xibtn = Template.FindName(xi_BTN_NAME, this) as Button;
+        if (_xibtn is not null) 
+        {
+            _xibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\xi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Xibtn = Template.FindName(Xi_BTN_NAME, this) as Button;
+        if (_Xibtn is not null)
+        {
+            _Xibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Xi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _rhobtn = Template.FindName(rho_BTN_NAME, this) as Button;
+        if (_rhobtn is not null) {
+            _rhobtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\rho"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Rhobtn = Template.FindName(Rho_BTN_NAME, this) as Button;
+        if (_Rhobtn is not null) {
+            _Rhobtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Rho"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _sigmabtn = Template.FindName(sigma_BTN_NAME, this) as Button;
+        if (_sigmabtn is not null) {
+            _sigmabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\sigma"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Sigmabtn = Template.FindName(Sigma_BTN_NAME, this) as Button;
+        if (_Sigmabtn is not null) {
+            _Sigmabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Sigma"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _taubtn = Template.FindName(tau_BTN_NAME, this) as Button;
+        if (_taubtn is not null) {
+            _taubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\tau"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Taubtn = Template.FindName(Tau_BTN_NAME, this) as Button;
+        if (_Taubtn is not null) {
+            _Taubtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Tau"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _upsilonbtn = Template.FindName(upsilon_BTN_NAME, this) as Button;
+        if (_upsilonbtn is not null)
+        {
+            _upsilonbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\upsilon"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Upsilonbtn = Template.FindName(Upsilon_BTN_NAME, this) as Button;
+        if (_Upsilonbtn is not null) {
+            _Upsilonbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Upsilon"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _phibtn = Template.FindName(phi_BTN_NAME, this) as Button;
+        if (_phibtn is not null) {
+            _phibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\phi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Phibtn = Template.FindName(Phi_BTN_NAME, this) as Button;
+        if (_Phibtn is not null) {
+            _Phibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Phi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _chibtn = Template.FindName(chi_BTN_NAME, this) as Button;
+        if (_chibtn is not null) {
+            _chibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\chi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Chibtn = Template.FindName(Chi_BTN_NAME, this) as Button;
+        if (_Chibtn is not null) {
+            _Chibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Chi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _psibtn = Template.FindName(psi_BTN_NAME, this) as Button;
+        if (_psibtn is not null) {
+            _psibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\psi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Psibtn = Template.FindName(Psi_BTN_NAME, this) as Button;
+        if (_Psibtn is not null)
+        {
+            _Psibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Psi"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _omegabtn = Template.FindName(omega_BTN_NAME, this) as Button;
+        if (_omegabtn is not null)
+        {
+            _omegabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\omega"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _Omegabtn = Template.FindName(Omega_BTN_NAME, this) as Button;
+        if (_Omegabtn is not null)
+        {
+            _Omegabtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\Omega"));
+                await DisplayResultAsync();
+            };
+        }
+
         _vecabtn = Template.FindName(veca_BTN_NAME, this) as Button;
         if (_vecabtn is not null)
         {
@@ -948,6 +1675,39 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(new StandardBranchingNode(@"\vec{", "}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _parallelbtn = Template.FindName(parallel_BTN_NAME, this) as Button;
+        if (_parallelbtn is not null)
+        {
+            _parallelbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\parallel"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _perpbtn = Template.FindName(perp_BTN_NAME, this) as Button;
+        if (_perpbtn is not null)
+        {
+            _perpbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\perp"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _angbtn = Template.FindName(ang_BTN_NAME, this) as Button;
+        if (_angbtn is not null)
+        {
+            _angbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\angle"));
                 await DisplayResultAsync();
             };
         }
