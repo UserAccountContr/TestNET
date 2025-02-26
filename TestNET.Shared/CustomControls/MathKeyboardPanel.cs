@@ -31,6 +31,26 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = IN_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = sys_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = cases_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMGT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMGTE_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMLT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMLTE_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMDOT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMPLUS_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMMINUS_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMTIMES_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMDIVIDE_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUMEQ_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM0_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM1_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM2_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM3_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM4_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM5_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM6_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM7_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM8_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = NUM9_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new LatexConfiguration();
@@ -63,6 +83,26 @@ public class MathKeyboardPanel : Control
     private const string IN_BTN_NAME = "IN_BTN";
     private const string sys_BTN_NAME = "sys_BTN";
     private const string cases_BTN_NAME = "cases_BTN";
+    private const string NUMGT_BTN_NAME = "NUMGT_BTN";
+    private const string NUMGTE_BTN_NAME = "NUMGTE_BTN";
+    private const string NUMLT_BTN_NAME = "NUMLT_BTN";
+    private const string NUMLTE_BTN_NAME = "NUMLTE_BTN";
+    private const string NUMDOT_BTN_NAME = "NUMDOT_BTN";
+    private const string NUMPLUS_BTN_NAME = "NUMPLUS_BTN";
+    private const string NUMMINUS_BTN_NAME = "NUMMINUS_BTN";
+    private const string NUMTIMES_BTN_NAME = "NUMTIMES_BTN";
+    private const string NUMDIVIDE_BTN_NAME = "NUMDIVIDE_BTN";
+    private const string NUMEQ_BTN_NAME = "NUMEQ_BTN";
+    private const string NUM0_BTN_NAME = "NUM0_BTN";
+    private const string NUM1_BTN_NAME = "NUM1_BTN";
+    private const string NUM2_BTN_NAME = "NUM2_BTN";
+    private const string NUM3_BTN_NAME = "NUM3_BTN";
+    private const string NUM4_BTN_NAME = "NUM4_BTN";
+    private const string NUM5_BTN_NAME = "NUM5_BTN";
+    private const string NUM6_BTN_NAME = "NUM6_BTN";
+    private const string NUM7_BTN_NAME = "NUM7_BTN";
+    private const string NUM8_BTN_NAME = "NUM8_BTN";
+    private const string NUM9_BTN_NAME = "NUM9_BTN";
 
     private Grid _grid;
     private CheckBox _toggle;
@@ -91,6 +131,26 @@ public class MathKeyboardPanel : Control
     private Button _inbtn;
     private Button _sysbtn;
     private Button _casesbtn;
+    private Button _num0btn;
+    private Button _num1btn;
+    private Button _num2btn;
+    private Button _num3btn;
+    private Button _num4btn;
+    private Button _num5btn;
+    private Button _num6btn;
+    private Button _num7btn;
+    private Button _num8btn;
+    private Button _num9btn;
+    private Button _numgtbtn;
+    private Button _numgtebtn;
+    private Button _numltbtn;
+    private Button _numltebtn;
+    private Button _numdotbtn;
+    private Button _numplusbtn;
+    private Button _numminusbtn;
+    private Button _numtimesbtn;
+    private Button _numdividebtn;
+    private Button _numeqbtn;
 
     #region Properties
 
@@ -316,6 +376,226 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _num0btn = Template.FindName(NUM0_BTN_NAME, this) as Button;
+        if (_num0btn is not null)
+        {
+            _num0btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("0"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num1btn = Template.FindName(NUM1_BTN_NAME, this) as Button;
+        if (_num1btn is not null)
+        {
+            _num1btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("1"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num2btn = Template.FindName(NUM2_BTN_NAME, this) as Button;
+        if (_num2btn is not null)
+        {
+            _num2btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("2"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num3btn = Template.FindName(NUM3_BTN_NAME, this) as Button;
+        if (_num3btn is not null)
+        {
+            _num3btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("3"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num4btn = Template.FindName(NUM4_BTN_NAME, this) as Button;
+        if (_num4btn is not null)
+        {
+            _num4btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("4"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num5btn = Template.FindName(NUM5_BTN_NAME, this) as Button;
+        if (_num5btn is not null)
+        {
+            _num5btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("5"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num6btn = Template.FindName(NUM6_BTN_NAME, this) as Button;
+        if (_num6btn is not null)
+        {
+            _num6btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("6"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num7btn = Template.FindName(NUM7_BTN_NAME, this) as Button;
+        if (_num7btn is not null)
+        {
+            _num7btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("7"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num8btn = Template.FindName(NUM8_BTN_NAME, this) as Button;
+        if (_num8btn is not null)
+        {
+            _num8btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("8"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _num9btn = Template.FindName(NUM9_BTN_NAME, this) as Button;
+        if (_num9btn is not null)
+        {
+            _num9btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new DigitNode("9"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numgtbtn = Template.FindName(NUMGT_BTN_NAME, this) as Button;
+        if (_numgtbtn is not null)
+        {
+            _numgtbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@">"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numgtebtn = Template.FindName(NUMGTE_BTN_NAME, this) as Button;
+        if (_numgtebtn is not null)
+        {
+            _numgtebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\geq"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numltbtn = Template.FindName(NUMLT_BTN_NAME, this) as Button;
+        if (_numltbtn is not null)
+        {
+            _numltbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"<"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numltebtn = Template.FindName(NUMLTE_BTN_NAME, this) as Button;
+        if (_numltebtn is not null)
+        {
+            _numltebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\leq"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numdotbtn = Template.FindName(NUMDOT_BTN_NAME, this) as Button;
+        if (_numdotbtn is not null)
+        {
+            _numdotbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetDecimalSeparatorNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _numplusbtn = Template.FindName(NUMPLUS_BTN_NAME, this) as Button;
+        if (_numplusbtn is not null)
+        {
+            _numplusbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"+"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numminusbtn = Template.FindName(NUMMINUS_BTN_NAME, this) as Button;
+        if (_numminusbtn is not null)
+        {
+            _numminusbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"-"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numtimesbtn = Template.FindName(NUMTIMES_BTN_NAME, this) as Button;
+        if (_numtimesbtn is not null)
+        {
+            _numtimesbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetMultiplicationNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _numdividebtn = Template.FindName(NUMDIVIDE_BTN_NAME, this) as Button;
+        if (_numdividebtn is not null)
+        {
+            _numdividebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\div"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _numeqbtn = Template.FindName(NUMEQ_BTN_NAME, this) as Button;
+        if (_numeqbtn is not null)
+        {
+            _numeqbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"="));
+                await DisplayResultAsync();
+            };
+        }
+
         //_nlbtn = Template.FindName(NEWLINE_BTN_NAME, this) as Button;
         //if (_nlbtn is not null)
         //{
@@ -389,7 +669,7 @@ public class MathKeyboardPanel : Control
             _sinbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(new StandardBranchingNode(@"\sin{","}"));
+                keyboardMemory.Insert(new StandardBranchingNode(@"\sin{", "}"));
                 await DisplayResultAsync();
             };
         }
@@ -1063,11 +1343,11 @@ public class MathKeyboardPanel : Control
     {
         if (keyboardMemory.Current is not Placeholder)
         {
-            if ((keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration)==(@"\text"))
+            if ((keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration).Contains(@"\text"))
             {
                 MoveLeft();
             }
-            else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration)==(@"\right."))
+            else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == (@"\right."))
             {
                 MoveLeft();
                 DelLeft();
