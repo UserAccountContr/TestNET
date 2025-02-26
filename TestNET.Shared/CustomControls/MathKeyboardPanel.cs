@@ -63,8 +63,8 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = PROC_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
-    LatexConfiguration latexConfiguration = new LatexConfiguration();
-    KeyboardMemory keyboardMemory = new KeyboardMemory();
+    LatexConfiguration latexConfiguration = new ();
+    KeyboardMemory keyboardMemory = new ();
 
     private const string PART_GRID_NAME = "PART_GRID";
     private const string PART_TOGGLE_NAME = "PART_Toggle";
@@ -123,62 +123,62 @@ public class MathKeyboardPanel : Control
     private const string INDEX_BTN_NAME = "INDEX_BTN";
     private const string PROC_BTN_NAME = "PROC_BTN";
 
-    private Grid _grid;
-    private CheckBox _toggle;
-    private Button _savebtn;
-    private Button _cancelbtn;
-    private Button _textbtn;
-    private Button _nlbtn;
-    private Button _sqrtbtn;
-    private Button _nthrtbtn;
-    private Button _fracbtn;
-    private Button _degbtn;
-    private Button _infbtn;
-    private Button _sinbtn;
-    private Button _cosbtn;
-    private Button _cupbtn;
-    private Button _capbtn;
-    private Button _tgbtn;
-    private Button _cotgbtn;
-    private Button _limbtn;
-    private Button _limxbtn;
-    private Button _vecabtn;
-    private Button _vecbbtn;
-    private Button _veccbtn;
-    private Button _vecbtn;
-    private Button _pibtn;
-    private Button _pibtn2;
-    private Button _inbtn;
-    private Button _sysbtn;
-    private Button _casesbtn;
-    private Button _num0btn;
-    private Button _num1btn;
-    private Button _num2btn;
-    private Button _num3btn;
-    private Button _num4btn;
-    private Button _num5btn;
-    private Button _num6btn;
-    private Button _num7btn;
-    private Button _num8btn;
-    private Button _num9btn;
-    private Button _numgtbtn;
-    private Button _numgtebtn;
-    private Button _numltbtn;
-    private Button _numltebtn;
-    private Button _numdotbtn;
-    private Button _numplusbtn;
-    private Button _numminusbtn;
-    private Button _numtimesbtn;
-    private Button _numdividebtn;
-    private Button _numeqbtn;
-    private Button _sbrbtn;
-    private Button _sqbrbtn;
-    private Button _cbrbtn;
-    private Button _pipebtn;
-    private Button _powersndbtn;
-    private Button _powerbtn;
-    private Button _indexbtn;
-    private Button _procbtn;
+    private Grid? _grid;
+    private CheckBox? _toggle;
+    private Button? _savebtn;
+    private Button? _cancelbtn;
+    private Button? _textbtn;
+    private Button? _nlbtn;
+    private Button? _sqrtbtn;
+    private Button? _nthrtbtn;
+    private Button? _fracbtn;
+    private Button? _degbtn;
+    private Button? _infbtn;
+    private Button? _sinbtn;
+    private Button? _cosbtn;
+    private Button? _cupbtn;
+    private Button? _capbtn;
+    private Button? _tgbtn;
+    private Button? _cotgbtn;
+    private Button? _limbtn;
+    private Button? _limxbtn;
+    private Button? _vecabtn;
+    private Button? _vecbbtn;
+    private Button? _veccbtn;
+    private Button? _vecbtn;
+    private Button? _pibtn;
+    private Button? _pibtn2;
+    private Button? _inbtn;
+    private Button? _sysbtn;
+    private Button? _casesbtn;
+    private Button? _num0btn;
+    private Button? _num1btn;
+    private Button? _num2btn;
+    private Button? _num3btn;
+    private Button? _num4btn;
+    private Button? _num5btn;
+    private Button? _num6btn;
+    private Button? _num7btn;
+    private Button? _num8btn;
+    private Button? _num9btn;
+    private Button? _numgtbtn;
+    private Button? _numgtebtn;
+    private Button? _numltbtn;
+    private Button? _numltebtn;
+    private Button? _numdotbtn;
+    private Button? _numplusbtn;
+    private Button? _numminusbtn;
+    private Button? _numtimesbtn;
+    private Button? _numdividebtn;
+    private Button? _numeqbtn;
+    private Button? _sbrbtn;
+    private Button? _sqbrbtn;
+    private Button? _cbrbtn;
+    private Button? _pipebtn;
+    private Button? _powersndbtn;
+    private Button? _powerbtn;
+    private Button? _indexbtn;
+    private Button? _procbtn;
 
     #region Properties
 
@@ -1041,8 +1041,8 @@ public class MathKeyboardPanel : Control
         }
         else
         {
-            if (keyboardMemory.Current is Placeholder pl && pl.ParentNode is not null && pl.ParentNode is BranchingNode) return;
-            else if ((keyboardMemory.Current as TreeNode)?.ParentPlaceholder is not null && (keyboardMemory.Current as TreeNode).ParentPlaceholder != keyboardMemory.SyntaxTreeRoot) return;
+            if (keyboardMemory.Current is Placeholder pl && pl.ParentNode is BranchingNode) return;
+            else if ((keyboardMemory.Current as TreeNode)?.ParentPlaceholder is not null && (keyboardMemory.Current as TreeNode)?.ParentPlaceholder != keyboardMemory.SyntaxTreeRoot) return;
             keyboardMemory.Insert(new StandardLeafNode(@"\\"));
         }
 
@@ -1087,7 +1087,7 @@ public class MathKeyboardPanel : Control
 
     private void Panel_Closed(object sender, EventArgs e)
     {
-        if (!_toggle.IsMouseOver)
+        if (_toggle is not null && !_toggle.IsMouseOver)
         {
             IsOpen = false;
         }
@@ -1379,10 +1379,10 @@ public class MathKeyboardPanel : Control
         //StateHasChanged();
     }
 
-    private void Panel_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+    private async void Panel_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
     {
         //MessageBox.Show(e.Key.ToString());
-        OnPhysicalKeyDownAsync(e.Key.ToString());
+        await OnPhysicalKeyDownAsync(e.Key.ToString());
 
         if (e.Key == Key.Left || e.Key == Key.Right || e.Key == Key.Up || e.Key == Key.Down)
         {
@@ -1395,15 +1395,15 @@ public class MathKeyboardPanel : Control
         OnPhysicalKeyUp(e.Key.ToString());
     }
 
-    private void Panel_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+    private async void Panel_TextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
     {
         if (e.Text == "\b") return;
-        OnRealTextInput(e.Text);
+        await OnRealTextInput(e.Text);
     }
 
     public Action<KeyboardMemory, TreeNode> InsertAction { get; set; } = (k, node) => k.Insert(node);
 
-    public MathTextboxInfo GetMathTextboxInfo() => new MathTextboxInfo
+    public MathTextboxInfo GetMathTextboxInfo() => new ()
     {
         KeyboardMemory = keyboardMemory,
         LatexConfiguration = latexConfiguration,
@@ -1414,7 +1414,7 @@ public class MathKeyboardPanel : Control
     {
         if (keyboardMemory.Current is not Placeholder && keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == @"\right.")
         {
-            Placeholder pl = (keyboardMemory.Current as TreeNode).ParentPlaceholder;
+            Placeholder? pl = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder;
             if (pl is not null)
             {
                 if (pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
@@ -1425,7 +1425,7 @@ public class MathKeyboardPanel : Control
         }
         else if (keyboardMemory.Current is not Placeholder && keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == @"{")
         {
-            Placeholder pl = (keyboardMemory.Current as TreeNode).ParentPlaceholder;
+            Placeholder? pl = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder;
             if (pl is not null)
             {
                 if (pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left|" || pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left\{")
@@ -1439,13 +1439,13 @@ public class MathKeyboardPanel : Control
 
     public void MoveRight()
     {
-        Placeholder pl;
+        Placeholder? pl;
         if (keyboardMemory.Current is Placeholder) pl = keyboardMemory.Current as Placeholder;
-        else pl = (keyboardMemory.Current as TreeNode).ParentPlaceholder;
+        else pl = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder;
 
         if (pl is not null)
         {
-            TreeNode treeNode = (keyboardMemory.Current is Placeholder) ? pl.Nodes.FirstOrDefault() : pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
+            TreeNode? treeNode = (keyboardMemory.Current is Placeholder) ? pl.Nodes.FirstOrDefault() : pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
             if (treeNode?.GetViewModeLatex(latexConfiguration) == @"}")
             {
                 if (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\right.")
@@ -1468,7 +1468,7 @@ public class MathKeyboardPanel : Control
     {
         if (keyboardMemory.Current is not Placeholder)
         {
-            if ((keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+            if ((keyboardMemory.Current is TreeNode trn) && trn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
             {
                 MoveLeft();
             }
@@ -1480,8 +1480,8 @@ public class MathKeyboardPanel : Control
             }
             else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == "{")
             {
-                string temp = (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration);
-                if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode).ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
+                string? temp = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration);
+                if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
                 {
                     keyboardMemory.DeleteLeft();
                     keyboardMemory.DeleteLeft();
@@ -1510,8 +1510,9 @@ public class MathKeyboardPanel : Control
             Placeholder pl = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
             if (pl.Nodes[^1] != keyboardMemory.Current)
             {
-                TreeNode treeNode = pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
+                TreeNode? treeNode = pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
 
+                if (treeNode is not null)
                 if (treeNode.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
                 {
                     MoveRight();
@@ -1520,7 +1521,7 @@ public class MathKeyboardPanel : Control
                 {
                     if (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\right.")
                     {
-                        if ((keyboardMemory.Current as TreeNode).GetViewModeLatex(latexConfiguration) == @"{" && (pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left|" || pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left\{"))
+                        if ((keyboardMemory.Current as TreeNode)?.GetViewModeLatex(latexConfiguration) == @"{" && (pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left|" || pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == @"\left\{"))
                         {
                             keyboardMemory.DeleteRight();
                             keyboardMemory.DeleteRight();
