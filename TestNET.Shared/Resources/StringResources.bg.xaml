@@ -8,7 +8,7 @@
     <system:String x:Key="add">Добави</system:String>
     <system:String x:Key="save">Запиши</system:String>
     <system:String x:Key="load">Зареди</system:String>
-    <system:String x:Key="import">Вмъкни</system:String>
+    <system:String x:Key="import">Импортирай</system:String>
     <system:String x:Key="open">Отвори</system:String>
     <system:String x:Key="delete">Изтрий</system:String>
     <system:String x:Key="back">Назад</system:String>
@@ -33,7 +33,8 @@
     <system:String x:Key="testShuffle">Размести въпросите на теста</system:String>
     <system:String x:Key="testAllowReviewing">Разреши преглед на резултати</system:String>
     <system:String x:Key="possibleAnswers">Възможни отговори</system:String>
-    <system:String x:Key="points"> Точки</system:String>
+    <system:String x:Key="points">&#xa0;т.</system:String>
+    <system:String x:Key="pointsFull">Точки</system:String>
 
     <system:String x:Key="addQuestion">Добави въпрос</system:String>
 
