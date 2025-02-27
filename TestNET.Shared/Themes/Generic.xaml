@@ -1743,12 +1743,6 @@
                                         </StackPanel>
                                     
                                         
-                                        <!--
-                                        <Expander Header="Latex">
-                                        <TextBox Text="{Binding TBText, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                                             IsEnabled="{Binding IsExpanded, RelativeSource={RelativeSource AncestorType=Expander}}"/>
-                                    </Expander>
-                                    -->
                                         <Button Content="Save" Name="SAVE_BTN"/>
                                         <Button Content="Cancel" Name="CANCEL_BTN"/>
                                     </StackPanel>
