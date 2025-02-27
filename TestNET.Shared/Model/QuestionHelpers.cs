@@ -64,12 +64,12 @@ public static class QuestionHelpers
         }
 
         bool correctSelected = q.PossibleAnswers[index].IsCorrect;
-        bool correctTarget = q.PossibleAnswers[index - 1].IsCorrect;
+        bool correctTarget = q.PossibleAnswers[index + 1].IsCorrect;
 
         (q.PossibleAnswers[index], q.PossibleAnswers[index + 1]) = (q.PossibleAnswers[index + 1], q.PossibleAnswers[index]);
 
         q.PossibleAnswers[index].IsCorrect = correctTarget;
-        q.PossibleAnswers[index - 1].IsCorrect = correctSelected;
+        q.PossibleAnswers[index + 1].IsCorrect = correctSelected;
     }
 
     public static float MaxPoints(this Test t) => t.Questions.Sum(x => x.Points);
