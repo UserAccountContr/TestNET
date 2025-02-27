@@ -1826,22 +1826,22 @@ public class MathKeyboardPanel : Control
         }
         catch
         {
-            var result = MessageBox.Show("Parsing LaTeX failed.\\You have to clear the field\\or exit math mode!\\\\Clear field?", "Parsing failure", MessageBoxButton.YesNo, MessageBoxImage.Error);
-            switch (result)
-            {
-                case MessageBoxResult.Yes:
-                    Text = "";
-                    var parsedNodes2 = Parse.Latex(Text).SyntaxTreeRoot.Nodes;
-                    keyboardMemory = new KeyboardMemory
-                    {
+                //var result = MessageBox.Show("Parsing LaTeX failed.\\You have to clear the field\\or exit math mode!\\\\Clear field?", "Parsing failure", MessageBoxButton.YesNo, MessageBoxImage.Error);
+                //switch (result)
+                //{
+                //    case MessageBoxResult.Yes:
+                //        Text = "";
+                //        var parsedNodes2 = Parse.Latex(Text).SyntaxTreeRoot.Nodes;
+                //        keyboardMemory = new KeyboardMemory
+                //        {
 
-                    };
-                    keyboardMemory.Insert(parsedNodes2);
-                    break;
-                case MessageBoxResult.No:
-                    IsOpen = false;
-                    break;
-            }
+                //        };
+                //        keyboardMemory.Insert(parsedNodes2);
+                //        break;
+                //    case MessageBoxResult.No:
+                //        IsOpen = false;
+                //        break;
+                //}
         }
 
         TBText = Text; 
