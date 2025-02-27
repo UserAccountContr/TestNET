@@ -47,6 +47,30 @@ public partial class EditTestViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    void MoveUpAnsFromQ(object parameters)
+    {
+        if (parameters is object[] objs)
+        {
+            if (objs[0] is IManyAnswers q && objs[1] is Answer a)
+            {
+                q.MoveUpAns(a);
+            }
+        }
+    }
+
+    [RelayCommand]
+    void MoveDownAnsFromQ(object parameters)
+    {
+        if (parameters is object[] objs)
+        {
+            if (objs[0] is IManyAnswers q && objs[1] is Answer a)
+            {
+                q.MoveDownAns(a);
+            }
+        }
+    }
+
+    [RelayCommand]
     void AddPosAnsToQ(IManyAnswers q)
     {
         q.AddPosAns();
@@ -69,6 +93,32 @@ public partial class EditTestViewModel : BaseViewModel
 
     [RelayCommand]
     void RemoveQuestion(Question q) => Questions.Remove(q);
+
+    [RelayCommand]
+    void MoveUpQuestion(Question q) 
+    {
+        int index = Questions.IndexOf(q);
+
+        if (index == 0)
+        {
+            return;
+        }
+
+        (Questions[index], Questions[index - 1]) = (Questions[index - 1], Questions[index]);
+    }
+    
+    [RelayCommand]
+    void MoveDownQuestion(Question q)
+    {
+        int index = Questions.IndexOf(q);
+
+        if (index == Questions.Count - 1)
+        {
+            return;
+        }
+
+        (Questions[index], Questions[index + 1]) = (Questions[index + 1], Questions[index]);
+    }
 
     [RelayCommand]
     void Save()

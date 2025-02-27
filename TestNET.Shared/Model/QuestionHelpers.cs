@@ -36,6 +36,42 @@ public static class QuestionHelpers
     public static void AddPosAns(this IManyAnswers q) => q.PossibleAnswers.Add(new($"Option {q.PossibleAnswers.Count + 1}"));
     public static void RemAns(this IManyAnswers q, Answer ans) => q.PossibleAnswers.Remove(ans);
 
+    public static void MoveUpAns(this IManyAnswers q, Answer ans)
+    {
+        int index = q.PossibleAnswers.IndexOf(ans);
+
+        if (index == 0)
+        {
+            return;
+        }
+
+        bool correctSelected = q.PossibleAnswers[index].IsCorrect;
+        bool correctTarget = q.PossibleAnswers[index - 1].IsCorrect;
+
+        (q.PossibleAnswers[index - 1], q.PossibleAnswers[index]) = (q.PossibleAnswers[index], q.PossibleAnswers[index - 1]);
+
+        q.PossibleAnswers[index].IsCorrect = correctTarget;
+        q.PossibleAnswers[index - 1].IsCorrect = correctSelected;
+    }
+
+    public static void MoveDownAns(this IManyAnswers q, Answer ans)
+    {
+        int index = q.PossibleAnswers.IndexOf(ans);
+
+        if (index == q.PossibleAnswers.Count - 1)
+        {
+            return;
+        }
+
+        bool correctSelected = q.PossibleAnswers[index].IsCorrect;
+        bool correctTarget = q.PossibleAnswers[index - 1].IsCorrect;
+
+        (q.PossibleAnswers[index], q.PossibleAnswers[index + 1]) = (q.PossibleAnswers[index + 1], q.PossibleAnswers[index]);
+
+        q.PossibleAnswers[index].IsCorrect = correctTarget;
+        q.PossibleAnswers[index - 1].IsCorrect = correctSelected;
+    }
+
     public static float MaxPoints(this Test t) => t.Questions.Sum(x => x.Points);
 
     public static Test NormalTest(this TeacherTest t) => new (t.Name, new ObservableCollection<Question>(t.Questions.Select(x => x.DeepCopy())));

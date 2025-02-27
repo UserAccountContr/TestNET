@@ -147,7 +147,11 @@
         <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}"
                              ShowDropdown="True">
             <local:QuestionPanel.DropdownContent>
-                <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                <StackPanel>
+                    <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Up" Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Down" Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                </StackPanel>
             </local:QuestionPanel.DropdownContent>
 
             <StackPanel Margin="15">
@@ -169,7 +173,11 @@
         <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}"
                              ShowDropdown="True">
             <local:QuestionPanel.DropdownContent>
-                <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                <StackPanel>
+                    <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Up" Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Down" Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                </StackPanel>
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
                 <local:LatexTextBox IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
@@ -195,7 +203,7 @@
                                             </Style.Triggers>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </Style>
-                                    </WrapPanel.Style>
+                                </WrapPanel.Style>
                                     <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
                                             Height="20">
@@ -208,6 +216,40 @@
                                         <Grid>
                                             <Viewbox>
                                                 <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.MoveUpAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.MoveDownAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
                                                   Fill="Black"
                                                   Stretch="Fill"/>
                                             </Viewbox>
@@ -239,7 +281,11 @@
         <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}"
                              ShowDropdown="True">
             <local:QuestionPanel.DropdownContent>
-                <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                <StackPanel>
+                    <Button Content="Delete" Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Up" Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                    <Button Content="Move Down" Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White"/>
+                </StackPanel>
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
                 <local:LatexTextBox IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
@@ -279,6 +325,40 @@
                                                 <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
                                                   Fill="Black"
                                                   Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.MoveUpAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
+                                                      Fill="Black"
+                                                      Stretch="Fill"/>
+                                            </Viewbox>
+                                        </Grid>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.MoveDownAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+                                            Padding="2"
+                                            Height="20">
+                                        <Button.CommandParameter>
+                                            <MultiBinding Converter="{StaticResource MultiConv}">
+                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="."/>
+                                            </MultiBinding>
+                                        </Button.CommandParameter>
+                                        <Grid>
+                                            <Viewbox>
+                                                <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
+                                                      Fill="Black"
+                                                      Stretch="Fill"/>
                                             </Viewbox>
                                         </Grid>
                                     </Button>
@@ -1602,6 +1682,10 @@
                                 </Viewbox>
                             </WrapPanel>
                             
+                            <WrapPanel>
+                                <Button Content="123"></Button>
+                            </WrapPanel>
+
                             <local:LatexLabel IsMath="{Binding TextIsMath}">
                                 <local:LatexLabel.Text>
                                     <MultiBinding Converter="{StaticResource TestUIDSHConv}">
@@ -1640,7 +1724,7 @@
                                                          IsEnabled="False"
                                                          VerticalContentAlignment="Center">
                                                 <WrapPanel>
-                                                    
+
                                                     <local:LatexLabel Text="{Binding Text}"
                                                                       IsMath="{Binding DataContext.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionSubmPanelMC}}"/>
                                                     <Viewbox Height="12"
