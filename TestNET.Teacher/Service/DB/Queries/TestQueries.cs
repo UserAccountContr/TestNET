@@ -132,6 +132,9 @@ internal class TestQueries(string dbPath)
             command.Parameters.AddWithValue(
                     "$ReviewCode", submission.Code);
 
+            command.Parameters.AddWithValue(
+                    "$RequiresAttention", submission.RequiresAttention);
+
             command.ExecuteNonQuery();
         }
 
@@ -325,6 +328,7 @@ internal class TestQueries(string dbPath)
                 var submissionTime = reader.GetString(2);
                 var points = reader.GetFloat(3);
                 var code = reader.GetString(4);
+                var attention = reader.GetInt64(5);
 
                 submissions.Add(new Submission(
                     username,
@@ -336,7 +340,8 @@ internal class TestQueries(string dbPath)
                     new Test(
                         SelectCurrentName(),
                         new ObservableCollection<Question>(SelectSubmissionCorrectAnswers(id))),
-                    code));
+                    code,
+                    Convert.ToBoolean(attention)));
             }
         }
 

@@ -21,6 +21,7 @@ CREATE TABLE IF NOT EXISTS [TestNET.Test.Submissions] (
   SubmissionTime TEXT NOT NULL,
   Points FLOAT NOT NULL,
   ReviewCode TEXT NOT NULL,
+  RequiresAttention INTEGER NOT NULL DEFAULT 0,
 
   PRIMARY KEY (Id)
 );
