@@ -1,1 +1,1 @@
-SELECT Id, Username, SubmissionTime, Points, ReviewCode FROM [TestNET.Test.Submissions];
+SELECT Id, Username, SubmissionTime, Points, ReviewCode, RequiresAttention FROM [TestNET.Test.Submissions];

@@ -14,7 +14,9 @@ public class Submission
 
     public float Points { get; set; }
 
-    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null, string code = "")
+    public bool RequiresAttention { get; set; }
+
+    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null, string code = "", bool attention = false)
     {
         Name = name;
         Answers = answers;
@@ -22,5 +24,6 @@ public class Submission
         TimeSubmitted = timesubmitted;
         Points = points;
         Code = code;
+        RequiresAttention = attention;
     }
 }
