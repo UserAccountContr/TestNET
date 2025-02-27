@@ -555,8 +555,31 @@ public class MathKeyboardPanel : Control
         {
             _textbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
-                keyboardMemory.Insert(GetTextNode());
+                if (IsInTextNode())
+                    if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
+                    {
+                        if (pl.Nodes.Count == 0) DelLeft();
+                        else MoveLeft();
+                    }
+                    else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) MoveRight();
+                    else
+                    {
+                        Placeholder plh = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
+                        int n = plh.Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
+
+                        List<TreeNode> after = plh.Nodes[(n + 1)..];
+
+                        plh.Nodes.RemoveRange(n + 1, plh.Nodes.Count - n - 1);
+                        MoveRight();
+
+                        SyntaxTreeComponent stc = keyboardMemory.Current;
+
+                        keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
+                        keyboardMemory.Insert(after);
+
+                        keyboardMemory.Current = stc;
+                    }
+                else keyboardMemory.Insert(GetTextNode());
                 await DisplayResultAsync();
             };
         }
@@ -1923,36 +1946,40 @@ public class MathKeyboardPanel : Control
         }
     }
 
+    private void TextMode()
+    {
+        if (IsInTextNode())
+            if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
+            {
+                if (pl.Nodes.Count == 0) DelLeft();
+                else MoveLeft();
+            }
+            else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) MoveRight();
+            else
+            {
+                Placeholder plh = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
+                int n = plh.Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
+
+                List<TreeNode> after = plh.Nodes[(n + 1)..];
+
+                plh.Nodes.RemoveRange(n + 1, plh.Nodes.Count - n - 1);
+                MoveRight();
+
+                SyntaxTreeComponent stc = keyboardMemory.Current;
+
+                keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
+                keyboardMemory.Insert(after);
+
+                keyboardMemory.Current = stc;
+            }
+        else keyboardMemory.Insert(GetTextNode());
+    }
+
     public async Task OnPhysicalKeyDownAsync(string key)
     {
         if (IsInTextNode() && key != "Right" && key != "Left" && key != "Up" && key != "Down" && key != "Back" && key != "Delete")
         {
-            if (key == "Insert")
-            {
-                if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
-                {
-                    if (pl.Nodes.Count == 0) DelLeft();
-                    else MoveLeft();
-                }
-                else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) MoveRight();
-                else
-                {
-                    Placeholder plh = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
-                    int n = plh.Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
-
-                    List<TreeNode> after = plh.Nodes[(n + 1)..];
-
-                    plh.Nodes.RemoveRange(n + 1, plh.Nodes.Count - n - 1);
-                    MoveRight();
-
-                    SyntaxTreeComponent stc = keyboardMemory.Current;
-
-                    keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
-                    keyboardMemory.Insert(after);
-
-                    keyboardMemory.Current = stc;
-                }
-            }
+            if (key == "Insert") TextMode();
             else return;
         }
         else if (await ShouldIgnorePhysicalKeyPresses())
@@ -2092,7 +2119,7 @@ public class MathKeyboardPanel : Control
             yield return new PhysicalKeyHandler("OemOpenBrackets", (k, key) => k.Insert(GetSquareBracketsNode()));
             yield return new PhysicalKeyHandler("OemCloseBrackets", (k, key) => MoveRight());
             yield return new PhysicalKeyHandler("Oem1", (k, key) => k.Insert(new StandardLeafNode(";")));
-            yield return new PhysicalKeyHandler("Insert", (k, key) => k.Insert(GetTextNode()));
+            yield return new PhysicalKeyHandler("Insert", (k, key) => TextMode());
         }
     }
 
@@ -2195,6 +2222,8 @@ public class MathKeyboardPanel : Control
             }
         }
         keyboardMemory.MoveLeft();
+        if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == @"\not")
+            keyboardMemory.MoveLeft();
     }
 
     public void MoveRight()
@@ -2213,6 +2242,11 @@ public class MathKeyboardPanel : Control
                     keyboardMemory.MoveRight();
                 }
             }
+            else if (treeNode?.GetViewModeLatex(latexConfiguration) == @"\not" && (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\in" ||
+                    pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\exists"))
+            {
+                keyboardMemory.MoveRight();
+            }
             else if (treeNode?.GetViewModeLatex(latexConfiguration) == @"\left|" || treeNode?.GetViewModeLatex(latexConfiguration) == @"\left\{")
             {
                 if (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"{")
@@ -2228,54 +2262,73 @@ public class MathKeyboardPanel : Control
     {
         if (keyboardMemory.Current is not Placeholder)
         {
-            if ((keyboardMemory.Current is TreeNode trn) && trn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+            if (keyboardMemory.Current is TreeNode trn)
             {
-                MoveLeft();
-            }
-            else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == (@"\right."))
-            {
-                MoveLeft();
-                DelLeft();
-                return;
-            }
-            else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == "{")
-            {
-                string? temp = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration);
-                if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
+                if (trn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
                 {
-                    keyboardMemory.DeleteLeft();
-                    keyboardMemory.DeleteLeft();
-                    keyboardMemory.DeleteRight();
-                    keyboardMemory.DeleteRight();
+                    MoveLeft();
                 }
-                return;
+                else if (trn.GetViewModeLatex(latexConfiguration) == (@"\right."))
+                {
+                    MoveLeft();
+                    DelLeft();
+                    return;
+                }
+                else if (trn.GetViewModeLatex(latexConfiguration) == @"\to")
+                {
+                    if (trn.ParentPlaceholder.ParentNode is not null && trn.ParentPlaceholder.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\lim"))
+                    {
+                        MoveLeft();
+                        return;
+                    }
+                }
+                else if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == "{")
+                {
+                    string? temp = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration);
+                    if ((temp == @"\left|" || temp == @"\left\{") && (keyboardMemory.Current as TreeNode)?.ParentPlaceholder.Nodes.FirstAfterOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) == "}")
+                    {
+                        keyboardMemory.DeleteLeft();
+                        keyboardMemory.DeleteLeft();
+                        keyboardMemory.DeleteRight();
+                        keyboardMemory.DeleteRight();
+                    }
+                    return;
+                }
             }
         }
         keyboardMemory.DeleteLeft();
+        if (keyboardMemory.Current.GetViewModeLatex(latexConfiguration) == @"\not")
+            keyboardMemory.DeleteLeft();
     }
 
     public void DelRight()
     {
-        if (keyboardMemory.Current is Placeholder pl1)
-        {
-            if (pl1.Nodes.Count != 0 && (pl1.Nodes[0].GetViewModeLatex(latexConfiguration).Contains(@"\text") || pl1.Nodes[0].GetViewModeLatex(latexConfiguration) == @"\left|" || pl1.Nodes[0].GetViewModeLatex(latexConfiguration) == @"\left\{"))
-            {
-                MoveRight();
-                DelRight();
-                return;
-            }
-        }
-        else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder is not null)
-        {
-            Placeholder pl = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
-            if (pl.Nodes[^1] != keyboardMemory.Current)
-            {
-                TreeNode? treeNode = pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
+        Placeholder? pl;
+        if (keyboardMemory.Current is Placeholder) pl = keyboardMemory.Current as Placeholder;
+        else pl = (keyboardMemory.Current as TreeNode)?.ParentPlaceholder;
 
-                if (treeNode is not null)
-                if (treeNode.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+        if (pl != null)
+        {
+            TreeNode? treeNode = (keyboardMemory.Current is Placeholder) ? pl.Nodes.FirstOrDefault() : pl.Nodes.FirstAfterOrDefault(keyboardMemory.Current) as TreeNode;
+            if (treeNode is not null)
+                if (treeNode.GetViewModeLatex(latexConfiguration) == @"\left|" || treeNode.GetViewModeLatex(latexConfiguration) == @"\left\{" || treeNode.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
                 {
                     MoveRight();
+                    DelRight();
+                    return;
+                }
+                else if (treeNode.GetViewModeLatex(latexConfiguration) == @"\not" && (pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\in" ||
+                    pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) == @"\exists"))
+                {
+                    keyboardMemory.DeleteRight();
+                }
+                else if (treeNode.GetViewModeLatex(latexConfiguration) == @"\to")
+                {
+                    if (pl.ParentNode is not null && pl.ParentNode.GetViewModeLatex(latexConfiguration).Contains(@"\lim"))
+                    {
+                        MoveRight();
+                        return;
+                    }
                 }
                 else if (treeNode.GetViewModeLatex(latexConfiguration) == "}")
                 {
@@ -2292,15 +2345,7 @@ public class MathKeyboardPanel : Control
                         else return;
                     }
                 }
-                else if (treeNode.GetViewModeLatex(latexConfiguration) == @"\left|" || treeNode.GetViewModeLatex(latexConfiguration) == @"\left\{")
-                {
-                    MoveRight();
-                    DelRight();
-                    return;
-                }
-            }
         }
-
         keyboardMemory.DeleteRight();
     }
 }
