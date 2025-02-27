@@ -279,6 +279,14 @@ public class TestService(LogService logService)
                 Subm = null
             };
         }
+        else if (submission.RequiresAttention)
+        {
+            response = new()
+            {
+                Error = "Test has not been graded yet",
+                Subm = null
+            };
+        }
         else
         {
             response = new() 
