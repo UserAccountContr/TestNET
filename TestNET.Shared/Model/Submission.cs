@@ -1,29 +1,39 @@
-﻿namespace TestNET.Shared.Model;
+﻿using System.ComponentModel;
 
-public class Submission
+namespace TestNET.Shared.Model;
+
+public partial class Submission : ObservableObject
 {
     public string Name { get; set; }
 
     public string Code { get; set; }
 
-    public Test Answers { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Points))]
+    public Test answers;
 
     public Test? CorrectAnswers { get; set; }
 
     public DateTime TimeSubmitted { get; set; }
 
-    public float Points { get; set; }
+    public float Points => Answers.Questions.Sum(x => x.Points);
 
-    public bool RequiresAttention { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(Points))]
+    public bool requiresAttention;
 
-    public Submission(string name, Test answers, DateTime timesubmitted, float points = 0, Test? correctAnswers = null, string code = "", bool attention = false)
+    public Submission(string name, Test answers, DateTime timesubmitted, Test? correctAnswers = null, string code = "", bool requiresAttention = false)
     {
         Name = name;
         Answers = answers;
         CorrectAnswers = correctAnswers;
         TimeSubmitted = timesubmitted;
-        Points = points;
         Code = code;
-        RequiresAttention = attention;
+        RequiresAttention = requiresAttention;
+    }
+
+    public void OnPropertyChanged1(PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(e.PropertyName);
     }
 }

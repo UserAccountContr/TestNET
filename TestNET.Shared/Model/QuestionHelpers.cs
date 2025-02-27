@@ -85,6 +85,7 @@ public static class QuestionHelpers
             if (question is ISingleAnswer)
             {
                 question.Points = ((ISingleAnswer)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                if (question.Points == 0) s.RequiresAttention = true;
                 msg += question.Points;
             }
             else if (question is IManyAnswers)
@@ -93,6 +94,7 @@ public static class QuestionHelpers
                 msg += question.Points;
             }
         }
+        s.OnPropertyChanged1(new System.ComponentModel.PropertyChangedEventArgs(nameof(s.Points)));
         return msg;
     }
 }

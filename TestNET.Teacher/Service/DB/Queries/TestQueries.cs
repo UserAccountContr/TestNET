@@ -336,7 +336,6 @@ internal class TestQueries(string dbPath)
                         SelectCurrentName(),
                         new ObservableCollection<Question>(SelectSubmissionAnswers(id))),
                     DateTime.Parse(submissionTime),
-                    points,
                     new Test(
                         SelectCurrentName(),
                         new ObservableCollection<Question>(SelectSubmissionCorrectAnswers(id))),

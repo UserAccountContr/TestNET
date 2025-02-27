@@ -118,3 +118,22 @@ public class QTypeConverter : IValueConverter
         throw new NotImplementedException();
     }
 }
+
+public class SubmissionAttentionConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values.Length != 2) return null;
+        if (values[0] is string s && values[1] is bool b)
+        {
+            if (b) return $"{s} - Requires attention";
+            else return s;
+        }
+        return null;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}

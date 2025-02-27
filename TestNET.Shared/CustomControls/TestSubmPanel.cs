@@ -1,10 +1,13 @@
 ﻿namespace TestNET.Shared.CustomControls;
 
 [TemplatePart(Name = RGR_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = Accept_BTN_NAME, Type = typeof(Button))]
 public class TestSubmPanel : Control
 {
     private const string RGR_BTN_NAME = "RGR_BTN";
-    private Button _rgrbtn;
+    private const string Accept_BTN_NAME = "Accept_BTN";
+    private Button? _rgrbtn;
+    private Button? _acceptbtn;
 
     static TestSubmPanel()
     {
@@ -38,7 +41,15 @@ public class TestSubmPanel : Control
         {
             _rgrbtn.Click += (s, e) =>
             {
-                Submission.Points = Submission.Grade();
+                Submission.Grade();
+            };
+        }
+        _acceptbtn = Template.FindName(Accept_BTN_NAME, this) as Button;
+        if (_acceptbtn != null)
+        {
+            _acceptbtn.Click += (s, e) =>
+            {
+                Submission.RequiresAttention = false;
             };
         }
         base.OnApplyTemplate();
