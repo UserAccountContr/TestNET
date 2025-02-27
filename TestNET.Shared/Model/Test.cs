@@ -38,6 +38,7 @@ public class TeacherTest : Test
             if (question is ISingleAnswer)
             {
                 question.Points = ((ISingleAnswer)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                if (question.Points == 0) subm.RequiresAttention = true;
                 msg += question.Points;
             }
             else if (question is IManyAnswers)
