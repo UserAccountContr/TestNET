@@ -58,6 +58,27 @@ public class TestUIDToSAQuestionConverter : IMultiValueConverter
     }
 }
 
+public class TestUIDToSAQuestionPOINTSConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values[1] is Test test && values[0] is string uid)
+        {
+            return test.Questions.FirstOrDefault(q => q.UniqueId == uid) switch
+            {
+                ShortAnswerQuestion sh => sh.Points,
+                _ => 0
+            };
+        }
+        return 0;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class TestUIDToSAQuestionBOOLConverter : IMultiValueConverter
 {
     public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
@@ -135,5 +156,25 @@ public class SubmissionAttentionConverter : IMultiValueConverter
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
     {
         throw new NotImplementedException();
+    }
+}
+
+public class FloatRangeValidationRule : ValidationRule
+{
+    public float MinValue { get; set; }
+    public float MaxValue { get; set; }
+        
+
+    public override ValidationResult Validate(object value, CultureInfo cultureInfo)
+    {
+        if (value is string strValue && float.TryParse(strValue, out float parsedValue))
+        {
+            if (parsedValue < MinValue || parsedValue > MaxValue)
+            {
+                return new ValidationResult(false, $"Value must be between {MinValue} and {MaxValue}");
+            }
+            return ValidationResult.ValidResult;
+        }
+        return new ValidationResult(false, "Invalid number");
     }
 }

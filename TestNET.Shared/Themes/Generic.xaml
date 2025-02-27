@@ -8,6 +8,7 @@
     <serv:QTypeConverter x:Key="QType"/>
     <serv:MultiBindConverter x:Key="MultiConv"/>
     <serv:TestUIDToSAQuestionConverter x:Key="TestUIDSHConv"/>
+    <serv:TestUIDToSAQuestionPOINTSConverter x:Key="TestUIDSHPTSConv"/>
     <serv:TestUIDToSAQuestionBOOLConverter x:Key="TestUIDSHBOOLConv"/>
     <serv:TestUIDToMCQuestionConverter x:Key="TestUIDMCConv"/>
     <serv:IndexConverter x:Key="IndexConverter"/>
@@ -197,8 +198,19 @@
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel HorizontalAlignment="Stretch">
                     <Label Content="{DynamicResource pointsFull}"/>
-                    <TextBox Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                             MinWidth="30"/>
+
+                    <!-- Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" -->
+                    <TextBox 
+                             MinWidth="30">
+                        <TextBox.Text>
+                            <Binding Path="Points" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+                    
                 </WrapPanel>
                 <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
             </StackPanel>
@@ -1808,9 +1820,17 @@
                                 </local:LatexLabel.Text>
                             </local:LatexLabel>
 
-                            <TextBox Text="{Binding Points}" 
+                            <TextBox 
                                      IsEnabled="{TemplateBinding IsTeacher}"
-                                     Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}"/>
+                                     Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}">
+                                <TextBox.Text>
+                                    <Binding Path="Points" Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                         </StackPanel>
                     </local:QuestionPanel>
                 </ControlTemplate>
