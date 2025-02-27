@@ -1797,10 +1797,6 @@
                                                               Stretch="Fill"/>
                                 </Viewbox>
                             </WrapPanel>
-                            
-                            <WrapPanel>
-                                <Button Content="123"></Button>
-                            </WrapPanel>
 
                             <local:LatexLabel IsMath="{Binding TextIsMath}">
                                 <local:LatexLabel.Text>
@@ -1810,6 +1806,10 @@
                                     </MultiBinding>
                                 </local:LatexLabel.Text>
                             </local:LatexLabel>
+
+                            <TextBox Text="{Binding Points}" 
+                                     IsEnabled="{TemplateBinding IsTeacher}"
+                                     Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}"/>
                         </StackPanel>
                     </local:QuestionPanel>
                 </ControlTemplate>
@@ -1954,7 +1954,8 @@
                                 <ItemsControl.Resources>
                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                                         <local:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"
-                                                                   QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
+                                                                   QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"
+                                                                   IsTeacher="{Binding IsTeacher, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"/>
                                     </DataTemplate>
                                     <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
                                         <local:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"

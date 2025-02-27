@@ -21,6 +21,16 @@ public class TestSubmPanel : Control
         set { SetValue(SubmissionProperty, value); }
     }
 
+    public static readonly DependencyProperty IsTeacherProperty =
+        DependencyProperty.Register("IsTeacher", typeof(bool), typeof(TestSubmPanel),
+            new PropertyMetadata(false));
+
+    public bool IsTeacher
+    {
+        get { return (bool)GetValue(IsTeacherProperty); }
+        set { SetValue(IsTeacherProperty, value); }
+    }
+
     public override void OnApplyTemplate()
     {
         _rgrbtn = Template.FindName(RGR_BTN_NAME, this) as Button;

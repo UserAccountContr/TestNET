@@ -36,6 +36,16 @@
             get { return (int)GetValue(QuestionIndexProperty); }
             set { SetValue(QuestionIndexProperty, value); }
         }
+
+        public static readonly DependencyProperty IsTeacherProperty = 
+            DependencyProperty.Register("IsTeacher", typeof(bool), typeof(QuestionSubmPanelSH),
+                new PropertyMetadata(false));
+
+        public bool IsTeacher
+        {
+            get { return (bool)GetValue(IsTeacherProperty); }
+            set { SetValue(IsTeacherProperty, value); }
+        }
     }
 
     public class QuestionSubmPanelMC : Control

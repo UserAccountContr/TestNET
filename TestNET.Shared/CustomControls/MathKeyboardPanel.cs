@@ -555,31 +555,7 @@ public class MathKeyboardPanel : Control
         {
             _textbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode())
-                    if (keyboardMemory.Current is Placeholder pl && pl.Nodes.Count == 0)
-                    {
-                        if (pl.Nodes.Count == 0) DelLeft();
-                        else MoveLeft();
-                    }
-                    else if (((TreeNode)keyboardMemory.Current).ParentPlaceholder.Nodes[^1] == keyboardMemory.Current) MoveRight();
-                    else
-                    {
-                        Placeholder plh = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
-                        int n = plh.Nodes.FindIndex(x => x == keyboardMemory.Current as TreeNode);
-
-                        List<TreeNode> after = plh.Nodes[(n + 1)..];
-
-                        plh.Nodes.RemoveRange(n + 1, plh.Nodes.Count - n - 1);
-                        MoveRight();
-
-                        SyntaxTreeComponent stc = keyboardMemory.Current;
-
-                        keyboardMemory.Insert(new StandardBranchingNode(@"\text{", "}"));
-                        keyboardMemory.Insert(after);
-
-                        keyboardMemory.Current = stc;
-                    }
-                else keyboardMemory.Insert(GetTextNode());
+                TextMode();
                 await DisplayResultAsync();
             };
         }
@@ -1174,7 +1150,7 @@ public class MathKeyboardPanel : Control
         {
             _pibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\pi"));
                 await DisplayResultAsync();
             };
@@ -1185,7 +1161,7 @@ public class MathKeyboardPanel : Control
         {
             _pibtn2.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\pi"));
                 await DisplayResultAsync();
             };
@@ -1195,7 +1171,7 @@ public class MathKeyboardPanel : Control
         if (_alphabtn is not null) {
             _alphabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\alpha"));
                 await DisplayResultAsync();
             };
@@ -1205,7 +1181,7 @@ public class MathKeyboardPanel : Control
         if (_Alphabtn is not null) {
             _Alphabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Alpha"));
                 await DisplayResultAsync();
             };
@@ -1215,7 +1191,7 @@ public class MathKeyboardPanel : Control
         if (_betabtn is not null) {
             _betabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\beta"));
                 await DisplayResultAsync();
             };
@@ -1226,7 +1202,7 @@ public class MathKeyboardPanel : Control
         {
             _Betabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Beta"));
                 await DisplayResultAsync();
             };
@@ -1236,7 +1212,7 @@ public class MathKeyboardPanel : Control
         if (_gammabtn is not null) {
             _gammabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\gamma"));
                 await DisplayResultAsync();
             };
@@ -1246,7 +1222,7 @@ public class MathKeyboardPanel : Control
         if (_Gammabtn is not null) {
             _Gammabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Gamma"));
                 await DisplayResultAsync();
             };
@@ -1257,7 +1233,7 @@ public class MathKeyboardPanel : Control
         {
             _deltabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\delta"));
                 await DisplayResultAsync();
             };
@@ -1267,7 +1243,7 @@ public class MathKeyboardPanel : Control
         if (_Deltabtn is not null) {
             _Deltabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Delta"));
                 await DisplayResultAsync();
             };
@@ -1277,7 +1253,7 @@ public class MathKeyboardPanel : Control
         if (_epsilonbtn is not null) {
             _epsilonbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\epsilon"));
                 await DisplayResultAsync();
             };
@@ -1287,7 +1263,7 @@ public class MathKeyboardPanel : Control
         if (_Epsilonbtn is not null) {
             _Epsilonbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Epsilon"));
                 await DisplayResultAsync();
             };
@@ -1298,7 +1274,7 @@ public class MathKeyboardPanel : Control
         {
             _zetabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\zeta"));
                 await DisplayResultAsync();
             };
@@ -1309,7 +1285,7 @@ public class MathKeyboardPanel : Control
         {
             _Zetabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Zeta"));
                 await DisplayResultAsync();
             };
@@ -1320,7 +1296,7 @@ public class MathKeyboardPanel : Control
         {
             _etabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\eta"));
                 await DisplayResultAsync();
             };
@@ -1330,7 +1306,7 @@ public class MathKeyboardPanel : Control
         if (_Etabtn is not null) {
             _Etabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Eta"));
                 await DisplayResultAsync();
             };
@@ -1341,7 +1317,7 @@ public class MathKeyboardPanel : Control
         {
             _thetabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\theta"));
                 await DisplayResultAsync();
             };
@@ -1352,7 +1328,7 @@ public class MathKeyboardPanel : Control
         {
             _Thetabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Theta"));
                 await DisplayResultAsync();
             };
@@ -1362,7 +1338,7 @@ public class MathKeyboardPanel : Control
         if (_iotabtn is not null) {
             _iotabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\iota"));
                 await DisplayResultAsync();
             };
@@ -1373,7 +1349,7 @@ public class MathKeyboardPanel : Control
         {
             _Iotabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Iota"));
                 await DisplayResultAsync();
             };
@@ -1384,7 +1360,7 @@ public class MathKeyboardPanel : Control
         {
             _kappabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\kappa"));
                 await DisplayResultAsync();
             };
@@ -1395,7 +1371,7 @@ public class MathKeyboardPanel : Control
         {
             _Kappabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Kappa"));
                 await DisplayResultAsync();
             };
@@ -1406,7 +1382,7 @@ public class MathKeyboardPanel : Control
         {
             _lambdabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\lambda"));
                 await DisplayResultAsync();
             };
@@ -1417,7 +1393,7 @@ public class MathKeyboardPanel : Control
         {
             _Lambdabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Lambda"));
                 await DisplayResultAsync();
             };
@@ -1427,7 +1403,7 @@ public class MathKeyboardPanel : Control
         if (_mubtn is not null) {
             _mubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\mu"));
                 await DisplayResultAsync();
             };
@@ -1438,7 +1414,7 @@ public class MathKeyboardPanel : Control
 
             _Mubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Mu"));
                 await DisplayResultAsync();
             };
@@ -1449,7 +1425,7 @@ public class MathKeyboardPanel : Control
         {
             _nubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\nu"));
                 await DisplayResultAsync();
             };
@@ -1460,7 +1436,7 @@ public class MathKeyboardPanel : Control
         {
             _Nubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Nu"));
                 await DisplayResultAsync();
             };
@@ -1471,7 +1447,7 @@ public class MathKeyboardPanel : Control
         {
             _xibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\xi"));
                 await DisplayResultAsync();
             };
@@ -1482,7 +1458,7 @@ public class MathKeyboardPanel : Control
         {
             _Xibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Xi"));
                 await DisplayResultAsync();
             };
@@ -1492,7 +1468,7 @@ public class MathKeyboardPanel : Control
         if (_rhobtn is not null) {
             _rhobtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\rho"));
                 await DisplayResultAsync();
             };
@@ -1502,7 +1478,7 @@ public class MathKeyboardPanel : Control
         if (_Rhobtn is not null) {
             _Rhobtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Rho"));
                 await DisplayResultAsync();
             };
@@ -1512,7 +1488,7 @@ public class MathKeyboardPanel : Control
         if (_sigmabtn is not null) {
             _sigmabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\sigma"));
                 await DisplayResultAsync();
             };
@@ -1522,7 +1498,7 @@ public class MathKeyboardPanel : Control
         if (_Sigmabtn is not null) {
             _Sigmabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Sigma"));
                 await DisplayResultAsync();
             };
@@ -1532,7 +1508,7 @@ public class MathKeyboardPanel : Control
         if (_taubtn is not null) {
             _taubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\tau"));
                 await DisplayResultAsync();
             };
@@ -1542,7 +1518,7 @@ public class MathKeyboardPanel : Control
         if (_Taubtn is not null) {
             _Taubtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Tau"));
                 await DisplayResultAsync();
             };
@@ -1553,7 +1529,7 @@ public class MathKeyboardPanel : Control
         {
             _upsilonbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\upsilon"));
                 await DisplayResultAsync();
             };
@@ -1563,7 +1539,7 @@ public class MathKeyboardPanel : Control
         if (_Upsilonbtn is not null) {
             _Upsilonbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Upsilon"));
                 await DisplayResultAsync();
             };
@@ -1573,7 +1549,7 @@ public class MathKeyboardPanel : Control
         if (_phibtn is not null) {
             _phibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\phi"));
                 await DisplayResultAsync();
             };
@@ -1583,7 +1559,7 @@ public class MathKeyboardPanel : Control
         if (_Phibtn is not null) {
             _Phibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Phi"));
                 await DisplayResultAsync();
             };
@@ -1593,7 +1569,7 @@ public class MathKeyboardPanel : Control
         if (_chibtn is not null) {
             _chibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\chi"));
                 await DisplayResultAsync();
             };
@@ -1603,7 +1579,7 @@ public class MathKeyboardPanel : Control
         if (_Chibtn is not null) {
             _Chibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Chi"));
                 await DisplayResultAsync();
             };
@@ -1613,7 +1589,7 @@ public class MathKeyboardPanel : Control
         if (_psibtn is not null) {
             _psibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\psi"));
                 await DisplayResultAsync();
             };
@@ -1624,7 +1600,7 @@ public class MathKeyboardPanel : Control
         {
             _Psibtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Psi"));
                 await DisplayResultAsync();
             };
@@ -1635,7 +1611,7 @@ public class MathKeyboardPanel : Control
         {
             _omegabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\omega"));
                 await DisplayResultAsync();
             };
@@ -1646,7 +1622,7 @@ public class MathKeyboardPanel : Control
         {
             _Omegabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                if (IsInTextNode()) TextMode();
                 keyboardMemory.Insert(new StandardLeafNode(@"\Omega"));
                 await DisplayResultAsync();
             };
@@ -1657,7 +1633,8 @@ public class MathKeyboardPanel : Control
         {
             _vecabtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                bool temp = IsInTextNode();
+                if (temp) TextMode();
                 keyboardMemory.Insert(new StandardBranchingNode(@"\vec{", "}"));
                 keyboardMemory.Insert(new StandardLeafNode("a"));
                 MoveRight();
@@ -1670,7 +1647,8 @@ public class MathKeyboardPanel : Control
         {
             _vecbbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                bool temp = IsInTextNode();
+                if (temp) TextMode();
                 keyboardMemory.Insert(new StandardBranchingNode(@"\vec{", "}"));
                 keyboardMemory.Insert(new StandardLeafNode("b"));
                 MoveRight();
@@ -1683,7 +1661,8 @@ public class MathKeyboardPanel : Control
         {
             _veccbtn.Click += async (s, e) =>
             {
-                if (IsInTextNode()) return;
+                bool temp = IsInTextNode();
+                if (temp) TextMode();
                 keyboardMemory.Insert(new StandardBranchingNode(@"\vec{", "}"));
                 keyboardMemory.Insert(new StandardLeafNode("c"));
                 MoveRight();
@@ -1696,6 +1675,8 @@ public class MathKeyboardPanel : Control
         {
             _vecbtn.Click += async (s, e) =>
             {
+                bool temp = IsInTextNode();
+                if (temp) TextMode();
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(new StandardBranchingNode(@"\vec{", "}"));
                 await DisplayResultAsync();

@@ -84,11 +84,13 @@ public static class QuestionHelpers
         {
             if (question is ISingleAnswer)
             {
-                msg += ((ISingleAnswer)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                question.Points = ((ISingleAnswer)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                msg += question.Points;
             }
             else if (question is IManyAnswers)
             {
-                msg += ((IManyAnswers)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+                question.Points = ((IManyAnswers)s.CorrectAnswers.Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+                msg += question.Points;
             }
         }
         return msg;

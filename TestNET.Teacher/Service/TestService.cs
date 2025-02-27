@@ -306,7 +306,7 @@ public class TestService(LogService logService)
     public void handleSubmissionRequest(SubmissionRequest request, TeacherTest test, NetworkStream stream)
     {
         Submission temp = request.Submission;
-        temp.Points = test.Grade(request.Submission);
+        temp.Points = test.Grade(ref temp);
         temp.CorrectAnswers = test.NormalTest();                //must be reworked for the nac. krug :)
 
         var usedCodes = test.Submissions.Select(x => x.Code).ToList();

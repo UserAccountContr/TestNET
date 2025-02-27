@@ -30,18 +30,20 @@ public class TeacherTest : Test
         Submissions = submissions ?? new();
     }
 
-    public float Grade(Submission subm)
+    public float Grade(ref Submission subm)
     {
         float msg = 0;
         foreach (Question question in subm.Answers.Questions)
         {
             if (question is ISingleAnswer)
             {
-                msg += ((ISingleAnswer)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                question.Points = ((ISingleAnswer)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((ISingleAnswer)question).Answer);
+                msg += question.Points;
             }
             else if (question is IManyAnswers)
             {
-                msg += ((IManyAnswers)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+                question.Points = ((IManyAnswers)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
+                msg += question.Points;
             }
         }
 

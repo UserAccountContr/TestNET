@@ -114,7 +114,8 @@
                                   PreviewMouseWheel="ListView_PreviewMouseWheel">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <CustomControls:TestSubmPanel Submission="{Binding .}"/>
+                                <CustomControls:TestSubmPanel Submission="{Binding .}"
+                                                              IsTeacher="True"/>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
