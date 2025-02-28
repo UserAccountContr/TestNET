@@ -27,6 +27,16 @@ public class QuestionPanel : ContentControl
         set { SetValue(PointsProperty, value); }
     }
 
+    public static readonly DependencyProperty  MAXPointsProperty =
+       DependencyProperty.Register("MAXPoints", typeof(float), typeof(QuestionPanel),
+           new PropertyMetadata((float)0));
+
+    public float MAXPoints
+    {
+        get { return (float)GetValue(MAXPointsProperty); }
+        set { SetValue(MAXPointsProperty, value); }
+    }
+
     public static readonly DependencyProperty DropdownContentProperty =
         DependencyProperty.Register("DropdownContent", typeof(object), typeof(QuestionPanel),
             new PropertyMetadata(null));

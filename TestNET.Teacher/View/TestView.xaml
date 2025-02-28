@@ -57,7 +57,8 @@
                     <ListView ItemsSource="{Binding Test.Questions}" 
                               HorizontalContentAlignment="Stretch"
                               PreviewMouseWheel="ListView_PreviewMouseWheel"
-                              ScrollViewer.HorizontalScrollBarVisibility="Hidden">
+                              ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                              BorderThickness="0">
                         <ListView.Resources>
                             <sharedserv:IndexConverter x:Key="IndexConverter" />
                             
@@ -86,16 +87,22 @@
                             -->
 
                         </ListView.Resources>
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel>
-                                        <CustomControls:QuestionViewPanel 
-                                            Question="{Binding .}"
-                                            ShowAnswers="False"
-                                            QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <CustomControls:QuestionViewPanel 
+                                        Question="{Binding .}"
+                                        ShowAnswers="False"
+                                        QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0 10"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                     </ListView>
                 </Expander>
                 <Expander Header="{DynamicResource testSettings}"
@@ -111,7 +118,15 @@
                 </Expander>
                 <Expander Header="{DynamicResource testSubmissions}">
                     <ListView ItemsSource="{Binding Test.Submissions}"
-                                  PreviewMouseWheel="ListView_PreviewMouseWheel">
+                              PreviewMouseWheel="ListView_PreviewMouseWheel"
+                          BorderThickness="0">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <CustomControls:TestSubmPanel Submission="{Binding .}"

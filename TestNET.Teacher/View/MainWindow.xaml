@@ -9,6 +9,7 @@
 	xmlns:viewmodel="clr-namespace:TestNET.Teacher.ViewModel" 
 	d:DataContext="{d:DesignInstance Type=viewmodel:WindowViewModel}"
 	mc:Ignorable="d"
+    WindowStartupLocation="CenterScreen" WindowState="Maximized"
 	Title="TestNET Teacher" Height="720" Width="1280">
 
     <Window.Resources>

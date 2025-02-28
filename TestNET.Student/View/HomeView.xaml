@@ -116,7 +116,7 @@
                     <Label Content="Review submission"
                            Style="{StaticResource MediumLabel}"/>
                     <Button Content="&gt;"
-                            Padding="5 0"
+                            Padding="7 0"
                             IsEnabled="{Binding IsNotGettingTest}"
                             Command="{Binding EnableRevModeCommand}"/>
                 </WrapPanel>
@@ -124,7 +124,7 @@
                 <WrapPanel HorizontalAlignment="Left"
                            Visibility="{Binding RevMode, Converter={StaticResource bvc}}">
                     <Button Content="&lt;"
-                            Padding="5 0"
+                            Padding="7 0"
                             IsEnabled="{Binding IsNotGettingTest}"
                             Command="{Binding DisableRevModeCommand}"/>
                     <Label Content="Cancel Review"

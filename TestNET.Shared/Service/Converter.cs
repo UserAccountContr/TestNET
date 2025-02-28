@@ -159,6 +159,24 @@ public class SubmissionAttentionConverter : IMultiValueConverter
     }
 }
 
+public class TestUIDPointsConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values.Length != 2) return null;
+        if (values[0] is Test t && values[1] is string s )
+        {
+            return t.Questions.Where(x=> x.UniqueId == s).FirstOrDefault()?.Points;
+        }
+        return 0;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class FloatRangeValidationRule : ValidationRule
 {
     public float MinValue { get; set; }

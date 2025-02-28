@@ -13,6 +13,13 @@
     <serv:TestUIDToMCQuestionConverter x:Key="TestUIDMCConv"/>
     <serv:IndexConverter x:Key="IndexConverter"/>
     <serv:SubmissionAttentionConverter x:Key="SubmAttConv"/>
+    <serv:TestUIDPointsConverter x:Key="PointsOutOfConv"/>
+
+    <Style x:Key="ltlbl" TargetType="TextBlock">
+        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="MaxWidth" Value="1100"/>
+    </Style>
 
     <Style x:Key="QuestionBorder" TargetType="Border">
         <Setter Property="BorderBrush" Value="#FF80c0ff"/>
@@ -55,7 +62,7 @@
                         <StackPanel>
                             <Grid Background="#FFbfdFff">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="auto"/>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
@@ -65,13 +72,15 @@
 
                                 <Label Content="{TemplateBinding QuestionIndex}"
                                        Style="{StaticResource QuestionIndex}"
-                                       Grid.Column="0"/>
+                                       Grid.Column="0"
+                                       MinWidth="30"/>
                                 
                                 
                                 <local:DropdownMenu 
                                     Content="{TemplateBinding DropdownContent}"
                                     Grid.Column="2"
                                     MaxWidth="20"
+                                    Margin="10 0"
                                     Visibility="{TemplateBinding ShowDropdown, Converter={StaticResource BoolToVis}}"/>
 
                                 <Label Grid.Column="2"
@@ -80,6 +89,18 @@
                                     <Label.Content>
                                         <WrapPanel>
                                             <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType={x:Type StackPanel}}, Path=DataContext.Points}"/>
+                                            <TextBlock>
+                                                <TextBlock.Style>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding MAXPoints, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}/{0}}"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding MAXPoints, RelativeSource={RelativeSource TemplatedParent}}" Value="0">
+                                                                <Setter Property="Text" Value=""/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </TextBlock.Style>
+                                            </TextBlock>
                                             <TextBlock Text="{DynamicResource points}"/>
                                         </WrapPanel>
                                     </Label.Content>
@@ -97,7 +118,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LatexLabel}">
-                    <ContentControl Content="{TemplateBinding Content}"/>
+                    <ContentPresenter Content="{TemplateBinding Content}" 
+                                      HorizontalAlignment="Left">
+                        <ContentPresenter.Resources>
+                            <Style TargetType="TextBlock" BasedOn="{StaticResource ltlbl}"/>
+                        </ContentPresenter.Resources>
+                    </ContentPresenter>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -211,14 +237,16 @@
 
             <StackPanel Margin="15">
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Margin="0 0 0 15"/>
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel HorizontalAlignment="Stretch">
-                    <Label Content="{DynamicResource pointsFull}"/>
+                    <Label Content="{DynamicResource pointsFull}"
+                           Style="{DynamicResource MediumLabel}"/>
 
                     <!-- Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" -->
-                    <TextBox 
+                    <TextBox FontSize="14"
                              MinWidth="30">
                         <TextBox.Text>
                             <Binding Path="Points" Mode="TwoWay">
@@ -230,7 +258,8 @@
                     </TextBox>
                     
                 </WrapPanel>
-                <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                          FontSize="14"/>
             </StackPanel>
         </local:QuestionPanel>
     </ControlTemplate>
@@ -297,7 +326,8 @@
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
                 <local:LatexTextBox IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Margin="0 0 0 15"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -319,7 +349,7 @@
                                             </Style.Triggers>
                                             <Setter Property="Visibility" Value="Collapsed"/>
                                         </Style>
-                                </WrapPanel.Style>
+                                    </WrapPanel.Style>
                                     <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
                                             Height="20">
@@ -377,16 +407,28 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <WrapPanel HorizontalAlignment="Left">
-                    <Button Content="+"
+                    <Button Content="{DynamicResource addposans}"
+                            ContentStringFormat="+ {0}"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                             CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
-                            Width="20"
                             Margin="15 5"/>
                 </WrapPanel>
-                <WrapPanel>
-                    <Label Content="{DynamicResource pointsFull}"/>
-                    <TextBox Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                             MinWidth="30"/>
+                <WrapPanel HorizontalAlignment="Stretch">
+                    <Label Content="{DynamicResource pointsFull}"
+                           Style="{DynamicResource MediumLabel}"/>
+
+                    <!-- Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" -->
+                    <TextBox FontSize="14"
+                             MinWidth="30">
+                        <TextBox.Text>
+                            <Binding Path="Points" Mode="TwoWay">
+                                <Binding.ValidationRules>
+                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
+
                 </WrapPanel>
                 <CheckBox Content="Math" IsChecked="{Binding QuestionMC.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
             </StackPanel>
@@ -455,7 +497,8 @@
             </local:QuestionPanel.DropdownContent>
             <StackPanel Margin="15">
                 <local:LatexTextBox IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
+                                    Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                    Margin="0 0 0 15"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
                     <ItemsControl.ItemTemplate>
@@ -534,10 +577,10 @@
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
                 <WrapPanel HorizontalAlignment="Left">
-                    <Button Content="+"
+                    <Button Content="{DynamicResource addposans}"
+                            ContentStringFormat="+ {0}"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                            CommandParameter="{Binding QuestionMCM, RelativeSource={RelativeSource TemplatedParent}}" 
-                            Width="20"
+                            CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
                             Margin="15 5"/>
                 </WrapPanel>
                 <WrapPanel>
@@ -610,7 +653,8 @@
 
                 <local:LatexLabel
                                     Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
-                                    IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"/>
+                                    IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                    Margin="0 0 0 15"/>
 
                 <TextBlock Text="Short answer"/>
             </StackPanel>
@@ -627,7 +671,7 @@
                 <local:LatexLabel
                                     Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
-                                    Margin="0,0,0,10"/>
+                                    Margin="0 0 0 15"/>
 
                 <local:LatexTextBox Text="{Binding QuestionSH.Answer.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
@@ -681,8 +725,6 @@
                                     Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0 0 0 15"/>
-
-                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
                               Margin="2">
@@ -768,8 +810,6 @@
                                     Text="{Binding QuestionMCM.Text, RelativeSource={RelativeSource TemplatedParent}}"
                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Margin="0 0 0 15"/>
-
-                <TextBlock Text="{DynamicResource possibleAnswers}"/>
 
                 <ItemsControl ItemsSource="{Binding QuestionMCM.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}"
                               Margin="2">
@@ -1093,7 +1133,10 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:TemplateTextBox}">
                     <Grid Margin="{TemplateBinding Margin}">
-                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"/>
+                        <TextBox Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged}"
+                                 TextWrapping="{TemplateBinding TextWrapping}"
+                                 VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                 MinWidth="300"/>
                         <TextBlock IsHitTestVisible="False" Text="{TemplateBinding Placeholder}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0" Foreground="DarkGray">
                             <TextBlock.Style>
                                 <Style TargetType="{x:Type TextBlock}">
@@ -1116,7 +1159,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:LatexTextBox}">
-                    <local:TemplateTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <local:TemplateTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                                           HorizontalAlignment="Left"
+                                           TextWrapping="Wrap"
+                                           MaxWidth="1100"
+                                           FontSize="16"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -1882,11 +1929,19 @@
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelSH}">
 
                     <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
+                        <local:QuestionPanel.MAXPoints>
+                            <MultiBinding Converter="{StaticResource PointsOutOfConv}">
+                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                <Binding Path="UniqueId" />
+                            </MultiBinding>
+                        </local:QuestionPanel.MAXPoints>
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"
-                                    Margin="0,0,0,15"/>
-                            <WrapPanel>
+                                              IsMath="{Binding TextIsMath}"
+                                              Margin="0,0,0,15"/>
+                            <WrapPanel Margin="0 0 0 10">
+                                <TextBlock Text="{DynamicResource answerdots}"
+                                           VerticalAlignment="Center"/>
                                 <local:LatexLabel Text="{Binding Answer.Text}" 
                                           IsMath="{Binding TextIsMath}"/>
                                 <Viewbox Height="12"
@@ -1914,14 +1969,19 @@
                                 </Viewbox>
                             </WrapPanel>
 
-                            <local:LatexLabel IsMath="{Binding TextIsMath}">
-                                <local:LatexLabel.Text>
-                                    <MultiBinding Converter="{StaticResource TestUIDSHConv}">
-                                        <Binding Path="UniqueId"/>
-                                        <Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
-                                    </MultiBinding>
-                                </local:LatexLabel.Text>
-                            </local:LatexLabel>
+                            <WrapPanel>
+
+                                <TextBlock Text="{DynamicResource correctdots}"
+                                           VerticalAlignment="Center"/>
+                                <local:LatexLabel IsMath="{Binding TextIsMath}">
+                                    <local:LatexLabel.Text>
+                                        <MultiBinding Converter="{StaticResource TestUIDSHConv}">
+                                            <Binding Path="UniqueId"/>
+                                            <Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                        </MultiBinding>
+                                    </local:LatexLabel.Text>
+                                </local:LatexLabel>
+                            </WrapPanel>
 
                             <TextBox 
                                      IsEnabled="{TemplateBinding IsTeacher}"
@@ -1947,10 +2007,16 @@
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMC}">
 
                     <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
+                        <local:QuestionPanel.MAXPoints>
+                            <MultiBinding Converter="{StaticResource PointsOutOfConv}">
+                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMC}}"/>
+                                <Binding Path="UniqueId" />
+                            </MultiBinding>
+                        </local:QuestionPanel.MAXPoints>
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"
-                                    Margin="0,0,0,15"/>
+                                              IsMath="{Binding TextIsMath}"
+                                              Margin="0,0,0,15"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                 <ItemsControl.ItemContainerStyle>
                                     <Style TargetType="ContentPresenter">
@@ -2010,10 +2076,16 @@
                 <ControlTemplate TargetType="{x:Type local:QuestionSubmPanelMCM}">
 
                     <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
+                        <local:QuestionPanel.MAXPoints>
+                            <MultiBinding Converter="{StaticResource PointsOutOfConv}">
+                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelMCM}}"/>
+                                <Binding Path="UniqueId" />
+                            </MultiBinding>
+                        </local:QuestionPanel.MAXPoints>
                         <StackPanel Margin="15">
                             <local:LatexLabel Text="{Binding Text}" 
-                                          IsMath="{Binding TextIsMath}"
-                                    Margin="0,0,0,15"/>
+                                              IsMath="{Binding TextIsMath}"
+                                              Margin="0,0,0,15"/>
                             <ItemsControl ItemsSource="{Binding PossibleAnswers}">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
@@ -2076,9 +2148,11 @@
                                         </MultiBinding>
                                     </Setter.Value>
                                 </Setter>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
                             </Style>
                         </Expander.Style>
-                        <StackPanel>
+                        <StackPanel HorizontalAlignment="Stretch">
 
                             <Grid>
                                 <Grid.ColumnDefinitions>
@@ -2087,9 +2161,18 @@
                                 </Grid.ColumnDefinitions>
 
                                 <StackPanel Grid.Column="0">
-                                    <Label Content="{Binding TimeSubmitted}"/>
-                                    <Label Content="{Binding Points}"/>
-                                    <Label Content="{Binding Code}"/>
+                                    <WrapPanel>
+                                        <Label Content="{DynamicResource timeSubmitted}"/>
+                                        <Label Content="{Binding TimeSubmitted}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label Content="{DynamicResource pointsdots}"/>
+                                        <Label Content="{Binding Points}"/>
+                                    </WrapPanel>
+                                    <WrapPanel>
+                                        <Label Content="{DynamicResource reviewcodedots}"/>
+                                        <Label Content="{Binding Code}"/>
+                                    </WrapPanel>
                                 </StackPanel>
 
                                 <StackPanel Grid.Column="1"

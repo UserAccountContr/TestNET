@@ -39,8 +39,15 @@
     <system:String x:Key="pointsFull">Points</system:String>
 
     <system:String x:Key="addQuestion">Add question</system:String>
+    <system:String x:Key="addposans">Add answer</system:String>
 
     <system:String x:Key="shortAnswer">Short answer</system:String>
+    <system:String x:Key="answerdots">Answer:&#xa0;</system:String>
+    <system:String x:Key="correctdots">Correct:&#xa0;</system:String>
     <system:String x:Key="multipleChoice">Multiple choice</system:String>
     <system:String x:Key="multipleChoiceManyCorrect">Multiple choice (Many correct)</system:String>
+
+    <system:String x:Key="timeSubmitted">Time submitted:</system:String>
+    <system:String x:Key="pointsdots">Points:</system:String>
+    <system:String x:Key="reviewcodedots">Review code:</system:String>
 </ResourceDictionary>

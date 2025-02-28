@@ -207,7 +207,7 @@ public class TestService
                     return false;
 
                 MessageBox.Show(
-                    $"When the teacher tells you, use this code to check your results:\n{response.ReviewCode}",
+                    $"Submission successful!\n\nReview code:\n{response.ReviewCode}",
                     "Info",
                     MessageBoxButton.OK,
                     MessageBoxImage.Information

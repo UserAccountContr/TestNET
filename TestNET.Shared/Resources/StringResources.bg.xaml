@@ -39,8 +39,15 @@
     <system:String x:Key="pointsFull">Точки</system:String>
 
     <system:String x:Key="addQuestion">Добави въпрос</system:String>
+    <system:String x:Key="addposans">Добави отговор</system:String>
 
     <system:String x:Key="shortAnswer">Кратък отворен отговор</system:String>
+    <system:String x:Key="answerdots">Отговор:&#xa0;</system:String>
+    <system:String x:Key="correctdots">Верен:&#xa0;</system:String>
     <system:String x:Key="multipleChoice">Избираем отговор</system:String>
     <system:String x:Key="multipleChoiceManyCorrect">Избираем отговор (Множество верни)</system:String>
+
+    <system:String x:Key="timeSubmitted">Час на предаване:</system:String>
+    <system:String x:Key="pointsdots">Точки:</system:String>
+    <system:String x:Key="reviewcodedots">Парола за преглед:</system:String>
 </ResourceDictionary>
