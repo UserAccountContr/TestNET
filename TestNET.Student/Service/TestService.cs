@@ -153,7 +153,7 @@ public class TestService
                         MessageBox.Show("Invalid credentials.", "Review", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
                     case "Test has not been graded yet":
-                        MessageBox.Show("The test has not been graded yet.", "Review", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show("The test has not been graded yet.", "Review", MessageBoxButton.OK, MessageBoxImage.Information);
                         break;
                 }
 
@@ -198,6 +198,12 @@ public class TestService
                     Array.Resize(ref responseBytes, responseLength + 1024);
                 }
 
+                if (responseLength == 0)
+                {
+                    MessageBox.Show("Something unexpected happened. The test was probably switched before you submitted.", "Submission", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+
                 Array.Resize(ref responseBytes, responseLength - 1);
 
                 stream.Write([0xff], 0, 1); // Acknowledge
@@ -225,6 +231,10 @@ public class TestService
         catch (SocketException e)
         {
             //Console.WriteLine("SocketException: {0}", e);
+        }
+        catch
+        {
+
         }
 
         //MessageBox.Show(string.Join('\n', test.Questions.Select(x => x.Answer.Text)));
