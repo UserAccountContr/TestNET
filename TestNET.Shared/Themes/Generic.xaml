@@ -112,7 +112,9 @@
 
                             <Style TargetType="Button">
                                 <Setter Property="Background" Value="Transparent"/>
-                                <Setter Property="Padding" Value="20 10"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                             </Style>
                         </Grid.Resources>
                         <CheckBox x:Name="PART_Toggle" IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
@@ -136,7 +138,8 @@
                             IsOpen="{TemplateBinding IsOpen}"
                             Placement="Bottom"
                             PlacementTarget="{Binding ElementName=PART_Toggle}"
-                            StaysOpen="False">
+                            StaysOpen="False"
+                            MinWidth="150">
                             <ContentControl Content="{TemplateBinding Content}"/>
                         </Popup>
                     </Grid>
@@ -149,44 +152,59 @@
         <local:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}"
                              ShowDropdown="True">
             <local:QuestionPanel.DropdownContent>
-                <StackPanel>
-                    <Button Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                <StackPanel Background="White">
+                    <Button Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Delete</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="{StaticResource delete}"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
-                    <Button Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
+                    <Button Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Up</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move up"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
-                    <Button Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
+                    <Button Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}">
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Down</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move down"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
                 </StackPanel>
             </local:QuestionPanel.DropdownContent>
@@ -223,42 +241,57 @@
             <local:QuestionPanel.DropdownContent>
                 <StackPanel>
                     <Button Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Delete</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="{StaticResource delete}"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
                     <Button Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Up</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move up"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
                     <Button Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Down</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move down"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
                 </StackPanel>
             </local:QuestionPanel.DropdownContent>
@@ -366,42 +399,57 @@
             <local:QuestionPanel.DropdownContent>
                 <StackPanel>
                     <Button Command="{Binding DataContext.RemoveQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Delete</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="{StaticResource delete}"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
                     <Button Command="{Binding DataContext.MoveUpQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Up</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move up"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
 
                     <Button Command="{Binding DataContext.MoveDownQuestionCommand, RelativeSource={RelativeSource AncestorType=ListView}}" CommandParameter="{TemplateBinding Question}" Background="White">
-                        <WrapPanel>
-                            <Grid>
-                                <Viewbox Height="12">
-                                    <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
+                        <Grid HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="20"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Height="16"
+                                     Grid.Column="0">
+                                <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
                                           Fill="Black"
                                           Stretch="Fill"/>
-                                </Viewbox>
-                            </Grid>
-                            <Label>Move Down</Label>
-                        </WrapPanel>
+                            </Viewbox>
+                            <TextBlock Grid.Column="1" Text="Move down"
+                                       VerticalAlignment="Center"
+                                       Padding="10 0 0 0"/>
+                        </Grid>
                     </Button>
                 </StackPanel>
             </local:QuestionPanel.DropdownContent>
@@ -1447,6 +1495,30 @@
                                                                     Grid.Row="0"
                                                                     Grid.Column="2">
                                                                 <local:LatexLabel Text="\pi" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="sigma_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\sigma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="Sigma_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\Sigma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="PI_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\Pi" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="rho_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <local:LatexLabel Text="\rho" IsMath="True"/>
                                                             </Button>
 
                                                             <Button Name="Gamma_BTN"

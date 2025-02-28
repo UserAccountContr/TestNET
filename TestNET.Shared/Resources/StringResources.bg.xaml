@@ -23,6 +23,8 @@
     <system:String x:Key="language">Език</system:String>
     <system:String x:Key="testName">Име на теста:</system:String>
     <system:String x:Key="testNameView">Име на теста: {0}</system:String>
+    <system:String x:Key="moveup">Премести нагоре</system:String>
+    <system:String x:Key="movedown">Премести надолу</system:String>
 
     <system:String x:Key="testCodeView">Код на теста: {0}</system:String>
     <system:String x:Key="testNumberQuestions">Брой въпроси: {0}</system:String>

@@ -129,12 +129,42 @@
                             <CustomControls:DropdownMenu Grid.Column="1">
                                 <StackPanel Background="White">
 
-                                    <Button Content="{DynamicResource open}" 
-                                            Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                            CommandParameter="{Binding .}"/>
-                                    <Button Content="{DynamicResource delete}" 
-                                            Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                            CommandParameter="{Binding .}"/>
+                                    <Button Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                            CommandParameter="{Binding .}">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Viewbox Height="16"
+                                                     Grid.Column="0">
+                                                <Path Data="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v240h-80v-200H520v-200H240v640h360v80H240Zm638 15L760-183v89h-80v-226h226v80h-90l118 118-56 57Zm-638-95v-640 640Z"
+                                                      Fill="Black"
+                                                      Stretch="Fill"/>
+                                            </Viewbox>
+                                            <TextBlock Grid.Column="1" Text="{StaticResource open}"
+                                                       VerticalAlignment="Center"
+                                                       Padding="10 0 0 0"/>
+                                        </Grid>
+                                    </Button>
+                                    <Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                            CommandParameter="{Binding .}">
+                                        <Grid HorizontalAlignment="Stretch">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="20"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Viewbox Height="16"
+                                                     Grid.Column="0">
+                                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                                                      Fill="Black"
+                                                      Stretch="Fill"/>
+                                            </Viewbox>
+                                            <TextBlock Grid.Column="1" Text="{StaticResource delete}"
+                                                       VerticalAlignment="Center"
+                                                       Padding="10 0 0 0"/>
+                                        </Grid>
+                                    </Button>
                                 </StackPanel>
                             </CustomControls:DropdownMenu>
                         </Grid>

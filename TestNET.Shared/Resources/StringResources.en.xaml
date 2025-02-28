@@ -23,6 +23,8 @@
     <system:String x:Key="language">Language</system:String>
     <system:String x:Key="testName">Test Name:</system:String>
     <system:String x:Key="testNameView">Test Name: {0}</system:String>
+    <system:String x:Key="moveup">Move up</system:String>
+    <system:String x:Key="movedown">Move down</system:String>
     
     <system:String x:Key="testCodeView">Test Code: {0}</system:String>
     <system:String x:Key="testNumberQuestions">Number of questions: {0}</system:String>

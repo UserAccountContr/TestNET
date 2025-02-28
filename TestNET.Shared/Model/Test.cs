@@ -44,9 +44,6 @@ public class TeacherTest : Test
             else if (question is IManyAnswers)
             {
                 question.Points = ((IManyAnswers)Questions.Where(x => x.UniqueId == question.UniqueId).First()).Grade(((IManyAnswers)question).PossibleAnswers);
-
-                if (question.Points == 0) subm.RequiresAttention = true;
-
                 msg += question.Points;
             }
         }
