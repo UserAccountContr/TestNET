@@ -2184,6 +2184,11 @@
                             </Grid>
 
                             <ItemsControl ItemsSource="{Binding Answers.Questions}">
+                                <ItemsControl.ItemContainerStyle>
+                                    <Style TargetType="ContentPresenter">
+                                        <Setter Property="Margin" Value="0 10"/>
+                                    </Style>
+                                </ItemsControl.ItemContainerStyle>
                                 <ItemsControl.Resources>
                                     <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
                                         <local:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding DataContext.CorrectAnswers, RelativeSource={RelativeSource AncestorType=local:TestSubmPanel}}"

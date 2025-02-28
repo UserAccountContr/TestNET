@@ -7,6 +7,8 @@ public class TestService
 {
     private IPAddress? DecodeCode(string base64encoded)
     {
+        ip = null;
+
         string padded = base64encoded + new string('=', 4 - base64encoded.Length % 4);
 
         try
