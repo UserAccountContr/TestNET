@@ -150,6 +150,9 @@ public class TestService
                     case "Invalid credentials":
                         MessageBox.Show("Invalid credentials.", "Review", MessageBoxButton.OK, MessageBoxImage.Error);
                         break;
+                    case "Test has not been graded yet":
+                        MessageBox.Show("The test has not been graded yet.", "Review", MessageBoxButton.OK, MessageBoxImage.Error);
+                        break;
                 }
 
                 return response.Subm;
