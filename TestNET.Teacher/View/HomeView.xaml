@@ -142,7 +142,7 @@
                                                       Fill="Black"
                                                       Stretch="Fill"/>
                                             </Viewbox>
-                                            <TextBlock Grid.Column="1" Text="{StaticResource open}"
+                                            <TextBlock Grid.Column="1" Text="{DynamicResource open}"
                                                        VerticalAlignment="Center"
                                                        Padding="10 0 0 0"/>
                                         </Grid>
@@ -160,7 +160,7 @@
                                                       Fill="Black"
                                                       Stretch="Fill"/>
                                             </Viewbox>
-                                            <TextBlock Grid.Column="1" Text="{StaticResource delete}"
+                                            <TextBlock Grid.Column="1" Text="{DynamicResource delete}"
                                                        VerticalAlignment="Center"
                                                        Padding="10 0 0 0"/>
                                         </Grid>

@@ -1205,7 +1205,7 @@ public class MathKeyboardPanel : Control
             _epsilonbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) TextMode();
-                keyboardMemory.Insert(new StandardLeafNode(@"\epsilon"));
+                keyboardMemory.Insert(new StandardLeafNode(@"\varepsilon"));
                 await DisplayResultAsync();
             };
         }
