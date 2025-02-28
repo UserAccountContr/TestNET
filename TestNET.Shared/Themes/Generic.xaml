@@ -241,9 +241,12 @@
                                     Margin="0 0 0 15"/>
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
-                <WrapPanel HorizontalAlignment="Stretch">
-                    <Label Content="{DynamicResource pointsFull}"
-                           Style="{DynamicResource MediumLabel}"/>
+                <WrapPanel HorizontalAlignment="Right">
+                    <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                              FontSize="14"
+                              Margin="0 0 40 0"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"/>
 
                     <!-- Text="{Binding QuestionSH.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" -->
                     <TextBox FontSize="14"
@@ -256,10 +259,10 @@
                             </Binding>
                         </TextBox.Text>
                     </TextBox>
-                    
+                    <Label Content="{DynamicResource pointsFull}"
+                           Style="{DynamicResource MediumLabel}"/>
+
                 </WrapPanel>
-                <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                          FontSize="14"/>
             </StackPanel>
         </local:QuestionPanel>
     </ControlTemplate>
@@ -339,7 +342,8 @@
                                              VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
-                                <WrapPanel VerticalAlignment="Center">
+                                <WrapPanel VerticalAlignment="Center"
+                                           Margin="5 0">
                                     <WrapPanel.Style>
                                         <Style TargetType="WrapPanel">
                                             <Style.Triggers>
@@ -352,6 +356,7 @@
                                     </WrapPanel.Style>
                                     <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
@@ -369,6 +374,7 @@
                                     </Button>
                                     <Button Command="{Binding DataContext.MoveUpAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
@@ -386,6 +392,7 @@
                                     </Button>
                                     <Button Command="{Binding DataContext.MoveDownAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
@@ -405,32 +412,48 @@
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="0 1"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
-                <WrapPanel HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Button Content="{DynamicResource addposans}"
                             ContentStringFormat="+ {0}"
+                            Grid.Column="0"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                             CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
                             Margin="15 5"/>
-                </WrapPanel>
-                <WrapPanel HorizontalAlignment="Stretch">
-                    <Label Content="{DynamicResource pointsFull}"
-                           Style="{DynamicResource MediumLabel}"/>
+                    
+                    <WrapPanel HorizontalAlignment="Right"
+                               VerticalAlignment="Bottom"
+                               Grid.Column="1">
 
-                    <!-- Text="{Binding QuestionMC.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}" -->
-                    <TextBox FontSize="14"
-                             MinWidth="30">
-                        <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
+                        <CheckBox Content="Math" IsChecked="{Binding QuestionMC.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                              FontSize="14"
+                              Margin="0 0 40 0"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"/>
+                        <TextBox FontSize="14"
+                                 MinWidth="30">
+                            <TextBox.Text>
+                                <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="{DynamicResource pointsFull}"
+                               Style="{DynamicResource MediumLabel}"/>
 
-                </WrapPanel>
-                <CheckBox Content="Math" IsChecked="{Binding QuestionMC.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+                    </WrapPanel>
+                </Grid>
             </StackPanel>
         </local:QuestionPanel>
     </ControlTemplate>
@@ -509,7 +532,8 @@
                                           VerticalContentAlignment="Center"/>
                                 <local:LatexTextBox Text="{Binding Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                                     IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType=local:QuestionEditPanel}}"/>
-                                <WrapPanel>
+                                <WrapPanel VerticalAlignment="Center"
+                                           Margin="5 0">
                                     <WrapPanel.Style>
                                         <Style TargetType="WrapPanel">
                                             <Style.Triggers>
@@ -522,6 +546,7 @@
                                     </WrapPanel.Style>
                                     <Button Command="{Binding DataContext.RemAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
@@ -539,35 +564,37 @@
                                     </Button>
                                     <Button Command="{Binding DataContext.MoveUpAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
-                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="QuestionMCM" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
                                                 <Binding Path="."/>
                                             </MultiBinding>
                                         </Button.CommandParameter>
                                         <Grid>
                                             <Viewbox>
                                                 <Path Data="M440-160v-487L216-423l-56-57 320-320 320 320-56 57-224-224v487h-80Z"
-                                                      Fill="Black"
-                                                      Stretch="Fill"/>
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
                                             </Viewbox>
                                         </Grid>
                                     </Button>
                                     <Button Command="{Binding DataContext.MoveDownAnsFromQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                                             Padding="2"
+                                            Margin="2 0"
                                             Height="20">
                                         <Button.CommandParameter>
                                             <MultiBinding Converter="{StaticResource MultiConv}">
-                                                <Binding Path="QuestionMC" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
+                                                <Binding Path="QuestionMCM" RelativeSource="{RelativeSource AncestorType=local:QuestionEditPanel}"/>
                                                 <Binding Path="."/>
                                             </MultiBinding>
                                         </Button.CommandParameter>
                                         <Grid>
                                             <Viewbox>
                                                 <Path Data="M440-800v487L216-537l-56 57 320 320 320-320-56-57-224 224v-487h-80Z"
-                                                      Fill="Black"
-                                                      Stretch="Fill"/>
+                                                  Fill="Black"
+                                                  Stretch="Fill"/>
                                             </Viewbox>
                                         </Grid>
                                     </Button>
@@ -575,28 +602,48 @@
                             </WrapPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="0 1"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
                 </ItemsControl>
-                <WrapPanel HorizontalAlignment="Left">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
                     <Button Content="{DynamicResource addposans}"
                             ContentStringFormat="+ {0}"
+                            Grid.Column="0"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
                             CommandParameter="{Binding QuestionMCM, RelativeSource={RelativeSource TemplatedParent}}" 
                             Margin="15 5"/>
-                </WrapPanel>
-                <WrapPanel>
-                    <Label Content="Pts:"/>
-                    <TextBox FontSize="14"
-                             MinWidth="30">
-                        <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </TextBox.Text>
-                    </TextBox>
-                </WrapPanel>
-                <CheckBox Content="Math" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                    <WrapPanel HorizontalAlignment="Right"
+                               VerticalAlignment="Bottom"
+                               Grid.Column="1">
+
+                        <CheckBox Content="Math" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                              FontSize="14"
+                              Margin="0 0 40 0"
+                              VerticalAlignment="Center"
+                              VerticalContentAlignment="Center"/>
+                        <TextBox FontSize="14"
+                                 MinWidth="30">
+                            <TextBox.Text>
+                                <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding.ValidationRules>
+                                        <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                    </Binding.ValidationRules>
+                                </Binding>
+                            </TextBox.Text>
+                        </TextBox>
+                        <Label Content="{DynamicResource pointsFull}"
+                               Style="{DynamicResource MediumLabel}"/>
+
+                    </WrapPanel>
+                </Grid>
             </StackPanel>
         </local:QuestionPanel>
     </ControlTemplate>

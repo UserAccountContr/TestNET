@@ -105,9 +105,8 @@
                         </ListView.ItemContainerStyle>
                     </ListView>
                 </Expander>
-                <Expander Header="{DynamicResource testSettings}"
-                          ExpandDirection="Down">
-                    <StackPanel>
+                <Expander Header="{DynamicResource testSettings}">
+                    <StackPanel Margin="10 5">
                         <CheckBox Content="{DynamicResource testAllowReviewing}" 
                                       IsChecked="{Binding LogService.SubmissionsViewable}"/>
 
