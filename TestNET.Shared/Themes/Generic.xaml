@@ -249,7 +249,7 @@
                     <TextBox FontSize="14"
                              MinWidth="30">
                         <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay">
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                 </Binding.ValidationRules>
@@ -421,7 +421,7 @@
                     <TextBox FontSize="14"
                              MinWidth="30">
                         <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay">
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                 </Binding.ValidationRules>
@@ -580,13 +580,21 @@
                     <Button Content="{DynamicResource addposans}"
                             ContentStringFormat="+ {0}"
                             Command="{Binding DataContext.AddPosAnsToQCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
-                            CommandParameter="{Binding QuestionMC, RelativeSource={RelativeSource TemplatedParent}}" 
+                            CommandParameter="{Binding QuestionMCM, RelativeSource={RelativeSource TemplatedParent}}" 
                             Margin="15 5"/>
                 </WrapPanel>
                 <WrapPanel>
                     <Label Content="Pts:"/>
-                    <TextBox Text="{Binding QuestionMCM.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                             MinWidth="30"/>
+                    <TextBox FontSize="14"
+                             MinWidth="30">
+                        <TextBox.Text>
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </WrapPanel>
                 <CheckBox Content="Math" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
             </StackPanel>
@@ -827,7 +835,7 @@
                                     </Style>
                                 </CheckBox.Style>
                                 <local:LatexLabel Text="{Binding Text}"
-                                                  IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionViewPanel}}}"/>
+                                                  IsMath="{Binding QuestionMCM.TextIsMath, RelativeSource={RelativeSource AncestorType={x:Type local:QuestionViewPanel}}}"/>
                             </CheckBox>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
@@ -1987,7 +1995,7 @@
                                      IsEnabled="{TemplateBinding IsTeacher}"
                                      Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}">
                                 <TextBox.Text>
-                                    <Binding Path="Points" Mode="TwoWay">
+                                    <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:0.0#}">
                                         <Binding.ValidationRules>
                                             <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                         </Binding.ValidationRules>
