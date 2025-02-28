@@ -249,7 +249,7 @@
                     <TextBox FontSize="14"
                              MinWidth="30">
                         <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay">
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                 </Binding.ValidationRules>
@@ -421,7 +421,7 @@
                     <TextBox FontSize="14"
                              MinWidth="30">
                         <TextBox.Text>
-                            <Binding Path="Points" Mode="TwoWay">
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
                                 <Binding.ValidationRules>
                                     <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                 </Binding.ValidationRules>
@@ -585,8 +585,16 @@
                 </WrapPanel>
                 <WrapPanel>
                     <Label Content="Pts:"/>
-                    <TextBox Text="{Binding QuestionMCM.Points, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
-                             MinWidth="30"/>
+                    <TextBox FontSize="14"
+                             MinWidth="30">
+                        <TextBox.Text>
+                            <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </TextBox.Text>
+                    </TextBox>
                 </WrapPanel>
                 <CheckBox Content="Math" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"/>
             </StackPanel>
@@ -1987,7 +1995,7 @@
                                      IsEnabled="{TemplateBinding IsTeacher}"
                                      Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}">
                                 <TextBox.Text>
-                                    <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                                    <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:0.0#}">
                                         <Binding.ValidationRules>
                                             <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
                                         </Binding.ValidationRules>

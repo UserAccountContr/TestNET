@@ -314,6 +314,10 @@ public class TestService(LogService logService)
     public void handleSubmissionRequest(SubmissionRequest request, TeacherTest test, NetworkStream stream)
     {
         Submission temp = request.Submission;
+        //if (temp.Answers.Name != test.Name)
+        //{
+        //
+        //}
         test.Grade(ref temp);
         temp.CorrectAnswers = test.NormalTest();                //must be reworked for the nac. krug :)
 
