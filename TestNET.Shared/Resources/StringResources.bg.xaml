@@ -34,7 +34,7 @@
 
     <system:String x:Key="testShuffle">Размести въпросите на теста</system:String>
     <system:String x:Key="testAllowReviewing">Разреши преглед на резултати</system:String>
-    <system:String x:Key="possibleAnswers">Възможни отговори</system:String>
+    <system:String x:Key="possibleAnswers">Възможни отговори:</system:String>
     <system:String x:Key="points">&#xa0;т.</system:String>
     <system:String x:Key="pointsFull">Точки</system:String>
 

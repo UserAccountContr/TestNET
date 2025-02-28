@@ -34,7 +34,7 @@
 
     <system:String x:Key="testShuffle">Shuffle test questions</system:String>
     <system:String x:Key="testAllowReviewing">Allow viewing submissions</system:String>
-    <system:String x:Key="possibleAnswers">Possible answers</system:String>
+    <system:String x:Key="possibleAnswers">Possible answers:</system:String>
     <system:String x:Key="points">&#xa0;pts.</system:String>
     <system:String x:Key="pointsFull">Points</system:String>
 

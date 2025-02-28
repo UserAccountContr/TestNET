@@ -94,8 +94,8 @@
                 -->
 
             <ListView ItemsSource="{Binding Path=Tests}" 
-                  Grid.Row="0"
-                  Name="TestView">
+                      Grid.Row="0"
+                      Name="TestView">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>

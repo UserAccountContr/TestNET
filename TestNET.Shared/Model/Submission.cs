@@ -17,6 +17,7 @@ public partial class Submission : ObservableObject
     public DateTime TimeSubmitted { get; set; }
 
     public float Points => Answers.Questions.Sum(x => x.Points);
+    public float MaxPoints => CorrectAnswers?.Questions.Sum(x => x.Points) ?? 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Points))]

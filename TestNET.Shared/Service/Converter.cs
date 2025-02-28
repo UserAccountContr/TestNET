@@ -196,3 +196,18 @@ public class FloatRangeValidationRule : ValidationRule
         return new ValidationResult(false, "Invalid number");
     }
 }
+
+public class PointsOutOfMaxConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        if (values.Length == 2 && values[0] is float points && values[1] is float max)
+            return $@"{points}/{max}";
+        return "0";
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
