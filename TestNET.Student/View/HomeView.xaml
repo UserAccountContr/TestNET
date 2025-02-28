@@ -77,6 +77,7 @@
             <Button Content="Get test"
                     Command="{Binding GoToTestOverviewCommand}"
                     IsEnabled="{Binding CanStart}"
+                    Background="White"
                     Margin="190 0"
                     Padding="10"
                     Visibility="{Binding NotRevMode, Converter={StaticResource bvc}}">
@@ -95,6 +96,7 @@
             <Button Content="Review test"
                     Command="{Binding GoToSubmReviewCommand}"
                     IsEnabled="{Binding CanStartReview}"
+                    Background="White"
                     Margin="190 0"
                     Padding="10"
                     Visibility="{Binding RevMode, Converter={StaticResource bvc}}">
@@ -117,6 +119,7 @@
                            Style="{StaticResource MediumLabel}"/>
                     <Button Content="&gt;"
                             Padding="7 0"
+                            Background="White"
                             IsEnabled="{Binding IsNotGettingTest}"
                             Command="{Binding EnableRevModeCommand}"/>
                 </WrapPanel>
@@ -125,6 +128,7 @@
                            Visibility="{Binding RevMode, Converter={StaticResource bvc}}">
                     <Button Content="&lt;"
                             Padding="7 0"
+                            Background="White"
                             IsEnabled="{Binding IsNotGettingTest}"
                             Command="{Binding DisableRevModeCommand}"/>
                     <Label Content="Cancel Review"
