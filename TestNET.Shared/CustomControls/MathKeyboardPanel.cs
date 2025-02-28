@@ -481,7 +481,7 @@ public class MathKeyboardPanel : Control
                 {
                     if (Text != TempText)
                     {
-                        var result = MessageBox.Show("Save changes?", "Leave math", MessageBoxButton.YesNoCancel);
+                        var result = MessageBox.Show("Save changes?", "Leave math", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                         switch (result)
                         {
                             case MessageBoxResult.Yes:
@@ -1882,7 +1882,7 @@ public class MathKeyboardPanel : Control
     private static BranchingNode GetLogNode() => new StandardBranchingNode(@"\log_{", "}");
     private static BranchingNode GetLnNode() => new StandardBranchingNode(@"\ln{", "}");
     private static BranchingNode GetLgNode() => new StandardBranchingNode(@"\lg{", "}");
-    private static BranchingNode GetLog2Node() => new StandardBranchingNode(@"\log_2{", "}");
+    private static LeafNode GetLog2Node() => new StandardLeafNode(@"\log_2");
     private static BranchingNode GetNthRootNode() => new DescendingBranchingNode(@"\sqrt[", "]{", "}");
     private static BranchingNode GetPipesNode() => new StandardBranchingNode(@"\left|", @"\right|");
     private static BranchingNode GetDoublePipesNode() => new StandardBranchingNode(@"\left\|", @"\right\|");
