@@ -117,6 +117,10 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = perp_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = parallel_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = ang_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = log_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = log2_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = log10_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = ln_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -234,7 +238,11 @@ public class MathKeyboardPanel : Control
     private const string perp_BTN_NAME = "perp_BTN";
     private const string parallel_BTN_NAME = "parallel_BTN";
     private const string ang_BTN_NAME = "ANG_BTN";
-    
+    private const string log_BTN_NAME = "LOG_BTN";
+    private const string log2_BTN_NAME = "LOGTWO_BTN";
+    private const string log10_BTN_NAME = "LOGTEN_BTN";
+    private const string ln_BTN_NAME = "LN_BTN";
+
     private Grid? _grid;
     private CheckBox? _toggle;
     private Button? _savebtn;
@@ -347,6 +355,10 @@ public class MathKeyboardPanel : Control
     private Button? _perpbtn;
     private Button? _parallelbtn;
     private Button? _angbtn;
+    private Button? _logbtn;
+    private Button? _log2btn;
+    private Button? _log10btn;
+    private Button? _lnbtn;
 
     #region Properties
 
@@ -469,7 +481,7 @@ public class MathKeyboardPanel : Control
                 {
                     if (Text != TempText)
                     {
-                        var result = MessageBox.Show("Save changes?", "Leave math", MessageBoxButton.YesNoCancel);
+                        var result = MessageBox.Show("Save changes?", "Leave math", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
                         switch (result)
                         {
                             case MessageBoxResult.Yes:
@@ -1667,6 +1679,50 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _logbtn = Template.FindName(log_BTN_NAME, this) as Button;
+        if (_logbtn is not null)
+        {
+            _logbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetLogNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _log2btn = Template.FindName(log2_BTN_NAME, this) as Button;
+        if (_log2btn is not null)
+        {
+            _log2btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetLog2Node());
+                await DisplayResultAsync();
+            };
+        }
+
+        _log10btn = Template.FindName(log10_BTN_NAME, this) as Button;
+        if (_log10btn is not null)
+        {
+            _log10btn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetLgNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _lnbtn = Template.FindName(ln_BTN_NAME, this) as Button;
+        if (_lnbtn is not null)
+        {
+            _lnbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetLnNode());
+                await DisplayResultAsync();
+            };
+        }
+
         _sysbtn = Template.FindName(sys_BTN_NAME, this) as Button;
         if (_sysbtn is not null)
         {
@@ -1822,6 +1878,11 @@ public class MathKeyboardPanel : Control
     private static BranchingNode GetDegreeNode() => new StandardBranchingNode("", @"^{\circ}");
     private static BranchingNode GetSubscriptNode() => new DescendingBranchingNode("", "_{", "}");
     private static BranchingNode GetSquareRootNode() => new StandardBranchingNode(@"\sqrt{", "}");
+
+    private static BranchingNode GetLogNode() => new StandardBranchingNode(@"\log_{", "}");
+    private static BranchingNode GetLnNode() => new StandardBranchingNode(@"\ln{", "}");
+    private static BranchingNode GetLgNode() => new StandardBranchingNode(@"\lg{", "}");
+    private static LeafNode GetLog2Node() => new StandardLeafNode(@"\log_2");
     private static BranchingNode GetNthRootNode() => new DescendingBranchingNode(@"\sqrt[", "]{", "}");
     private static BranchingNode GetPipesNode() => new StandardBranchingNode(@"\left|", @"\right|");
     private static BranchingNode GetDoublePipesNode() => new StandardBranchingNode(@"\left\|", @"\right\|");
