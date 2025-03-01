@@ -5,10 +5,10 @@
     <system:String x:Key="test">Test</system:String>
     <system:String x:Key="tests">Tests</system:String>
     <system:String x:Key="questions">Questions</system:String>
-    <system:String x:Key="add">Add</system:String>
+    <system:String x:Key="add">New test</system:String>
     <system:String x:Key="save">Save</system:String>
     <system:String x:Key="load">Load</system:String>
-    <system:String x:Key="import">Import</system:String>
+    <system:String x:Key="import">Import test</system:String>
     <system:String x:Key="open">Open</system:String>
     <system:String x:Key="delete">Delete</system:String>
     <system:String x:Key="back">Back</system:String>
@@ -51,4 +51,6 @@
     <system:String x:Key="timeSubmitted">Time submitted:</system:String>
     <system:String x:Key="pointsdots">Points:</system:String>
     <system:String x:Key="reviewcodedots">Review code:</system:String>
+
+    <system:String x:Key="requiresAttention">Requires attention</system:String>
 </ResourceDictionary>

@@ -5,10 +5,10 @@
     <system:String x:Key="test">Тест</system:String>
     <system:String x:Key="tests">Тестове</system:String>
     <system:String x:Key="questions">Въпроси</system:String>
-    <system:String x:Key="add">Добави</system:String>
+    <system:String x:Key="add">Нов тест</system:String>
     <system:String x:Key="save">Запиши</system:String>
     <system:String x:Key="load">Зареди</system:String>
-    <system:String x:Key="import">Импортирай</system:String>
+    <system:String x:Key="import">Импортирай тест</system:String>
     <system:String x:Key="open">Отвори</system:String>
     <system:String x:Key="delete">Изтрий</system:String>
     <system:String x:Key="back">Назад</system:String>
@@ -51,4 +51,6 @@
     <system:String x:Key="timeSubmitted">Час на предаване:</system:String>
     <system:String x:Key="pointsdots">Точки:</system:String>
     <system:String x:Key="reviewcodedots">Парола за преглед:</system:String>
+
+    <system:String x:Key="requiresAttention">Изисква внимание</system:String>
 </ResourceDictionary>
