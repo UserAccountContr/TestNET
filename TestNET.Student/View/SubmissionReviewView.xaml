@@ -16,15 +16,39 @@
 
     <UserControl.Resources>
         <sharedserv:IndexConverter x:Key="IndexConverter"/>
+        <sharedserv:PointsOutOfMaxConverter x:Key="PointsOutOfMaxConv"/>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
     </UserControl.Resources>
     
     <Grid>
         <ScrollViewer>
-            <StackPanel>
-                <Label Content="{Binding Submission.Name}"/>
-                <Label Content="{Binding Submission.TimeSubmitted}"/>
-                <Label Content="{Binding Submission.Points}"/>
+            <StackPanel Width="1200">
+                <WrapPanel>
+                    <Label Content="{DynamicResource name}"/>
+                    <Label Content="{Binding Submission.Name}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="{DynamicResource timeSubmitted}"/>
+                    <Label Content="{Binding Submission.TimeSubmitted}"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <Label Content="{DynamicResource pointsdots}"/>
+                    <Label>
+                        <MultiBinding Converter="{StaticResource PointsOutOfMaxConv}">
+                            <Binding Path="Submission.Points"/>
+                            <Binding Path="Submission.MaxPoints"/>
+                        </MultiBinding>
+                    </Label>
+                </WrapPanel>
                 <ItemsControl ItemsSource="{Binding Submission.Answers.Questions}">
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Margin" Value="0 10"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
                     <ItemsControl.Resources>
                         
                         <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">

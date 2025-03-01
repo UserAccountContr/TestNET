@@ -15,18 +15,10 @@
     d:DesignHeight="720" d:DesignWidth="1280">
 
     <UserControl.Resources>
-        <Style x:Key="BorderSt" TargetType="Border">
-            <Setter Property="BorderBrush" Value="#FF80c0ff"/>
-            <Setter Property="Background" Value="#FFa0d0ff"/>
-            <Setter Property="BorderThickness" Value="2"/>
-            <Setter Property="CornerRadius" Value="4"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"/>
-        </Style>
-        
         <BooleanToVisibilityConverter x:Key="bvc"/>
     </UserControl.Resources>
 
-    <Border Style="{StaticResource BorderSt}"
+    <Border Style="{DynamicResource BorderSt}"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
         <StackPanel Width="500"

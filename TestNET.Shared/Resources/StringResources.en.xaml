@@ -17,6 +17,7 @@
     <system:String x:Key="edit">Edit</system:String>
     <system:String x:Key="fname">First name</system:String>
     <system:String x:Key="lname">Last name</system:String>
+    <system:String x:Key="name">Name:</system:String>
     <system:String x:Key="testcode">Test code</system:String>
     <system:String x:Key="notext">No text entered</system:String>
     <system:String x:Key="settings">Settings</system:String>

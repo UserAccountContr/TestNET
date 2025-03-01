@@ -17,6 +17,7 @@
     <system:String x:Key="edit">Редактирай</system:String>
     <system:String x:Key="fname">Име</system:String>
     <system:String x:Key="lname">Фамилия</system:String>
+    <system:String x:Key="name">Име:</system:String>
     <system:String x:Key="testcode">Код на теста</system:String>
     <system:String x:Key="notext">Не е въведен текст</system:String>
     <system:String x:Key="settings">Настройки</system:String>
