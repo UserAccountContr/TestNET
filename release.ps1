@@ -109,7 +109,7 @@ try {
         Remove-Item -Path "./$projDir/$appName.application"
     }
     if (Test-Path "./$projDir/$appName.setup.exe") {
-        Remove-Item -Path "./$projDir/setup.exe"
+        Remove-Item -Path "./$projDir/$appName.setup.exe"
     }
     if (Test-Path "./$projDir/setup.exe") {
         Remove-Item -Path "./$projDir/setup.exe"
