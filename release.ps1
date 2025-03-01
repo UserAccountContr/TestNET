@@ -129,7 +129,7 @@ try {
 
     # Copy new application files.
     Write-Output "Copying new files..."
-    if (!Test-Path "./$projDir"){
+    if (!(Test-Path "./$projDir")){
         New-Item -ItemType Directory -Path "./$projDir"
     }
     Push-Location $projDir
@@ -137,13 +137,13 @@ try {
     Copy-Item -Path "../../$outDir/Application Files","../../$outDir/$appName.application","../../$outDir/$appName.setup.exe" `
         -Destination . -Recurse
     Pop-Location
-    if (!Test-Path "./$projDir2"){
+    if (!(Test-Path "./$projDir2")){
         New-Item -ItemType Directory -Path "./$projDir2"
     }
     Push-Location $projDir2
     Rename-Item -Path "../../$outDir2/setup.exe" -NewName "$appName2.setup.exe"
     Copy-Item -Path "../../$outDir2/Application Files","../../$outDir2/$appName2.application","../../$outDir2/$appName2.setup.exe" `
-        -Destination ./$projDir2 -Recurse
+        -Destination . -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
