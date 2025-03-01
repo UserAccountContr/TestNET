@@ -166,9 +166,22 @@ public class TestUIDPointsConverter : IMultiValueConverter
         if (values.Length != 2) return null;
         if (values[0] is Test t && values[1] is string s )
         {
-            return t.Questions.Where(x=> x.UniqueId == s).FirstOrDefault()?.Points;
+            return (t.Questions.Where(x=> x.UniqueId == s).FirstOrDefault()?.Points ?? 0) * (parameter is not null && float.TryParse(parameter.ToString(), out float f) ? f : 1);
         }
         return 0;
+    }
+
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
+}
+
+public class MultiBoolConverter : IMultiValueConverter
+{
+    public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+    {
+        return values.All(x => x is bool b && b);
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

@@ -3,15 +3,21 @@
 [TemplatePart(Name = PlusBtnName, Type = typeof(Button))]
 [TemplatePart(Name = MinusBtnName, Type = typeof(Button))]
 [TemplatePart(Name = FullBtnName, Type = typeof(Button))]
+[TemplatePart(Name = HalfBtnName, Type = typeof(Button))]
+[TemplatePart(Name = ZeroBtnName, Type = typeof(Button))]
 public class QuestionSubmPanelSH : Control
 {
     Button? _plusbtn;
     Button? _minusbtn;
     Button? _fullbtn;
+    Button? _halfbtn;
+    Button? _zerobtn;
 
     private const string PlusBtnName = "plus25";
     private const string MinusBtnName = "minus25";
     private const string FullBtnName = "fullpts";
+    private const string HalfBtnName = "halfpts";
+    private const string ZeroBtnName = "zeropts";
 
     static QuestionSubmPanelSH()
     {
@@ -77,6 +83,14 @@ public class QuestionSubmPanelSH : Control
         _fullbtn = (Button)Template.FindName(FullBtnName, this);
         if (_fullbtn is not null)
             _fullbtn.Click += (s, e) => { Question.Points = maxpoints; };
+
+        _halfbtn = (Button)Template.FindName(HalfBtnName, this);
+        if (_halfbtn is not null)
+            _halfbtn.Click += (s, e) => { Question.Points = maxpoints / 2; };
+
+        _zerobtn = (Button)Template.FindName(ZeroBtnName, this);
+        if (_zerobtn is not null)
+            _zerobtn.Click += (s, e) => { Question.Points = 0; };
         base.OnApplyTemplate();
     }
 
