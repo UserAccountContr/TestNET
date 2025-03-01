@@ -137,7 +137,7 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = prod_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
-[TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = noteq_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -274,7 +274,7 @@ public class MathKeyboardPanel : Control
     private const string approx_BTN_NAME = "APPROX_BTN";
     private const string cong_BTN_NAME = "CONG_BTN";
     private const string sim_BTN_NAME = "SIM_BTN";
-    private const string simeq_BTN_NAME = "SIMEQ_BTN";
+    private const string noteq_BTN_NAME = "NOTEQ_BTN";
     private const string tilde_BTN_NAME = "TILDE_BTN";
 
     private Grid? _grid;
@@ -406,7 +406,7 @@ public class MathKeyboardPanel : Control
     private Button? _approxbtn;
     private Button? _congbtn;
     private Button? _simbtn;
-    private Button? _simeqbtn;
+    private Button? _noteqbtn;
     private Button? _tildebtn;
 
     #region Properties
@@ -1917,13 +1917,13 @@ public class MathKeyboardPanel : Control
             };
         }
 
-        _simeqbtn = Template.FindName(simeq_BTN_NAME, this) as Button;
-        if (_simeqbtn is not null)
+        _noteqbtn = Template.FindName(noteq_BTN_NAME, this) as Button;
+        if (_noteqbtn is not null)
         {
-            _simeqbtn.Click += async (s, e) =>
+            _noteqbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(new StandardLeafNode(@"\simeq"));
+                keyboardMemory.Insert(new StandardLeafNode(@"\neq"));
                 await DisplayResultAsync();
             };
         }

@@ -1531,10 +1531,10 @@
                                                                     Grid.Column="8">
                                                                 <local:LatexLabel Text="\sim" IsMath="True"/>
                                                             </Button>
-                                                            <Button Name="SIMEQ_BTN"
+                                                            <Button Name="NOTEQ_BTN"
                                                                     Grid.Row="3"
                                                                     Grid.Column="8">
-                                                                <local:LatexLabel Text="\simeq" IsMath="True"/>
+                                                                <local:LatexLabel Text="\neq" IsMath="True"/>
                                                             </Button>
                                                         </Grid>
                                                     </WrapPanel>
