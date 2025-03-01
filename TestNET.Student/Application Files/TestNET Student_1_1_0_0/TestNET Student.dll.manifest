@@ -60,16 +60,16 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>vXNmdk25yE5UBAK38ItahBjXXLb9WGFpTebBQgeMu9c=</dsig:DigestValue>
+      <dsig:DigestValue>5UxAXoRx5038Tmj7JJlaEkBlgr+urG2OFryldDxu04k=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="TestNET.Shared.pdb" size="55456">
+  <file name="TestNET.Shared.pdb" size="55460">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>0hBzIMJvSrcQf23M8tIdGJ9D/weyMXPeCMU1g8K/rUU=</dsig:DigestValue>
+      <dsig:DigestValue>QDCglcQP9Ctt0nTlaw3nJoaZxynqwmhHezjnFV+VrZs=</dsig:DigestValue>
     </hash>
   </file>
   <file name="testnetlogo.ico" size="185055">
