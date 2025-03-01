@@ -27,6 +27,11 @@
         <ScrollViewer>
             <StackPanel Width="1200">
                 <WrapPanel>
+                    <Label Content="{Binding Submission.Answers.Name}"
+                           ContentStringFormat="{DynamicResource testNameView}"
+                           Style="{DynamicResource LargeLabel}"/>
+                </WrapPanel>
+                <WrapPanel>
                     <Label Content="{DynamicResource name}"/>
                     <Label Content="{Binding Submission.Name}"/>
                 </WrapPanel>

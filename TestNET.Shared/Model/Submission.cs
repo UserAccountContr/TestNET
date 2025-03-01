@@ -10,7 +10,7 @@ public partial class Submission : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Points))]
-    public Test answers;
+    Test answers;
 
     public Test? CorrectAnswers { get; set; }
 
@@ -21,7 +21,7 @@ public partial class Submission : ObservableObject
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(Points))]
-    public bool requiresAttention;
+    bool requiresAttention;
 
     public Submission(string name, Test answers, DateTime timesubmitted, Test? correctAnswers = null, string code = "", bool requiresAttention = false)
     {

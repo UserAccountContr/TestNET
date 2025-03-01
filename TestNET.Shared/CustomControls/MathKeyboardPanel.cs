@@ -2570,7 +2570,11 @@ public class MathKeyboardPanel : Control
 
     public void InsertWithEncapsulate(BranchingNode trn, InsertWithEncapsulateCurrentOptions? options = null)
     {
-        if (keyboardMemory.Current is not Placeholder)
+        if (keyboardMemory.Current is BranchingNode)
+        {
+            keyboardMemory.InsertWithEncapsulateCurrent(trn, options);
+        }
+        else if (keyboardMemory.Current is not Placeholder)
         {
             Placeholder pl = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
             string? nodebefore = keyboardMemory.Current.GetViewModeLatex(latexConfiguration);
