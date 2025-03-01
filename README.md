@@ -14,3 +14,8 @@ __TestNET__ е Платформа за създаване, провеждане 
 
 - ОС: Windows 7+
 - Runtime: .NET 8+
+
+### Инсталация:
+
+- [TestNET Teacher](https://UserAccountContr.github.io/TestNET/TestNET.Teacher/TestNet.Teacher.setup.exe)
+- [TestNET Teacher](https://UserAccountContr.github.io/TestNET/TestNET.Student/TestNet.Student.setup.exe)
