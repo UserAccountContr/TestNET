@@ -108,8 +108,11 @@ try {
     if (Test-Path "./$projDir/$appName.application") {
         Remove-Item -Path "./$projDir/$appName.application"
     }
+    if (Test-Path "./$projDir/$appName.setup.exe") {
+        Remove-Item -Path "./$projDir/setup.exe"
+    }
     if (Test-Path "./$projDir/setup.exe") {
-        Remove-Item -Path "./$projDir/$appName.setup.exe"
+        Remove-Item -Path "./$projDir/setup.exe"
     }
     if (Test-Path "./$projDir2/Application Files") {
         Remove-Item -Path "./$projDir2/Application Files" -Recurse
@@ -117,8 +120,11 @@ try {
     if (Test-Path "./$projDir2/$appName2.application") {
         Remove-Item -Path "./$projDir2/$appName2.application"
     }
-    if (Test-Path "./$projDir2/setup.exe") {
+    if (Test-Path "./$projDir2/$appName2.setup.exe") {
         Remove-Item -Path "./$projDir2/$appName2.setup.exe"
+    }
+    if (Test-Path "./$projDir2/setup.exe") {
+        Remove-Item -Path "./$projDir2/setup.exe"
     }
 
     # Copy new application files.
