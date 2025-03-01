@@ -2549,20 +2549,20 @@ public class MathKeyboardPanel : Control
                 }
                 else if (treeNode.GetViewModeLatex(latexConfiguration) == "}" || treeNode.GetViewModeLatex(latexConfiguration).Contains(@"\right"))
                 {
-                    if ((pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) ?? "").Contains(@"\right"))
+                    if ((keyboardMemory.Current as TreeNode)?.GetViewModeLatex(latexConfiguration) == @"{" || ((keyboardMemory.Current as TreeNode)?.GetViewModeLatex(latexConfiguration) ?? "").Contains(@"\left"))
                     {
-                        if ((keyboardMemory.Current as TreeNode)?.GetViewModeLatex(latexConfiguration) == @"{" || ((keyboardMemory.Current as TreeNode)?.GetViewModeLatex(latexConfiguration) ?? "").Contains(@"\left"))
+                        if ((pl.Nodes.FirstAfterOrDefault(treeNode)?.GetViewModeLatex(latexConfiguration) ?? "").Contains(@"\right"))
                         {
                             if ((pl.Nodes.FirstBeforeOrDefault(keyboardMemory.Current)?.GetViewModeLatex(latexConfiguration) ?? "").Contains(@"\left"))
                             {
                                 keyboardMemory.DeleteRight();
                                 keyboardMemory.DeleteLeft();
                             }
-                            keyboardMemory.DeleteRight();
-                            keyboardMemory.DeleteLeft();
                         }
-                        return;
+                        keyboardMemory.DeleteRight();
+                        keyboardMemory.DeleteLeft();
                     }
+                    return;
                 }
         }
         keyboardMemory.DeleteRight();
