@@ -9,6 +9,7 @@
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>testnetlogo.ico</ApplicationIcon>
+    <AssemblyName>TestNET Teacher</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
