@@ -132,6 +132,12 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
+
+[TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = prod_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -265,6 +271,12 @@ public class MathKeyboardPanel : Control
     private const string vari_BTN_NAME = "VARI_BTN";
     private const string comb_BTN_NAME = "COMB_BTN";
 
+    private const string approx_BTN_NAME = "APPROX_BTN";
+    private const string cong_BTN_NAME = "CONG_BTN";
+    private const string sim_BTN_NAME = "SIM_BTN";
+    private const string simeq_BTN_NAME = "SIMEQ_BTN";
+    private const string tilde_BTN_NAME = "TILDE_BTN";
+
     private Grid? _grid;
     private CheckBox? _toggle;
     private Button? _savebtn;
@@ -391,6 +403,11 @@ public class MathKeyboardPanel : Control
     private Button? _permbtn;
     private Button? _varibtn;
     private Button? _combbtn;
+    private Button? _approxbtn;
+    private Button? _congbtn;
+    private Button? _simbtn;
+    private Button? _simeqbtn;
+    private Button? _tildebtn;
 
     #region Properties
 
@@ -1863,6 +1880,61 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(GetCombNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _approxbtn = Template.FindName(approx_BTN_NAME, this) as Button;
+        if (_approxbtn is not null)
+        {
+            _approxbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\approx"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _congbtn = Template.FindName(cong_BTN_NAME, this) as Button;
+        if (_congbtn is not null)
+        {
+            _congbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\cong"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _simbtn = Template.FindName(sim_BTN_NAME, this) as Button;
+        if (_simbtn is not null)
+        {
+            _simbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\sim"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _simeqbtn = Template.FindName(simeq_BTN_NAME, this) as Button;
+        if (_simeqbtn is not null)
+        {
+            _simeqbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\simeq"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _tildebtn = Template.FindName(tilde_BTN_NAME, this) as Button;
+        if (_tildebtn is not null)
+        {
+            _tildebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardBranchingNode(@"\widetilde{", "}"));
                 await DisplayResultAsync();
             };
         }
