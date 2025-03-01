@@ -10,7 +10,8 @@
 	d:DataContext="{d:DesignInstance Type=viewmodel:WindowViewModel}"
     mc:Ignorable="d"
     WindowStartupLocation="CenterScreen" WindowState="Maximized"
-    Title="TestNET Student" Height="720" Width="1280">
+    Title="TestNET Student" Height="720" Width="1280"
+    MinWidth="1280" MinHeight="720">
 
     <Window.Resources>
         <DataTemplate DataType="{x:Type viewmodel:HomeViewModel}">

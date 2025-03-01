@@ -18,7 +18,6 @@
     <DockPanel>
 
         <Menu DockPanel.Dock="Top">
-            <!--Grid.Column="4"-->
             <MenuItem Header="{DynamicResource back}"
                               Command="{Binding BackCommand}"/>
             <MenuItem Header="{DynamicResource addQuestion}">
@@ -37,30 +36,6 @@
 
         <ScrollViewer>
             <StackPanel Width="1200">
-                <!--
-                <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="100" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="100" />
-                </Grid.ColumnDefinitions>
-                <Button Content="Back" 
-                        Grid.Column="0"
-                        Command="{Binding BackCommand}" 
-                        IsEnabled="{Binding IsNotBusy}"/>
-                <Button Content="Add Question"
-                        Grid.Column="1"
-                        Command="{Binding AddQuestionCommand}"/>
-                <Button Content="Save"
-                        Grid.Column="2"
-                        Command="{Binding SaveChangesCommand}"/>
-                <Button Content="Cancel"
-                        Grid.Column="3"
-                        Command="{Binding CancelCommand}"/>
-                </Grid>
-                -->
                 <WrapPanel Grid.Row="0">
                     <Label Content="{DynamicResource testName}"
                            Style="{StaticResource LargeLabel}"/>
@@ -69,7 +44,7 @@
                         Grid.Row="1"
                         VerticalContentAlignment="Center"
                         MinWidth="150"
-                        FontSize="16"/>
+                        FontSize="20"/>
                 </WrapPanel>
                 <ListView Grid.Row="1" 
                           ItemsSource="{Binding Questions}"
