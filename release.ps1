@@ -4,7 +4,9 @@ param (
 )
 
 $appName = "TestNET.Teacher" # Replace with your application project name.
+$appName2 = "TestNET.Student" # Replace with your application project name.
 $projDir = "TestNET.Teacher" # Replace with your project directory (where .csproj resides).
+$projDir2 = "TestNET.Student" # Replace with your project directory (where .csproj resides).
 
 Set-StrictMode -version 2.0
 $ErrorActionPreference = "Stop"
@@ -29,21 +31,48 @@ Write-Output "Version: $version"
 # Clean output directory.
 $publishDir = "bin/publish"
 $outDir = "$projDir/$publishDir"
+$outDir2 = "$projDir2/$publishDir"
 if (Test-Path $outDir) {
     Remove-Item -Path $outDir -Recurse
+}
+if (Test-Path $outDir2) {
+    Remove-Item -Path $outDir2 -Recurse
 }
 
 # Publish the application.
 Push-Location $projDir
 try {
     Write-Output "Restoring:"
-    dotnet restore -r win-x64
+    dotnet restore -r win-x86
     Write-Output "Publishing:"
     $msBuildVerbosityArg = "/v:m"
     if ($env:CI) {
         $msBuildVerbosityArg = ""
     }
     & $msBuildPath /target:publish /p:PublishProfile=GitHubTeacherProfile `
+        /p:ApplicationVersion=$version /p:Configuration=Release `
+        /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
+        $msBuildVerbosityArg
+
+    # Measure publish size.
+    $publishSize = (Get-ChildItem -Path "$publishDir/Application Files" -Recurse |
+        Measure-Object -Property Length -Sum).Sum / 1Mb
+    Write-Output ("Published size: {0:N2} MB" -f $publishSize)
+}
+finally {
+    Pop-Location
+}
+
+Push-Location $projDir2
+try {
+    Write-Output "Restoring:"
+    dotnet restore -r win-x86
+    Write-Output "Publishing:"
+    $msBuildVerbosityArg = "/v:m"
+    if ($env:CI) {
+        $msBuildVerbosityArg = ""
+    }
+    & $msBuildPath /target:publish /p:PublishProfile=GitHubStudentProfile `
         /p:ApplicationVersion=$version /p:Configuration=Release `
         /p:PublishDir=$publishDir /p:PublishUrl=$publishDir `
         $msBuildVerbosityArg
@@ -73,17 +102,33 @@ Push-Location $ghPagesDir
 try {
     # Remove previous application files.
     Write-Output "Removing previous files..."
-    if (Test-Path "Application Files") {
-        Remove-Item -Path "Application Files" -Recurse
+    if (Test-Path "./$projDir/Application Files") {
+        Remove-Item -Path "./$projDir/Application Files" -Recurse
     }
-    if (Test-Path "$appName.application") {
-        Remove-Item -Path "$appName.application"
+    if (Test-Path "./$projDir/$appName.application") {
+        Remove-Item -Path "./$projDir/$appName.application"
+    }
+    if (Test-Path "./$projDir/setup.exe") {
+        Remove-Item -Path "./$projDir/$appName.setup.exe"
+    }
+    if (Test-Path "./$projDir2/Application Files") {
+        Remove-Item -Path "./$projDir2/Application Files" -Recurse
+    }
+    if (Test-Path "./$projDir2/$appName2.application") {
+        Remove-Item -Path "./$projDir2/$appName2.application"
+    }
+    if (Test-Path "./$projDir2/setup.exe") {
+        Remove-Item -Path "./$projDir2/$appName2.setup.exe"
     }
 
     # Copy new application files.
     Write-Output "Copying new files..."
-    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application","../$outDir/setup.exe" `
+    Rename-Item -Path "../$outDir/setup.exe" -NewName "$appName.setup.exe"
+    Rename-Item -Path "../$outDir2/setup.exe" -NewName "$appName2.setup.exe"
+    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application","../$outDir/$appName.setup.exe" `
         -Destination ./$projDir -Recurse
+    Copy-Item -Path "../$outDir2/Application Files","../$outDir2/$appName2.application","../$outDir2/$appName2.setup.exe" `
+        -Destination ./$projDir2 -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
