@@ -53,4 +53,7 @@
     <system:String x:Key="reviewcodedots">Review code:</system:String>
 
     <system:String x:Key="requiresAttention">Requires attention</system:String>
+
+    <system:String x:Key="math">Math</system:String>
+    <system:String x:Key="enterText">Enter text here...</system:String>
 </ResourceDictionary>

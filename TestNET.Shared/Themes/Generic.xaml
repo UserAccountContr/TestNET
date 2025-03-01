@@ -213,7 +213,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move up"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource moveup}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -231,7 +231,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move down"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource movedown}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -246,7 +246,7 @@
                 <local:LatexTextBox IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                                     Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"/>
                 <WrapPanel HorizontalAlignment="Right">
-                    <CheckBox Content="Math" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                    <CheckBox Content="{DynamicResource math}" IsChecked="{Binding QuestionSH.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                               FontSize="14"
                               Margin="0 0 40 0"
                               VerticalAlignment="Center"
@@ -307,7 +307,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move up"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource moveup}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -325,7 +325,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move down"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource movedown}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -439,7 +439,7 @@
                                VerticalAlignment="Bottom"
                                Grid.Column="1">
 
-                        <CheckBox Content="Math" IsChecked="{Binding QuestionMC.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                        <CheckBox Content="{DynamicResource math}" IsChecked="{Binding QuestionMC.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                               FontSize="14"
                               Margin="0 0 40 0"
                               VerticalAlignment="Center"
@@ -499,7 +499,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move up"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource moveup}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -517,7 +517,7 @@
                                           Fill="Black"
                                           Stretch="Fill"/>
                             </Viewbox>
-                            <TextBlock Grid.Column="1" Text="Move down"
+                            <TextBlock Grid.Column="1" Text="{DynamicResource movedown}"
                                        VerticalAlignment="Center"
                                        Padding="10 0 0 0"/>
                         </Grid>
@@ -630,7 +630,7 @@
                                VerticalAlignment="Bottom"
                                Grid.Column="1">
 
-                        <CheckBox Content="Math" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
+                        <CheckBox Content="{DynamicResource math}" IsChecked="{Binding QuestionMCM.TextIsMath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, RelativeSource={RelativeSource TemplatedParent}}"
                               FontSize="14"
                               Margin="0 0 40 0"
                               VerticalAlignment="Center"
@@ -718,7 +718,7 @@
                     IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
                     Margin="0 0 0 15"/>
 
-                <TextBlock Text="Short answer"/>
+                <TextBlock Text="{DynamicResource shortAnswer}"/>
             </StackPanel>
 
         </local:QuestionPanel>

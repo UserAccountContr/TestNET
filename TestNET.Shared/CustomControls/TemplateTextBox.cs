@@ -7,9 +7,15 @@ public class TemplateTextBox : TextBox
         DefaultStyleKeyProperty.OverrideMetadata(typeof(TemplateTextBox), new FrameworkPropertyMetadata(typeof(TemplateTextBox)));
     }
 
+    public override void OnApplyTemplate()
+    {
+        this.SetResourceReference(PlaceholderProperty, "enterText");
+        base.OnApplyTemplate();
+    }
+
     public static readonly DependencyProperty PlaceholderProperty =
         DependencyProperty.Register("Placeholder", typeof(string), typeof(TemplateTextBox),
-            new PropertyMetadata("Enter text here..."));
+            new PropertyMetadata(Application.Current.FindResource("enterText")));
 
     public string Placeholder
     {

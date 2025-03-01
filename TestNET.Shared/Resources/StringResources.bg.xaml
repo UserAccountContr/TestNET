@@ -53,4 +53,7 @@
     <system:String x:Key="reviewcodedots">Парола за преглед:</system:String>
 
     <system:String x:Key="requiresAttention">Изисква внимание</system:String>
+
+    <system:String x:Key="math">Математика</system:String>
+    <system:String x:Key="enterText">Въведете текст тук...</system:String>
 </ResourceDictionary>

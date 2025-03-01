@@ -147,7 +147,7 @@ public class SubmissionAttentionConverter : IMultiValueConverter
         if (values.Length != 2) return null;
         if (values[0] is string s && values[1] is bool b)
         {
-            var requiresAttention = Application.Current.Resources["requiresAttention"];
+            var requiresAttention = Application.Current.FindResource("requiresAttention");
             if (b) return $"{s} - {requiresAttention}";
             else return s;
         }
