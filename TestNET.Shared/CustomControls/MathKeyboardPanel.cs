@@ -121,6 +121,17 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = log2_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = log10_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = ln_BTN_NAME, Type = typeof(Button))]
+
+[TemplatePart(Name = e_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = arrow_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = binom_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = prim_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = integral_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = sum_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = prod_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -243,6 +254,17 @@ public class MathKeyboardPanel : Control
     private const string log10_BTN_NAME = "LOGTEN_BTN";
     private const string ln_BTN_NAME = "LN_BTN";
 
+    private const string e_BTN_NAME = "E_BTN";
+    private const string arrow_BTN_NAME = "arrow_BTN";
+    private const string binom_BTN_NAME = "binom_BTN";
+    private const string prim_BTN_NAME = "PRIM_BTN";
+    private const string integral_BTN_NAME = "INTEGRAL_BTN";
+    private const string sum_BTN_NAME = "SUM_BTN";
+    private const string prod_BTN_NAME = "PROD_BTN";
+    private const string perm_BTN_NAME = "PERM_BTN";
+    private const string vari_BTN_NAME = "VARI_BTN";
+    private const string comb_BTN_NAME = "COMB_BTN";
+
     private Grid? _grid;
     private CheckBox? _toggle;
     private Button? _savebtn;
@@ -359,6 +381,16 @@ public class MathKeyboardPanel : Control
     private Button? _log2btn;
     private Button? _log10btn;
     private Button? _lnbtn;
+    private Button? _ebtn;
+    private Button? _arrowbtn;
+    private Button? _binombtn;
+    private Button? _primbtn;
+    private Button? _integralbtn;
+    private Button? _sumbtn;
+    private Button? _prodbtn;
+    private Button? _permbtn;
+    private Button? _varibtn;
+    private Button? _combbtn;
 
     #region Properties
 
@@ -1723,6 +1755,118 @@ public class MathKeyboardPanel : Control
             };
         }
 
+        _ebtn = Template.FindName(e_BTN_NAME, this) as Button;
+        if (_ebtn is not null)
+        {
+            _ebtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                // looks better than \mathrm{e}
+                keyboardMemory.Insert(new StandardLeafNode(@"e"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _arrowbtn = Template.FindName(arrow_BTN_NAME, this) as Button;
+        if (_arrowbtn is not null)
+        {
+            _arrowbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(new StandardLeafNode(@"\to"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _binombtn = Template.FindName(binom_BTN_NAME, this) as Button;
+        if (_binombtn is not null)
+        {
+            _binombtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetBinomialNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _primbtn = Template.FindName(prim_BTN_NAME, this) as Button;
+        if (_primbtn is not null)
+        {
+            _primbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetPrimeNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _integralbtn = Template.FindName(integral_BTN_NAME, this) as Button;
+        if (_integralbtn is not null)
+        {
+            _integralbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetIntegralNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _sumbtn = Template.FindName(sum_BTN_NAME, this) as Button;
+        if (_sumbtn is not null)
+        {
+            _sumbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetSumNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _prodbtn = Template.FindName(prod_BTN_NAME, this) as Button;
+        if (_prodbtn is not null)
+        {
+            _prodbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetProductNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _permbtn = Template.FindName(perm_BTN_NAME, this) as Button;
+        if (_permbtn is not null)
+        {
+            _permbtn.Click += async (s, e) =>
+            {
+                // P^{\square}_{\square}
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetPermNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _varibtn = Template.FindName(vari_BTN_NAME, this) as Button;
+        if (_varibtn is not null)
+        {
+            _varibtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetVariNode());
+                await DisplayResultAsync();
+            };
+        }
+
+        _combbtn = Template.FindName(comb_BTN_NAME, this) as Button;
+        if (_combbtn is not null)
+        {
+            _combbtn.Click += async (s, e) =>
+            {
+                if (IsInTextNode()) return;
+                keyboardMemory.Insert(GetCombNode());
+                await DisplayResultAsync();
+            };
+        }
+
         _sysbtn = Template.FindName(sys_BTN_NAME, this) as Button;
         if (_sysbtn is not null)
         {
@@ -1884,8 +2028,12 @@ public class MathKeyboardPanel : Control
     private static BranchingNode GetLgNode() => new StandardBranchingNode(@"\lg{", "}");
     private static LeafNode GetLog2Node() => new StandardLeafNode(@"\log_2");
     private static BranchingNode GetNthRootNode() => new DescendingBranchingNode(@"\sqrt[", "]{", "}");
+    private static StandardBranchingNode GetPrimeNode() => new StandardBranchingNode(@"{", @"}^{\prime}");
+    private static BranchingNode GetPermNode() => new DescendingBranchingNode(@"P^{", "}_{", "}");
+    private static BranchingNode GetVariNode() => new DescendingBranchingNode(@"V^{", "}_{", "}");
+    private static BranchingNode GetCombNode() => new DescendingBranchingNode(@"C^{", "}_{", "}");
     private static BranchingNode GetPipesNode() => new StandardBranchingNode(@"\left|", @"\right|");
-    private static BranchingNode GetDoublePipesNode() => new StandardBranchingNode(@"\left\|", @"\right\|");
+    // private static BranchingNode GetDoublePipesNode() => new StandardBranchingNode(@"\left\|", @"\right\|");
     private static BranchingNode GetCurlyBracketsNode() => new StandardBranchingNode(@"\left\{", @"\right\}");
     private static BranchingNode GetSquareBracketsNode() => new StandardBranchingNode(@"\left[", @"\right]");
     private static BranchingNode GetIntegralNode() => new AscendingBranchingNode(@"\int_{", "}^{", "}");
