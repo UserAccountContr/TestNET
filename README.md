@@ -17,5 +17,5 @@ __TestNET__ е Платформа за създаване, провеждане 
 
 ### Инсталация:
 
-- [TestNET Teacher](https://UserAccountContr.github.io/TestNET/TestNET.Teacher/TestNet.Teacher.setup.exe)
-- [TestNET Teacher](https://UserAccountContr.github.io/TestNET/TestNET.Student/TestNet.Student.setup.exe)
+- [TestNET Teacher](https://UserAccountContr.github.io/TestNET/TestNET.Teacher/TestNET.Teacher.setup.exe)
+- [TestNET Student](https://UserAccountContr.github.io/TestNET/TestNET.Student/TestNET.Student.setup.exe)
