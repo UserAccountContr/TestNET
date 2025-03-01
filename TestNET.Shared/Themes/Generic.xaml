@@ -1999,66 +1999,82 @@
                                 <Binding Path="UniqueId" />
                             </MultiBinding>
                         </local:QuestionPanel.MAXPoints>
-                        <StackPanel Margin="15">
-                            <local:LatexLabel Text="{Binding Text}" 
-                                              IsMath="{Binding TextIsMath}"
-                                              Margin="0,0,0,15"/>
-                            <WrapPanel Margin="0 0 0 10">
-                                <TextBlock Text="{DynamicResource answerdots}"
-                                           VerticalAlignment="Center"/>
-                                <local:LatexLabel Text="{Binding Answer.Text}" 
-                                          IsMath="{Binding TextIsMath}"/>
-                                <Viewbox Height="12"
-                                         Margin="8 0">
-                                    <Viewbox.Style>
-                                        <Style TargetType="Viewbox">
-                                            <Setter Property="Visibility" Value="Collapsed"/>
-                                            <Style.Triggers>
-                                                <DataTrigger Value="True">
-                                                    <DataTrigger.Binding>
-                                                        <MultiBinding Converter="{StaticResource TestUIDSHBOOLConv}">
-                                                            <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
-                                                            <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
-                                                            <Binding Path="Question.Answer.Text" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
-                                                        </MultiBinding>
-                                                    </DataTrigger.Binding>
-                                                    <Setter Property="Visibility" Value="Visible"/>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </Viewbox.Style>
-                                    <Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
-                                                              Fill="Green"
-                                                              Stretch="Fill"/>
-                                </Viewbox>
-                            </WrapPanel>
+                        <Grid Margin="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                
+                                <local:LatexLabel Text="{Binding Text}" 
+                                                  IsMath="{Binding TextIsMath}"
+                                                  Margin="0,0,0,15"/>
+                                <WrapPanel Margin="0 0 0 10">
+                                    <TextBlock Text="{DynamicResource answerdots}"
+                                               VerticalAlignment="Center"/>
+                                    <local:LatexLabel Text="{Binding Answer.Text}" 
+                                              IsMath="{Binding TextIsMath}"/>
+                                    <Viewbox Height="12"
+                                             Margin="8 0">
+                                        <Viewbox.Style>
+                                            <Style TargetType="Viewbox">
+                                                <Setter Property="Visibility" Value="Collapsed"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Value="True">
+                                                        <DataTrigger.Binding>
+                                                            <MultiBinding Converter="{StaticResource TestUIDSHBOOLConv}">
+                                                                <Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                                <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                                <Binding Path="Question.Answer.Text" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                                            </MultiBinding>
+                                                        </DataTrigger.Binding>
+                                                        <Setter Property="Visibility" Value="Visible"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Viewbox.Style>
+                                        <Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
+                                                                  Fill="Green"
+                                                                  Stretch="Fill"/>
+                                    </Viewbox>
+                                </WrapPanel>
 
-                            <WrapPanel>
+                                <WrapPanel>
 
-                                <TextBlock Text="{DynamicResource correctdots}"
-                                           VerticalAlignment="Center"/>
-                                <local:LatexLabel IsMath="{Binding TextIsMath}">
-                                    <local:LatexLabel.Text>
-                                        <MultiBinding Converter="{StaticResource TestUIDSHConv}">
-                                            <Binding Path="UniqueId"/>
-                                            <Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
-                                        </MultiBinding>
-                                    </local:LatexLabel.Text>
-                                </local:LatexLabel>
-                            </WrapPanel>
-
-                            <TextBox 
-                                     IsEnabled="{TemplateBinding IsTeacher}"
-                                     Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}">
-                                <TextBox.Text>
-                                    <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:0.0#}">
-                                        <Binding.ValidationRules>
-                                            <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
-                                        </Binding.ValidationRules>
-                                    </Binding>
-                                </TextBox.Text>
-                            </TextBox>
-                        </StackPanel>
+                                    <TextBlock Text="{DynamicResource correctdots}"
+                                               VerticalAlignment="Center"/>
+                                    <local:LatexLabel IsMath="{Binding TextIsMath}">
+                                        <local:LatexLabel.Text>
+                                            <MultiBinding Converter="{StaticResource TestUIDSHConv}">
+                                                <Binding Path="UniqueId"/>
+                                                <Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
+                                            </MultiBinding>
+                                        </local:LatexLabel.Text>
+                                    </local:LatexLabel>
+                                </WrapPanel>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}">
+                                <TextBox IsEnabled="{TemplateBinding IsTeacher}"
+                                         HorizontalAlignment="Stretch"
+                                         MinWidth="30">
+                                    <TextBox.Text>
+                                        <Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:0.0#}">
+                                            <Binding.ValidationRules>
+                                                <serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+                                            </Binding.ValidationRules>
+                                        </Binding>
+                                    </TextBox.Text>
+                                </TextBox>
+                                <Button Content="+0.25" Name="plus25"/>
+                                <Button Content="-0.25" Name="minus25"/>
+                                <Button Name="fullpts">
+                                    <MultiBinding Converter="{StaticResource PointsOutOfQuestionConv}">
+                                        <Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+                                        <Binding Path="UniqueId" />
+                                    </MultiBinding>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
                     </local:QuestionPanel>
                 </ControlTemplate>
             </Setter.Value>
