@@ -54,123 +54,103 @@
             </MenuItem>
         </Menu>
 
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition />
-            </Grid.RowDefinitions>
+        <Border Style="{DynamicResource BorderSt}"
+                HorizontalAlignment="Center"
+                Margin="0 30">
+            <Grid Width="1200">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Label Content="TestNET" 
+                       FontSize="40"
+                       HorizontalAlignment="Center"
+                       Margin="0 30 0 0"
+                       Grid.Row="0"/>
 
-                <!--
-            <WrapPanel Grid.Row="0">
-                
+                <ListView ItemsSource="{Binding Path=Tests}" 
+                          Name="TestView"
+                          BorderThickness="2"
+                          BorderBrush="{DynamicResource MainColor}"
+                          Margin="30"
+                          Grid.Row="1">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <DataTemplate.Resources>
+                                <sharedserv:IndexConverter x:Key="IndexConverter" />
+                            </DataTemplate.Resources>
+                            <Grid Background="Transparent">
+                                <Grid.InputBindings>
+                                    <MouseBinding Gesture="LeftDoubleClick"
+                                                  Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                                  CommandParameter="{Binding }"/>
+                                </Grid.InputBindings>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
 
-                <Label Content="{DynamicResource tests}" 
-                       Style="{StaticResource LargeLabel}"/>
+                                <WrapPanel Grid.Column="0">
+                                    <WrapPanel.Resources>
+                                        <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
+                                    </WrapPanel.Resources>
 
-                <Button Content="{DynamicResource add}" 
-                        Command="{Binding NewTestCommand}" 
-                        Style="{StaticResource Btn}"/>
+                                    <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
+                                           ContentStringFormat="{}{0}."/>
+                                    <Label Content="{Binding Name}"/>
+                                </WrapPanel>
+                                <CustomControls:DropdownMenu Grid.Column="1"
+                                                             Margin="5">
+                                    <StackPanel Background="White">
 
-                <Button Content="{DynamicResource save}" 
-                        Command="{Binding SaveTestCommand}"
-                        Style="{StaticResource Btn}"/>
-
-                <Button Content="{DynamicResource load}" 
-                        Command="{Binding LoadTestCommand}"
-                        Style="{StaticResource Btn}"/>
-
-                <RadioButton GroupName="Lang"
-                             Content="English"
-                             IsChecked="True"
-                             Command="{Binding SetLangCommand}"
-                             CommandParameter="en"/>
-                
-                <RadioButton GroupName="Lang"
-                             Content="Български"
-                             Command="{Binding SetLangCommand}"
-                             CommandParameter="bg"/>
-                
-        
-            </WrapPanel>
-                -->
-
-            <ListView ItemsSource="{Binding Path=Tests}" 
-                      Grid.Row="0"
-                      Name="TestView">
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <DataTemplate.Resources>
-                            <sharedserv:IndexConverter x:Key="IndexConverter" />
-                        </DataTemplate.Resources>
-                        <Grid Background="Transparent">
-                            <Grid.InputBindings>
-                                <MouseBinding Gesture="LeftDoubleClick"
-                                              Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                              CommandParameter="{Binding }"/>
-                            </Grid.InputBindings>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="auto"/>
-                            </Grid.ColumnDefinitions>
-
-                            <WrapPanel Grid.Column="0">
-                                <WrapPanel.Resources>
-                                    <Style TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>
-                                </WrapPanel.Resources>
-
-                                <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"
-                                       ContentStringFormat="{}{0}."/>
-                                <Label Content="{Binding Name}"/>
-                            </WrapPanel>
-                            <CustomControls:DropdownMenu Grid.Column="1">
-                                <StackPanel Background="White">
-
-                                    <Button Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
-                                            CommandParameter="{Binding .}">
-                                        <Grid HorizontalAlignment="Stretch">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Viewbox Height="16"
-                                                     Grid.Column="0">
-                                                <Path Data="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v240h-80v-200H520v-200H240v640h360v80H240Zm638 15L760-183v89h-80v-226h226v80h-90l118 118-56 57Zm-638-95v-640 640Z"
-                                                      Fill="Black"
-                                                      Stretch="Fill"/>
-                                            </Viewbox>
-                                            <TextBlock Grid.Column="1" Text="{DynamicResource open}"
-                                                       VerticalAlignment="Center"
-                                                       Padding="10 0 0 0"/>
-                                        </Grid>
-                                    </Button>
-                                    <Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
-                                            CommandParameter="{Binding .}">
-                                        <Grid HorizontalAlignment="Stretch">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Viewbox Height="16"
-                                                     Grid.Column="0">
-                                                <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
-                                                      Fill="Black"
-                                                      Stretch="Fill"/>
-                                            </Viewbox>
-                                            <TextBlock Grid.Column="1" Text="{DynamicResource delete}"
-                                                       VerticalAlignment="Center"
-                                                       Padding="10 0 0 0"/>
-                                        </Grid>
-                                    </Button>
-                                </StackPanel>
-                            </CustomControls:DropdownMenu>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+                                        <Button Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}" 
+                                                CommandParameter="{Binding .}">
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Viewbox Height="16"
+                                                         Grid.Column="0">
+                                                    <Path Data="M240-80q-33 0-56.5-23.5T160-160v-640q0-33 23.5-56.5T240-880h320l240 240v240h-80v-200H520v-200H240v640h360v80H240Zm638 15L760-183v89h-80v-226h226v80h-90l118 118-56 57Zm-638-95v-640 640Z"
+                                                          Fill="Black"
+                                                          Stretch="Fill"/>
+                                                </Viewbox>
+                                                <TextBlock Grid.Column="1" Text="{DynamicResource open}"
+                                                           VerticalAlignment="Center"
+                                                           Padding="10 0 0 0"/>
+                                            </Grid>
+                                        </Button>
+                                        <Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}" 
+                                                CommandParameter="{Binding .}">
+                                            <Grid HorizontalAlignment="Stretch">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="20"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Viewbox Height="16"
+                                                         Grid.Column="0">
+                                                    <Path Data="M280-120q-33 0-56.5-23.5T200-200v-520h-40v-80h200v-40h240v40h200v80h-40v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM360-280h80v-360h-80v360Zm160 0h80v-360h-80v360ZM280-720v520-520Z"
+                                                          Fill="Black"
+                                                          Stretch="Fill"/>
+                                                </Viewbox>
+                                                <TextBlock Grid.Column="1" Text="{DynamicResource delete}"
+                                                           VerticalAlignment="Center"
+                                                           Padding="10 0 0 0"/>
+                                            </Grid>
+                                        </Button>
+                                    </StackPanel>
+                                </CustomControls:DropdownMenu>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Border>
     </DockPanel>
 </UserControl>
