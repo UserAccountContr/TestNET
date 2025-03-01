@@ -129,11 +129,14 @@ try {
 
     # Copy new application files.
     Write-Output "Copying new files..."
-    Rename-Item -Path "../$outDir/setup.exe" -NewName "$appName.setup.exe"
-    Rename-Item -Path "../$outDir2/setup.exe" -NewName "$appName2.setup.exe"
-    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application","../$outDir/$appName.setup.exe" `
-        -Destination ./$projDir -Recurse
-    Copy-Item -Path "../$outDir2/Application Files","../$outDir2/$appName2.application","../$outDir2/$appName2.setup.exe" `
+    Push-Location $projDir
+    Rename-Item -Path "../../$outDir/setup.exe" -NewName "$appName.setup.exe"
+    Copy-Item -Path "../../$outDir/Application Files","../../$outDir/$appName.application","../../$outDir/$appName.setup.exe" `
+        -Destination . -Recurse
+    Pop-Location
+    Push-Location $projDir2
+    Rename-Item -Path "../../$outDir2/setup.exe" -NewName "$appName2.setup.exe"
+    Copy-Item -Path "../../$outDir2/Application Files","../../$outDir2/$appName2.application","../../$outDir2/$appName2.setup.exe" `
         -Destination ./$projDir2 -Recurse
 
     # Stage and commit.
