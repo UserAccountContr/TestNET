@@ -17,6 +17,7 @@ public class IndexDB
 
     public IndexDB(bool cleaned = true, string dbPath = ".index.db.log")
     {
+        // The tests are saved in AppData/Local in order to preserve them between updates/reinstalls
         this.cleaned = cleaned;
         indexQueries = new(dbPath);
         indexQueries.InitializeIndex();

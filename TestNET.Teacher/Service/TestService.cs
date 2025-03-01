@@ -13,6 +13,8 @@ public class TestService(LogService logService)
 
     public async Task<List<TeacherTest>> GetTests()
     {
+        Directory.CreateDirectory(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TestNET"));
+        Directory.SetCurrentDirectory(Path.Join(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "TestNET"));
         var tests = new List<TeacherTest>();
 
         var testDBs = new IndexDB(cleaned).LoadAll();
