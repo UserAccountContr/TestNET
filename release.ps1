@@ -82,8 +82,8 @@ try {
 
     # Copy new application files.
     Write-Output "Copying new files..."
-    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application" `
-        -Destination . -Recurse
+    Copy-Item -Path "../$outDir/Application Files","../$outDir/$appName.application","../$outDir/setup.exe" `
+        -Destination ./$projDir -Recurse
 
     # Stage and commit.
     Write-Output "Staging..."
