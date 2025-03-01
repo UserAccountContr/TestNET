@@ -121,7 +121,6 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = log2_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = log10_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = ln_BTN_NAME, Type = typeof(Button))]
-
 [TemplatePart(Name = e_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = arrow_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = binom_BTN_NAME, Type = typeof(Button))]
@@ -132,12 +131,15 @@ namespace TestNET.Shared.CustomControls;
 [TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
-
 [TemplatePart(Name = comb_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = prod_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = perm_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = vari_BTN_NAME, Type = typeof(Button))]
 [TemplatePart(Name = noteq_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = MOVEDOWN_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = MOVELEFT_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = MOVEUP_BTN_NAME, Type = typeof(Button))]
+[TemplatePart(Name = MOVERIGHT_BTN_NAME, Type = typeof(Button))]
 public class MathKeyboardPanel : Control
 {
     LatexConfiguration latexConfiguration = new ();
@@ -277,6 +279,11 @@ public class MathKeyboardPanel : Control
     private const string noteq_BTN_NAME = "NOTEQ_BTN";
     private const string tilde_BTN_NAME = "TILDE_BTN";
 
+    private const string MOVEUP_BTN_NAME = "MOVEUP_BTN";
+    private const string MOVELEFT_BTN_NAME = "MOVELEFT_BTN";
+    private const string MOVEDOWN_BTN_NAME = "MOVEDOWN_BTN";
+    private const string MOVERIGHT_BTN_NAME = "MOVERIGHT_BTN";
+
     private Grid? _grid;
     private CheckBox? _toggle;
     private Button? _savebtn;
@@ -408,6 +415,10 @@ public class MathKeyboardPanel : Control
     private Button? _simbtn;
     private Button? _noteqbtn;
     private Button? _tildebtn;
+    private Button? _moveupbtn;
+    private Button? _movedownbtn;
+    private Button? _moverightbtn;
+    private Button? _moveleftbtn;
 
     #region Properties
 
@@ -1935,6 +1946,46 @@ public class MathKeyboardPanel : Control
             {
                 if (IsInTextNode()) return;
                 keyboardMemory.Insert(new StandardBranchingNode(@"\widetilde{", "}"));
+                await DisplayResultAsync();
+            };
+        }
+
+        _moveupbtn = Template.FindName(MOVEUP_BTN_NAME,this) as Button;
+        if (_moveupbtn is not null)
+        {
+            _moveupbtn.Click += async (s, e) =>
+            {
+                keyboardMemory.MoveUp();
+                await DisplayResultAsync();
+            };
+        }
+
+        _movedownbtn = Template.FindName(MOVEDOWN_BTN_NAME, this) as Button;
+        if (_movedownbtn is not null)
+        {
+            _movedownbtn.Click += async (s, e) =>
+            {
+                keyboardMemory.MoveDown();
+                await DisplayResultAsync();
+            };
+        }
+
+        _moverightbtn = Template.FindName(MOVERIGHT_BTN_NAME, this) as Button;
+        if (_moverightbtn is not null)
+        {
+            _moverightbtn.Click += async (s, e) =>
+            {
+                MoveRight();
+                await DisplayResultAsync();
+            };
+        }
+
+        _moveleftbtn = Template.FindName(MOVELEFT_BTN_NAME, this) as Button;
+        if (_moveleftbtn is not null)
+        {
+            _moveleftbtn.Click += async (s, e) =>
+            {
+                MoveLeft();
                 await DisplayResultAsync();
             };
         }
