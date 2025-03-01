@@ -5,6 +5,8 @@ param (
 
 $appName = "TestNET.Teacher" # Replace with your application project name.
 $appName2 = "TestNET.Student" # Replace with your application project name.
+$exeName = "TestNET Teacher"
+$exeName2 = "TestNET Student"
 $projDir = "TestNET.Teacher" # Replace with your project directory (where .csproj resides).
 $projDir2 = "TestNET.Student" # Replace with your project directory (where .csproj resides).
 
@@ -105,8 +107,8 @@ try {
     if (Test-Path "./$projDir/Application Files") {
         Remove-Item -Path "./$projDir/Application Files" -Recurse
     }
-    if (Test-Path "./$projDir/$appName.application") {
-        Remove-Item -Path "./$projDir/$appName.application"
+    if (Test-Path "./$projDir/$exeName.application") {
+        Remove-Item -Path "./$projDir/$exeName.application"
     }
     if (Test-Path "./$projDir/$appName.setup.exe") {
         Remove-Item -Path "./$projDir/$appName.setup.exe"
@@ -117,8 +119,8 @@ try {
     if (Test-Path "./$projDir2/Application Files") {
         Remove-Item -Path "./$projDir2/Application Files" -Recurse
     }
-    if (Test-Path "./$projDir2/$appName2.application") {
-        Remove-Item -Path "./$projDir2/$appName2.application"
+    if (Test-Path "./$projDir2/$exeName2.application") {
+        Remove-Item -Path "./$projDir2/$exeName2.application"
     }
     if (Test-Path "./$projDir2/$appName2.setup.exe") {
         Remove-Item -Path "./$projDir2/$appName2.setup.exe"
@@ -134,7 +136,7 @@ try {
     }
     Push-Location $projDir
     Rename-Item -Path "../../$outDir/setup.exe" -NewName "$appName.setup.exe"
-    Copy-Item -Path "../../$outDir/Application Files","../../$outDir/$appName.application","../../$outDir/$appName.setup.exe" `
+    Copy-Item -Path "../../$outDir/Application Files","../../$outDir/$exeName.application","../../$outDir/$appName.setup.exe" `
         -Destination . -Recurse
     Pop-Location
     if (!(Test-Path "./$projDir2")){
@@ -142,7 +144,7 @@ try {
     }
     Push-Location $projDir2
     Rename-Item -Path "../../$outDir2/setup.exe" -NewName "$appName2.setup.exe"
-    Copy-Item -Path "../../$outDir2/Application Files","../../$outDir2/$appName2.application","../../$outDir2/$appName2.setup.exe" `
+    Copy-Item -Path "../../$outDir2/Application Files","../../$outDir2/$exeName2.application","../../$outDir2/$appName2.setup.exe" `
         -Destination . -Recurse
 
     # Stage and commit.
