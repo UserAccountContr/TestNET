@@ -1273,7 +1273,7 @@
                                                         <Setter Property="Text" Value="{Binding Text, RelativeSource={RelativeSource AncestorType=local:MathKeyboardPanel}, UpdateSourceTrigger=PropertyChanged}"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=local:MathKeyboardPanel}, UpdateSourceTrigger=PropertyChanged}" Value="">
-                                                                <Setter Property="Text" Value="Enter\text{ }text\text{ }or\text{ }formula..."/>
+                                                                <Setter Property="Text" Value="{DynamicResource enterTextFormula}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>

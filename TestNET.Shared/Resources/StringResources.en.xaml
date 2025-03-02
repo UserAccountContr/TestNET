@@ -56,4 +56,5 @@
 
     <system:String x:Key="math">Math</system:String>
     <system:String x:Key="enterText">Enter text here...</system:String>
+    <system:String x:Key="enterTextFormula">Enter\text{ }text\text{ }or\text{ }formula...</system:String>
 </ResourceDictionary>

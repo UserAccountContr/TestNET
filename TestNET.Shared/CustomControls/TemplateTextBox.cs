@@ -9,17 +9,18 @@ public class TemplateTextBox : TextBox
 
     public override void OnApplyTemplate()
     {
-        this.SetResourceReference(PlaceholderProperty, "enterText");
+        if (string.IsNullOrEmpty(Placeholder))
+            SetResourceReference(PlaceholderProperty, "enterText");
         base.OnApplyTemplate();
     }
 
     public static readonly DependencyProperty PlaceholderProperty =
         DependencyProperty.Register("Placeholder", typeof(string), typeof(TemplateTextBox),
-            new PropertyMetadata(Application.Current.FindResource("enterText")));
+            new PropertyMetadata(null));
 
     public string Placeholder
     {
-        get { return (string)GetValue(TemplateProperty); }
-        set { SetValue(TemplateProperty, value); }
+        get { return (string)GetValue(PlaceholderProperty); }
+        set { SetValue(PlaceholderProperty, value); }
     }
 }

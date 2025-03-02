@@ -56,4 +56,5 @@
 
     <system:String x:Key="math">Математика</system:String>
     <system:String x:Key="enterText">Въведете текст тук...</system:String>
+    <system:String x:Key="enterTextFormula">\text{Въведете текст или формула...}</system:String>
 </ResourceDictionary>
