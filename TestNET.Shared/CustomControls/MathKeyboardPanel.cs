@@ -2199,6 +2199,7 @@ public class MathKeyboardPanel : Control
             {
                 return;
             }
+            if (text == "{" || text == "}") return;
             else if (keyboardMemory.InSelectionMode())
             {
                 keyboardMemory.LeaveSelectionMode();
