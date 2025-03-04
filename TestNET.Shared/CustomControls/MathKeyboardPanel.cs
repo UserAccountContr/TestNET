@@ -929,7 +929,7 @@ public class MathKeyboardPanel : Control
             _degbtn.Click += async (s, e) =>
             {
                 if (IsInTextNode()) return;
-                keyboardMemory.Insert(GetDegreeNode());
+                InsertWithEncapsulate(GetDegreeNode());
                 await DisplayResultAsync();
             };
         }
@@ -2621,16 +2621,18 @@ public class MathKeyboardPanel : Control
 
     public void InsertWithEncapsulate(BranchingNode trn, InsertWithEncapsulateCurrentOptions? options = null)
     {
-        if (keyboardMemory.Current is BranchingNode)
+        if (keyboardMemory.Current is BranchingNode brn)
         {
-            keyboardMemory.InsertWithEncapsulateCurrent(trn, options);
+            if (brn.GetViewModeLatex(latexConfiguration).Contains(@"\text"))
+                keyboardMemory.Insert(trn);
+            else keyboardMemory.InsertWithEncapsulateCurrent(trn, options);
         }
         else if (keyboardMemory.Current is not Placeholder)
         {
             Placeholder pl = ((TreeNode)keyboardMemory.Current).ParentPlaceholder;
             string? nodebefore = keyboardMemory.Current.GetViewModeLatex(latexConfiguration);
 
-            if (bans.Contains(nodebefore) || nodebefore.Contains(@"\left") || nodebefore.Contains(@"\right") || string.IsNullOrEmpty(nodebefore))
+            if (bans.Contains(nodebefore) || nodebefore.Contains(@"\left") || nodebefore.Contains(@"\right") || nodebefore == "=" || string.IsNullOrEmpty(nodebefore))
                 keyboardMemory.Insert(trn);
             else keyboardMemory.InsertWithEncapsulateCurrent(trn, options);
         }
