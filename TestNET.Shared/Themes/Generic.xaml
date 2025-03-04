@@ -1273,7 +1273,7 @@
                                                         <Setter Property="Text" Value="{Binding Text, RelativeSource={RelativeSource AncestorType=local:MathKeyboardPanel}, UpdateSourceTrigger=PropertyChanged}"/>
                                                         <Style.Triggers>
                                                             <DataTrigger Binding="{Binding Text, RelativeSource={RelativeSource AncestorType=local:MathKeyboardPanel}, UpdateSourceTrigger=PropertyChanged}" Value="">
-                                                                <Setter Property="Text" Value="Enter\text{ }text\text{ }or\text{ }formula..."/>
+                                                                <Setter Property="Text" Value="{DynamicResource enterTextFormula}"/>
                                                             </DataTrigger>
                                                         </Style.Triggers>
                                                     </Style>
@@ -1970,30 +1970,86 @@
                                                     </WrapPanel>
                                                 </TabItem>
                                             </TabControl>
-                                            <WrapPanel>
-                                                <Button Name="TEXT_BTN">
-                                                    <Button.Style>
-                                                        <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
-                                                            <Style.Triggers>
-                                                                <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
-                                                                    <Setter Property="Background" Value="PaleGreen"/>
-                                                                </DataTrigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Button.Style>
-                                                    <Viewbox Height="14">
-                                                        <Path Data="M280-160v-520H80v-120h520v120H400v520H280Zm360 0v-320H520v-120h360v120H760v320H640Z"
-                                                              Fill="Black"
-                                                              Stretch="Fill"/>
-                                                    </Viewbox>
-                                                </Button>
-                                                <Button Name="NEWLINE_BTN">
-                                                    <Viewbox Height="14">
-                                                        <Path Data="M360-240 120-480l240-240 56 56-144 144h488v-160h80v240H272l144 144-56 56Z"
-                                                              Fill="Black"
-                                                              Stretch="Fill"/>
-                                                    </Viewbox>
-                                                </Button>
+                                            <WrapPanel Margin="0 5 0 0">
+                                                <Grid Background="white">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    
+                                                    <Button Name="TEXT_BTN"
+                                                            Grid.Column="0"
+                                                            Grid.Row="0">
+                                                        <Button.Style>
+                                                            <Style TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                                                        <Setter Property="Background" Value="PaleGreen"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </Button.Style>
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M280-160v-520H80v-120h520v120H400v520H280Zm360 0v-320H520v-120h360v120H760v320H640Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="NEWLINE_BTN"
+                                                            Grid.Column="2"
+                                                            Grid.Row="0">
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M360-240 120-480l240-240 56 56-144 144h488v-160h80v240H272l144 144-56 56Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVEUP_BTN"
+                                                            Grid.Column="1"
+                                                            Grid.Row="0">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M440-240v-368L296-464l-56-56 240-240 240 240-56 56-144-144v368h-80Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVELEFT_BTN"
+                                                            Grid.Column="0"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVEDOWN_BTN"
+                                                            Grid.Column="1"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M480-240 240-480l56-56 144 144v-368h80v368l144-144 56 56-240 240Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVERIGHT_BTN"
+                                                            Grid.Column="2"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                </Grid>
                                             </WrapPanel>
                                         </StackPanel>
 

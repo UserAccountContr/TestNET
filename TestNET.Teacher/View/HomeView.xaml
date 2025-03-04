@@ -57,10 +57,12 @@
                         <Button Content="{DynamicResource add}"
                                 Command="{Binding NewTestCommand}"
                                 Background="White"
+                                MinWidth="100"
                                 Margin="0 0 5 0"/>
                         <Button Content="{DynamicResource import}"
                                 Command="{Binding ImportTestCommand}"
-                                Background="White"/>
+                                Background="White"
+                                MinWidth="100"/>
                     </WrapPanel>
                 
                     <ListView ItemsSource="{Binding Path=Tests}" 
