@@ -1,0 +1,17 @@
+﻿global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using Microsoft.Extensions.DependencyInjection;
+global using System;
+global using System.Collections.Generic;
+global using System.Collections.ObjectModel;
+global using System.IO;
+global using System.Linq;
+global using System.Text;
+global using System.Text.Json;
+global using System.Text.Json.Serialization;
+global using System.Threading.Tasks;
+global using Avalonia;
+global using Avalonia.Controls;
+//global using TestNET.Avalonia.Shared.Model;
+global using TestNET.Avalonia.Teacher.Views;
+global using TestNET.Avalonia.Teacher.ViewModels;

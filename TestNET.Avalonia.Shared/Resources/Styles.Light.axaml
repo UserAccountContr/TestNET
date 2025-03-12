@@ -1,0 +1,22 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <!-- Add Resources Here -->
+	
+	<SolidColorBrush x:Key="MainColor" Color="#FF80c0ff"/>
+	<SolidColorBrush x:Key="SecondaryColor" Color="#FFbfdFff"/>
+
+	<ControlTheme TargetType="Label" x:Key="BaseLabel">
+		<Setter Property="FontFamily" Value="OpenSansRegular" />
+		<!-- 
+		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" /> 
+		-->
+	</ControlTheme>
+	
+	<ControlTheme x:Key="BorderSt" TargetType="Border">
+		<Setter Property="BorderBrush" Value="#FF80c0ff"/>
+		<Setter Property="Background" Value="#FFa0d0ff"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="CornerRadius" Value="4"/>
+		<Setter Property="HorizontalAlignment" Value="Stretch"/>
+	</ControlTheme>
+</ResourceDictionary>

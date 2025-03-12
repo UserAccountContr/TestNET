@@ -1,0 +1,61 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:system="clr-namespace:System;assembly=mscorlib">
+  <!-- Add Resources Here -->
+	<system:String x:Key="cancel">Cancel</system:String>
+	<system:String x:Key="test">Test</system:String>
+	<system:String x:Key="tests">Tests</system:String>
+	<system:String x:Key="questions">Questions</system:String>
+	<system:String x:Key="add">New test</system:String>
+	<system:String x:Key="save">Save</system:String>
+	<system:String x:Key="load">Load</system:String>
+	<system:String x:Key="import">Import test</system:String>
+	<system:String x:Key="open">Open</system:String>
+	<system:String x:Key="delete">Delete</system:String>
+	<system:String x:Key="back">Back</system:String>
+	<system:String x:Key="start">Start</system:String>
+	<system:String x:Key="stop">Stop</system:String>
+	<system:String x:Key="edit">Edit</system:String>
+	<system:String x:Key="fname">First name</system:String>
+	<system:String x:Key="lname">Last name</system:String>
+	<system:String x:Key="name">Name:</system:String>
+	<system:String x:Key="testcode">Test code</system:String>
+	<system:String x:Key="notext">No text entered</system:String>
+	<system:String x:Key="settings">Settings</system:String>
+	<system:String x:Key="language">Language</system:String>
+	<system:String x:Key="testName">Test Name:</system:String>
+	<system:String x:Key="testNameView">Test Name: {0}</system:String>
+	<system:String x:Key="moveup">Move up</system:String>
+	<system:String x:Key="movedown">Move down</system:String>
+
+	<system:String x:Key="testCodeView">Test Code: {0}</system:String>
+	<system:String x:Key="testNumberQuestions">Number of questions: {0}</system:String>
+	<system:String x:Key="testSettings">Test settings</system:String>
+	<system:String x:Key="testSubmissions">Submissions</system:String>
+	<system:String x:Key="testLog">Log</system:String>
+
+	<system:String x:Key="testShuffle">Shuffle test questions</system:String>
+	<system:String x:Key="testAllowReviewing">Allow viewing submissions</system:String>
+	<system:String x:Key="possibleAnswers">Possible answers:</system:String>
+	<system:String x:Key="points">&#xa0;pts.</system:String>
+	<system:String x:Key="pointsFull">Points</system:String>
+
+	<system:String x:Key="addQuestion">Add question</system:String>
+	<system:String x:Key="addposans">Add answer</system:String>
+
+	<system:String x:Key="shortAnswer">Short answer</system:String>
+	<system:String x:Key="answerdots">Answer:&#xa0;</system:String>
+	<system:String x:Key="correctdots">Correct:&#xa0;</system:String>
+	<system:String x:Key="multipleChoice">Multiple choice</system:String>
+	<system:String x:Key="multipleChoiceManyCorrect">Multiple choice (Many correct)</system:String>
+
+	<system:String x:Key="timeSubmitted">Time submitted:</system:String>
+	<system:String x:Key="pointsdots">Points:</system:String>
+	<system:String x:Key="reviewcodedots">Review code:</system:String>
+
+	<system:String x:Key="requiresAttention">Requires attention</system:String>
+
+	<system:String x:Key="math">Math</system:String>
+	<system:String x:Key="enterText">Enter text here...</system:String>
+	<system:String x:Key="enterTextFormula">Enter\text{ }text\text{ }or\text{ }formula...</system:String>
+</ResourceDictionary>
