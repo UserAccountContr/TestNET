@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
+             xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TestNET.Avalonia.Teacher.Views.HomeView"
              x:DataType="vm:HomeViewModel">
@@ -71,21 +72,20 @@
 								<Setter Property="HorizontalContentAlignment" Value="Stretch"/>
 							</ControlTheme>
 						</ListBox.ItemContainerTheme>
+						<ListBox.Resources>
+							<sharedserv:IndexConverter x:Key="IndexConverter" />
+						</ListBox.Resources>
 						<ListBox.ItemTemplate>
 							<DataTemplate>
-								<!--
-								<DataTemplate.Resources>
-									<sharedserv:IndexConverter x:Key="IndexConverter" />
-								</DataTemplate.Resources>
-								-->
-								<Grid Background="Transparent">
+								<Grid Background="Transparent"
+								      DoubleTapped="Test_OnDoubleTapped">
 									<!--
-									<Grid.InputBindings>
-										<MouseBinding Gesture="LeftDoubleClick"
+									<Grid.KeyBindings>
+										<KeyBinding Gesture="LeftDoubleClick"
                                                       Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
                                                       CommandParameter="{Binding }"/>
-									</Grid.InputBindings>
-									-->
+									</Grid.KeyBindings>
+-->
 									<Grid.ColumnDefinitions>
 										<ColumnDefinition Width="*"/>
 										<ColumnDefinition Width="auto"/>

@@ -1,0 +1,1 @@
+SELECT Name FROM [TestNET.Test.Meta] ORDER BY Id DESC LIMIT 1;

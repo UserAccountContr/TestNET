@@ -55,8 +55,8 @@ public partial class App : Application
     private void ConfigureServices(IServiceCollection services)
     {
         services.AddSingleton<INavigationService, NavigationService>();
-        //services.AddSingleton<ISettingsService, SettingsService>();
-        //services.AddSingleton<TestService>();
+        services.AddSingleton<ISettingsService, SettingsService>();
+        services.AddSingleton<TestService>();
 
         services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider => viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
         services.AddSingleton<Func<Type, object, BaseViewModel>>(serviceProvider => (viewModelType, test) => (BaseViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, test));
@@ -69,6 +69,6 @@ public partial class App : Application
         //services.AddSingleton<WindowViewModel>();
         services.AddSingleton<HomeViewModel>();
 
-        //services.AddSingleton<LogService>();
+        services.AddSingleton<LogService>();
     }
 }

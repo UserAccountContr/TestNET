@@ -1,6 +1,6 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <!-- Add Resources Here -->
+  
 	
 	<SolidColorBrush x:Key="MainColor" Color="#FF80c0ff"/>
 	<SolidColorBrush x:Key="SecondaryColor" Color="#FFbfdFff"/>
@@ -11,6 +11,52 @@
 		<Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource LabelText}, Dark={StaticResource LabelTextDark}}" /> 
 		-->
 	</ControlTheme>
+	
+	<ControlTheme x:Key="MicroLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+		<Setter Property="FontSize" Value="10"/>
+	</ControlTheme>
+
+	<ControlTheme x:Key="SmallLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+		<Setter Property="FontSize" Value="12"/>
+	</ControlTheme>
+
+	<ControlTheme x:Key="MediumLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+		<Setter Property="FontSize" Value="14"/>
+	</ControlTheme>
+
+	<ControlTheme x:Key="LargeLabel" BasedOn="{StaticResource BaseLabel}" TargetType="Label">
+		<Setter Property="FontSize" Value="20"/>
+	</ControlTheme>
+
+	<!--
+	<ControlTheme TargetType="MenuItem">
+		<Setter Property="FontSize" Value="14"/>
+	</ControlTheme>
+	-->
+
+	<ControlTheme TargetType="Button" x:Key="Btn">
+		<Setter Property="MinWidth" Value="50"/>
+	</ControlTheme>
+
+	<ControlTheme x:Key="QuestionBody" TargetType="StackPanel">
+		<Setter Property="Margin" Value="15"/>
+	</ControlTheme>
+
+	<!--
+	<ControlTheme TargetType="Expander">
+		<Setter Property="FontSize" Value="14"/>
+	</ControlTheme>
+	-->
+
+	<!--
+	<ControlTheme TargetType="Button">
+		<Setter Property="FontSize" Value="14"/>
+		<Setter Property="Background" Value="{StaticResource SecondaryColor}"/>
+		<Setter Property="BorderBrush" Value="{StaticResource MainColor}"/>
+		<Setter Property="BorderThickness" Value="2"/>
+		<Setter Property="Padding" Value="10 5"/>
+	</ControlTheme>
+	-->
 	
 	<ControlTheme x:Key="BorderSt" TargetType="Border">
 		<Setter Property="BorderBrush" Value="#FF80c0ff"/>

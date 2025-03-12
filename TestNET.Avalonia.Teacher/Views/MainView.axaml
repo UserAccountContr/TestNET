@@ -7,15 +7,17 @@
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TestNET.Avalonia.Teacher.Views.MainView"
              x:DataType="vm:MainViewModel">
-	<!--
-  <Design.DataContext>
-    <vm:MainViewModel />
-  </Design.DataContext>
-	-->
+	
+	<Design.DataContext>
+		<vm:MainViewModel />
+	</Design.DataContext>
 
 	<UserControl.DataTemplates>
 		<DataTemplate DataType="vm:HomeViewModel">
 			<local:HomeView/>
+		</DataTemplate>
+		<DataTemplate DataType="vm:TestViewModel">
+			<local:TestView/>
 		</DataTemplate>
 	</UserControl.DataTemplates>
 	

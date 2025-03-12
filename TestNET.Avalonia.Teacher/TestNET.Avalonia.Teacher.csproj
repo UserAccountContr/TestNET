@@ -17,11 +17,32 @@
 
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="9.0.2" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TestNET.Avalonia.Shared\TestNET.Avalonia.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Service\DB\Queries\Index\DeleteIndex.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Index\InitializeIndex.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Index\InsertTest.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Index\SelectTestPaths.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\DeleteTest.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InitializeTest.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertAnswer.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertCorrectAnswers.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertMeta.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertQuestion.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\InsertSubmission.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectCurrentName.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectQuestions.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectShuffled.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionAnswers.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionCorrectAnswers.sql" />
+    <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissions.sql" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,120 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
+             xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TestNET.Avalonia.Teacher.Views.TestView"
+             x:DataType="vm:TestViewModel">
+
+    <Design.DataContext>
+        <vm:TestViewModel/>
+    </Design.DataContext>
+    
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource back}"
+                      Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                      IsEnabled="{Binding LogService.TestNotStarted}"/>
+            <MenuItem Header="{DynamicResource start}"
+                      Command="{Binding ShareTestCommand}"
+                      IsEnabled="{Binding LogService.TestNotStarted}"/>
+            <MenuItem Header="{DynamicResource stop}"
+                      Command="{Binding StopSharingTestCommand}"
+                      IsEnabled="{Binding LogService.TestStarted}"/>
+            <MenuItem Header="{DynamicResource edit}"
+                      Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                      CommandParameter="{Binding Test}"
+                      IsEnabled="{Binding LogService.TestNotStarted}"/>
+        </Menu>
+        
+        <ScrollViewer>
+            <StackPanel MaxWidth="1200">
+                <WrapPanel>
+                    <WrapPanel.Resources>
+                        <!--<ControlTheme TargetType="Label" BasedOn="{StaticResource LargeLabel}"/>-->
+                        <!--<BooleanToVisibilityConverter x:Key="bvc"/>-->
+                    </WrapPanel.Resources>
+                    <!--<Label ContentStringFormat="{DynamicResource testNameView}"-->
+                    <Label
+                           Content="{Binding Test.Name}"
+                           MaxWidth="500"/>
+                    <!--<Label ContentStringFormat="{DynamicResource testCodeView}"-->
+                    <Label
+                           Content="{Binding LogService.IPCode}"
+                           Margin="25 0 0 0"/>
+                           <!--Visibility="{Binding LogService.TestStarted, Converter={StaticResource bvc}}"-->
+                    
+                </WrapPanel>
+                <!--<Label ContentStringFormat="{DynamicResource testNumberQuestions}"-->
+                <Label
+                       Content="{Binding Test.Questions.Count}"
+                       Theme="{StaticResource MediumLabel}"/>
+                <Expander Header="{DynamicResource questions}"
+                          ExpandDirection="Down"
+                          IsExpanded="True">
+                    <ListBox ItemsSource="{Binding Test.Questions}">
+                        <!--////-->
+                        <ListBox.Resources>
+                            <sharedserv:IndexConverter x:Key="IndexConverter" />
+                        </ListBox.Resources>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <!--
+                                    <CustomControls:QuestionViewPanel 
+                                        Question="{Binding .}"
+                                        ShowAnswers="False"
+                                        QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
+                                    -->
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem">
+                                <Setter Property="Padding" Value="0"/>
+                                <Setter Property="Margin" Value="0 10"/>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                    </ListBox>
+                </Expander>
+                <Expander Header="{DynamicResource testSettings}">
+                    <StackPanel Margin="10 5">
+                        <CheckBox Content="{DynamicResource testAllowReviewing}" 
+                                  IsChecked="{Binding LogService.SubmissionsViewable}"/>
+
+                        <CheckBox Content="{DynamicResource testShuffle}"
+                                  IsEnabled="{Binding LogService.TestNotStarted}"
+                                  IsChecked="{Binding Test.Shuffled}"/>
+                    </StackPanel>
+                </Expander>
+                <Expander Header="{DynamicResource testSubmissions}">
+                    <ListBox ItemsSource="{Binding Test.Submissions}">
+                        <!--
+                        PreviewMouseWheel="ListView_PreviewMouseWheel"
+                              BorderThickness="0">
+                        -->
+                        <ListBox.ItemContainerTheme>
+                            <ControlTheme TargetType="ListBoxItem">
+                                <Setter Property="Focusable" Value="False"/>
+                                <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </ControlTheme>
+                        </ListBox.ItemContainerTheme>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <!--
+                                <CustomControls:TestSubmPanel Submission="{Binding .}"
+                                                              IsTeacher="True"/>
+                                                              -->
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Expander>
+            </StackPanel>
+        </ScrollViewer>
+        
+    </DockPanel>
+    
+</UserControl>
