@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 			 xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
              xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
+             xmlns:customControls="clr-namespace:TestNET.Avalonia.Shared.CustomControls;assembly=TestNET.Avalonia.Shared"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TestNET.Avalonia.Teacher.Views.HomeView"
              x:DataType="vm:HomeViewModel">
@@ -18,7 +19,7 @@
 				Margin="0 30">
 			<Grid>
 				<Grid>
-					<!--CustomControls:DropdownMenu
+					<customControls:DropdownMenu
                         Width="20"
                         Height="20"
                         Margin="10"
@@ -32,7 +33,7 @@
                                     Command="{Binding SetLangCommand}"
                                     CommandParameter="en"/>
 						</StackPanel>
-					</CustomControls:DropdownMenu-->
+					</customControls:DropdownMenu>
 				</Grid>
 				
 				<Grid Width="1200">

@@ -22,15 +22,21 @@ public class SettingsService : ISettingsService
 
     private void Change(string property, string value)
     {
-        foreach (ResourceInclude dictionary in Application.Current.Resources.MergedDictionaries)
-        {
-            if (dictionary.Source is not null && dictionary.Source.ToString().Contains($"{property}"))
-            {
-                Application.Current.Resources.MergedDictionaries.Remove(dictionary);
-                break;
-            }
-        }
+        if (Application.Current is null) return;
+        var dict = Application.Current.Resources.MergedDictionaries.OfType<ResourceInclude>().FirstOrDefault(d => d.Source.ToString().Contains($"{property}"));
+        Application.Current.Resources.MergedDictionaries.Remove(dict);
+        //foreach (ResourceInclude dictionary in Application.Current.Resources.MergedDictionaries)
+        //{
+        //    if (dictionary.Source is not null && dictionary.Source.ToString().Contains($"{property}"))
+        //    {
+        //        Application.Current.Resources.MergedDictionaries.Remove(dictionary);
+        //        break;
+        //    }
+        //}
 
-        Application.Current.Resources.MergedDictionaries.Add(new ResourceInclude(new Uri($"avares:/TestNET.Avalonia.Shared/Resources/{property}.{value}.axaml", UriKind.Absolute)));
+        Application.Current.Resources.MergedDictionaries.Add(new ResourceInclude(new Uri($"avares://TestNET.Avalonia.Shared/Resources/{property}.{value}.axaml", UriKind.Absolute))
+        {
+            Source = new Uri($"avares://TestNET.Avalonia.Shared/Resources/{property}.{value}.axaml", UriKind.Absolute)
+        });
     }
 }

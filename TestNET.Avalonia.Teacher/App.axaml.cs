@@ -2,7 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
-
+using Avalonia.Markup.Xaml.Styling;
 using TestNET.Avalonia.Teacher.ViewModels;
 using TestNET.Avalonia.Teacher.Views;
 using TestNET.Avalonia.Teacher.Service;
@@ -27,6 +27,15 @@ public partial class App : Application
         var serviceCollection = new ServiceCollection();
         ConfigureServices(serviceCollection);
         serviceProvider = serviceCollection.BuildServiceProvider();
+        
+        this.Resources.MergedDictionaries.Add(new ResourceInclude(new Uri("avares://TestNET.Avalonia.Shared/Resources/StringResources.en.axaml"))
+        {
+            Source = new Uri("avares://TestNET.Avalonia.Shared/Resources/StringResources.en.axaml")
+        });
+        this.Resources.MergedDictionaries.Add(new ResourceInclude(new Uri("avares://TestNET.Avalonia.Shared/Resources/Styles.Light.axaml"))
+        {
+            Source = new Uri("avares://TestNET.Avalonia.Shared/Resources/Styles.Light.axaml")
+        });
 
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {

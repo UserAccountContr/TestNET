@@ -1,0 +1,51 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
+    <Design.PreviewWith>
+        <controls:DropdownMenu />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|DropdownMenu">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Grid>
+                        <Grid.Styles>
+
+                            <Style Selector="Button">
+                                <Setter Property="Background" Value="Transparent"/>
+                                <Setter Property="Padding" Value="10"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            </Style>
+                        </Grid.Styles>
+                        <CheckBox x:Name="PART_Toggle" IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}">
+                            <CheckBox.Template>
+                                <ControlTemplate TargetType="CheckBox">
+                                    <Grid Background="Transparent">
+                                        <Viewbox>
+                                            <Path
+                                                Data="M6 10c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm12 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"
+                                                Fill="Black"
+                                                Stretch="Fill" />
+                                        </Viewbox>
+                                    </Grid>
+                                </ControlTemplate>
+                            </CheckBox.Template>
+                        </CheckBox>
+
+                            <!--AllowsTransparency="True"-->
+                        <Popup
+                            x:Name="PART_Popup"
+                            IsOpen="{TemplateBinding IsOpen}"
+                            Placement="Bottom"
+                            PlacementTarget="{Binding ElementName=PART_Toggle}"
+                            IsLightDismissEnabled="False"
+                            MinWidth="150">
+                            <ContentControl Content="{TemplateBinding Content}"/>
+                        </Popup>
+                    </Grid>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

@@ -101,9 +101,10 @@ public class TestService(LogService logService)
 
         foreach (var i in ints)
         {
-            ////IPAddress? ip = i.GetIPProperties().UnicastAddresses.Where(n => n.Address.AddressFamily == AddressFamily.InterNetwork)
-            ////    .Select(n => n.Address).Where(a => a != null).FirstOrDefault() ?? throw new Exception();
-            ////string msg = $"{i.Name}\n{ip}";
+            IPAddress? ip = i.GetIPProperties().UnicastAddresses.Where(n => n.Address.AddressFamily == AddressFamily.InterNetwork)
+                .Select(n => n.Address).Where(a => a != null).FirstOrDefault() ?? throw new Exception();
+            string msg = $"{i.Name}\n{ip}";
+            return ip;
             ////var result = MessageBox.Show(msg, "IP", MessageBoxButton.YesNo);
             ////switch (result)
             ////{

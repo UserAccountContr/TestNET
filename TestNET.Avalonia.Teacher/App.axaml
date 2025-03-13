@@ -6,15 +6,7 @@
 
     <Application.Styles>
         <FluentTheme />
+        <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/DropdownMenu.axaml"/>
     </Application.Styles>
 
-	<Application.Resources>
-		<ResourceDictionary>
-			<ResourceDictionary.MergedDictionaries>
-
-				<ResourceInclude Source="avares://TestNET.Avalonia.Shared/Resources/StringResources.en.axaml"/>
-				<ResourceInclude Source="avares://TestNET.Avalonia.Shared/Resources/Styles.Light.axaml"/>
-			</ResourceDictionary.MergedDictionaries>
-		</ResourceDictionary>
-	</Application.Resources>
 </Application>
