@@ -1,0 +1,86 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
+    <Design.PreviewWith>
+        <controls:QuestionPanel Points="1" MAXPoints="0" QuestionIndex="1">
+            <TextBlock Text="aaaaa"/>
+        </controls:QuestionPanel>
+    </Design.PreviewWith>
+
+    <Style Selector="Border.QuestionBorder">
+        <Setter Property="BorderBrush" Value="#FF80c0ff"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="4"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+
+    <Style Selector="Label.QuestionIndex">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="Background" Value="#FF80c0ff"/>
+        <Setter Property="FontWeight" Value="SemiBold"/>
+        <Setter Property="FontSize" Value="18"/>
+        <Setter Property="Padding" Value="0"/>
+    </Style>
+
+    <Style Selector="controls|QuestionPanel">
+        <!-- Set Defaults -->
+        <Setter Property="MaxWidth" Value="1200"/>
+        <Setter Property="MinWidth" Value="1150"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                    <Border Classes="QuestionBorder">
+                        <StackPanel>
+                            <Grid Background="#FFbfdFff">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                </Grid.RowDefinitions>
+
+                                <Label Content="{TemplateBinding QuestionIndex}"
+                                       Classes="QuestionIndex"
+                                       Grid.Column="0"
+                                       MinWidth="30"/>
+                                
+                                
+                                <controls:DropdownMenu 
+                                    Content="{TemplateBinding DropdownContent}"
+                                    Grid.Column="2"
+                                    MaxWidth="20"
+                                    Margin="10 0"
+                                    IsVisible="{TemplateBinding ShowDropdown}"/>
+
+                                <Label Grid.Column="2"
+                                       FontSize="16"
+                                       IsVisible="{Binding !ShowDropdown, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <Label.Content>
+                                        <WrapPanel>
+                                            <TextBlock Text="{TemplateBinding Points}"/>
+                                            <TextBlock>
+                                                <TextBlock.Styles>
+                                                    <Style Selector="TextBlock">
+                                                        <Setter Property="Text" Value="{Binding MAXPoints, RelativeSource={RelativeSource TemplatedParent}, StringFormat={}/{0}}"/>
+                                                        <Style Selector="^[Text=/0]">
+                                                            <Setter Property="IsVisible" Value="False"/>
+                                                        </Style>
+                                                    </Style>
+                                                </TextBlock.Styles>
+                                            </TextBlock>
+                                            <TextBlock Text="{DynamicResource points}"/>
+                                        </WrapPanel>
+                                    </Label.Content>
+                                </Label>
+                            </Grid>
+                            <ContentControl Content="{TemplateBinding Content}"/>
+                        </StackPanel>
+                    </Border>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

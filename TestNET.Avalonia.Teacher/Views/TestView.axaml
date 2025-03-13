@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
              xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
+             xmlns:customControls="clr-namespace:TestNET.Avalonia.Shared.CustomControls;assembly=TestNET.Avalonia.Shared"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="TestNET.Avalonia.Teacher.Views.TestView"
              x:DataType="vm:TestViewModel">
@@ -62,12 +63,10 @@
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel>
-                                    <!--
-                                    <CustomControls:QuestionViewPanel 
+                                    <customControls:QuestionViewPanel 
                                         Question="{Binding .}"
                                         ShowAnswers="False"
-                                        QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListViewItem}}, Converter={StaticResource IndexConverter}}"/>
-                                    -->
+                                        QuestionIndex="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}, Converter={StaticResource IndexConverter}}"/>
                                 </StackPanel>
                             </DataTemplate>
                         </ListBox.ItemTemplate>

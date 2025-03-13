@@ -1,0 +1,30 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
+    <Design.PreviewWith>
+        <controls:LatexTextBox />
+    </Design.PreviewWith>
+
+    <Style Selector="controls|LatexTextBox">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel>
+                    <controls:MathKeyboardPanel Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"/>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^[IsMath=False]">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <TextBox Text="{Binding Text, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                             HorizontalAlignment="Left"
+                             TextWrapping="Wrap"
+                             MaxWidth="1100"
+                             FontSize="16"/>
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </Style>
+</Styles>

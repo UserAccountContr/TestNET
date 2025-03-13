@@ -104,7 +104,7 @@
 										<!--ContentStringFormat="{}{0}."/>-->
 										<Label Content="{Binding Name}"/>
 									</WrapPanel>
-									<!--CustomControls:DropdownMenu Grid.Column="1"
+									<customControls:DropdownMenu Grid.Column="1"
                                                                  Margin="5">
 										<StackPanel Background="White">
 
@@ -126,7 +126,7 @@
                                                                Padding="10 0 0 0"/>
 												</Grid>
 											</Button>
-											<Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListView}}"
+											<Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
                                                     CommandParameter="{Binding .}">
 												<Grid HorizontalAlignment="Stretch">
 													<Grid.ColumnDefinitions>
@@ -145,7 +145,7 @@
 												</Grid>
 											</Button>
 										</StackPanel>
-									</CustomControls:DropdownMenu-->
+									</customControls:DropdownMenu>
 								</Grid>
 							</DataTemplate>
 						</ListBox.ItemTemplate>

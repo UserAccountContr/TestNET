@@ -1,0 +1,32 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:math="clr-namespace:AvaloniaMath.Controls;assembly=AvaloniaMath"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
+    
+    <Design.PreviewWith>
+        <controls:LatexLabel Text="x_{1,2}=\frac{-b\pm\sqrt{b^2-4ac}}{2a}"
+                             IsMath="True"/>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|LatexLabel">
+        <!-- Set Defaults -->
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="MaxWidth" Value="1000"/>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <math:FormulaBlock Formula="{TemplateBinding Text}"
+                                   HorizontalAlignment="Left"
+                                   SystemTextFontName="Times New Roman"/>
+            </ControlTemplate>
+        </Setter>
+        
+        <Style Selector="^[IsMath=False]">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <TextBlock Text="{TemplateBinding Text}"/>
+                               <!--Theme="{StaticResource ltlbl}"/-->
+                </ControlTemplate>
+            </Setter>
+        </Style>
+    </Style>
+</Styles>

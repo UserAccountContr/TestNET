@@ -1,0 +1,87 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
+    <Design.PreviewWith>
+        <controls:QuestionViewPanel/>
+    </Design.PreviewWith>
+
+    <Style Selector="controls|QuestionViewPanel[QType=SH][ShowAnswers=True]">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:QuestionPanel
+                    Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                    QuestionIndex="{TemplateBinding QuestionIndex}">
+                    
+                    <StackPanel Margin="15">
+                        <controls:LatexLabel
+                            Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                            Margin="0 0 0 15"/>
+                        
+                        <controls:LatexTextBox
+                            Text="{Binding QuestionSH.Answer.Text, RelativeSource={RelativeSource TemplatedParent}}" 
+                            IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsEnabled="{TemplateBinding EnableSolving}"/>
+                    </StackPanel>
+                </controls:QuestionPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|QuestionViewPanel[QType=SH][ShowAnswers=False]">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:QuestionPanel
+                    Points="{Binding QuestionSH.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                    QuestionIndex="{TemplateBinding QuestionIndex}">
+                    
+                    <StackPanel Margin="15">
+                        <controls:LatexLabel
+                            Text="{Binding QuestionSH.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsMath="{Binding QuestionSH.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                            Margin="0 0 0 15"/>
+                        
+                        <TextBlock Text="{DynamicResource shortAnswer}"/>
+                    </StackPanel>
+                </controls:QuestionPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+
+    <Style Selector="controls|QuestionViewPanel[QType=MC][ShowAnswers=False]">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <controls:QuestionPanel
+                    Points="{Binding QuestionMC.Points, RelativeSource={RelativeSource TemplatedParent}}"
+                    QuestionIndex="{TemplateBinding QuestionIndex}">
+                    
+                    <StackPanel Margin="15">
+                        
+                        <controls:LatexLabel
+                            Text="{Binding QuestionMC.Text, RelativeSource={RelativeSource TemplatedParent}}"
+                            IsMath="{Binding QuestionMC.TextIsMath, RelativeSource={RelativeSource TemplatedParent}}"
+                            Margin="0 0 0 15"/>
+                        
+                        <TextBlock Text="{DynamicResource possibleAnswers}"
+                                   Margin="0 0 0 5"/>
+                        
+                        <ItemsControl ItemsSource="{Binding QuestionMC.PossibleAnswers, RelativeSource={RelativeSource TemplatedParent}}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <WrapPanel>
+                                        <controls:LatexLabel Text="{Binding Text}"
+                                                             IsMath="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=DataContext.TextIsMath}"
+                                                             Margin="5"/>
+                                    </WrapPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </controls:QuestionPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

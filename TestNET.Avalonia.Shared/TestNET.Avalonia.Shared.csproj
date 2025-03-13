@@ -8,7 +8,9 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.1.0" />
+    <PackageReference Include="AvaloniaMath" Version="2.1.0" />
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="MathKeyboardEngine" Version="1.0.0" />
   </ItemGroup>
 
 </Project>

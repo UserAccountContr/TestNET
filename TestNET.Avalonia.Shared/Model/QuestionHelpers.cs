@@ -18,13 +18,13 @@ public static class QuestionHelpers
         _ => throw new NotImplementedException()
     };
 
-    //public static string QType(this Question q) => q switch
-    //{
-    //    ShortAnswerQuestion => "SH",
-    //    MultipleChoiceQuestion => "MC",
-    //    MultipleChoiceManyQuestion => "MCM",
-    //    _ => "unknown"
-    //};
+    public static string QType(this Question q) => q switch
+    {
+        ShortAnswerQuestion => "SH",
+        MultipleChoiceQuestion => "MC",
+        MultipleChoiceManyQuestion => "MCM",
+        _ => "unknown"
+    };
 
     //public static float Grade(this Question q, ObservableCollection<Answer> submAnswers) => q switch
     //{
