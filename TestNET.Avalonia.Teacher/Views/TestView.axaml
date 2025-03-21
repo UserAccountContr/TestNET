@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
+             xmlns:local="clr-namespace:TestNET.Avalonia.Teacher.Views"
              xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
              xmlns:customControls="clr-namespace:TestNET.Avalonia.Shared.CustomControls;assembly=TestNET.Avalonia.Shared"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -16,7 +17,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="{DynamicResource back}"
-                      Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                      Command="{Binding DataContext.GoToHomeViewCommand, RelativeSource={RelativeSource AncestorType=local:MainView}}"
                       IsEnabled="{Binding LogService.TestNotStarted}"/>
             <MenuItem Header="{DynamicResource start}"
                       Command="{Binding ShareTestCommand}"
@@ -25,7 +26,7 @@
                       Command="{Binding StopSharingTestCommand}"
                       IsEnabled="{Binding LogService.TestStarted}"/>
             <MenuItem Header="{DynamicResource edit}"
-                      Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                      Command="{Binding DataContext.OpenEditTestViewCommand, RelativeSource={RelativeSource AncestorType=local:MainView}}"
                       CommandParameter="{Binding Test}"
                       IsEnabled="{Binding LogService.TestNotStarted}"/>
         </Menu>

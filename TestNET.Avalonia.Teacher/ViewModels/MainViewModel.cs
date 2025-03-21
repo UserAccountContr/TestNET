@@ -21,8 +21,8 @@ public partial class MainViewModel : BaseViewModel
 //    [RelayCommand]
 //    void OpenTestView(object test) => Navigation.NavigateTo<TestViewModel, Test>(test as Test);
 //
-//    [RelayCommand]
-//    void OpenEditTestView(object test) => Navigation.NavigateTo<EditTestViewModel, Test>(test as Test);
+    [RelayCommand]
+    void OpenEditTestView(object test) => Navigation.NavigateTo<EditTestViewModel, Test>(test as Test);
 
     [RelayCommand]
     void GoToHomeView() => Navigation.NavigateTo<HomeViewModel>();

@@ -11,6 +11,7 @@
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/LatexTextBox.axaml"/>
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/MathKeyboardPanel.axaml"/>
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionPanel.axaml"/>
+        <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionEditPanel.axaml"/>
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionViewPanel.axaml"/>
     </Application.Styles>
 

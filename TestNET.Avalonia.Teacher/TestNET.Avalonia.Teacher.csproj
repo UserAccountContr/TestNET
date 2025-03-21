@@ -45,4 +45,11 @@
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissionCorrectAnswers.sql" />
     <EmbeddedResource Include="Service\DB\Queries\Test\SelectSubmissions.sql" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\EditTestView.axaml.cs">
+      <DependentUpon>EditTestView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

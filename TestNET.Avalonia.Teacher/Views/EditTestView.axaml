@@ -1,0 +1,80 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:TestNET.Avalonia.Teacher.ViewModels"
+             xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
+             xmlns:customControls="clr-namespace:TestNET.Avalonia.Shared.CustomControls;assembly=TestNET.Avalonia.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TestNET.Avalonia.Teacher.Views.EditTestView"
+             x:DataType="vm:EditTestViewModel">
+
+    <Design.DataContext>
+        <vm:EditTestViewModel/>
+    </Design.DataContext>
+    
+    <DockPanel>
+
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="{DynamicResource back}"
+                              Command="{Binding BackCommand}"/>
+            <MenuItem Header="{DynamicResource addQuestion}">
+                <MenuItem Header="{DynamicResource shortAnswer}"
+                                  Command="{Binding AddSAQuestionCommand}" />
+                <MenuItem Header="{DynamicResource multipleChoice}"
+                                  Command="{Binding AddMCQuestionCommand}" />
+                <MenuItem Header="{DynamicResource multipleChoiceManyCorrect}"
+                                  Command="{Binding AddMCMQuestionCommand}" />
+            </MenuItem>
+            <MenuItem Header="{DynamicResource save}"
+                              Command="{Binding SaveCommand}"/>
+            <MenuItem Header="{DynamicResource cancel}"
+                              Command="{Binding CancelCommand}"/>
+        </Menu>
+
+        <ScrollViewer>
+            <StackPanel Width="1200">
+                <WrapPanel Grid.Row="0">
+                    <Label Content="{DynamicResource testName}"
+                           Theme="{StaticResource LargeLabel}"/>
+                    <TextBox 
+                        Text="{Binding Name}"
+                        Grid.Row="1"
+                        VerticalContentAlignment="Center"
+                        MinWidth="150"
+                        FontSize="20"/>
+                </WrapPanel>
+                <ListBox Grid.Row="1" 
+                          ItemsSource="{Binding Questions}"
+                          SelectedIndex="{Binding SelIndex}"
+                          BorderThickness="0">
+                    <!--
+                    PreviewMouseWheel="ListView_PreviewMouseWheel"
+                          HorizontalContentAlignment="Stretch"
+-->
+
+                    <ListBox.ItemContainerTheme>
+                        <ControlTheme TargetType="ListBoxItem">
+                            <Setter Property="Margin" Value="0 10"/>
+                            <Setter Property="Padding" Value="0"/>
+                        </ControlTheme>
+                    </ListBox.ItemContainerTheme>
+                    
+                    <ListBox.Resources>
+                        <sharedserv:IndexConverter x:Key="IndexConverter" />
+                    </ListBox.Resources>
+                    
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <customControls:QuestionEditPanel 
+                                Question="{Binding}"
+                                IsInEditMode="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                                QuestionIndex="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Converter={StaticResource IndexConverter}}"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+    
+</UserControl>

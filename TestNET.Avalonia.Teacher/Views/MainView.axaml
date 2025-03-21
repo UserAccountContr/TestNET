@@ -19,6 +19,9 @@
 		<DataTemplate DataType="vm:TestViewModel">
 			<local:TestView/>
 		</DataTemplate>
+		<DataTemplate DataType="vm:EditTestViewModel">
+			<local:EditTestView/>
+		</DataTemplate>
 	</UserControl.DataTemplates>
 	
 	<ContentControl Content="{Binding Navigation.CurrentViewModel}"/>

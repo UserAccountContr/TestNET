@@ -4,13 +4,823 @@
     <Design.PreviewWith>
         <controls:MathKeyboardPanel />
     </Design.PreviewWith>
+    
+    <Style Selector="TabControl.MathBtnSt Button">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="MinHeight" Value="45"/>
+    </Style>
 
     <Style Selector="controls|MathKeyboardPanel">
         <!-- Set Defaults -->
+        <Setter Property="MaxWidth" Value="1100"/>
         <Setter Property="Template">
             <ControlTemplate>
-                <TextBlock Text="Templated Control" />
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="DarkGray"
+                        BorderThickness="1">
+                    <Grid Background="Transparent">
+                        <CheckBox IsChecked="{Binding IsOpen, RelativeSource={RelativeSource TemplatedParent}}">
+                            <CheckBox.Template>
+                                <ControlTemplate TargetType="CheckBox">
+                                    <Grid Background="Transparent">
+                                        <controls:LatexLabel 
+                                            IsMath="True"
+                                            Margin="5 3 5 5">
+                                            <controls:LatexLabel.Theme>
+                                                <ControlTheme TargetType="controls:LatexLabel">
+                                                    <Setter Property="Text" Value="{Binding Text, RelativeSource={RelativeSource AncestorType=controls:MathKeyboardPanel}}"/>
+                                                    <!--<Style Selector="^[Text='']">
+                                                        <Setter Property="Text" Value="{DynamicResource enterTextFormula}"/>
+                                                    </Style>-->
+                                                </ControlTheme>
+                                            </controls:LatexLabel.Theme>
+                                        </controls:LatexLabel>
+                                    </Grid>
+                                </ControlTemplate>
+                            </CheckBox.Template>
+                        </CheckBox>
+                    </Grid>
+                </Border>
             </ControlTemplate>
         </Setter>
+        <Style Selector="^[IsOpen=True]">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border BorderBrush="DarkGray"
+                                    BorderThickness="1">
+                                <Grid Name="PART_GRID" Background="Transparent" Focusable="True">
+                                    <StackPanel>
+                                        <controls:LatexLabel Margin="20"
+                                                      IsMath="True"
+                                                      Text="{Binding TempView, RelativeSource={RelativeSource TemplatedParent}}"/>
+
+                                        <StackPanel Margin="20">
+                                            <TabControl HorizontalAlignment="Left" Classes="MathBtnSt">
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <controls:LatexLabel Text="+-\\\times \div" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <Button Name="NUMGT_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\gt" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMGTE_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\geq" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMLT_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\lt" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMLTE_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\leq" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMDOT_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="." IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMPLUS_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="+" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMMINUS_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="-" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMTIMES_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\times" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMDIVIDE_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\div" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUMEQ_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="=" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM0_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="0" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM1_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="1" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM2_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="2" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM3_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="3" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM4_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="4" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM5_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="5" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM6_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="6" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM7_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="7" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM8_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="8" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="NUM9_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="9" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SBR_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\left( \square \right)" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SQBR_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\left[ \square \right]" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CBR_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\left\{ \square \right\}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PIPE_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\left| \square \right|" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="FRAC_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="6">
+                                                                <controls:LatexLabel Text="\frac{\square}{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SQRT_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="6">
+                                                                <controls:LatexLabel Text="\sqrt{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NTHRT_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="6">
+                                                                <controls:LatexLabel Text="\sqrt[\square]{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="Pi_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="6">
+                                                                <controls:LatexLabel Text="\pi" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="POWERSND_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="7">
+                                                                <controls:LatexLabel Text="a^{2}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="POWER_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="7">
+                                                                <controls:LatexLabel Text="a^{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="INDEX_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="7">
+                                                                <controls:LatexLabel Text="a_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PROC_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="7">
+                                                                <controls:LatexLabel Text="\%" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="APPROX_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="8">
+                                                                <controls:LatexLabel Text="\approx" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CONG_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="8">
+                                                                <controls:LatexLabel Text="\cong" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SIM_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="8">
+                                                                <controls:LatexLabel Text="\sim" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NOTEQ_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="8">
+                                                                <controls:LatexLabel Text="\neq" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
+
+
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <controls:LatexLabel Text="\alpha" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+                                                            <Button Name="alpha_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\alpha" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="beta_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\beta" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="gamma_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\gamma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="delta_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\delta" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="epsilon_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\varepsilon" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="mu_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\mu" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="lambda_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\lambda" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="pi_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\pi" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="rho_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\rho" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="sigma_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\sigma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="phi_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\phi" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="omega_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\omega" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="Gamma_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\Gamma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="Delta_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\Delta" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="Sigma_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\Sigma" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="Omega_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\Omega" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="veca_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\vec{a}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vecb_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\vec{b}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vecc_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\vec{c}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="vec_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\vec{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="perp_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\perp" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="parallel_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\parallel" IsMath="True"/>
+                                                            </Button>
+                                                            
+                                                            <Button Name="DEG_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\square^{\circ}" IsMath="True"/>
+                                                            </Button>
+
+                                                            <Button Name="ANG_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\angle" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
+
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <controls:LatexLabel Text="\in" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+
+                                                            <Button Name="in_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\in" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="notin_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\not\in" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="ni_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\ni" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="subset_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\subset" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CUP_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\cup" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="CAP_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\cap" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SETM_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\setminus" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NOTHING_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\emptyset" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="EXISTS_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\exists" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="EXISTS1_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\exists!" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="NEXISTS_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\not\exists" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="FORALL_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\forall" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
+
+                                                <TabItem>
+                                                    <TabItem.Header>
+                                                        <controls:LatexLabel Text="f(x)" IsMath="True"/>
+                                                    </TabItem.Header>
+                                                    <WrapPanel>
+
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                                <ColumnDefinition/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                                <RowDefinition/>
+                                                            </Grid.RowDefinitions>
+
+
+                                                            <Button Name="LOG_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\log_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LOGTWO_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\log_2" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LOGTEN_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\lg" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LN_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="0">
+                                                                <controls:LatexLabel Text="\ln" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LIMX_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\lim_{x\to\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="LIM_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\lim_{\square\to\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="E_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="e" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="INF_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="1">
+                                                                <controls:LatexLabel Text="\infty" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SIN_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\sin" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="COS_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\cos" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="TG_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\tg" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="COTG_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="5">
+                                                                <controls:LatexLabel Text="\cot" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="sys_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="|" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="cases_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\{" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="arrow_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\to" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="binom_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="2">
+                                                                <controls:LatexLabel Text="\binom{\square}{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PRIM_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\square'" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="TILDE_BTN"
+                                                                    Grid.Row="0"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="\widetilde{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="INTEGRAL_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\int" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="SUM_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\sum" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PROD_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="3">
+                                                                <controls:LatexLabel Text="\prod" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="PERM_BTN"
+                                                                    Grid.Row="1"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="P^{\square}_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="VARI_BTN"
+                                                                    Grid.Row="2"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="V^{\square}_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                            <Button Name="COMB_BTN"
+                                                                    Grid.Row="3"
+                                                                    Grid.Column="4">
+                                                                <controls:LatexLabel Text="C^{\square}_{\square}" IsMath="True"/>
+                                                            </Button>
+                                                        </Grid>
+                                                    </WrapPanel>
+                                                </TabItem>
+                                            </TabControl>
+                                            <WrapPanel Margin="0 5 0 0">
+                                                <Grid Background="white">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                        <ColumnDefinition/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition/>
+                                                        <RowDefinition/>
+                                                    </Grid.RowDefinitions>
+                                                    
+                                                    <Button Name="TEXT_BTN"
+                                                            Grid.Column="0"
+                                                            Grid.Row="0">
+                                                        
+                                                                <!--
+                                                        <Button.Theme>
+                                                            <ControlTheme TargetType="Button" BasedOn="{StaticResource MathBtnSt}">
+                                                                <Style.Triggers>
+                                                                    <DataTrigger Binding="{Binding TextNodeActive, RelativeSource={RelativeSource TemplatedParent}}" Value="True">
+                                                                        <Setter Property="Background" Value="PaleGreen"/>
+                                                                    </DataTrigger>
+                                                                </Style.Triggers>
+                                                            </ControlTheme>
+                                                        </Button.Theme>
+                                                                -->
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M280-160v-520H80v-120h520v120H400v520H280Zm360 0v-320H520v-120h360v120H760v320H640Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="NEWLINE_BTN"
+                                                            Grid.Column="2"
+                                                            Grid.Row="0">
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M360-240 120-480l240-240 56 56-144 144h488v-160h80v240H272l144 144-56 56Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVEUP_BTN"
+                                                            Grid.Column="1"
+                                                            Grid.Row="0">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M440-240v-368L296-464l-56-56 240-240 240 240-56 56-144-144v368h-80Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVELEFT_BTN"
+                                                            Grid.Column="0"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M400-240 160-480l240-240 56 58-142 142h486v80H314l142 142-56 58Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVEDOWN_BTN"
+                                                            Grid.Column="1"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="M480-240 240-480l56-56 144 144v-368h80v368l144-144 56 56-240 240Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                    <Button Name="MOVERIGHT_BTN"
+                                                            Grid.Column="2"
+                                                            Grid.Row="1">
+
+                                                        <Viewbox Height="14">
+                                                            <Path Data="m560-240-56-58 142-142H160v-80h486L504-662l56-58 240 240-240 240Z"
+                                                                  Fill="Black"
+                                                                  Stretch="Fill"/>
+                                                        </Viewbox>
+                                                    </Button>
+                                                </Grid>
+                                            </WrapPanel>
+                                        </StackPanel>
+
+                                        <Grid Margin="20 0 20 20" Width="250" HorizontalAlignment="Left">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            
+                                            <Button Content="{DynamicResource save}" Name="SAVE_BTN" Grid.Column="0" Margin="0 0 10 0"/>
+                                            <Button Content="{DynamicResource cancel}" Name="CANCEL_BTN" Grid.Column="1" Margin="10 0 0 0"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
     </Style>
 </Styles>
