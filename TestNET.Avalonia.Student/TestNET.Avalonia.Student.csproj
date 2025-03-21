@@ -24,4 +24,15 @@
   <ItemGroup>
     <ProjectReference Include="..\TestNET.Avalonia.Shared\TestNET.Avalonia.Shared.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\TestOverviewView.axaml.cs">
+      <DependentUpon>TestOverviewView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\TestSolvingView.axaml.cs">
+      <DependentUpon>TestSolvingView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
 </Project>

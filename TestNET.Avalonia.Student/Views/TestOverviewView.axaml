@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:vm="clr-namespace:TestNET.Avalonia.Student.ViewModels"
+			 xmlns:local="clr-namespace:TestNET.Avalonia.Student.Views"
+             xmlns:sharedserv="clr-namespace:TestNET.Avalonia.Shared.Service;assembly=TestNET.Avalonia.Shared"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="TestNET.Avalonia.Student.Views.TestOverviewView"
+             x:DataType="vm:TestOverviewViewModel">
+
+	<Design.DataContext>
+		<vm:TestOverviewViewModel/>
+	</Design.DataContext>
+    
+	<Border Theme="{DynamicResource BorderSt}"
+	        HorizontalAlignment="Center"
+	        VerticalAlignment="Center">
+		<StackPanel Width="300"
+		            Margin="20">
+			<Label Content="{Binding Test.Name}"
+			       Theme="{DynamicResource LargeLabel}"
+			       HorizontalAlignment="Center"
+			       Margin="0 0 0 20"/>
+			<Label Content="{Binding Test.Questions.Count, StringFormat='Number of questions: {0}'}"
+			       Theme="{DynamicResource MediumLabel}"
+			       HorizontalAlignment="Center"
+			       Margin="0 0 0 20"/>
+			<Button Content="Start"
+			        Command="{Binding DataContext.StartTestCommand, RelativeSource={RelativeSource AncestorType=local:MainView}}"
+			        CommandParameter="{Binding Test}"
+			        Background="White"/>
+		</StackPanel>
+	</Border>
+</UserControl>

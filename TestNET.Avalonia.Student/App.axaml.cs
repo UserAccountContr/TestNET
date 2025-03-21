@@ -1,10 +1,7 @@
-﻿using Avalonia;
-using Avalonia.Controls.ApplicationLifetimes;
+﻿using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.Styling;
-using TestNET.Avalonia.Student.ViewModels;
-using TestNET.Avalonia.Student.Views;
 using TestNET.Avalonia.Student.Service;
 
 namespace TestNET.Avalonia.Student;
@@ -65,7 +62,7 @@ public partial class App : Application
     {
         services.AddSingleton<INavigationService, NavigationService>();
         //services.AddSingleton<ISettingsService, SettingsService>();
-        //services.AddSingleton<TestService>();
+        services.AddSingleton<TestService>();
 
         services.AddSingleton<Func<Type, BaseViewModel>>(serviceProvider => viewModelType => (BaseViewModel)serviceProvider.GetRequiredService(viewModelType));
         services.AddSingleton<Func<Type, object, BaseViewModel>>(serviceProvider => (viewModelType, test) => (BaseViewModel)ActivatorUtilities.CreateInstance(serviceProvider, viewModelType, test));

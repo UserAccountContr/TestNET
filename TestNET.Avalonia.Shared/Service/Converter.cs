@@ -29,7 +29,9 @@ public class MultiBindConverter : IMultiValueConverter
 {
     public object? Convert(IList<object?> values, Type targetType, object? parameter, CultureInfo culture)
     {
-        return values;
+        object[] objs = new object[values.Count];
+        values.CopyTo(objs, 0);
+        return objs;
     }
 
     public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

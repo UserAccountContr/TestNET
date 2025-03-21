@@ -16,6 +16,6 @@ public partial class MainViewModel : BaseViewModel
     [RelayCommand]
     void GoToHomeView() => Navigation.NavigateTo<HomeViewModel>();
 
-    //[RelayCommand]
-    //void StartTest(Test test) => Navigation.NavigateTo<TestSolvingViewModel, Test>(test);
+    [RelayCommand]
+    void StartTest(Test test) => Navigation.NavigateTo<TestSolvingViewModel, Test>(test);
 }

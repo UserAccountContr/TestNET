@@ -17,6 +17,12 @@
 		<DataTemplate DataType="vm:HomeViewModel">
 			<local:HomeView/>
 		</DataTemplate>
+		<DataTemplate DataType="vm:TestOverviewViewModel">
+			<local:TestOverviewView/>
+		</DataTemplate>
+		<DataTemplate DataType="vm:TestSolvingViewModel">
+			<local:TestSolvingView/>
+		</DataTemplate>
 	</UserControl.DataTemplates>
 
 	<ContentControl Content="{Binding Navigation.CurrentViewModel}"/>
