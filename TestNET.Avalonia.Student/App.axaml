@@ -1,0 +1,16 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             x:Class="TestNET.Avalonia.Student.App"
+             RequestedThemeVariant="Default">
+             <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.Styles>
+        <FluentTheme />
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/DropdownMenu.axaml"/>
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/LatexLabel.axaml"/>
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/LatexTextBox.axaml"/>
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/MathKeyboardPanel.axaml"/>
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionPanel.axaml"/>
+		<StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionViewPanel.axaml"/>
+    </Application.Styles>
+</Application>

@@ -15,6 +15,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Teacher.De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Shared", "TestNET.Avalonia.Shared\TestNET.Avalonia.Shared.csproj", "{D6C84997-7CDE-43A5-8D31-6BF341005966}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student", "TestNET.Avalonia.Student\TestNET.Avalonia.Student.csproj", "{93B33C4A-8AD8-9FEA-B374-852870D741C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.Android", "TestNET.Avalonia.Student.Android\TestNET.Avalonia.Student.Android.csproj", "{903B3FD9-C34A-9EB7-120F-49573C1B0D1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.Desktop", "TestNET.Avalonia.Student.Desktop\TestNET.Avalonia.Student.Desktop.csproj", "{AE2180BA-C405-B064-627D-21A5A14E8C1E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.iOS", "TestNET.Avalonia.Student.iOS\TestNET.Avalonia.Student.iOS.csproj", "{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +53,22 @@ Global
 		{D6C84997-7CDE-43A5-8D31-6BF341005966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D6C84997-7CDE-43A5-8D31-6BF341005966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D6C84997-7CDE-43A5-8D31-6BF341005966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93B33C4A-8AD8-9FEA-B374-852870D741C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93B33C4A-8AD8-9FEA-B374-852870D741C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93B33C4A-8AD8-9FEA-B374-852870D741C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93B33C4A-8AD8-9FEA-B374-852870D741C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{903B3FD9-C34A-9EB7-120F-49573C1B0D1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{903B3FD9-C34A-9EB7-120F-49573C1B0D1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{903B3FD9-C34A-9EB7-120F-49573C1B0D1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{903B3FD9-C34A-9EB7-120F-49573C1B0D1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2180BA-C405-B064-627D-21A5A14E8C1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2180BA-C405-B064-627D-21A5A14E8C1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2180BA-C405-B064-627D-21A5A14E8C1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2180BA-C405-B064-627D-21A5A14E8C1E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
