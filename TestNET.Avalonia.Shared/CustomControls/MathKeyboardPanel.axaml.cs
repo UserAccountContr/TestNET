@@ -441,5 +441,13 @@ public class MathKeyboardPanel : TemplatedControl
         set => SetValue(TextProperty, value);
     }
 
+    public static readonly DirectProperty<MathKeyboardPanel, string> TempTextProperty = AvaloniaProperty.RegisterDirect<MathKeyboardPanel, string>(
+        nameof(TempText), o => o.TempText);
+
+    public string TempText
+    {
+        get => GetValue(TempTextProperty);
+    }
+
     #endregion
 }

@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">
     <Design.PreviewWith>
-        <controls:MathKeyboardPanel />
+        <controls:MathKeyboardPanel
+            Text="x^2-2x+1=y"
+            IsOpen="True"/>
     </Design.PreviewWith>
     
     <Style Selector="TabControl.MathBtnSt Button">
