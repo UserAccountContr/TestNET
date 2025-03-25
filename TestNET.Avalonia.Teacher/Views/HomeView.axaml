@@ -108,7 +108,7 @@
                                                                  Margin="5">
 										<StackPanel Background="White">
 
-											<Button Command="{Binding DataContext.OpenTestViewCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+											<Button Command="{Binding $parent[ListBox].((vm:HomeViewModel)DataContext).OpenTestViewCommand}"
                                                     CommandParameter="{Binding .}">
 												<Grid HorizontalAlignment="Stretch">
 													<Grid.ColumnDefinitions>
@@ -126,7 +126,7 @@
                                                                Padding="10 0 0 0"/>
 												</Grid>
 											</Button>
-											<Button Command="{Binding DataContext.RemoveTestCommand, RelativeSource={RelativeSource AncestorType=ListBox}}"
+											<Button Command="{Binding $parent[ListBox].((vm:HomeViewModel)DataContext).RemoveTestCommand}"
                                                     CommandParameter="{Binding .}">
 												<Grid HorizontalAlignment="Stretch">
 													<Grid.ColumnDefinitions>
