@@ -1,0 +1,127 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls">  
+    <Design.PreviewWith>
+        <controls:QuestionSubmPanel />
+    </Design.PreviewWith>
+ 
+    <Style Selector="controls|QuestionSubmPanelSH">
+        <Setter Property="Template">
+            <ControlTemplate>
+				<controls:QuestionPanel QuestionIndex="{TemplateBinding QuestionIndex}">
+					<controls:QuestionPanel.MAXPoints>
+						<MultiBinding Converter="{StaticResource PointsOutOfQuestionConv}">
+							<Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+							<Binding Path="UniqueId" />
+						</MultiBinding>
+					</controls:QuestionPanel.MAXPoints>
+					<Grid Margin="15">
+						<Grid.ColumnDefinitions>
+							<ColumnDefinition Width="*"/>
+							<ColumnDefinition Width="auto"/>
+						</Grid.ColumnDefinitions>
+						<StackPanel Grid.Column="0">
+
+							<controls:LatexLabel Text="{Binding Text}"
+											  IsMath="{Binding TextIsMath}"
+											  Margin="0,0,0,15"/>
+							<WrapPanel Margin="0 0 0 10">
+								<TextBlock Text="{DynamicResource answerdots}"
+										   VerticalAlignment="Center"/>
+								<controls:LatexLabel Text="{Binding Answer.Text}"
+										  IsMath="{Binding TextIsMath}"/>
+								<Viewbox Height="12"
+										 Margin="8 0">
+									<Viewbox.Style>
+										<Style TargetType="Viewbox">
+											<Setter Property="Visibility" Value="Collapsed"/>
+											<Style.Triggers>
+												<DataTrigger Value="True">
+													<DataTrigger.Binding>
+														<MultiBinding Converter="{StaticResource TestUIDSHBOOLConv}">
+															<Binding Path="Question.UniqueId" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+															<Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+															<Binding Path="Question.Answer.Text" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+														</MultiBinding>
+													</DataTrigger.Binding>
+													<Setter Property="Visibility" Value="Visible"/>
+												</DataTrigger>
+											</Style.Triggers>
+										</Style>
+									</Viewbox.Style>
+									<Path Data="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"
+															  Fill="Green"
+															  Stretch="Fill"/>
+								</Viewbox>
+							</WrapPanel>
+
+							<WrapPanel>
+
+								<TextBlock Text="{DynamicResource correctdots}"
+										   VerticalAlignment="Center"/>
+								<controls:LatexLabel IsMath="{Binding TextIsMath}">
+									<controls:LatexLabel.Text>
+										<MultiBinding Converter="{StaticResource TestUIDSHConv}">
+											<Binding Path="UniqueId"/>
+											<Binding Path="Test" RelativeSource="{RelativeSource TemplatedParent}"/>
+										</MultiBinding>
+									</controls:LatexLabel.Text>
+								</controls:LatexLabel>
+							</WrapPanel>
+						</StackPanel>
+						<StackPanel Grid.Column="1"
+									Visibility="{TemplateBinding IsTeacher, Converter={StaticResource BoolToVis}}"
+									IsEnabled="{TemplateBinding IsTeacher}">
+							<WrapPanel HorizontalAlignment="Center">
+								<Button Name="minus25" Width="20" Height="20" Padding="0">
+									<TextBlock Text="-" Margin="-1,-5,0,0"/>
+								</Button>
+								<TextBox IsEnabled="{TemplateBinding IsTeacher}"
+										 HorizontalAlignment="Stretch"
+										 HorizontalContentAlignment="Center"
+										 VerticalContentAlignment="Center"
+										 MinWidth="40"
+										 Height="30"
+										 Margin="2">
+									<TextBox.Text>
+										<Binding Path="Points" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" StringFormat="{}{0:0.0#}">
+											<Binding.ValidationRules>
+												<serv:FloatRangeValidationRule MinValue="0" MaxValue="100" />
+											</Binding.ValidationRules>
+										</Binding>
+									</TextBox.Text>
+								</TextBox>
+								<Button Name="plus25"  Width="20" Height="20" Padding="0">
+									<TextBlock Text="+" Margin="-1,-3,0,0"/>
+								</Button>
+							</WrapPanel>
+							<WrapPanel>
+
+								<Button Name="zeropts"
+										MinWidth="40" Content="0"
+										Margin="1"/>
+								<Button Name="halfpts"
+										MinWidth="40"
+										Margin="1">
+									<MultiBinding Converter="{StaticResource PointsOutOfQuestionConv}"
+												  ConverterParameter="0.5">
+										<Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+										<Binding Path="UniqueId" />
+									</MultiBinding>
+								</Button>
+								<Button Name="fullpts"
+										MinWidth="40"
+										Margin="1">
+									<MultiBinding Converter="{StaticResource PointsOutOfQuestionConv}">
+										<Binding Path="Test" RelativeSource="{RelativeSource AncestorType={x:Type local:QuestionSubmPanelSH}}"/>
+										<Binding Path="UniqueId" />
+									</MultiBinding>
+								</Button>
+							</WrapPanel>
+						</StackPanel>
+					</Grid>
+				</controls:QuestionPanel>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>
