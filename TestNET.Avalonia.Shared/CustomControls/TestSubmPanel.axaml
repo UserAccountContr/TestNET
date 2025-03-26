@@ -1,0 +1,109 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="using:TestNET.Avalonia.Shared.CustomControls"
+        xmlns:model="clr-namespace:TestNET.Avalonia.Shared.Model"
+        xmlns:serv="clr-namespace:TestNET.Avalonia.Shared.Service">
+    
+    <Design.PreviewWith>
+        <controls:TestSubmPanel />
+    </Design.PreviewWith>
+    
+    <Styles.Resources>
+        <serv:IndexConverter x:Key="IndexConverter"/>
+        <serv:SubmissionAttentionConverter x:Key="SubmAttConv"/>
+        <serv:TestUIDPointsConverter x:Key="PointsOutOfQuestionConv"/>
+        <serv:PointsOutOfMaxConverter x:Key="PointsOutOfMaxConv"/>
+        <serv:MultiBoolConverter x:Key="MultiBoolConv"/>
+    </Styles.Resources>
+
+    <Style Selector="controls|TestSubmPanel">
+        <!-- Set Defaults -->
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Expander>
+                    <Expander.Styles>
+                        <Style Selector="Expander">
+                            <Setter Property="Header">
+                                <Setter.Value>
+                                    <MultiBinding Converter="{StaticResource SubmAttConv}">
+                                        <Binding Path="Name"/>
+                                        <Binding Path="RequiresAttention"/>
+                                    </MultiBinding>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"/>
+                        </Style>
+                    </Expander.Styles>
+                    <StackPanel HorizontalAlignment="Stretch">
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0">
+                                <WrapPanel>
+                                    <Label Content="{DynamicResource timeSubmitted}"/>
+                                    <Label Content="{Binding TimeSubmitted}"/>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Content="{DynamicResource pointsdots}"/>
+                                    <Label>
+                                        <MultiBinding Converter="{StaticResource PointsOutOfMaxConv}">
+                                            <Binding Path="Points"/>
+                                            <Binding Path="MaxPoints"/>
+                                        </MultiBinding>
+                                    </Label>
+                                </WrapPanel>
+                                <WrapPanel>
+                                    <Label Content="{DynamicResource reviewcodedots}"/>
+                                    <Label Content="{Binding Code}"/>
+                                </WrapPanel>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1"
+                                        HorizontalAlignment="Right">
+                                <Button Name="RGR_BTN" Content="Re-grade"
+                                        Margin="0 0 0 5"/>
+                                <Button Name="Accept_BTN" Content="Finish grading"
+                                        IsVisible="{Binding RequiresAttention}"/>
+                            </StackPanel>
+                        </Grid>
+
+                        <ItemsControl ItemsSource="{Binding Answers.Questions}">
+                            <ItemsControl.ItemContainerTheme>
+                                <ControlTheme TargetType="ContentPresenter">
+                                    <Setter Property="Margin" Value="0 10"/>
+                                    <Setter Property="MaxWidth" Value="1180"/>
+                                </ControlTheme>
+                            </ItemsControl.ItemContainerTheme>
+                            <ItemsControl.DataTemplates>
+                                <DataTemplate DataType="{x:Type model:ShortAnswerQuestion}">
+                                    <controls:QuestionSubmPanelSH Question="{Binding .}" Test="{Binding Submission.CorrectAnswers, RelativeSource={RelativeSource AncestorType=controls:TestSubmPanel}}"
+                                                               QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}">
+                                        <controls:QuestionSubmPanelSH.IsTeacher>
+                                            <MultiBinding Converter="{StaticResource MultiBoolConv}">
+                                                <Binding Path="Submission.RequiresAttention" RelativeSource="{RelativeSource AncestorType=controls:TestSubmPanel}"/>
+                                                <Binding Path="IsTeacher" RelativeSource="{RelativeSource AncestorType=controls:TestSubmPanel}"/>
+                                            </MultiBinding>
+                                        </controls:QuestionSubmPanelSH.IsTeacher>
+                                    </controls:QuestionSubmPanelSH>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:MultipleChoiceQuestion}">
+                                    <controls:QuestionSubmPanelMC Question="{Binding .}" Test="{Binding Submission.CorrectAnswers, RelativeSource={RelativeSource AncestorType=controls:TestSubmPanel}}"
+                                                               QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
+                                </DataTemplate>
+                                <DataTemplate DataType="{x:Type model:MultipleChoiceManyQuestion}">
+                                    <controls:QuestionSubmPanelMCM Question="{Binding .}" Test="{Binding Submission.CorrectAnswers, RelativeSource={RelativeSource AncestorType=controls:TestSubmPanel}}"
+                                                                QuestionIndex="{Binding RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource IndexConverter}}"/>
+                                </DataTemplate>
+                            </ItemsControl.DataTemplates>
+                        </ItemsControl>
+                    </StackPanel>
+                </Expander>
+            </ControlTemplate>
+        </Setter>
+    </Style>
+</Styles>

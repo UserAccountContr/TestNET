@@ -22,10 +22,10 @@ public class QuestionSubmPanelSH : TemplatedControl
     private const string HalfBtnName = "halfpts";
     private const string ZeroBtnName = "zeropts";
 
-    private static readonly StyledProperty<Question> QuestionProperty =
-        AvaloniaProperty.Register<QuestionSubmPanelSH, Question>(nameof(Question), null);
+    public static readonly StyledProperty<ShortAnswerQuestion> QuestionProperty =
+        AvaloniaProperty.Register<QuestionSubmPanelSH, ShortAnswerQuestion>(nameof(Question), null);
 
-    public Question Question
+    public ShortAnswerQuestion Question
     {
         get => GetValue(QuestionProperty);
         set => SetValue(QuestionProperty, value);
@@ -53,7 +53,7 @@ public class QuestionSubmPanelSH : TemplatedControl
 
 
     public static readonly StyledProperty<bool> IsTeacherProperty = AvaloniaProperty.Register<QuestionSubmPanelSH, bool>(
-        nameof(IsTeacher));
+        nameof(IsTeacher), false);
 
     public bool IsTeacher
     {
@@ -94,5 +94,69 @@ public class QuestionSubmPanelSH : TemplatedControl
             _zerobtn.Click += (s, re) => { Question.Points = 0; };
         
         base.OnApplyTemplate(e);
+    }
+}
+
+public class QuestionSubmPanelMC : TemplatedControl
+{
+    public static readonly StyledProperty<MultipleChoiceQuestion> QuestionProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMC, MultipleChoiceQuestion>(nameof(Question), null);
+
+    public MultipleChoiceQuestion Question
+    {
+        get => GetValue(QuestionProperty);
+        set => SetValue(QuestionProperty, value);
+    }
+
+
+    public static readonly StyledProperty<Test> TestProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMC, Test>(nameof(Test), null);
+
+    public Test Test
+    {
+        get => GetValue(TestProperty);
+        set => SetValue(TestProperty, value);
+    }
+
+
+    public static readonly StyledProperty<int> QuestionIndexProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMC, int>(nameof(QuestionIndex), 0);
+
+    public int QuestionIndex
+    {
+        get => GetValue(QuestionIndexProperty);
+        set => SetValue(QuestionIndexProperty, value);
+    }
+}
+
+public class QuestionSubmPanelMCM : TemplatedControl
+{
+    public static readonly StyledProperty<MultipleChoiceManyQuestion> QuestionProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMCM, MultipleChoiceManyQuestion>(nameof(Question), null);
+
+    public MultipleChoiceManyQuestion Question
+    {
+        get => GetValue(QuestionProperty);
+        set => SetValue(QuestionProperty, value);
+    }
+
+
+    public static readonly StyledProperty<Test> TestProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMCM, Test>(nameof(Test), null);
+
+    public Test Test
+    {
+        get => GetValue(TestProperty);
+        set => SetValue(TestProperty, value);
+    }
+
+
+    public static readonly StyledProperty<int> QuestionIndexProperty = 
+        AvaloniaProperty.Register<QuestionSubmPanelMCM, int>(nameof(QuestionIndex), 0);
+
+    public int QuestionIndex
+    {
+        get => GetValue(QuestionIndexProperty);
+        set => SetValue(QuestionIndexProperty, value);
     }
 }

@@ -104,10 +104,8 @@
                         </ListBox.ItemContainerTheme>
                         <ListBox.ItemTemplate>
                             <DataTemplate>
-                                <!--
-                                <CustomControls:TestSubmPanel Submission="{Binding .}"
+                                <customControls:TestSubmPanel Submission="{Binding .}"
                                                               IsTeacher="True"/>
-                                                              -->
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>

@@ -13,6 +13,8 @@
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionPanel.axaml"/>
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionEditPanel.axaml"/>
         <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionViewPanel.axaml"/>
+        <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/QuestionSubmPanel.axaml"/>
+        <StyleInclude Source="avares://TestNET.Avalonia.Shared/CustomControls/TestSubmPanel.axaml"/>
     </Application.Styles>
 
 </Application>
