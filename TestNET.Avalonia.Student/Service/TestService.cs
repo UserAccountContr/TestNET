@@ -1,5 +1,8 @@
-﻿using System.Net;
+﻿using System.Diagnostics;
+using System.Net;
 using System.Net.Sockets;
+using System.Net.WebSockets;
+using System.Threading;
 
 namespace TestNET.Avalonia.Student.Service;
 
@@ -35,45 +38,77 @@ public class TestService
                 this.name = name;
                 //using TcpClient client = new TcpClient("192.168.80.146", port);
                 IPAddress endpoint = DecodeCode(code) ?? throw new ArgumentException("Invalid IP.");
-                using var client = new TcpClient();
+                ////using var client = new TcpClient();
 
-                if (!client.ConnectAsync(endpoint.ToString(), 61234).Wait(10_000))
+                ////if (!client.ConnectAsync(endpoint.ToString(), 61234).Wait(10_000))
+                ////{
+                ////    //MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
+                ////    throw new ArgumentNullException();
+                ////}
+                using var client = new ClientWebSocket();
+
+                if (!client.ConnectAsync(new Uri($"ws://{endpoint.ToString()}:61235"), CancellationToken.None).Wait(10_000))
                 {
                     //MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    Debug.WriteLine("Could not connect to the Test server\nНе беше осъществена връзка със сървъра");
                     throw new ArgumentNullException();
                 }
 
-                using NetworkStream stream = client.GetStream();
+                ////using NetworkStream stream = client.GetStream();
 
                 TestRequest request = new() { StudentName = name };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
+                
+                await client.SendAsync(new ArraySegment<byte>(requestBytes), WebSocketMessageType.Text, true, CancellationToken.None);
 
-                stream.Write(requestBytes, 0, requestBytes.Length);
-                stream.Write([0xff], 0, 1);
+                ////stream.Write(requestBytes, 0, requestBytes.Length);
+                ////stream.Write([0xff], 0, 1);
 
-                byte[] responseBytes = new byte[1024];
-                int responseLength = 0;
+                List<byte> receivedBytes = new List<byte>(); // Use a List to store bytes
+                byte[] buffer = new byte[1024];
 
-                for (int currentLenght = 0;
-                    (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
+                ////for (int currentLenght = 0;
+                ////    (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
+                ////{
+                ////    responseLength += currentLenght;
+////
+                ////    if (responseBytes[responseLength - 1] == 0xff)
+                ////    {
+                ////        break;
+                ////    }
+////
+                ////    Array.Resize(ref responseBytes, responseLength + 1024);
+                ////}
+                string responseJson = "";
+                while (client.State == WebSocketState.Open)
                 {
-                    responseLength += currentLenght;
+                    var result = await client.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-                    if (responseBytes[responseLength - 1] == 0xff)
+                    if (result.MessageType == WebSocketMessageType.Text)
                     {
+                        receivedBytes.AddRange(buffer.AsSpan(0, result.Count).ToArray()); // Add received bytes to the list
+
+                        if (result.EndOfMessage)
+                        {
+                            responseJson = Encoding.UTF8.GetString(receivedBytes.ToArray()); // Convert the list to a string
+                            //_textBox.Text += $"Received: {message}\n";
+                            receivedBytes.Clear(); // Clear the list for the next message
+                        }
+                    }
+                    else if (result.MessageType == WebSocketMessageType.Close)
+                    {
+                        //Console.WriteLine($"WebSocket closed: {result.CloseStatus}");
                         break;
                     }
-
-                    Array.Resize(ref responseBytes, responseLength + 1024);
                 }
 
-                Array.Resize(ref responseBytes, responseLength - 1);
+                ////Array.Resize(ref responseBytes, responseLength - 1);
 
-                stream.Write([0xff], 0, 1); // Acknowledge
+                ////stream.Write([0xff], 0, 1); // Acknowledge
 
-                string responseJson = Encoding.UTF8.GetString(responseBytes);
-                TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson) ?? throw new ArgumentNullException("Invalid response.");
+                ////string responseJson = Encoding.UTF8.GetString(responseBytes);
+                TestResponse? response = JsonSerializer.Deserialize<TestResponse>(responseJson) ?? throw new ArgumentNullException(nameof(responseJson));
 
                 switch (response.Error)
                 {

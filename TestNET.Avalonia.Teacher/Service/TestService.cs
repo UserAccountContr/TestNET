@@ -1,6 +1,8 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.WebSockets;
+using System.Threading;
 using TestNET.Avalonia.Teacher.Service.DB;
 
 namespace TestNET.Avalonia.Teacher.Service;
@@ -58,6 +60,7 @@ public class TestService(LogService logService)
     }
 
     TcpListener? server = null;
+    HttpListener? listener = null;
 
     private static string EncodeCode(IPAddress ip_addr)
     {
@@ -135,6 +138,91 @@ public class TestService(LogService logService)
         }
     }
 
+    async Task StartProxy(string localAddr)
+    {
+        listener = new HttpListener();
+        listener.Prefixes.Add($"http://{localAddr}:61235/"); // The proxy listens on port 61235
+        listener.Start();
+        
+        while (true)
+        {
+            HttpListenerContext context = await listener.GetContextAsync();
+            if (context.Request.IsWebSocketRequest)
+            {
+                await ProcessWebSocketRequest(context, localAddr);
+            }
+            else
+            {
+                context.Response.StatusCode = 400; // Bad Request
+                context.Response.Close();
+            }
+        }
+        
+    }
+    
+    private static async Task ProcessWebSocketRequest(HttpListenerContext context, string localAddr)
+    {
+        WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
+        var webSocket = webSocketContext.WebSocket;
+        
+        using var tcpClient = new TcpClient();
+
+        if (!tcpClient.ConnectAsync(localAddr, 61234).Wait(10_000))
+        {
+            //MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
+            throw new ArgumentNullException();
+        }
+        
+        using (var stream = tcpClient.GetStream())
+        {
+            byte[] receiveBuffer = new byte[1024];
+
+            while (webSocket.State == WebSocketState.Open)
+            {
+                var result = await webSocket.ReceiveAsync(new ArraySegment<byte>(receiveBuffer), CancellationToken.None);
+
+                switch (result.MessageType)
+                {
+                    case WebSocketMessageType.Text:
+                    {
+                        string message = Encoding.UTF8.GetString(receiveBuffer, 0, result.Count);
+                        byte[] tcpBytes = Encoding.UTF8.GetBytes(message).Append<byte>(0xff).ToArray();
+                        await stream.WriteAsync(tcpBytes, 0, tcpBytes.Length);
+
+                        byte[] responseBytes = new byte[1024];
+                        int responseLength = 0;
+
+                        for (int currentLenght = 0;
+                             (currentLenght = await stream.ReadAsync(responseBytes, responseLength, 1024)) != 0;)
+                        {
+                            responseLength += currentLenght;
+
+                            if (responseBytes[responseLength - 1] == 0xff)
+                            {
+                                break;
+                            }
+
+                            Array.Resize(ref responseBytes, responseLength + 1024);
+                        }
+
+                        Array.Resize(ref responseBytes, responseLength - 1);
+                        
+                        stream.Write([0xff], 0, 1);
+                        string tcpResponse = Encoding.UTF8.GetString(responseBytes);
+                        await webSocket.SendAsync(new ArraySegment<byte>(Encoding.UTF8.GetBytes(tcpResponse)), WebSocketMessageType.Text, true, CancellationToken.None);
+                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
+
+                        break;
+                    }
+                    case WebSocketMessageType.Close:
+                        await webSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Client closed", CancellationToken.None);
+                        break;
+                }
+            }
+        }
+    }
+    
+
     public void ShareTest(TeacherTest test, IPAddress localAddr)
     {
         _ = Task.Run(async () =>
@@ -143,6 +231,8 @@ public class TestService(LogService logService)
             {
                 server = new TcpListener(localAddr, 61234);
                 server.Start();
+                
+                Task.Run(() => StartProxy(localAddr.ToString()));
 
                 while (true)
                 {
@@ -204,6 +294,7 @@ public class TestService(LogService logService)
             finally
             {
                 server?.Stop();
+                listener?.Stop();
                 logService.TestStarted = false;
             }
         });
@@ -240,7 +331,7 @@ public class TestService(LogService logService)
         stream.Write([0xff], 0, 1);
 
         byte[] acknowledge = new byte[1];
-        stream.Read(acknowledge, 0, 1);
+        stream.ReadExactly(acknowledge, 0, 1);
 
         if (acknowledge[0] != 0xff)
         {
@@ -353,6 +444,7 @@ public class TestService(LogService logService)
     public void StopSharingTest()
     {
         server?.Stop();
+        listener?.Stop();
         logService.TestStarted = false;
     }
 }

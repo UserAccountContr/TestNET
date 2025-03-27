@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.De
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.iOS", "TestNET.Avalonia.Student.iOS\TestNET.Avalonia.Student.iOS.csproj", "{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestNET.Avalonia.Student.Browser", "TestNET.Avalonia.Student.Browser\TestNET.Avalonia.Student.Browser.csproj", "{2F742F75-7A95-64A4-AAA2-46BC93498B11}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7138F0EB-4B06-14E6-CD41-3E9C2D09B9BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2F742F75-7A95-64A4-AAA2-46BC93498B11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2F742F75-7A95-64A4-AAA2-46BC93498B11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2F742F75-7A95-64A4-AAA2-46BC93498B11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2F742F75-7A95-64A4-AAA2-46BC93498B11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
