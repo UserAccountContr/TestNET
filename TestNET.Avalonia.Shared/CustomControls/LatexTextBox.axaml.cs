@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
+using Avalonia.Data;
 
 namespace TestNET.Avalonia.Shared.CustomControls;
 
@@ -16,7 +17,7 @@ public class LatexTextBox : TemplatedControl
     }
     
     public static readonly StyledProperty<string> TextProperty =
-        AvaloniaProperty.Register<LatexTextBox, string>(nameof(Text), string.Empty);
+        AvaloniaProperty.Register<LatexTextBox, string>(nameof(Text), string.Empty, false, BindingMode.TwoWay);
 
     public string Text
     {
