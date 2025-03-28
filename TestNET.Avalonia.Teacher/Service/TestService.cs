@@ -1,7 +1,9 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Net.Security;
 using System.Net.WebSockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using TestNET.Avalonia.Teacher.Service.DB;
 
@@ -147,9 +149,32 @@ public class TestService(LogService logService)
         while (true)
         {
             HttpListenerContext context = await listener.GetContextAsync();
+
             if (context.Request.IsWebSocketRequest)
             {
-                await ProcessWebSocketRequest(context, localAddr);
+                //// Accept the secure WebSocket connection.
+                //SslStream sslStream = new SslStream(context.AcceptTCPClient().GetStream(), false);
+                //X509Certificate2 certificate = new X509Certificate2("your_certificate.pfx", "your_password"); // Replace with your certificate path and password.
+                //sslStream.AuthenticateAsServer(certificate, false, System.Security.Authentication.SslProtocols.Tls12, true);
+                //WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(sslStream.ToString());
+                //await ProcessWebSocketRequest(webSocketContext.WebSocket, localAddr);
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                context.Response.Headers.Add("Access-Control-Allow-Headers", "Content-Type");
+                context.Response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                
+                
+                //handle the options request.
+                if(context.Request.HttpMethod == "OPTIONS"){
+                    context.Response.StatusCode = 204; // No Content
+                    context.Response.Close();
+                    continue;
+                }
+
+                if (context.Request.Headers["Upgrade"] != null && context.Request.Headers["Upgrade"].ToLower() == "websocket")
+                {
+                    WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
+                    await ProcessWebSocketRequest(webSocketContext.WebSocket, localAddr);
+                }
             }
             else
             {
@@ -160,10 +185,10 @@ public class TestService(LogService logService)
         
     }
     
-    private static async Task ProcessWebSocketRequest(HttpListenerContext context, string localAddr)
+    private static async Task ProcessWebSocketRequest(WebSocket webSocket, string localAddr)
     {
-        WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
-        var webSocket = webSocketContext.WebSocket;
+        //WebSocketContext webSocketContext = await context.AcceptWebSocketAsync(null);
+        //var webSocket = context.WebSocket;
         
         using var tcpClient = new TcpClient();
 
@@ -444,7 +469,7 @@ public class TestService(LogService logService)
     public void StopSharingTest()
     {
         server?.Stop();
-        listener?.Stop();
+        if (listener?.IsListening ?? false) listener?.Stop();
         logService.TestStarted = false;
     }
 }

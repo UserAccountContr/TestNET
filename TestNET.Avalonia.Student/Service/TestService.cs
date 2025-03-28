@@ -1,8 +1,11 @@
 ﻿using System.Diagnostics;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Net.Sockets;
 using System.Net.WebSockets;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using Avalonia.DesignerSupport.Remote.HtmlTransport;
 
 namespace TestNET.Avalonia.Student.Service;
 
@@ -32,6 +35,7 @@ public class TestService
 
     public async Task<Test> GetTest(string name, string code)
     {
+        //Debug.WriteLine(NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(n => n.NetworkInterfaceType == NetworkInterfaceType.Ethernet));
         try
         {
             {
@@ -47,20 +51,27 @@ public class TestService
                 ////}
                 using var client = new ClientWebSocket();
 
-                if (!client.ConnectAsync(new Uri($"ws://{endpoint.ToString()}:61235"), CancellationToken.None).Wait(10_000))
-                {
-                    //MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    Debug.WriteLine("Could not connect to the Test server\nНе беше осъществена връзка със сървъра");
-                    throw new ArgumentNullException();
-                }
+                //if (!client.ConnectAsync(new Uri($"ws://{endpoint.ToString()}:61235"), CancellationToken.None).Wait(10_000))
+                //{
+                //    //MessageBox.Show("Could not connect to the Test server\nНе беше осъществена връзка със сървъра", "Server error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //    Debug.WriteLine(client.CloseStatus.ToString() + ": " + client.CloseStatusDescription);
+                //    Debug.WriteLine("Could not connect to the Test server\nНе беше осъществена връзка със сървъра");
+                //    await client.CloseAsync(WebSocketCloseStatus.EndpointUnavailable, "", CancellationToken.None);
+                //    throw new ArgumentNullException();
+                //}
 
                 ////using NetworkStream stream = client.GetStream();
+
+                await client.ConnectAsync(new Uri($"ws://{endpoint.ToString()}:61235"), CancellationToken.None);
 
                 TestRequest request = new() { StudentName = name };
                 string requestJson = JsonSerializer.Serialize(request as Request);
                 byte[] requestBytes = Encoding.UTF8.GetBytes(requestJson);
                 
                 await client.SendAsync(new ArraySegment<byte>(requestBytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                
+                Debug.WriteLine("OK");
+                Console.WriteLine("OK");
 
                 ////stream.Write(requestBytes, 0, requestBytes.Length);
                 ////stream.Write([0xff], 0, 1);
