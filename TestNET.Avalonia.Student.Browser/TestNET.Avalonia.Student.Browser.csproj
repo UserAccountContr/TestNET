@@ -13,4 +13,8 @@
   <ItemGroup>
     <ProjectReference Include="..\TestNET.Avalonia.Student\TestNET.Avalonia.Student.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <TrimmerRootDescriptor Include="MyRoots.xml" />
+  </ItemGroup>
 </Project>

@@ -1,0 +1,7 @@
+<linker>
+    <assembly fullname="TestNET.Avalonia.Shared">
+        <type fullname="CompiledAvaloniaXaml.!XamlLoader">
+            <method name="TryLoad" />
+        </type>
+    </assembly>
+</linker>
