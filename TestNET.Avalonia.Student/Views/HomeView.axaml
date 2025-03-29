@@ -78,7 +78,7 @@
                 </Button.CommandParameter>
             </Button>
 
-
+<!-- TODO:
             <Button Content="Review test"
                     Command="{Binding GoToSubmReviewCommand}"
                     IsEnabled="{Binding CanStartReview}"
@@ -97,6 +97,7 @@
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>
+            -->
 
             <Grid>
                 <WrapPanel HorizontalAlignment="Right"
