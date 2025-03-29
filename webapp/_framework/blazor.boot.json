@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TestNET.Avalonia.Student.Browser",
   "resources": {
-    "hash": "sha256-83sroDXucuqWW1nGEWbcdURx6ZXGJu146TRwFmUvxzM=",
+    "hash": "sha256-/fbQXh0Ca8qAQ8/bhAEzl6gwUdtTi8f01eDtpqKY+rQ=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-1sOqGGJPcdKtin3tFJDQMTHWvTzICN1lnGFJTMDKPBo="
     },
@@ -66,9 +66,9 @@
       "System.Text.RegularExpressions.wasm": "sha256-l8ZwMES4yU+baZtji/uUyUrEGLRBRtbuw5BwmLACtOk=",
       "System.wasm": "sha256-Ptp0SoFJ9d0L4Ggtn3zglr8nqyoyg6Y9/3zD9yoNP9E=",
       "System.Xml.Linq.wasm": "sha256-kZJO/BQhANYZ4psstEnj8MTlj1aTXnXh0OYp2XqcrDI=",
-      "TestNET.Avalonia.Shared.wasm": "sha256-oc9WOrn+BNs0FbaupWFceVt6iCsPJDUtBIitYOc7tgc=",
-      "TestNET.Avalonia.Student.Browser.wasm": "sha256-BnLIGsfKFe53Fg/cKH3zgT4zdIfgTo41xUchs5MqTnI=",
-      "TestNET.Avalonia.Student.wasm": "sha256-kGtl/ItzVboBkba7Nw6HZyOnu7RDxXJte6opX4WItYQ=",
+      "TestNET.Avalonia.Shared.wasm": "sha256-nHLyzU5A8Mx4QGeo1l/s/yGlMT5VK9xWXsMUlz3vxLg=",
+      "TestNET.Avalonia.Student.Browser.wasm": "sha256-qc8saD+ixxQbLyCS5ydxH2ANaYsiUpnGanttCRg5vIM=",
+      "TestNET.Avalonia.Student.wasm": "sha256-cXyrOmCux/fiYfDc7dTgrdBrMIijnpMHnmid35MZK0Q=",
       "XamlMath.Shared.wasm": "sha256-d+yaSWAfa8IiGEOmWZlqMI7fEOjsgtxuIQkMLICNL54="
     }
   },
