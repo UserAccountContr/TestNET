@@ -13,4 +13,13 @@
     <PackageReference Include="MathKeyboardEngine" Version="1.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <AvaloniaXaml Remove="Resources\Styles.Light.axaml" />
+    <AvaloniaResource Include="Resources\Styles.Light.axaml" />
+    <AvaloniaXaml Remove="Resources\StringResources.en.axaml" />
+    <AvaloniaResource Include="Resources\StringResources.en.axaml" />
+    <AvaloniaXaml Remove="Resources\StringResources.bg.axaml" />
+    <AvaloniaResource Include="Resources\StringResources.bg.axaml" />
+  </ItemGroup>
+
 </Project>
